@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../features/favorites/presentation/screens/favorites_screen.dart';
 import '../features/servers/presentation/screens/server_list_screen.dart';
+import '../features/settings/presentation/screens/settings_screen.dart';
 
 class AsaServerEyeApp extends StatefulWidget {
   const AsaServerEyeApp({super.key});
@@ -16,7 +17,11 @@ class _AsaServerEyeAppState extends State<AsaServerEyeApp> {
 
   @override
   Widget build(BuildContext context) {
-    final screens = [const ServerListScreen(), const FavoritesScreen()];
+    final screens = [
+      const ServerListScreen(),
+      const FavoritesScreen(),
+      const SettingsScreen(),
+    ];
 
     return MaterialApp(
       title: 'ASA Server Eye',
@@ -40,6 +45,11 @@ class _AsaServerEyeAppState extends State<AsaServerEyeApp> {
               icon: Icon(Icons.star_border),
               selectedIcon: Icon(Icons.star),
               label: 'Favorites',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.settings_outlined),
+              selectedIcon: Icon(Icons.settings),
+              label: 'Settings',
             ),
           ],
         ),
