@@ -1,57 +1,70 @@
 // features/servers/presentation/screens/server_list_screen.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/server_service.dart';
-import '../../domain/server.dart';
+import '../providers/server_providers.dart';
+import 'server_detail_screen.dart';
 
-class ServerListScreen extends StatefulWidget {
+class ServerListScreen extends ConsumerWidget {
   const ServerListScreen({super.key});
 
   @override
-  State<ServerListScreen> createState() => _ServerListScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final serversAsync = ref.watch(serversProvider);
 
-class _ServerListScreenState extends State<ServerListScreen> {
-  final service = ServerService();
-  late Future<List<Server>> servers;
-
-  @override
-  void initState() {
-    super.initState();
-    servers = service.fetchServers();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Servers")),
-      body: FutureBuilder<List<Server>>(
-        future: servers,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (snapshot.hasError) {
-            return Center(child: Text(snapshot.error.toString()));
-          }
-
-          final data = snapshot.data ?? [];
-
-          return ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              final server = data[index];
-
-              return ListTile(
-                title: Text(server.name),
-                subtitle: Text(
-                  "${server.map} • ${server.players}/${server.maxPlayers}",
-                ),
-              );
-            },
-          );
+      appBar: AppBar(title: const Text('Servers')),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(serversProvider);
+          await ref.read(serversProvider.future);
         },
+        child: serversAsync.when(
+          data: (servers) {
+            if (servers.isEmpty) {
+              return ListView(
+                children: [
+                  SizedBox(height: 250),
+                  Center(child: Text('No servers found')),
+                ],
+              );
+            }
+
+            return ListView.builder(
+              itemCount: servers.length,
+              itemBuilder: (context, index) {
+                final server = servers[index];
+
+                return ListTile(
+                  title: Text(server.name),
+                  subtitle: Text(
+                    '${server.map} • ${server.players}/${server.maxPlayers}',
+                  ),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => ServerDetailScreen(server: server),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stackTrace) => ListView(
+            children: [
+              const SizedBox(height: 250),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(error.toString()),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
