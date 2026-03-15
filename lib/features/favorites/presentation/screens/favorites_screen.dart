@@ -31,19 +31,68 @@ class FavoritesScreen extends ConsumerWidget {
             itemBuilder: (context, index) {
               final server = favoriteServers[index];
 
-              return ListTile(
-                title: Text(server.name),
-                subtitle: Text(
-                  '${server.map} • ${server.players}/${server.maxPlayers}',
+              return Dismissible(
+                key: ValueKey(server.id),
+                direction: DismissDirection.endToStart,
+                background: Container(
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  color: Colors.red,
+                  child: const Icon(Icons.delete_outline, color: Colors.white),
                 ),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => ServerDetailScreen(server: server),
+                confirmDismiss: (_) async {
+                  return await showDialog<bool>(
+                        context: context,
+                        builder: (dialogContext) {
+                          return AlertDialog(
+                            title: const Text('Remove favorite'),
+                            content: Text(
+                              'Do you want to remove "${server.name}" from favorites?',
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(dialogContext).pop(false);
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              FilledButton(
+                                onPressed: () {
+                                  Navigator.of(dialogContext).pop(true);
+                                },
+                                child: const Text('Remove'),
+                              ),
+                            ],
+                          );
+                        },
+                      ) ??
+                      false;
+                },
+                onDismissed: (_) {
+                  ref
+                      .read(favoritesControllerProvider.notifier)
+                      .toggleFavorite(server.id);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${server.name} removed from favorites'),
                     ),
                   );
                 },
+                child: ListTile(
+                  title: Text(server.name),
+                  subtitle: Text(
+                    '${server.map} • ${server.players}/${server.maxPlayers}',
+                  ),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => ServerDetailScreen(server: server),
+                      ),
+                    );
+                  },
+                ),
               );
             },
           );
