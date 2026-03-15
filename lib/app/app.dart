@@ -1,4 +1,7 @@
+// app/app.dart
 import 'package:flutter/material.dart';
+
+import '../features/servers/presentation/screens/server_list_screen.dart';
 
 class AsaServerEyeApp extends StatelessWidget {
   const AsaServerEyeApp({super.key});
@@ -7,12 +10,8 @@ class AsaServerEyeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'ASA Server Eye',
-      home: Scaffold(
-        appBar: AppBar(title: const Text('ASA Server Eye')),
-        body: const Center(
-          child: Text('ASA Server Eye MVP'),
-        ),
-      ),
+      theme: ThemeData(useMaterial3: true),
+      home: const ServerListScreen(),
     );
   }
 }
