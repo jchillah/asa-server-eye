@@ -316,6 +316,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{title} coming soon'**
   String comingSoon(String title);
+
+  /// Language option for following the system language
+  ///
+  /// In en, this message translates to:
+  /// **'System language'**
+  String get systemLanguage;
+
+  /// Language option for German
+  ///
+  /// In en, this message translates to:
+  /// **'German'**
+  String get german;
+
+  /// Language option for English
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// Dialog title for language selection
+  ///
+  /// In en, this message translates to:
+  /// **'Select language'**
+  String get selectLanguage;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

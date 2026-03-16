@@ -162,5 +162,21 @@
         "type": "String"
       }
     }
+  },
+  "systemLanguage": "Systemsprache",
+  "@systemLanguage": {
+    "description": "Sprachoption für die Systemsprache"
+  },
+  "german": "Deutsch",
+  "@german": {
+    "description": "Sprachoption für Deutsch"
+  },
+  "english": "Englisch",
+  "@english": {
+    "description": "Sprachoption für Englisch"
+  },
+  "selectLanguage": "Sprache auswählen",
+  "@selectLanguage": {
+    "description": "Dialogtitel für die Sprachauswahl"
   }
 }

@@ -124,4 +124,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String comingSoon(String title) {
     return '$title coming soon';
   }
+
+  @override
+  String get systemLanguage => 'System language';
+
+  @override
+  String get german => 'German';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get selectLanguage => 'Select language';
 }
