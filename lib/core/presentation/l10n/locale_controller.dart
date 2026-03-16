@@ -10,23 +10,7 @@ final localeControllerProvider =
 class LocaleController extends StateNotifier<Locale?> {
   LocaleController() : super(null);
 
-  void useSystemLocale() {
-    state = null;
-  }
-
-  void setGerman() {
-    state = const Locale('de');
-  }
-
-  void setEnglish() {
-    state = const Locale('en');
-  }
-
-  void setSpanish() {
-    state = const Locale('es');
-  }
-
-  void setChinese() {
-    state = const Locale('zh');
+  void setLocale(Locale? locale) {
+    state = locale;
   }
 }
