@@ -124,4 +124,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String comingSoon(String title) {
     return '$title kommt bald';
   }
+
+  @override
+  String get systemLanguage => 'Systemsprache';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get english => 'Englisch';
+
+  @override
+  String get selectLanguage => 'Sprache auswählen';
 }
