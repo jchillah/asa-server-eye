@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/extensions/context_l10n.dart';
 import '../../../favorites/presentation/favorites_controller.dart';
 import '../../domain/server.dart';
 import '../providers/server_providers.dart';
@@ -18,13 +19,13 @@ class ServerDetailScreen extends ConsumerWidget {
     final serversAsync = ref.watch(serversProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Server Details')),
+      appBar: AppBar(title: Text(context.l10n.serverDetails)),
       body: serversAsync.when(
         data: (servers) {
           final server = _findServerById(servers, serverId);
 
           if (server == null) {
-            return const Center(child: Text('Server not found'));
+            return Center(child: Text(context.l10n.serverNotFound));
           }
 
           return ListView(
@@ -37,18 +38,22 @@ class ServerDetailScreen extends ConsumerWidget {
               const SizedBox(height: 16),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Map'),
+                title: Text(context.l10n.map),
                 subtitle: Text(server.map),
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Population'),
+                title: Text(context.l10n.population),
                 subtitle: Text('${server.players}/${server.maxPlayers}'),
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text('Type'),
-                subtitle: Text(server.official ? 'Official' : 'Unofficial'),
+                title: Text(context.l10n.type),
+                subtitle: Text(
+                  server.official
+                      ? context.l10n.official
+                      : context.l10n.unofficial,
+                ),
               ),
               const SizedBox(height: 24),
               FilledButton.icon(
@@ -58,8 +63,8 @@ class ServerDetailScreen extends ConsumerWidget {
                       .toggleFavorite(server.id);
 
                   final message = isFavorite
-                      ? 'Removed from favorites'
-                      : 'Added to favorites';
+                      ? context.l10n.removedFromFavorites
+                      : context.l10n.addedToFavorites;
 
                   ScaffoldMessenger.of(
                     context,
@@ -67,7 +72,9 @@ class ServerDetailScreen extends ConsumerWidget {
                 },
                 icon: Icon(isFavorite ? Icons.star : Icons.star_border),
                 label: Text(
-                  isFavorite ? 'Remove from favorites' : 'Add to favorites',
+                  isFavorite
+                      ? context.l10n.removeFromFavorites
+                      : context.l10n.addToFavorites,
                 ),
               ),
             ],

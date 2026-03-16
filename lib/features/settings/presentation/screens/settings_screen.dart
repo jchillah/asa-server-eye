@@ -1,41 +1,43 @@
 // features/settings/presentation/screens/settings_screen.dart
 import 'package:flutter/material.dart';
 
+import '../../../../core/extensions/context_l10n.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: Text(context.l10n.settings)),
       body: ListView(
-        children: const [
-          _SettingsSectionHeader(title: 'General'),
+        children: [
+          _SettingsSectionHeader(title: context.l10n.general),
           _SettingsTile(
             icon: Icons.language,
-            title: 'Language',
-            subtitle: 'System default',
+            title: context.l10n.language,
+            subtitle: context.l10n.systemDefault,
           ),
           _SettingsTile(
             icon: Icons.info_outline,
-            title: 'About',
-            subtitle: 'App information',
+            title: context.l10n.about,
+            subtitle: context.l10n.appInformation,
           ),
-          _SettingsSectionHeader(title: 'Legal'),
+          _SettingsSectionHeader(title: context.l10n.legal),
           _SettingsTile(
             icon: Icons.privacy_tip_outlined,
-            title: 'Privacy Policy',
-            subtitle: 'How data is handled',
+            title: context.l10n.privacyPolicy,
+            subtitle: context.l10n.howDataIsHandled,
           ),
           _SettingsTile(
             icon: Icons.gavel_outlined,
-            title: 'Imprint',
-            subtitle: 'Legal information',
+            title: context.l10n.imprint,
+            subtitle: context.l10n.legalInformation,
           ),
           _SettingsTile(
             icon: Icons.support_agent,
-            title: 'Support',
-            subtitle: 'Get help and contact support',
+            title: context.l10n.support,
+            subtitle: context.l10n.getHelpAndContactSupport,
           ),
         ],
       ),
@@ -78,7 +80,7 @@ class _SettingsTile extends StatelessWidget {
       onTap: () {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('$title coming soon')));
+        ).showSnackBar(SnackBar(content: Text(context.l10n.comingSoon(title))));
       },
     );
   }

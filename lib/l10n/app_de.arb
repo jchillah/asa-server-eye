@@ -1,4 +1,166 @@
 {
   "@@locale": "de",
-  "appTitle": "ASA Server Eye"
+  "appTitle": "ASA Server Eye",
+  "@appTitle": {
+    "description": "Der Anwendungsname"
+  },
+  "servers": "Server",
+  "@servers": {
+    "description": "Bottom-Navigation und Seitentitel für Server"
+  },
+  "favorites": "Favoriten",
+  "@favorites": {
+    "description": "Bottom-Navigation und Seitentitel für Favoriten"
+  },
+  "settings": "Einstellungen",
+  "@settings": {
+    "description": "Bottom-Navigation und Seitentitel für Einstellungen"
+  },
+  "searchServersOrMaps": "Server oder Karten suchen",
+  "@searchServersOrMaps": {
+    "description": "Hinweistext im Suchfeld"
+  },
+  "noServersFound": "Keine Server gefunden",
+  "@noServersFound": {
+    "description": "Leerzustand wenn keine Server verfügbar sind"
+  },
+  "noServersMatchSearch": "Keine Server passen zu deiner Suche",
+  "@noServersMatchSearch": {
+    "description": "Leerzustand wenn die Suche keine Treffer hat"
+  },
+  "serverDetails": "Serverdetails",
+  "@serverDetails": {
+    "description": "Titel der Serverdetailansicht"
+  },
+  "serverNotFound": "Server nicht gefunden",
+  "@serverNotFound": {
+    "description": "Wird angezeigt, wenn eine Server-ID nicht gefunden wird"
+  },
+  "map": "Karte",
+  "@map": {
+    "description": "Bezeichnung für Karte"
+  },
+  "population": "Population",
+  "@population": {
+    "description": "Bezeichnung für Spieleranzahl"
+  },
+  "type": "Typ",
+  "@type": {
+    "description": "Bezeichnung für Servertyp"
+  },
+  "official": "Offiziell",
+  "@official": {
+    "description": "Offizieller Servertyp"
+  },
+  "unofficial": "Inoffiziell",
+  "@unofficial": {
+    "description": "Inoffizieller Servertyp"
+  },
+  "addToFavorites": "Zu Favoriten hinzufügen",
+  "@addToFavorites": {
+    "description": "Buttontext zum Hinzufügen zu Favoriten"
+  },
+  "removeFromFavorites": "Aus Favoriten entfernen",
+  "@removeFromFavorites": {
+    "description": "Buttontext zum Entfernen aus Favoriten"
+  },
+  "addedToFavorites": "Zu Favoriten hinzugefügt",
+  "@addedToFavorites": {
+    "description": "Snackbar nach dem Hinzufügen"
+  },
+  "removedFromFavorites": "Aus Favoriten entfernt",
+  "@removedFromFavorites": {
+    "description": "Snackbar nach dem Entfernen"
+  },
+  "noFavoritesYet": "Noch keine Favoriten vorhanden",
+  "@noFavoritesYet": {
+    "description": "Leerzustand im Favoriten-Screen"
+  },
+  "removeFavorite": "Favorit entfernen",
+  "@removeFavorite": {
+    "description": "Dialogtitel zum Entfernen eines Favoriten"
+  },
+  "cancel": "Abbrechen",
+  "@cancel": {
+    "description": "Abbrechen-Aktion"
+  },
+  "remove": "Entfernen",
+  "@remove": {
+    "description": "Entfernen-Aktion"
+  },
+  "removeFavoriteQuestion": "Möchtest du „{serverName}“ aus den Favoriten entfernen?",
+  "@removeFavoriteQuestion": {
+    "description": "Bestätigungsfrage vor dem Entfernen eines Favoriten",
+    "placeholders": {
+      "serverName": {
+        "type": "String"
+      }
+    }
+  },
+  "removedServerFromFavorites": "{serverName} wurde aus den Favoriten entfernt",
+  "@removedServerFromFavorites": {
+    "description": "Snackbar nach dem Swipe-Löschen",
+    "placeholders": {
+      "serverName": {
+        "type": "String"
+      }
+    }
+  },
+  "general": "Allgemein",
+  "@general": {
+    "description": "Titel eines Einstellungsbereichs"
+  },
+  "language": "Sprache",
+  "@language": {
+    "description": "Titel des Spracheintrags"
+  },
+  "systemDefault": "Systemstandard",
+  "@systemDefault": {
+    "description": "Untertitel für Spracheinstellung"
+  },
+  "about": "Über die App",
+  "@about": {
+    "description": "Titel des About-Eintrags"
+  },
+  "appInformation": "App-Informationen",
+  "@appInformation": {
+    "description": "Untertitel des About-Eintrags"
+  },
+  "legal": "Rechtliches",
+  "@legal": {
+    "description": "Titel eines Einstellungsbereichs"
+  },
+  "privacyPolicy": "Datenschutz",
+  "@privacyPolicy": {
+    "description": "Titel des Datenschutzeintrags"
+  },
+  "howDataIsHandled": "Wie Daten verarbeitet werden",
+  "@howDataIsHandled": {
+    "description": "Untertitel des Datenschutzeintrags"
+  },
+  "imprint": "Impressum",
+  "@imprint": {
+    "description": "Titel des Impressum-Eintrags"
+  },
+  "legalInformation": "Rechtliche Informationen",
+  "@legalInformation": {
+    "description": "Untertitel des Impressum-Eintrags"
+  },
+  "support": "Support",
+  "@support": {
+    "description": "Titel des Support-Eintrags"
+  },
+  "getHelpAndContactSupport": "Hilfe und Kontakt zum Support",
+  "@getHelpAndContactSupport": {
+    "description": "Untertitel des Support-Eintrags"
+  },
+  "comingSoon": "{title} kommt bald",
+  "@comingSoon": {
+    "description": "Snackbar für noch nicht umgesetzte Einstellungen",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  }
 }
