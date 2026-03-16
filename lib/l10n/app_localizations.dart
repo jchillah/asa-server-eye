@@ -7,6 +7,8 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -92,7 +94,9 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('de'),
-    Locale('en')
+    Locale('en'),
+    Locale('es'),
+    Locale('zh')
   ];
 
   /// The application name
@@ -227,6 +231,12 @@ abstract class AppLocalizations {
   /// **'Remove'**
   String get remove;
 
+  /// Apply action
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
   /// Confirmation message before removing a favorite
   ///
   /// In en, this message translates to:
@@ -256,6 +266,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'System default'**
   String get systemDefault;
+
+  /// Language option for following the system language
+  ///
+  /// In en, this message translates to:
+  /// **'System language'**
+  String get systemLanguage;
+
+  /// Language option for German
+  ///
+  /// In en, this message translates to:
+  /// **'German'**
+  String get german;
+
+  /// Language option for English
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// Language option for Spanish
+  ///
+  /// In en, this message translates to:
+  /// **'Spanish'**
+  String get spanish;
+
+  /// Language option for Chinese
+  ///
+  /// In en, this message translates to:
+  /// **'Chinese'**
+  String get chinese;
+
+  /// Dialog title for language selection
+  ///
+  /// In en, this message translates to:
+  /// **'Select language'**
+  String get selectLanguage;
 
   /// Settings entry title
   ///
@@ -316,30 +362,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{title} coming soon'**
   String comingSoon(String title);
-
-  /// Language option for following the system language
-  ///
-  /// In en, this message translates to:
-  /// **'System language'**
-  String get systemLanguage;
-
-  /// Language option for German
-  ///
-  /// In en, this message translates to:
-  /// **'German'**
-  String get german;
-
-  /// Language option for English
-  ///
-  /// In en, this message translates to:
-  /// **'English'**
-  String get english;
-
-  /// Dialog title for language selection
-  ///
-  /// In en, this message translates to:
-  /// **'Select language'**
-  String get selectLanguage;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -351,7 +373,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['de', 'en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['de', 'en', 'es', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -364,6 +386,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'de': return AppLocalizationsDe();
     case 'en': return AppLocalizationsEn();
+    case 'es': return AppLocalizationsEs();
+    case 'zh': return AppLocalizationsZh();
   }
 
   throw FlutterError(

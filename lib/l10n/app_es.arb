@@ -1,0 +1,194 @@
+{
+    "@@locale": "es",
+    "appTitle": "ASA Server Eye",
+    "@appTitle": {
+        "description": "El nombre de la aplicación"
+    },
+    "servers": "Servidores",
+    "@servers": {
+        "description": "Título de pantalla y navegación inferior para servidores"
+    },
+    "favorites": "Favoritos",
+    "@favorites": {
+        "description": "Título de pantalla y navegación inferior para favoritos"
+    },
+    "settings": "Ajustes",
+    "@settings": {
+        "description": "Título de pantalla y navegación inferior para ajustes"
+    },
+    "searchServersOrMaps": "Buscar servidores o mapas",
+    "@searchServersOrMaps": {
+        "description": "Texto de ayuda del campo de búsqueda"
+    },
+    "noServersFound": "No se encontraron servidores",
+    "@noServersFound": {
+        "description": "Estado vacío cuando no hay servidores disponibles"
+    },
+    "noServersMatchSearch": "Ningún servidor coincide con tu búsqueda",
+    "@noServersMatchSearch": {
+        "description": "Estado vacío cuando la búsqueda no devuelve resultados"
+    },
+    "serverDetails": "Detalles del servidor",
+    "@serverDetails": {
+        "description": "Título de la pantalla de detalles del servidor"
+    },
+    "serverNotFound": "Servidor no encontrado",
+    "@serverNotFound": {
+        "description": "Se muestra cuando no se encuentra un servidor"
+    },
+    "map": "Mapa",
+    "@map": {
+        "description": "Etiqueta del mapa"
+    },
+    "population": "Población",
+    "@population": {
+        "description": "Etiqueta de la población del servidor"
+    },
+    "type": "Tipo",
+    "@type": {
+        "description": "Etiqueta del tipo de servidor"
+    },
+    "official": "Oficial",
+    "@official": {
+        "description": "Tipo de servidor oficial"
+    },
+    "unofficial": "No oficial",
+    "@unofficial": {
+        "description": "Tipo de servidor no oficial"
+    },
+    "addToFavorites": "Añadir a favoritos",
+    "@addToFavorites": {
+        "description": "Botón para añadir a favoritos"
+    },
+    "removeFromFavorites": "Quitar de favoritos",
+    "@removeFromFavorites": {
+        "description": "Botón para quitar de favoritos"
+    },
+    "addedToFavorites": "Añadido a favoritos",
+    "@addedToFavorites": {
+        "description": "Snackbar al añadir favorito"
+    },
+    "removedFromFavorites": "Eliminado de favoritos",
+    "@removedFromFavorites": {
+        "description": "Snackbar al eliminar favorito"
+    },
+    "noFavoritesYet": "Todavía no hay favoritos",
+    "@noFavoritesYet": {
+        "description": "Estado vacío de favoritos"
+    },
+    "removeFavorite": "Eliminar favorito",
+    "@removeFavorite": {
+        "description": "Título del diálogo para eliminar favorito"
+    },
+    "cancel": "Cancelar",
+    "@cancel": {
+        "description": "Acción de cancelar"
+    },
+    "remove": "Eliminar",
+    "@remove": {
+        "description": "Acción de eliminar"
+    },
+    "apply": "Aplicar",
+    "@apply": {
+        "description": "Acción de aplicar"
+    },
+    "removeFavoriteQuestion": "¿Quieres eliminar \"{serverName}\" de favoritos?",
+    "@removeFavoriteQuestion": {
+        "description": "Pregunta de confirmación antes de eliminar un favorito",
+        "placeholders": {
+            "serverName": {
+                "type": "String"
+            }
+        }
+    },
+    "removedServerFromFavorites": "{serverName} eliminado de favoritos",
+    "@removedServerFromFavorites": {
+        "description": "Snackbar después de eliminar deslizando",
+        "placeholders": {
+            "serverName": {
+                "type": "String"
+            }
+        }
+    },
+    "general": "General",
+    "@general": {
+        "description": "Título de sección en ajustes"
+    },
+    "language": "Idioma",
+    "@language": {
+        "description": "Título del ajuste de idioma"
+    },
+    "systemDefault": "Predeterminado del sistema",
+    "@systemDefault": {
+        "description": "Subtítulo del ajuste de idioma"
+    },
+    "systemLanguage": "Idioma del sistema",
+    "@systemLanguage": {
+        "description": "Opción para seguir el idioma del sistema"
+    },
+    "german": "Alemán",
+    "@german": {
+        "description": "Opción de idioma alemán"
+    },
+    "english": "Inglés",
+    "@english": {
+        "description": "Opción de idioma inglés"
+    },
+    "spanish": "Español",
+    "@spanish": {
+        "description": "Opción de idioma español"
+    },
+    "chinese": "Chino",
+    "@chinese": {
+        "description": "Opción de idioma chino"
+    },
+    "selectLanguage": "Seleccionar idioma",
+    "@selectLanguage": {
+        "description": "Título del diálogo de idioma"
+    },
+    "about": "Acerca de",
+    "@about": {
+        "description": "Título del ajuste de información"
+    },
+    "appInformation": "Información de la aplicación",
+    "@appInformation": {
+        "description": "Subtítulo del ajuste de información"
+    },
+    "legal": "Legal",
+    "@legal": {
+        "description": "Título de sección legal"
+    },
+    "privacyPolicy": "Política de privacidad",
+    "@privacyPolicy": {
+        "description": "Título del ajuste de privacidad"
+    },
+    "howDataIsHandled": "Cómo se gestionan los datos",
+    "@howDataIsHandled": {
+        "description": "Subtítulo del ajuste de privacidad"
+    },
+    "imprint": "Aviso legal",
+    "@imprint": {
+        "description": "Título del ajuste de aviso legal"
+    },
+    "legalInformation": "Información legal",
+    "@legalInformation": {
+        "description": "Subtítulo del ajuste legal"
+    },
+    "support": "Soporte",
+    "@support": {
+        "description": "Título del ajuste de soporte"
+    },
+    "getHelpAndContactSupport": "Obtener ayuda y contactar con soporte",
+    "@getHelpAndContactSupport": {
+        "description": "Subtítulo del ajuste de soporte"
+    },
+    "comingSoon": "{title} próximamente",
+    "@comingSoon": {
+        "description": "Snackbar para funciones no implementadas",
+        "placeholders": {
+            "title": {
+                "type": "String"
+            }
+        }
+    }
+}

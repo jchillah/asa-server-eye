@@ -88,6 +88,10 @@
   "@remove": {
     "description": "Remove action"
   },
+  "apply": "Apply",
+  "@apply": {
+    "description": "Apply action"
+  },
   "removeFavoriteQuestion": "Do you want to remove \"{serverName}\" from favorites?",
   "@removeFavoriteQuestion": {
     "description": "Confirmation message before removing a favorite",
@@ -117,6 +121,30 @@
   "systemDefault": "System default",
   "@systemDefault": {
     "description": "Settings entry subtitle"
+  },
+  "systemLanguage": "System language",
+  "@systemLanguage": {
+    "description": "Language option for following the system language"
+  },
+  "german": "German",
+  "@german": {
+    "description": "Language option for German"
+  },
+  "english": "English",
+  "@english": {
+    "description": "Language option for English"
+  },
+  "spanish": "Spanish",
+  "@spanish": {
+    "description": "Language option for Spanish"
+  },
+  "chinese": "Chinese",
+  "@chinese": {
+    "description": "Language option for Chinese"
+  },
+  "selectLanguage": "Select language",
+  "@selectLanguage": {
+    "description": "Dialog title for language selection"
   },
   "about": "About",
   "@about": {
@@ -162,21 +190,5 @@
         "type": "String"
       }
     }
-  },
-  "systemLanguage": "System language",
-  "@systemLanguage": {
-    "description": "Language option for following the system language"
-  },
-  "german": "German",
-  "@german": {
-    "description": "Language option for German"
-  },
-  "english": "English",
-  "@english": {
-    "description": "Language option for English"
-  },
-  "selectLanguage": "Select language",
-  "@selectLanguage": {
-    "description": "Dialog title for language selection"
   }
 }

@@ -75,6 +75,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get remove => 'Remove';
 
   @override
+  String get apply => 'Apply';
+
+  @override
   String removeFavoriteQuestion(String serverName) {
     return 'Do you want to remove \"$serverName\" from favorites?';
   }
@@ -92,6 +95,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get systemDefault => 'System default';
+
+  @override
+  String get systemLanguage => 'System language';
+
+  @override
+  String get german => 'German';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get spanish => 'Spanish';
+
+  @override
+  String get chinese => 'Chinese';
+
+  @override
+  String get selectLanguage => 'Select language';
 
   @override
   String get about => 'About';
@@ -124,16 +145,4 @@ class AppLocalizationsEn extends AppLocalizations {
   String comingSoon(String title) {
     return '$title coming soon';
   }
-
-  @override
-  String get systemLanguage => 'System language';
-
-  @override
-  String get german => 'German';
-
-  @override
-  String get english => 'English';
-
-  @override
-  String get selectLanguage => 'Select language';
 }

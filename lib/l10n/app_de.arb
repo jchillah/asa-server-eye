@@ -88,6 +88,10 @@
   "@remove": {
     "description": "Entfernen-Aktion"
   },
+  "apply": "Anwenden",
+  "@apply": {
+    "description": "Anwenden-Aktion"
+  },
   "removeFavoriteQuestion": "Möchtest du „{serverName}“ aus den Favoriten entfernen?",
   "@removeFavoriteQuestion": {
     "description": "Bestätigungsfrage vor dem Entfernen eines Favoriten",
@@ -117,6 +121,30 @@
   "systemDefault": "Systemstandard",
   "@systemDefault": {
     "description": "Untertitel für Spracheinstellung"
+  },
+  "systemLanguage": "Systemsprache",
+  "@systemLanguage": {
+    "description": "Sprachoption für die Systemsprache"
+  },
+  "german": "Deutsch",
+  "@german": {
+    "description": "Sprachoption für Deutsch"
+  },
+  "english": "Englisch",
+  "@english": {
+    "description": "Sprachoption für Englisch"
+  },
+  "spanish": "Spanisch",
+  "@spanish": {
+    "description": "Sprachoption für Spanisch"
+  },
+  "chinese": "Chinesisch",
+  "@chinese": {
+    "description": "Sprachoption für Chinesisch"
+  },
+  "selectLanguage": "Sprache auswählen",
+  "@selectLanguage": {
+    "description": "Dialogtitel für die Sprachauswahl"
   },
   "about": "Über die App",
   "@about": {
@@ -162,21 +190,5 @@
         "type": "String"
       }
     }
-  },
-  "systemLanguage": "Systemsprache",
-  "@systemLanguage": {
-    "description": "Sprachoption für die Systemsprache"
-  },
-  "german": "Deutsch",
-  "@german": {
-    "description": "Sprachoption für Deutsch"
-  },
-  "english": "Englisch",
-  "@english": {
-    "description": "Sprachoption für Englisch"
-  },
-  "selectLanguage": "Sprache auswählen",
-  "@selectLanguage": {
-    "description": "Dialogtitel für die Sprachauswahl"
   }
 }
