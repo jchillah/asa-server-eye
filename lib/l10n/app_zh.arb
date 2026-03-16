@@ -1,0 +1,194 @@
+{
+    "@@locale": "zh",
+    "appTitle": "ASA Server Eye",
+    "@appTitle": {
+        "description": "应用名称"
+    },
+    "servers": "服务器",
+    "@servers": {
+        "description": "服务器页面和底部导航标题"
+    },
+    "favorites": "收藏",
+    "@favorites": {
+        "description": "收藏页面和底部导航标题"
+    },
+    "settings": "设置",
+    "@settings": {
+        "description": "设置页面和底部导航标题"
+    },
+    "searchServersOrMaps": "搜索服务器或地图",
+    "@searchServersOrMaps": {
+        "description": "搜索框提示文字"
+    },
+    "noServersFound": "未找到服务器",
+    "@noServersFound": {
+        "description": "没有服务器时的空状态"
+    },
+    "noServersMatchSearch": "没有服务器符合你的搜索",
+    "@noServersMatchSearch": {
+        "description": "搜索无结果时的空状态"
+    },
+    "serverDetails": "服务器详情",
+    "@serverDetails": {
+        "description": "服务器详情页标题"
+    },
+    "serverNotFound": "未找到服务器",
+    "@serverNotFound": {
+        "description": "找不到服务器时显示"
+    },
+    "map": "地图",
+    "@map": {
+        "description": "地图标签"
+    },
+    "population": "人数",
+    "@population": {
+        "description": "服务器人数标签"
+    },
+    "type": "类型",
+    "@type": {
+        "description": "服务器类型标签"
+    },
+    "official": "官方",
+    "@official": {
+        "description": "官方服务器类型"
+    },
+    "unofficial": "非官方",
+    "@unofficial": {
+        "description": "非官方服务器类型"
+    },
+    "addToFavorites": "添加到收藏",
+    "@addToFavorites": {
+        "description": "添加收藏按钮文字"
+    },
+    "removeFromFavorites": "从收藏中移除",
+    "@removeFromFavorites": {
+        "description": "移除收藏按钮文字"
+    },
+    "addedToFavorites": "已添加到收藏",
+    "@addedToFavorites": {
+        "description": "添加收藏后的提示"
+    },
+    "removedFromFavorites": "已从收藏中移除",
+    "@removedFromFavorites": {
+        "description": "移除收藏后的提示"
+    },
+    "noFavoritesYet": "还没有收藏",
+    "@noFavoritesYet": {
+        "description": "收藏页空状态"
+    },
+    "removeFavorite": "移除收藏",
+    "@removeFavorite": {
+        "description": "移除收藏对话框标题"
+    },
+    "cancel": "取消",
+    "@cancel": {
+        "description": "取消操作"
+    },
+    "remove": "移除",
+    "@remove": {
+        "description": "移除操作"
+    },
+    "apply": "应用",
+    "@apply": {
+        "description": "应用操作"
+    },
+    "removeFavoriteQuestion": "要将“{serverName}”从收藏中移除吗？",
+    "@removeFavoriteQuestion": {
+        "description": "移除收藏前的确认问题",
+        "placeholders": {
+            "serverName": {
+                "type": "String"
+            }
+        }
+    },
+    "removedServerFromFavorites": "{serverName} 已从收藏中移除",
+    "@removedServerFromFavorites": {
+        "description": "滑动删除后的提示",
+        "placeholders": {
+            "serverName": {
+                "type": "String"
+            }
+        }
+    },
+    "general": "通用",
+    "@general": {
+        "description": "设置分区标题"
+    },
+    "language": "语言",
+    "@language": {
+        "description": "语言设置标题"
+    },
+    "systemDefault": "系统默认",
+    "@systemDefault": {
+        "description": "语言设置副标题"
+    },
+    "systemLanguage": "系统语言",
+    "@systemLanguage": {
+        "description": "跟随系统语言的选项"
+    },
+    "german": "德语",
+    "@german": {
+        "description": "德语选项"
+    },
+    "english": "英语",
+    "@english": {
+        "description": "英语选项"
+    },
+    "spanish": "西班牙语",
+    "@spanish": {
+        "description": "西班牙语选项"
+    },
+    "chinese": "中文",
+    "@chinese": {
+        "description": "中文选项"
+    },
+    "selectLanguage": "选择语言",
+    "@selectLanguage": {
+        "description": "语言选择对话框标题"
+    },
+    "about": "关于",
+    "@about": {
+        "description": "关于页面标题"
+    },
+    "appInformation": "应用信息",
+    "@appInformation": {
+        "description": "关于页面副标题"
+    },
+    "legal": "法律信息",
+    "@legal": {
+        "description": "法律分区标题"
+    },
+    "privacyPolicy": "隐私政策",
+    "@privacyPolicy": {
+        "description": "隐私政策标题"
+    },
+    "howDataIsHandled": "数据如何处理",
+    "@howDataIsHandled": {
+        "description": "隐私政策副标题"
+    },
+    "imprint": "法律声明",
+    "@imprint": {
+        "description": "法律声明标题"
+    },
+    "legalInformation": "法律信息",
+    "@legalInformation": {
+        "description": "法律声明副标题"
+    },
+    "support": "支持",
+    "@support": {
+        "description": "支持标题"
+    },
+    "getHelpAndContactSupport": "获取帮助并联系支持",
+    "@getHelpAndContactSupport": {
+        "description": "支持副标题"
+    },
+    "comingSoon": "{title} 即将推出",
+    "@comingSoon": {
+        "description": "尚未实现功能的提示",
+        "placeholders": {
+            "title": {
+                "type": "String"
+            }
+        }
+    }
+}

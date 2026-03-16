@@ -21,4 +21,12 @@ class LocaleController extends StateNotifier<Locale?> {
   void setEnglish() {
     state = const Locale('en');
   }
+
+  void setSpanish() {
+    state = const Locale('es');
+  }
+
+  void setChinese() {
+    state = const Locale('zh');
+  }
 }
