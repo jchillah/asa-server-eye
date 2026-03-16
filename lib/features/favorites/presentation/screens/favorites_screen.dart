@@ -88,7 +88,7 @@ class FavoritesScreen extends ConsumerWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) => ServerDetailScreen(server: server),
+                        builder: (_) => ServerDetailScreen(serverId: server.id),
                       ),
                     );
                   },

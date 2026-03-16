@@ -1,9 +1,9 @@
-// features/servers/presentation/screens/server_detail_screen.dart
+// features/settings/servers/presentation/screens/server_detail_screen.dart
+import 'package:ark_server_eye/features/favorites/presentation/favorites_controller.dart';
+import 'package:ark_server_eye/features/settings/servers/domain/server.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../favorites/presentation/favorites_controller.dart';
-import '../../domain/server.dart';
 import '../providers/server_providers.dart';
 
 class ServerDetailScreen extends ConsumerWidget {
