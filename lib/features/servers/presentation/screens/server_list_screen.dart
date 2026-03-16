@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/extensions/context_l10n.dart';
 import '../providers/server_providers.dart';
 import 'server_detail_screen.dart';
 
@@ -27,7 +28,7 @@ class _ServerListScreenState extends ConsumerState<ServerListScreen> {
     final serversAsync = ref.watch(serversProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Servers')),
+      appBar: AppBar(title: Text(context.l10n.servers)),
       body: Column(
         children: [
           Padding(
@@ -40,7 +41,7 @@ class _ServerListScreenState extends ConsumerState<ServerListScreen> {
                 });
               },
               decoration: InputDecoration(
-                hintText: 'Search servers or maps',
+                hintText: context.l10n.searchServersOrMaps,
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: _query.isEmpty
                     ? null
@@ -79,8 +80,8 @@ class _ServerListScreenState extends ConsumerState<ServerListScreen> {
                   if (servers.isEmpty) {
                     return ListView(
                       children: [
-                        SizedBox(height: 250),
-                        Center(child: Text('No servers found')),
+                        const SizedBox(height: 250),
+                        Center(child: Text(context.l10n.noServersFound)),
                       ],
                     );
                   }
@@ -92,8 +93,8 @@ class _ServerListScreenState extends ConsumerState<ServerListScreen> {
                         Center(
                           child: Text(
                             _query.isEmpty
-                                ? 'No servers found'
-                                : 'No servers match your search',
+                                ? context.l10n.noServersFound
+                                : context.l10n.noServersMatchSearch,
                           ),
                         ),
                       ],

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/extensions/context_l10n.dart';
 import '../../../servers/presentation/providers/server_providers.dart';
 import '../../../servers/presentation/screens/server_detail_screen.dart';
 import '../favorites_controller.dart';
@@ -15,7 +16,7 @@ class FavoritesScreen extends ConsumerWidget {
     final serversAsync = ref.watch(serversProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Favorites')),
+      appBar: AppBar(title: Text(context.l10n.favorites)),
       body: serversAsync.when(
         data: (servers) {
           final favoriteServers = servers
@@ -23,7 +24,7 @@ class FavoritesScreen extends ConsumerWidget {
               .toList();
 
           if (favoriteServers.isEmpty) {
-            return const Center(child: Text('No favorites yet'));
+            return Center(child: Text(context.l10n.noFavoritesYet));
           }
 
           return ListView.builder(
@@ -45,22 +46,22 @@ class FavoritesScreen extends ConsumerWidget {
                         context: context,
                         builder: (dialogContext) {
                           return AlertDialog(
-                            title: const Text('Remove favorite'),
+                            title: Text(context.l10n.removeFavorite),
                             content: Text(
-                              'Do you want to remove "${server.name}" from favorites?',
+                              context.l10n.removeFavoriteQuestion(server.name),
                             ),
                             actions: [
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(dialogContext).pop(false);
                                 },
-                                child: const Text('Cancel'),
+                                child: Text(context.l10n.cancel),
                               ),
                               FilledButton(
                                 onPressed: () {
                                   Navigator.of(dialogContext).pop(true);
                                 },
-                                child: const Text('Remove'),
+                                child: Text(context.l10n.remove),
                               ),
                             ],
                           );
@@ -75,7 +76,9 @@ class FavoritesScreen extends ConsumerWidget {
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('${server.name} removed from favorites'),
+                      content: Text(
+                        context.l10n.removedServerFromFavorites(server.name),
+                      ),
                     ),
                   );
                 },

@@ -1,4 +1,166 @@
 {
   "@@locale": "en",
-  "appTitle": "ASA Server Eye"
+  "appTitle": "ASA Server Eye",
+  "@appTitle": {
+    "description": "The application name"
+  },
+  "servers": "Servers",
+  "@servers": {
+    "description": "Bottom navigation and screen title for servers"
+  },
+  "favorites": "Favorites",
+  "@favorites": {
+    "description": "Bottom navigation and screen title for favorites"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Bottom navigation and screen title for settings"
+  },
+  "searchServersOrMaps": "Search servers or maps",
+  "@searchServersOrMaps": {
+    "description": "Hint text for server search field"
+  },
+  "noServersFound": "No servers found",
+  "@noServersFound": {
+    "description": "Empty state when no servers are available"
+  },
+  "noServersMatchSearch": "No servers match your search",
+  "@noServersMatchSearch": {
+    "description": "Empty state when search has no results"
+  },
+  "serverDetails": "Server Details",
+  "@serverDetails": {
+    "description": "Title of the server details screen"
+  },
+  "serverNotFound": "Server not found",
+  "@serverNotFound": {
+    "description": "Shown when a server id cannot be found"
+  },
+  "map": "Map",
+  "@map": {
+    "description": "Label for server map"
+  },
+  "population": "Population",
+  "@population": {
+    "description": "Label for player population"
+  },
+  "type": "Type",
+  "@type": {
+    "description": "Label for server type"
+  },
+  "official": "Official",
+  "@official": {
+    "description": "Official server type"
+  },
+  "unofficial": "Unofficial",
+  "@unofficial": {
+    "description": "Unofficial server type"
+  },
+  "addToFavorites": "Add to favorites",
+  "@addToFavorites": {
+    "description": "Button label to add server to favorites"
+  },
+  "removeFromFavorites": "Remove from favorites",
+  "@removeFromFavorites": {
+    "description": "Button label to remove server from favorites"
+  },
+  "addedToFavorites": "Added to favorites",
+  "@addedToFavorites": {
+    "description": "Snackbar after adding favorite"
+  },
+  "removedFromFavorites": "Removed from favorites",
+  "@removedFromFavorites": {
+    "description": "Snackbar after removing favorite"
+  },
+  "noFavoritesYet": "No favorites yet",
+  "@noFavoritesYet": {
+    "description": "Empty state for favorites screen"
+  },
+  "removeFavorite": "Remove favorite",
+  "@removeFavorite": {
+    "description": "Dialog title for removing a favorite"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel action"
+  },
+  "remove": "Remove",
+  "@remove": {
+    "description": "Remove action"
+  },
+  "removeFavoriteQuestion": "Do you want to remove \"{serverName}\" from favorites?",
+  "@removeFavoriteQuestion": {
+    "description": "Confirmation message before removing a favorite",
+    "placeholders": {
+      "serverName": {
+        "type": "String"
+      }
+    }
+  },
+  "removedServerFromFavorites": "{serverName} removed from favorites",
+  "@removedServerFromFavorites": {
+    "description": "Snackbar after swipe delete from favorites",
+    "placeholders": {
+      "serverName": {
+        "type": "String"
+      }
+    }
+  },
+  "general": "General",
+  "@general": {
+    "description": "Settings section title"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Settings entry title"
+  },
+  "systemDefault": "System default",
+  "@systemDefault": {
+    "description": "Settings entry subtitle"
+  },
+  "about": "About",
+  "@about": {
+    "description": "Settings entry title"
+  },
+  "appInformation": "App information",
+  "@appInformation": {
+    "description": "Settings entry subtitle"
+  },
+  "legal": "Legal",
+  "@legal": {
+    "description": "Settings section title"
+  },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Settings entry title"
+  },
+  "howDataIsHandled": "How data is handled",
+  "@howDataIsHandled": {
+    "description": "Settings entry subtitle"
+  },
+  "imprint": "Imprint",
+  "@imprint": {
+    "description": "Settings entry title"
+  },
+  "legalInformation": "Legal information",
+  "@legalInformation": {
+    "description": "Settings entry subtitle"
+  },
+  "support": "Support",
+  "@support": {
+    "description": "Settings entry title"
+  },
+  "getHelpAndContactSupport": "Get help and contact support",
+  "@getHelpAndContactSupport": {
+    "description": "Settings entry subtitle"
+  },
+  "comingSoon": "{title} coming soon",
+  "@comingSoon": {
+    "description": "Snackbar for not yet implemented settings entries",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  }
 }
