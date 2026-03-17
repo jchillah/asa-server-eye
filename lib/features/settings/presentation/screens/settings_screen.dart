@@ -1,4 +1,8 @@
 // features/settings/presentation/screens/settings_screen.dart
+import 'package:ark_server_eye/features/settings/presentation/screens/about_screen.dart';
+import 'package:ark_server_eye/features/settings/presentation/screens/imprint_screen.dart';
+import 'package:ark_server_eye/features/settings/presentation/screens/privacy_screen.dart';
+import 'package:ark_server_eye/features/settings/presentation/screens/support_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,36 +45,53 @@ class SettingsScreen extends ConsumerWidget {
             icon: Icons.info_outline,
             title: context.l10n.about,
             subtitle: context.l10n.appInformation,
-            onTap: () => _showComingSoonSnackBar(context, context.l10n.about),
+            onTap: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const AboutScreen()));
+            },
           ),
           SettingsSectionHeader(title: context.l10n.legal),
           SettingsTile(
             icon: Icons.privacy_tip_outlined,
             title: context.l10n.privacyPolicy,
             subtitle: context.l10n.howDataIsHandled,
-            onTap: () =>
-                _showComingSoonSnackBar(context, context.l10n.privacyPolicy),
+            onTap: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const PrivacyScreen()));
+            },
           ),
           SettingsTile(
             icon: Icons.gavel_outlined,
             title: context.l10n.imprint,
             subtitle: context.l10n.legalInformation,
-            onTap: () => _showComingSoonSnackBar(context, context.l10n.imprint),
+            onTap: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const ImprintScreen()));
+            },
           ),
           SettingsTile(
             icon: Icons.support_agent,
             title: context.l10n.support,
             subtitle: context.l10n.getHelpAndContactSupport,
-            onTap: () => _showComingSoonSnackBar(context, context.l10n.support),
+            onTap: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const SupportScreen()));
+            },
           ),
         ],
       ),
     );
   }
 
+  /*
   void _showComingSoonSnackBar(BuildContext context, String featureName) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(context.l10n.comingSoon(featureName))),
     );
   }
+  */
 }
