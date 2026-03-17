@@ -8,6 +8,8 @@ import '../../../favorites/presentation/favorites_controller.dart';
 import '../../domain/server.dart';
 import '../providers/server_providers.dart';
 
+const _logTag = 'ServerDetailScreen';
+
 class ServerDetailScreen extends ConsumerWidget {
   const ServerDetailScreen({super.key, required this.serverId});
 
@@ -87,7 +89,7 @@ class ServerDetailScreen extends ConsumerWidget {
             FlutterErrorDetails(
               exception: error,
               stack: stackTrace,
-              library: 'server_detail_screen',
+              library: _logTag,
               context: ErrorDescription(
                 'while loading server details for serverId=$serverId',
               ),
@@ -95,7 +97,7 @@ class ServerDetailScreen extends ConsumerWidget {
           );
 
           if (kDebugMode) {
-            debugPrint('ServerDetailScreen error: $error');
+            debugPrint('$_logTag error: $error');
             debugPrintStack(stackTrace: stackTrace);
           }
 
