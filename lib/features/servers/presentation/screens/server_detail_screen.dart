@@ -17,97 +17,123 @@ class ServerDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favorites = ref.watch(favoritesControllerProvider);
-    final isFavorite = favorites.contains(serverId);
+    final favoriteIdsAsync = ref.watch(favoriteIdsProvider);
     final serversAsync = ref.watch(serversProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.serverDetails)),
-      body: serversAsync.when(
-        data: (servers) {
-          final server = _findServerById(servers, serverId);
+      body: favoriteIdsAsync.when(
+        data: (favoriteIds) {
+          final isFavorite = favoriteIds.contains(serverId);
 
-          if (server == null) {
-            return Center(child: Text(context.l10n.serverNotFound));
-          }
+          return serversAsync.when(
+            data: (servers) {
+              final server = _findServerById(servers, serverId);
 
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              Text(
-                server.name,
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              const SizedBox(height: 16),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(context.l10n.map),
-                subtitle: Text(server.map),
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(context.l10n.population),
-                subtitle: Text('${server.players}/${server.maxPlayers}'),
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(context.l10n.type),
-                subtitle: Text(
-                  server.official
-                      ? context.l10n.official
-                      : context.l10n.unofficial,
+              if (server == null) {
+                return Center(child: Text(context.l10n.serverNotFound));
+              }
+
+              return ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
+                  Text(
+                    server.name,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  const SizedBox(height: 16),
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(context.l10n.map),
+                    subtitle: Text(server.map),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(context.l10n.population),
+                    subtitle: Text('${server.players}/${server.maxPlayers}'),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(context.l10n.type),
+                    subtitle: Text(
+                      server.official
+                          ? context.l10n.official
+                          : context.l10n.unofficial,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  FilledButton.icon(
+                    onPressed: () async {
+                      try {
+                        await ref
+                            .read(favoritesControllerProvider)
+                            .toggleFavorite(server.id);
+
+                        if (!context.mounted) {
+                          return;
+                        }
+
+                        final message = isFavorite
+                            ? context.l10n.removedFromFavorites
+                            : context.l10n.addedToFavorites;
+
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text(message)));
+                      } catch (_) {
+                        if (!context.mounted) {
+                          return;
+                        }
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(context.l10n.genericError)),
+                        );
+                      }
+                    },
+                    icon: Icon(isFavorite ? Icons.star : Icons.star_border),
+                    label: Text(
+                      isFavorite
+                          ? context.l10n.removeFromFavorites
+                          : context.l10n.addToFavorites,
+                    ),
+                  ),
+                ],
+              );
+            },
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stackTrace) {
+              FlutterError.reportError(
+                FlutterErrorDetails(
+                  exception: error,
+                  stack: stackTrace,
+                  library: _logTag,
+                  context: ErrorDescription(
+                    'while loading server details for serverId=$serverId',
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              FilledButton.icon(
-                onPressed: () {
-                  ref
-                      .read(favoritesControllerProvider.notifier)
-                      .toggleFavorite(server.id);
+              );
 
-                  final message = isFavorite
-                      ? context.l10n.removedFromFavorites
-                      : context.l10n.addedToFavorites;
+              if (kDebugMode) {
+                debugPrint('$_logTag error: $error');
+                debugPrintStack(stackTrace: stackTrace);
+              }
 
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(message)));
-                },
-                icon: Icon(isFavorite ? Icons.star : Icons.star_border),
-                label: Text(
-                  isFavorite
-                      ? context.l10n.removeFromFavorites
-                      : context.l10n.addToFavorites,
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(context.l10n.genericError),
                 ),
-              ),
-            ],
+              );
+            },
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) {
-          FlutterError.reportError(
-            FlutterErrorDetails(
-              exception: error,
-              stack: stackTrace,
-              library: _logTag,
-              context: ErrorDescription(
-                'while loading server details for serverId=$serverId',
-              ),
-            ),
-          );
-
-          if (kDebugMode) {
-            debugPrint('$_logTag error: $error');
-            debugPrintStack(stackTrace: stackTrace);
-          }
-
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Text(context.l10n.genericError),
-            ),
-          );
-        },
+        error: (error, stackTrace) => Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Text(context.l10n.genericError),
+          ),
+        ),
       ),
     );
   }

@@ -198,5 +198,85 @@
   "genericError": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
   "@genericError": {
     "description": "Generische Fehlermeldung für den Nutzer"
+  },
+  "loading": "Lädt",
+  "@loading": {
+    "description": "Bezeichnung für Ladevorgang"
+  },
+  "signIn": "Anmelden",
+  "@signIn": {
+    "description": "Anmeldeaktion"
+  },
+  "signUp": "Registrieren",
+  "@signUp": {
+    "description": "Registrierungsaktion"
+  },
+  "email": "E-Mail",
+  "@email": {
+    "description": "Beschriftung für E-Mail-Feld"
+  },
+  "password": "Passwort",
+  "@password": {
+    "description": "Beschriftung für Passwort-Feld"
+  },
+  "welcomeBack": "Willkommen zurück",
+  "@welcomeBack": {
+    "description": "Überschrift auf dem Anmeldebildschirm"
+  },
+  "signInToContinue": "Melde dich an, um mit deinen gespeicherten Daten fortzufahren.",
+  "@signInToContinue": {
+    "description": "Untertitel auf dem Anmeldebildschirm"
+  },
+  "createAccount": "Konto erstellen",
+  "@createAccount": {
+    "description": "Aktion zum Erstellen eines Kontos"
+  },
+  "createYourAccount": "Erstelle dein Konto",
+  "@createYourAccount": {
+    "description": "Überschrift auf dem Registrierungsbildschirm"
+  },
+  "signUpToSaveFavorites": "Registriere dich, um deine Favoriten geräteübergreifend zu speichern.",
+  "@signUpToSaveFavorites": {
+    "description": "Untertitel auf dem Registrierungsbildschirm"
+  },
+  "account": "Konto",
+  "@account": {
+    "description": "Titel des Konto-Bereichs in den Einstellungen"
+  },
+  "signOut": "Abmelden",
+  "@signOut": {
+    "description": "Abmeldeaktion"
+  },
+  "signOutDescription": "Von deinem aktuellen Konto abmelden",
+  "@signOutDescription": {
+    "description": "Untertitel für die Abmelde-Kachel"
+  },
+  "authMissingEmailOrPassword": "Bitte gib E-Mail und Passwort ein.",
+  "@authMissingEmailOrPassword": {
+    "description": "Wird angezeigt, wenn E-Mail oder Passwort fehlt"
+  },
+  "authInvalidEmailFormat": "Bitte gib eine gültige E-Mail-Adresse ein.",
+  "@authInvalidEmailFormat": {
+    "description": "Wird angezeigt, wenn das E-Mail-Format ungültig ist"
+  },
+  "authUserDisabled": "Dieses Konto wurde deaktiviert.",
+  "@authUserDisabled": {
+    "description": "Wird angezeigt, wenn das Konto deaktiviert ist"
+  },
+  "authInvalidCredentials": "E-Mail oder Passwort ist ungültig.",
+  "@authInvalidCredentials": {
+    "description": "Wird angezeigt, wenn Anmeldedaten ungültig sind"
+  },
+  "networkError": "Netzwerkfehler. Bitte versuche es erneut.",
+  "@networkError": {
+    "description": "Wird bei Netzwerkfehlern angezeigt"
+  },
+  "authWeakPassword": "Das Passwort muss mindestens 6 Zeichen lang sein.",
+  "@authWeakPassword": {
+    "description": "Wird angezeigt, wenn das Passwort zu schwach ist"
+  },
+  "authEmailAlreadyInUse": "Diese E-Mail wird bereits verwendet.",
+  "@authEmailAlreadyInUse": {
+    "description": "Wird angezeigt, wenn die E-Mail schon registriert ist"
   }
 }

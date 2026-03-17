@@ -151,4 +151,64 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get genericError => 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.';
+
+  @override
+  String get loading => 'Lädt';
+
+  @override
+  String get signIn => 'Anmelden';
+
+  @override
+  String get signUp => 'Registrieren';
+
+  @override
+  String get email => 'E-Mail';
+
+  @override
+  String get password => 'Passwort';
+
+  @override
+  String get welcomeBack => 'Willkommen zurück';
+
+  @override
+  String get signInToContinue => 'Melde dich an, um mit deinen gespeicherten Daten fortzufahren.';
+
+  @override
+  String get createAccount => 'Konto erstellen';
+
+  @override
+  String get createYourAccount => 'Erstelle dein Konto';
+
+  @override
+  String get signUpToSaveFavorites => 'Registriere dich, um deine Favoriten geräteübergreifend zu speichern.';
+
+  @override
+  String get account => 'Konto';
+
+  @override
+  String get signOut => 'Abmelden';
+
+  @override
+  String get signOutDescription => 'Von deinem aktuellen Konto abmelden';
+
+  @override
+  String get authMissingEmailOrPassword => 'Bitte gib E-Mail und Passwort ein.';
+
+  @override
+  String get authInvalidEmailFormat => 'Bitte gib eine gültige E-Mail-Adresse ein.';
+
+  @override
+  String get authUserDisabled => 'Dieses Konto wurde deaktiviert.';
+
+  @override
+  String get authInvalidCredentials => 'E-Mail oder Passwort ist ungültig.';
+
+  @override
+  String get networkError => 'Netzwerkfehler. Bitte versuche es erneut.';
+
+  @override
+  String get authWeakPassword => 'Das Passwort muss mindestens 6 Zeichen lang sein.';
+
+  @override
+  String get authEmailAlreadyInUse => 'Diese E-Mail wird bereits verwendet.';
 }

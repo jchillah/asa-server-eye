@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/extensions/context_l10n.dart';
 import '../../../../core/presentation/l10n/app_language.dart';
 import '../../../../core/presentation/l10n/locale_controller.dart';
+import '../../../auth/presentation/providers/auth_providers.dart';
 import '../widgets/language_dialog.dart';
 import '../widgets/settings_section_header.dart';
 import '../widgets/settings_tile.dart';
@@ -80,6 +81,15 @@ class SettingsScreen extends ConsumerWidget {
               Navigator.of(
                 context,
               ).push(MaterialPageRoute(builder: (_) => const SupportScreen()));
+            },
+          ),
+          SettingsSectionHeader(title: context.l10n.account),
+          SettingsTile(
+            icon: Icons.logout,
+            title: context.l10n.signOut,
+            subtitle: context.l10n.signOutDescription,
+            onTap: () async {
+              await ref.read(authRepositoryProvider).signOut();
             },
           ),
         ],

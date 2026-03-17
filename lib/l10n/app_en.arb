@@ -191,12 +191,92 @@
       }
     }
   },
-    "french": "French",
+  "french": "French",
   "@french": {
     "description": "Language option for French"
   },
   "genericError": "Something went wrong. Please try again.",
   "@genericError": {
     "description": "Generic error message shown to the user"
+  },
+  "loading": "Loading",
+  "@loading": {
+    "description": "Loading state label"
+  },
+  "signIn": "Sign in",
+  "@signIn": {
+    "description": "Sign in action"
+  },
+  "signUp": "Sign up",
+  "@signUp": {
+    "description": "Sign up action"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  "welcomeBack": "Welcome back",
+  "@welcomeBack": {
+    "description": "Heading on sign in screen"
+  },
+  "signInToContinue": "Sign in to continue using your saved data.",
+  "@signInToContinue": {
+    "description": "Subtitle on sign in screen"
+  },
+  "createAccount": "Create account",
+  "@createAccount": {
+    "description": "Create account action"
+  },
+  "createYourAccount": "Create your account",
+  "@createYourAccount": {
+    "description": "Heading on sign up screen"
+  },
+  "signUpToSaveFavorites": "Sign up to save your favorites across devices.",
+  "@signUpToSaveFavorites": {
+    "description": "Subtitle on sign up screen"
+  },
+  "account": "Account",
+  "@account": {
+    "description": "Account section title in settings"
+  },
+  "signOut": "Sign out",
+  "@signOut": {
+    "description": "Sign out action"
+  },
+  "signOutDescription": "Log out of your current account",
+  "@signOutDescription": {
+    "description": "Subtitle for sign out tile"
+  },
+  "authMissingEmailOrPassword": "Please enter your email and password.",
+  "@authMissingEmailOrPassword": {
+    "description": "Shown when email or password is missing"
+  },
+  "authInvalidEmailFormat": "Please enter a valid email address.",
+  "@authInvalidEmailFormat": {
+    "description": "Shown when email format is invalid"
+  },
+  "authUserDisabled": "This account has been disabled.",
+  "@authUserDisabled": {
+    "description": "Shown when user account is disabled"
+  },
+  "authInvalidCredentials": "Invalid email or password.",
+  "@authInvalidCredentials": {
+    "description": "Shown when credentials are invalid"
+  },
+  "networkError": "Network error. Please try again.",
+  "@networkError": {
+    "description": "Shown on network failure"
+  },
+  "authWeakPassword": "Password must be at least 6 characters long.",
+  "@authWeakPassword": {
+    "description": "Shown when password is too weak"
+  },
+  "authEmailAlreadyInUse": "This email is already in use.",
+  "@authEmailAlreadyInUse": {
+    "description": "Shown when email is already registered"
   }
 }

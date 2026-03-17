@@ -198,5 +198,85 @@
     "genericError": "Algo salió mal. Inténtalo de nuevo.",
     "@genericError": {
         "description": "Mensaje de error genérico para el usuario"
+    },
+    "loading": "Cargando",
+    "@loading": {
+        "description": "Etiqueta de carga"
+    },
+    "signIn": "Iniciar sesión",
+    "@signIn": {
+        "description": "Acción de iniciar sesión"
+    },
+    "signUp": "Registrarse",
+    "@signUp": {
+        "description": "Acción de registro"
+    },
+    "email": "Correo electrónico",
+    "@email": {
+        "description": "Etiqueta del campo de correo"
+    },
+    "password": "Contraseña",
+    "@password": {
+        "description": "Etiqueta del campo de contraseña"
+    },
+    "welcomeBack": "Bienvenido de nuevo",
+    "@welcomeBack": {
+        "description": "Encabezado de la pantalla de inicio de sesión"
+    },
+    "signInToContinue": "Inicia sesión para seguir usando tus datos guardados.",
+    "@signInToContinue": {
+        "description": "Subtítulo de la pantalla de inicio de sesión"
+    },
+    "createAccount": "Crear cuenta",
+    "@createAccount": {
+        "description": "Acción para crear cuenta"
+    },
+    "createYourAccount": "Crea tu cuenta",
+    "@createYourAccount": {
+        "description": "Encabezado de la pantalla de registro"
+    },
+    "signUpToSaveFavorites": "Regístrate para guardar tus favoritos en todos tus dispositivos.",
+    "@signUpToSaveFavorites": {
+        "description": "Subtítulo de la pantalla de registro"
+    },
+    "account": "Cuenta",
+    "@account": {
+        "description": "Título de la sección de cuenta"
+    },
+    "signOut": "Cerrar sesión",
+    "@signOut": {
+        "description": "Acción de cerrar sesión"
+    },
+    "signOutDescription": "Cerrar sesión de tu cuenta actual",
+    "@signOutDescription": {
+        "description": "Subtítulo para cerrar sesión"
+    },
+    "authMissingEmailOrPassword": "Introduce tu correo electrónico y contraseña.",
+    "@authMissingEmailOrPassword": {
+        "description": "Se muestra cuando falta el correo o la contraseña"
+    },
+    "authInvalidEmailFormat": "Introduce una dirección de correo válida.",
+    "@authInvalidEmailFormat": {
+        "description": "Se muestra cuando el correo tiene un formato inválido"
+    },
+    "authUserDisabled": "Esta cuenta ha sido deshabilitada.",
+    "@authUserDisabled": {
+        "description": "Se muestra cuando la cuenta está deshabilitada"
+    },
+    "authInvalidCredentials": "Correo o contraseña no válidos.",
+    "@authInvalidCredentials": {
+        "description": "Se muestra cuando las credenciales son inválidas"
+    },
+    "networkError": "Error de red. Inténtalo de nuevo.",
+    "@networkError": {
+        "description": "Se muestra en errores de red"
+    },
+    "authWeakPassword": "La contraseña debe tener al menos 6 caracteres.",
+    "@authWeakPassword": {
+        "description": "Se muestra cuando la contraseña es débil"
+    },
+    "authEmailAlreadyInUse": "Este correo electrónico ya está en uso.",
+    "@authEmailAlreadyInUse": {
+        "description": "Se muestra cuando el correo ya está registrado"
     }
 }

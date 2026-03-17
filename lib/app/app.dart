@@ -4,8 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/presentation/l10n/locale_controller.dart';
+import '../features/auth/presentation/screens/auth_gate.dart';
 import '../l10n/app_localizations.dart';
-import 'presentation/app_shell.dart';
 
 class AsaServerEyeApp extends ConsumerWidget {
   const AsaServerEyeApp({super.key});
@@ -26,7 +26,7 @@ class AsaServerEyeApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       theme: ThemeData(useMaterial3: true),
-      home: const AppShell(),
+      home: const AuthGate(),
     );
   }
 }

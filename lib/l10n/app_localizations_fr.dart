@@ -151,4 +151,64 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get genericError => 'Une erreur s\'est produite. Veuillez réessayer.';
+
+  @override
+  String get loading => 'Chargement';
+
+  @override
+  String get signIn => 'Se connecter';
+
+  @override
+  String get signUp => 'S\'inscrire';
+
+  @override
+  String get email => 'E-mail';
+
+  @override
+  String get password => 'Mot de passe';
+
+  @override
+  String get welcomeBack => 'Bon retour';
+
+  @override
+  String get signInToContinue => 'Connectez-vous pour continuer avec vos données enregistrées.';
+
+  @override
+  String get createAccount => 'Créer un compte';
+
+  @override
+  String get createYourAccount => 'Créez votre compte';
+
+  @override
+  String get signUpToSaveFavorites => 'Inscrivez-vous pour enregistrer vos favoris sur tous vos appareils.';
+
+  @override
+  String get account => 'Compte';
+
+  @override
+  String get signOut => 'Se déconnecter';
+
+  @override
+  String get signOutDescription => 'Se déconnecter du compte actuel';
+
+  @override
+  String get authMissingEmailOrPassword => 'Veuillez saisir votre e-mail et votre mot de passe.';
+
+  @override
+  String get authInvalidEmailFormat => 'Veuillez saisir une adresse e-mail valide.';
+
+  @override
+  String get authUserDisabled => 'Ce compte a été désactivé.';
+
+  @override
+  String get authInvalidCredentials => 'E-mail ou mot de passe invalide.';
+
+  @override
+  String get networkError => 'Erreur réseau. Veuillez réessayer.';
+
+  @override
+  String get authWeakPassword => 'Le mot de passe doit contenir au moins 6 caractères.';
+
+  @override
+  String get authEmailAlreadyInUse => 'Cet e-mail est déjà utilisé.';
 }

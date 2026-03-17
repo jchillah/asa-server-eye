@@ -151,4 +151,64 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get genericError => 'Something went wrong. Please try again.';
+
+  @override
+  String get loading => 'Loading';
+
+  @override
+  String get signIn => 'Sign in';
+
+  @override
+  String get signUp => 'Sign up';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get welcomeBack => 'Welcome back';
+
+  @override
+  String get signInToContinue => 'Sign in to continue using your saved data.';
+
+  @override
+  String get createAccount => 'Create account';
+
+  @override
+  String get createYourAccount => 'Create your account';
+
+  @override
+  String get signUpToSaveFavorites => 'Sign up to save your favorites across devices.';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get signOut => 'Sign out';
+
+  @override
+  String get signOutDescription => 'Log out of your current account';
+
+  @override
+  String get authMissingEmailOrPassword => 'Please enter your email and password.';
+
+  @override
+  String get authInvalidEmailFormat => 'Please enter a valid email address.';
+
+  @override
+  String get authUserDisabled => 'This account has been disabled.';
+
+  @override
+  String get authInvalidCredentials => 'Invalid email or password.';
+
+  @override
+  String get networkError => 'Network error. Please try again.';
+
+  @override
+  String get authWeakPassword => 'Password must be at least 6 characters long.';
+
+  @override
+  String get authEmailAlreadyInUse => 'This email is already in use.';
 }

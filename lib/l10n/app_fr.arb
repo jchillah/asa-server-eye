@@ -198,5 +198,85 @@
     "genericError": "Une erreur s'est produite. Veuillez réessayer.",
     "@genericError": {
         "description": "Message d'erreur générique affiché à l'utilisateur"
+    },
+    "loading": "Chargement",
+    "@loading": {
+        "description": "Libellé de chargement"
+    },
+    "signIn": "Se connecter",
+    "@signIn": {
+        "description": "Action de connexion"
+    },
+    "signUp": "S'inscrire",
+    "@signUp": {
+        "description": "Action d'inscription"
+    },
+    "email": "E-mail",
+    "@email": {
+        "description": "Libellé du champ e-mail"
+    },
+    "password": "Mot de passe",
+    "@password": {
+        "description": "Libellé du champ mot de passe"
+    },
+    "welcomeBack": "Bon retour",
+    "@welcomeBack": {
+        "description": "Titre de l'écran de connexion"
+    },
+    "signInToContinue": "Connectez-vous pour continuer avec vos données enregistrées.",
+    "@signInToContinue": {
+        "description": "Sous-titre de l'écran de connexion"
+    },
+    "createAccount": "Créer un compte",
+    "@createAccount": {
+        "description": "Action pour créer un compte"
+    },
+    "createYourAccount": "Créez votre compte",
+    "@createYourAccount": {
+        "description": "Titre de l'écran d'inscription"
+    },
+    "signUpToSaveFavorites": "Inscrivez-vous pour enregistrer vos favoris sur tous vos appareils.",
+    "@signUpToSaveFavorites": {
+        "description": "Sous-titre de l'écran d'inscription"
+    },
+    "account": "Compte",
+    "@account": {
+        "description": "Titre de la section compte"
+    },
+    "signOut": "Se déconnecter",
+    "@signOut": {
+        "description": "Action de déconnexion"
+    },
+    "signOutDescription": "Se déconnecter du compte actuel",
+    "@signOutDescription": {
+        "description": "Sous-titre de la tuile de déconnexion"
+    },
+    "authMissingEmailOrPassword": "Veuillez saisir votre e-mail et votre mot de passe.",
+    "@authMissingEmailOrPassword": {
+        "description": "Affiché lorsque l'e-mail ou le mot de passe manque"
+    },
+    "authInvalidEmailFormat": "Veuillez saisir une adresse e-mail valide.",
+    "@authInvalidEmailFormat": {
+        "description": "Affiché lorsque le format de l'e-mail est invalide"
+    },
+    "authUserDisabled": "Ce compte a été désactivé.",
+    "@authUserDisabled": {
+        "description": "Affiché lorsque le compte est désactivé"
+    },
+    "authInvalidCredentials": "E-mail ou mot de passe invalide.",
+    "@authInvalidCredentials": {
+        "description": "Affiché lorsque les identifiants sont invalides"
+    },
+    "networkError": "Erreur réseau. Veuillez réessayer.",
+    "@networkError": {
+        "description": "Affiché en cas d'erreur réseau"
+    },
+    "authWeakPassword": "Le mot de passe doit contenir au moins 6 caractères.",
+    "@authWeakPassword": {
+        "description": "Affiché lorsque le mot de passe est trop faible"
+    },
+    "authEmailAlreadyInUse": "Cet e-mail est déjà utilisé.",
+    "@authEmailAlreadyInUse": {
+        "description": "Affiché lorsque l'e-mail est déjà enregistré"
     }
 }
