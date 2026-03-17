@@ -151,4 +151,64 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get genericError => 'Algo salió mal. Inténtalo de nuevo.';
+
+  @override
+  String get loading => 'Cargando';
+
+  @override
+  String get signIn => 'Iniciar sesión';
+
+  @override
+  String get signUp => 'Registrarse';
+
+  @override
+  String get email => 'Correo electrónico';
+
+  @override
+  String get password => 'Contraseña';
+
+  @override
+  String get welcomeBack => 'Bienvenido de nuevo';
+
+  @override
+  String get signInToContinue => 'Inicia sesión para seguir usando tus datos guardados.';
+
+  @override
+  String get createAccount => 'Crear cuenta';
+
+  @override
+  String get createYourAccount => 'Crea tu cuenta';
+
+  @override
+  String get signUpToSaveFavorites => 'Regístrate para guardar tus favoritos en todos tus dispositivos.';
+
+  @override
+  String get account => 'Cuenta';
+
+  @override
+  String get signOut => 'Cerrar sesión';
+
+  @override
+  String get signOutDescription => 'Cerrar sesión de tu cuenta actual';
+
+  @override
+  String get authMissingEmailOrPassword => 'Introduce tu correo electrónico y contraseña.';
+
+  @override
+  String get authInvalidEmailFormat => 'Introduce una dirección de correo válida.';
+
+  @override
+  String get authUserDisabled => 'Esta cuenta ha sido deshabilitada.';
+
+  @override
+  String get authInvalidCredentials => 'Correo o contraseña no válidos.';
+
+  @override
+  String get networkError => 'Error de red. Inténtalo de nuevo.';
+
+  @override
+  String get authWeakPassword => 'La contraseña debe tener al menos 6 caracteres.';
+
+  @override
+  String get authEmailAlreadyInUse => 'Este correo electrónico ya está en uso.';
 }

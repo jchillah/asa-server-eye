@@ -151,4 +151,64 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get genericError => '发生错误，请重试。';
+
+  @override
+  String get loading => '加载中';
+
+  @override
+  String get signIn => '登录';
+
+  @override
+  String get signUp => '注册';
+
+  @override
+  String get email => '电子邮件';
+
+  @override
+  String get password => '密码';
+
+  @override
+  String get welcomeBack => '欢迎回来';
+
+  @override
+  String get signInToContinue => '登录以继续使用你已保存的数据。';
+
+  @override
+  String get createAccount => '创建账户';
+
+  @override
+  String get createYourAccount => '创建你的账户';
+
+  @override
+  String get signUpToSaveFavorites => '注册后可在不同设备间保存你的收藏。';
+
+  @override
+  String get account => '账户';
+
+  @override
+  String get signOut => '退出登录';
+
+  @override
+  String get signOutDescription => '退出当前账户';
+
+  @override
+  String get authMissingEmailOrPassword => '请输入电子邮件和密码。';
+
+  @override
+  String get authInvalidEmailFormat => '请输入有效的电子邮件地址。';
+
+  @override
+  String get authUserDisabled => '此账户已被禁用。';
+
+  @override
+  String get authInvalidCredentials => '电子邮件或密码无效。';
+
+  @override
+  String get networkError => '网络错误，请重试。';
+
+  @override
+  String get authWeakPassword => '密码长度至少需要 6 个字符。';
+
+  @override
+  String get authEmailAlreadyInUse => '该电子邮件已被使用。';
 }

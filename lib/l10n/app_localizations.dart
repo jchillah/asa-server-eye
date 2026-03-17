@@ -376,6 +376,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong. Please try again.'**
   String get genericError;
+
+  /// Loading state label
+  ///
+  /// In en, this message translates to:
+  /// **'Loading'**
+  String get loading;
+
+  /// Sign in action
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signIn;
+
+  /// Sign up action
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up'**
+  String get signUp;
+
+  /// Email field label
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// Password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// Heading on sign in screen
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get welcomeBack;
+
+  /// Subtitle on sign in screen
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue using your saved data.'**
+  String get signInToContinue;
+
+  /// Create account action
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get createAccount;
+
+  /// Heading on sign up screen
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account'**
+  String get createYourAccount;
+
+  /// Subtitle on sign up screen
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up to save your favorites across devices.'**
+  String get signUpToSaveFavorites;
+
+  /// Account section title in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// Sign out action
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
+
+  /// Subtitle for sign out tile
+  ///
+  /// In en, this message translates to:
+  /// **'Log out of your current account'**
+  String get signOutDescription;
+
+  /// Shown when email or password is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email and password.'**
+  String get authMissingEmailOrPassword;
+
+  /// Shown when email format is invalid
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address.'**
+  String get authInvalidEmailFormat;
+
+  /// Shown when user account is disabled
+  ///
+  /// In en, this message translates to:
+  /// **'This account has been disabled.'**
+  String get authUserDisabled;
+
+  /// Shown when credentials are invalid
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email or password.'**
+  String get authInvalidCredentials;
+
+  /// Shown on network failure
+  ///
+  /// In en, this message translates to:
+  /// **'Network error. Please try again.'**
+  String get networkError;
+
+  /// Shown when password is too weak
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters long.'**
+  String get authWeakPassword;
+
+  /// Shown when email is already registered
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already in use.'**
+  String get authEmailAlreadyInUse;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

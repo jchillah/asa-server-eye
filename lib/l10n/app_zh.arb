@@ -198,5 +198,85 @@
     "genericError": "发生错误，请重试。",
     "@genericError": {
         "description": "向用户显示的通用错误消息"
+    },
+    "loading": "加载中",
+    "@loading": {
+        "description": "加载状态标签"
+    },
+    "signIn": "登录",
+    "@signIn": {
+        "description": "登录操作"
+    },
+    "signUp": "注册",
+    "@signUp": {
+        "description": "注册操作"
+    },
+    "email": "电子邮件",
+    "@email": {
+        "description": "电子邮件字段标签"
+    },
+    "password": "密码",
+    "@password": {
+        "description": "密码字段标签"
+    },
+    "welcomeBack": "欢迎回来",
+    "@welcomeBack": {
+        "description": "登录页标题"
+    },
+    "signInToContinue": "登录以继续使用你已保存的数据。",
+    "@signInToContinue": {
+        "description": "登录页副标题"
+    },
+    "createAccount": "创建账户",
+    "@createAccount": {
+        "description": "创建账户操作"
+    },
+    "createYourAccount": "创建你的账户",
+    "@createYourAccount": {
+        "description": "注册页标题"
+    },
+    "signUpToSaveFavorites": "注册后可在不同设备间保存你的收藏。",
+    "@signUpToSaveFavorites": {
+        "description": "注册页副标题"
+    },
+    "account": "账户",
+    "@account": {
+        "description": "设置中的账户分区标题"
+    },
+    "signOut": "退出登录",
+    "@signOut": {
+        "description": "退出登录操作"
+    },
+    "signOutDescription": "退出当前账户",
+    "@signOutDescription": {
+        "description": "退出登录说明"
+    },
+    "authMissingEmailOrPassword": "请输入电子邮件和密码。",
+    "@authMissingEmailOrPassword": {
+        "description": "当电子邮件或密码为空时显示"
+    },
+    "authInvalidEmailFormat": "请输入有效的电子邮件地址。",
+    "@authInvalidEmailFormat": {
+        "description": "当电子邮件格式无效时显示"
+    },
+    "authUserDisabled": "此账户已被禁用。",
+    "@authUserDisabled": {
+        "description": "当账户被禁用时显示"
+    },
+    "authInvalidCredentials": "电子邮件或密码无效。",
+    "@authInvalidCredentials": {
+        "description": "当凭据无效时显示"
+    },
+    "networkError": "网络错误，请重试。",
+    "@networkError": {
+        "description": "网络错误时显示"
+    },
+    "authWeakPassword": "密码长度至少需要 6 个字符。",
+    "@authWeakPassword": {
+        "description": "当密码过弱时显示"
+    },
+    "authEmailAlreadyInUse": "该电子邮件已被使用。",
+    "@authEmailAlreadyInUse": {
+        "description": "当电子邮件已注册时显示"
     }
 }
