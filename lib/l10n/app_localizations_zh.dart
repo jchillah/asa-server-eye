@@ -145,4 +145,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String comingSoon(String title) {
     return '$title 即将推出';
   }
+
+  @override
+  String get french => '法语';
+
+  @override
+  String get genericError => '发生错误，请重试。';
 }

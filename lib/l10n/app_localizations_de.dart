@@ -145,4 +145,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String comingSoon(String title) {
     return '$title kommt bald';
   }
+
+  @override
+  String get french => 'Französisch';
+
+  @override
+  String get genericError => 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.';
 }

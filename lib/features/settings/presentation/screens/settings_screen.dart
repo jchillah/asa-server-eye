@@ -15,13 +15,13 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeControllerProvider);
-
     final option = optionFromLocale(locale);
 
     final languageSubtitle = switch (option) {
       AppLanguageOption.german => context.l10n.german,
       AppLanguageOption.english => context.l10n.english,
       AppLanguageOption.spanish => context.l10n.spanish,
+      AppLanguageOption.french => context.l10n.french,
       AppLanguageOption.chinese => context.l10n.chinese,
       AppLanguageOption.system => context.l10n.systemLanguage,
     };

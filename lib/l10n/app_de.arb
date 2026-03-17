@@ -190,5 +190,13 @@
         "type": "String"
       }
     }
+  },
+  "french": "Französisch",
+  "@french": {
+    "description": "Sprachoption für Französisch"
+  },
+  "genericError": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+  "@genericError": {
+    "description": "Generische Fehlermeldung für den Nutzer"
   }
 }

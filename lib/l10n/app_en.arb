@@ -190,5 +190,13 @@
         "type": "String"
       }
     }
+  },
+    "french": "French",
+  "@french": {
+    "description": "Language option for French"
+  },
+  "genericError": "Something went wrong. Please try again.",
+  "@genericError": {
+    "description": "Generic error message shown to the user"
   }
 }

@@ -84,7 +84,7 @@ class ServerDetailScreen extends ConsumerWidget {
         error: (error, stackTrace) => Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(error.toString()),
+            child: Text(context.l10n.genericError),
           ),
         ),
       ),

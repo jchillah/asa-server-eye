@@ -190,5 +190,13 @@
                 "type": "String"
             }
         }
+    },
+    "french": "法语",
+    "@french": {
+        "description": "法语选项"
+    },
+    "genericError": "发生错误，请重试。",
+    "@genericError": {
+        "description": "向用户显示的通用错误消息"
     }
 }
