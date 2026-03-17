@@ -520,6 +520,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support\n\nFor questions, issues, or feedback about the app, please contact:\n\nMichael Winkler\nEmail: michael.winkler.developer@gmail.com\n\nPlease describe your issue as precisely as possible and include your device and app version if available.'**
   String get supportBody;
+
+  /// Button text to contact support
+  ///
+  /// In en, this message translates to:
+  /// **'Contact support'**
+  String get contactSupport;
+
+  /// Shown when no email app can be opened
+  ///
+  /// In en, this message translates to:
+  /// **'Email app could not be opened.'**
+  String get emailAppCouldNotBeOpened;
+
+  /// Subject line for support email
+  ///
+  /// In en, this message translates to:
+  /// **'ASA Server Eye Support'**
+  String get supportEmailSubject;
+
+  /// Prefilled support email body
+  ///
+  /// In en, this message translates to:
+  /// **'Hello Michael,\n\nI have the following issue:\n\n\n---\nApp version:\nDevice:\n'**
+  String get supportEmailBodyTemplate;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

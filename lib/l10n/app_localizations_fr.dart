@@ -223,4 +223,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get supportBody => 'Support\n\nFor questions, issues, or feedback about the app, please contact:\n\nMichael Winkler\nEmail: michael.winkler.developer@gmail.com\n\nPlease describe your issue as precisely as possible and include your device and app version if available.';
+
+  @override
+  String get contactSupport => 'Contacter le support';
+
+  @override
+  String get emailAppCouldNotBeOpened => 'Impossible d’ouvrir l’application e-mail.';
+
+  @override
+  String get supportEmailSubject => 'Support ASA Server Eye';
+
+  @override
+  String get supportEmailBodyTemplate => 'Bonjour Michael,\n\nj’ai le problème suivant :\n\n\n---\nVersion de l’application :\nAppareil :\n';
 }

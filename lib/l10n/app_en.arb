@@ -294,5 +294,21 @@
   "supportBody": "Support\n\nFor questions, issues, or feedback about the app, please contact:\n\nMichael Winkler\nEmail: michael.winkler.developer@gmail.com\n\nPlease describe your issue as precisely as possible and include your device and app version if available.",
   "@supportBody": {
     "description": "Body content for the Support screen"
+  },
+  "contactSupport": "Contact support",
+  "@contactSupport": {
+    "description": "Button text to contact support"
+  },
+  "emailAppCouldNotBeOpened": "Email app could not be opened.",
+  "@emailAppCouldNotBeOpened": {
+    "description": "Shown when no email app can be opened"
+  },
+  "supportEmailSubject": "ASA Server Eye Support",
+  "@supportEmailSubject": {
+    "description": "Subject line for support email"
+  },
+  "supportEmailBodyTemplate": "Hello Michael,\n\nI have the following issue:\n\n\n---\nApp version:\nDevice:\n",
+  "@supportEmailBodyTemplate": {
+    "description": "Prefilled support email body"
   }
 }
