@@ -8,11 +8,30 @@ class SupportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.support)),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.all(16),
-        child: Text(context.l10n.getHelpAndContactSupport),
+        children: [
+          Text(context.l10n.support, style: theme.textTheme.headlineSmall),
+          const SizedBox(height: 12),
+          Text(
+            context.l10n.getHelpAndContactSupport,
+            style: theme.textTheme.bodyLarge,
+          ),
+          const SizedBox(height: 24),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                context.l10n.getHelpAndContactSupport,
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

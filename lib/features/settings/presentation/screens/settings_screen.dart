@@ -1,8 +1,4 @@
 // features/settings/presentation/screens/settings_screen.dart
-import 'package:ark_server_eye/features/settings/presentation/screens/about_screen.dart';
-import 'package:ark_server_eye/features/settings/presentation/screens/imprint_screen.dart';
-import 'package:ark_server_eye/features/settings/presentation/screens/privacy_screen.dart';
-import 'package:ark_server_eye/features/settings/presentation/screens/support_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,6 +8,10 @@ import '../../../../core/presentation/l10n/locale_controller.dart';
 import '../widgets/language_dialog.dart';
 import '../widgets/settings_section_header.dart';
 import '../widgets/settings_tile.dart';
+import 'about_screen.dart';
+import 'imprint_screen.dart';
+import 'privacy_screen.dart';
+import 'support_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -86,12 +86,4 @@ class SettingsScreen extends ConsumerWidget {
       ),
     );
   }
-
-  /*
-  void _showComingSoonSnackBar(BuildContext context, String featureName) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(context.l10n.comingSoon(featureName))),
-    );
-  }
-  */
 }
