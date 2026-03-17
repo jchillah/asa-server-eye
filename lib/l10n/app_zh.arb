@@ -287,7 +287,7 @@
     "@privacyBody": {
         "description": "Body content for the Privacy screen"
     },
-    "imprintBody": "Imprint / Legal Notice\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\n\nEmail:\nmichael.winkler.developer@gmail.com\n\nResponsible for content:\nMichael Winkler",
+    "imprintBody": "Imprint / Legal Notice\n\nMichael Winkler\nStraße: \n14195 Berlin\nGermany\n\nEmail:\nmichael.winkler.developer@gmail.com\n\nResponsible for content:\nMichael Winkler",
     "@imprintBody": {
         "description": "Body content for the Imprint screen"
     },
