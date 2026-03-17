@@ -1,12 +1,13 @@
 // features/settings/presentation/screens/settings_screen.dart
-import 'package:ark_server_eye/features/settings/presentation/widgets/language_dialog.dart';
-import 'package:ark_server_eye/features/settings/presentation/widgets/settings_section_header.dart';
-import 'package:ark_server_eye/features/settings/presentation/widgets/settings_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
+import '../../../../core/presentation/l10n/app_language.dart';
 import '../../../../core/presentation/l10n/locale_controller.dart';
+import '../widgets/language_dialog.dart';
+import '../widgets/settings_section_header.dart';
+import '../widgets/settings_tile.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -15,12 +16,14 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeControllerProvider);
 
-    final languageSubtitle = switch (locale?.languageCode) {
-      'de' => context.l10n.german,
-      'en' => context.l10n.english,
-      'es' => context.l10n.spanish,
-      'zh' => context.l10n.chinese,
-      _ => context.l10n.systemLanguage,
+    final option = optionFromLocale(locale);
+
+    final languageSubtitle = switch (option) {
+      AppLanguageOption.german => context.l10n.german,
+      AppLanguageOption.english => context.l10n.english,
+      AppLanguageOption.spanish => context.l10n.spanish,
+      AppLanguageOption.chinese => context.l10n.chinese,
+      AppLanguageOption.system => context.l10n.systemLanguage,
     };
 
     return Scaffold(
