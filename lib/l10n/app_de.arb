@@ -278,5 +278,21 @@
   "authEmailAlreadyInUse": "Diese E-Mail wird bereits verwendet.",
   "@authEmailAlreadyInUse": {
     "description": "Wird angezeigt, wenn die E-Mail schon registriert ist"
+  },
+  "aboutBody": "ASA Server Eye ist eine Companion-App für ARK: Survival Ascended. Die App zeigt Serverinformationen, unterstützt Favoriten und bildet die Grundlage für spätere Funktionen wie Watchlist, Benachrichtigungen und Premium-Features.",
+  "@aboutBody": {
+    "description": "Inhalt der About-Seite"
+  },
+  "privacyBody": "Datenschutzhinweis\n\nDiese App verwendet Firebase Authentication zur Anmeldung von Nutzerkonten, Cloud Firestore zum Speichern persönlicher Favoriten sowie Google AdMob zur Auslieferung von Werbung.\n\nJe nach Nutzung können dabei technische Daten wie Geräteinformationen, App-Interaktionen, ungefähre Standortdaten, Kennungen oder Diagnosedaten verarbeitet werden. Ein Teil dieser Daten kann durch integrierte Drittanbieter-SDKs verarbeitet werden.\n\nFavoriten werden nutzerbezogen gespeichert, damit sie nach dem erneuten Start der App und auf mehreren Geräten verfügbar bleiben.\n\nVor dem Release musst du diesen Text durch eine vollständige, rechtskonforme Datenschutzerklärung mit deinem Namen/Firmennamen, Kontaktadresse, Verantwortlichem, Rechtsgrundlagen, Drittanbieter-Auflistung, Löschfristen und Betroffenenrechten ersetzen.",
+  "@privacyBody": {
+    "description": "Inhalt der Datenschutz-Seite"
+  },
+  "imprintBody": "Impressum\n\nAngaben gemäß § 5 TMG / § 18 MStV\n\nName / Firma:\n[DEIN NAME ODER FIRMENNAME]\n\nAnschrift:\n[DEINE VOLLSTÄNDIGE ANSCHRIFT]\n\nE-Mail:\n[DEINE KONTAKT-E-MAIL]\n\nVerantwortlich für den Inhalt:\n[DEIN NAME]\n\nHinweis: Vor dem Release musst du diese Platzhalter vollständig durch deine echten Pflichtangaben ersetzen.",
+  "@imprintBody": {
+    "description": "Inhalt der Impressum-Seite"
+  },
+  "supportBody": "Support\n\nBei Fragen, Problemen oder Feedback kontaktiere uns bitte unter:\n[DEINE SUPPORT-E-MAIL]\n\nOptional kannst du hier später zusätzlich eine Support-Webseite, FAQ oder Discord-/Community-Links ergänzen.",
+  "@supportBody": {
+    "description": "Inhalt der Support-Seite"
   }
 }

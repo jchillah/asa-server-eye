@@ -11,7 +11,7 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleInfoScreen(
       title: context.l10n.about,
-      body: context.l10n.appInformation,
+      body: context.l10n.aboutBody,
     );
   }
 }

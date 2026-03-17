@@ -11,7 +11,7 @@ class SupportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleInfoScreen(
       title: context.l10n.support,
-      body: context.l10n.getHelpAndContactSupport,
+      body: context.l10n.supportBody,
     );
   }
 }

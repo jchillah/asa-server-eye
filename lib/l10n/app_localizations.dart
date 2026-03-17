@@ -496,6 +496,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This email is already in use.'**
   String get authEmailAlreadyInUse;
+
+  /// Body content for the About screen
+  ///
+  /// In en, this message translates to:
+  /// **'ASA Server Eye is a companion app for ARK: Survival Ascended. The app displays server information, supports favorites, and provides the foundation for future features like watchlists, notifications, and premium features.'**
+  String get aboutBody;
+
+  /// Body content for the Privacy screen
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Notice\n\nThis app uses Firebase Authentication for account sign-in, Cloud Firestore to store personal favorites, and Google AdMob to serve advertising.\n\nDepending on how the app is used, technical data such as device information, app interactions, approximate location, identifiers, or diagnostic data may be processed. Some of this data may be processed by integrated third-party SDKs.\n\nFavorites are stored per user so they remain available after restarting the app and across multiple devices.\n\nBefore release, replace this text with a complete privacy policy containing your real legal details, controller information, legal bases, third-party services, retention periods, and user rights.'**
+  String get privacyBody;
+
+  /// Body content for the Imprint screen
+  ///
+  /// In en, this message translates to:
+  /// **'Imprint / Legal Notice\n\nInformation according to applicable legal requirements\n\nName / Company:\n[YOUR NAME OR COMPANY NAME]\n\nAddress:\n[YOUR FULL ADDRESS]\n\nEmail:\n[YOUR CONTACT EMAIL]\n\nResponsible for content:\n[YOUR NAME]\n\nNote: Before release, replace all placeholders with your real legal information.'**
+  String get imprintBody;
+
+  /// Body content for the Support screen
+  ///
+  /// In en, this message translates to:
+  /// **'Support\n\nFor questions, issues, or feedback, please contact us at:\n[YOUR SUPPORT EMAIL]\n\nLater, you can also add a support website, FAQ, or community links here.'**
+  String get supportBody;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -11,7 +11,7 @@ class PrivacyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleInfoScreen(
       title: context.l10n.privacyPolicy,
-      body: context.l10n.howDataIsHandled,
+      body: context.l10n.privacyBody,
     );
   }
 }

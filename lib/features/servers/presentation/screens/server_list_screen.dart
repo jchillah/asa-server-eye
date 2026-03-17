@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
+import '../../../../core/widgets/ad_banner_widget.dart';
 import '../providers/server_providers.dart';
 import 'server_detail_screen.dart';
 
@@ -138,6 +139,10 @@ class _ServerListScreenState extends ConsumerState<ServerListScreen> {
                 ),
               ),
             ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 8),
+            child: Center(child: AdBannerWidget()),
           ),
         ],
       ),

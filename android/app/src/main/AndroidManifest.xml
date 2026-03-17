@@ -3,6 +3,12 @@
         android:label="asa_server_eye"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <!-- AdMob App ID -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7269049262039376~1470882075" />
+            
         <activity
             android:name=".MainActivity"
             android:exported="true"
