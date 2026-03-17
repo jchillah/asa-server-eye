@@ -213,16 +213,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get authEmailAlreadyInUse => '该电子邮件已被使用。';
 
   @override
-  String get aboutBody => 'ASA Server Eye is a companion app for ARK: Survival Ascended. The app shows server information, supports favorites, and provides the foundation for future features such as watchlists, notifications, and premium features.\n\nDeveloped and operated by:\nMichael Winkler\nEmail: michael.winkler.developer@gmail.com';
+  String get aboutBody => 'ASA Server Eye 是一款适用于 ARK: Survival Ascended 的伴侣应用。该应用可显示服务器信息、支持收藏功能，并为后续的关注列表、通知和高级功能奠定基础。\n\n开发和运营者：\nMichael Winkler\n电子邮件：michael.winkler.developer@gmail.com';
 
   @override
-  String get privacyBody => 'Privacy Policy\n\nController responsible for data processing:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\nEmail: michael.winkler.developer@gmail.com\n\nThis app uses Firebase Authentication for account sign-in, Cloud Firestore to store personal favorites, and Google AdMob to serve ads.\n\nDepending on how the app is used, technical data may be processed, including account data, device information, app interactions, identifiers, diagnostics, and advertising-related data. Favorites are stored per user so they remain available after restarting the app and across multiple devices.\n\nProcessing is carried out to provide app functionality, authenticate users, store user-related settings, and finance the app through advertising.\n\nIt cannot be ruled out that integrated third-party services process data outside the European Union. In this respect, the privacy information of the respective services applies, especially Google Firebase and Google AdMob.\n\nFor privacy-related questions or deletion requests, please contact:\nmichael.winkler.developer@gmail.com\n\nNote: Before a final public release, this privacy policy should be reviewed and expanded with full details on legal bases, retention periods, user rights, and all integrated services.';
+  String get privacyBody => '隐私政策\n\n数据处理负责人：\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\n德国\n电子邮件：michael.winkler.developer@gmail.com\n\n本应用使用 Firebase Authentication 进行账户登录，使用 Cloud Firestore 存储个人收藏，并使用 Google AdMob 提供广告。\n\n根据应用的使用方式，可能会处理技术数据，包括账户数据、设备信息、应用交互、标识符、诊断数据以及与广告相关的数据。收藏内容会按用户存储，以便在重新启动应用后以及在多个设备之间继续可用。\n\n这些数据处理用于提供应用功能、验证用户身份、保存与用户相关的设置以及通过广告为应用提供资金支持。\n\n不能排除集成的第三方服务会在欧盟以外处理数据。在这方面，也适用相关服务各自的隐私信息，尤其是 Google Firebase 和 Google AdMob。\n\n如有与隐私相关的问题或数据删除请求，请联系：\nmichael.winkler.developer@gmail.com\n\n注意：在最终公开发布之前，应再次审查并补充本隐私政策，包括法律依据、保存期限、用户权利以及所有集成服务的完整信息。';
 
   @override
-  String get imprintBody => 'Imprint / Legal Notice\n\nMichael Winkler\nStraße: \n14195 Berlin\nGermany\n\nEmail:\nmichael.winkler.developer@gmail.com\n\nResponsible for content:\nMichael Winkler';
+  String get imprintBody => '法律声明\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\n德国\n\n电子邮件：\nmichael.winkler.developer@gmail.com\n\n内容负责人：\nMichael Winkler';
 
   @override
-  String get supportBody => 'Support\n\nFor questions, issues, or feedback about the app, please contact:\n\nMichael Winkler\nEmail: michael.winkler.developer@gmail.com\n\nPlease describe your issue as precisely as possible and include your device and app version if available.';
+  String get supportBody => '支持\n\n如果你对本应用有任何问题、故障或反馈，请联系：\n\nMichael Winkler\n电子邮件：michael.winkler.developer@gmail.com\n\n请尽可能准确地描述你的问题，并尽量附上你的设备信息和应用版本。';
 
   @override
   String get contactSupport => '联系支持';
