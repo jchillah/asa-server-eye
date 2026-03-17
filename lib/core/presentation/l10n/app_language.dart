@@ -1,7 +1,7 @@
 // core/presentation/l10n/app_language.dart
 import 'package:flutter/material.dart';
 
-enum AppLanguageOption { system, german, english, spanish, chinese }
+enum AppLanguageOption { system, german, english, spanish, french, chinese }
 
 Locale? localeFromOption(AppLanguageOption option) {
   switch (option) {
@@ -13,6 +13,8 @@ Locale? localeFromOption(AppLanguageOption option) {
       return const Locale('en');
     case AppLanguageOption.spanish:
       return const Locale('es');
+    case AppLanguageOption.french:
+      return const Locale('fr');
     case AppLanguageOption.chinese:
       return const Locale('zh');
   }
@@ -26,6 +28,8 @@ AppLanguageOption optionFromLocale(Locale? locale) {
       return AppLanguageOption.english;
     case 'es':
       return AppLanguageOption.spanish;
+    case 'fr':
+      return AppLanguageOption.french;
     case 'zh':
       return AppLanguageOption.chinese;
     default:

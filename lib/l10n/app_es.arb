@@ -190,5 +190,13 @@
                 "type": "String"
             }
         }
+    },
+    "french": "Francés",
+    "@french": {
+        "description": "Opción de idioma francés"
+    },
+    "genericError": "Algo salió mal. Inténtalo de nuevo.",
+    "@genericError": {
+        "description": "Mensaje de error genérico para el usuario"
     }
 }

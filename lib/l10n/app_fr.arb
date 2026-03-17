@@ -1,0 +1,202 @@
+{
+    "@@locale": "fr",
+    "appTitle": "ASA Server Eye",
+    "@appTitle": {
+        "description": "Le nom de l'application"
+    },
+    "servers": "Serveurs",
+    "@servers": {
+        "description": "Titre de l'écran et de la navigation inférieure pour les serveurs"
+    },
+    "favorites": "Favoris",
+    "@favorites": {
+        "description": "Titre de l'écran et de la navigation inférieure pour les favoris"
+    },
+    "settings": "Paramètres",
+    "@settings": {
+        "description": "Titre de l'écran et de la navigation inférieure pour les paramètres"
+    },
+    "searchServersOrMaps": "Rechercher des serveurs ou des cartes",
+    "@searchServersOrMaps": {
+        "description": "Texte d'aide du champ de recherche"
+    },
+    "noServersFound": "Aucun serveur trouvé",
+    "@noServersFound": {
+        "description": "État vide lorsqu'aucun serveur n'est disponible"
+    },
+    "noServersMatchSearch": "Aucun serveur ne correspond à votre recherche",
+    "@noServersMatchSearch": {
+        "description": "État vide lorsque la recherche ne retourne aucun résultat"
+    },
+    "serverDetails": "Détails du serveur",
+    "@serverDetails": {
+        "description": "Titre de l'écran de détails du serveur"
+    },
+    "serverNotFound": "Serveur introuvable",
+    "@serverNotFound": {
+        "description": "Affiché lorsqu'un serveur est introuvable"
+    },
+    "map": "Carte",
+    "@map": {
+        "description": "Libellé de la carte"
+    },
+    "population": "Population",
+    "@population": {
+        "description": "Libellé du nombre de joueurs"
+    },
+    "type": "Type",
+    "@type": {
+        "description": "Libellé du type de serveur"
+    },
+    "official": "Officiel",
+    "@official": {
+        "description": "Type de serveur officiel"
+    },
+    "unofficial": "Non officiel",
+    "@unofficial": {
+        "description": "Type de serveur non officiel"
+    },
+    "addToFavorites": "Ajouter aux favoris",
+    "@addToFavorites": {
+        "description": "Texte du bouton pour ajouter aux favoris"
+    },
+    "removeFromFavorites": "Retirer des favoris",
+    "@removeFromFavorites": {
+        "description": "Texte du bouton pour retirer des favoris"
+    },
+    "addedToFavorites": "Ajouté aux favoris",
+    "@addedToFavorites": {
+        "description": "Snackbar après ajout aux favoris"
+    },
+    "removedFromFavorites": "Retiré des favoris",
+    "@removedFromFavorites": {
+        "description": "Snackbar après retrait des favoris"
+    },
+    "noFavoritesYet": "Aucun favori pour le moment",
+    "@noFavoritesYet": {
+        "description": "État vide de l'écran des favoris"
+    },
+    "removeFavorite": "Retirer le favori",
+    "@removeFavorite": {
+        "description": "Titre du dialogue pour retirer un favori"
+    },
+    "cancel": "Annuler",
+    "@cancel": {
+        "description": "Action annuler"
+    },
+    "remove": "Retirer",
+    "@remove": {
+        "description": "Action retirer"
+    },
+    "apply": "Appliquer",
+    "@apply": {
+        "description": "Action appliquer"
+    },
+    "removeFavoriteQuestion": "Voulez-vous retirer « {serverName} » des favoris ?",
+    "@removeFavoriteQuestion": {
+        "description": "Question de confirmation avant suppression d'un favori",
+        "placeholders": {
+            "serverName": {
+                "type": "String"
+            }
+        }
+    },
+    "removedServerFromFavorites": "{serverName} a été retiré des favoris",
+    "@removedServerFromFavorites": {
+        "description": "Snackbar après suppression par balayage",
+        "placeholders": {
+            "serverName": {
+                "type": "String"
+            }
+        }
+    },
+    "general": "Général",
+    "@general": {
+        "description": "Titre d'une section des paramètres"
+    },
+    "language": "Langue",
+    "@language": {
+        "description": "Titre de l'entrée de langue"
+    },
+    "systemDefault": "Par défaut du système",
+    "@systemDefault": {
+        "description": "Sous-titre du paramètre de langue"
+    },
+    "systemLanguage": "Langue du système",
+    "@systemLanguage": {
+        "description": "Option pour suivre la langue du système"
+    },
+    "german": "Allemand",
+    "@german": {
+        "description": "Option de langue allemande"
+    },
+    "english": "Anglais",
+    "@english": {
+        "description": "Option de langue anglaise"
+    },
+    "spanish": "Espagnol",
+    "@spanish": {
+        "description": "Option de langue espagnole"
+    },
+    "french": "Français",
+    "@french": {
+        "description": "Option de langue française"
+    },
+    "chinese": "Chinois",
+    "@chinese": {
+        "description": "Option de langue chinoise"
+    },
+    "selectLanguage": "Sélectionner la langue",
+    "@selectLanguage": {
+        "description": "Titre du dialogue de sélection de langue"
+    },
+    "about": "À propos",
+    "@about": {
+        "description": "Titre de l'entrée À propos"
+    },
+    "appInformation": "Informations sur l'application",
+    "@appInformation": {
+        "description": "Sous-titre de l'entrée À propos"
+    },
+    "legal": "Mentions légales",
+    "@legal": {
+        "description": "Titre d'une section des paramètres"
+    },
+    "privacyPolicy": "Politique de confidentialité",
+    "@privacyPolicy": {
+        "description": "Titre de l'entrée de confidentialité"
+    },
+    "howDataIsHandled": "Comment les données sont traitées",
+    "@howDataIsHandled": {
+        "description": "Sous-titre de l'entrée de confidentialité"
+    },
+    "imprint": "Mentions légales",
+    "@imprint": {
+        "description": "Titre de l'entrée des mentions légales"
+    },
+    "legalInformation": "Informations légales",
+    "@legalInformation": {
+        "description": "Sous-titre de l'entrée des mentions légales"
+    },
+    "support": "Support",
+    "@support": {
+        "description": "Titre de l'entrée Support"
+    },
+    "getHelpAndContactSupport": "Obtenir de l'aide et contacter le support",
+    "@getHelpAndContactSupport": {
+        "description": "Sous-titre de l'entrée Support"
+    },
+    "comingSoon": "{title} arrive bientôt",
+    "@comingSoon": {
+        "description": "Snackbar pour les fonctions non encore implémentées",
+        "placeholders": {
+            "title": {
+                "type": "String"
+            }
+        }
+    },
+    "genericError": "Une erreur s'est produite. Veuillez réessayer.",
+    "@genericError": {
+        "description": "Message d'erreur générique affiché à l'utilisateur"
+    }
+}

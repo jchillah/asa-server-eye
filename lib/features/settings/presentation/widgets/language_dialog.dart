@@ -23,7 +23,6 @@ Future<void> showLanguageDialog(BuildContext context, WidgetRef ref) async {
             if (value == null) return;
 
             controller.setLocale(localeFromOption(value));
-
             Navigator.of(dialogContext).pop();
           },
           child: Column(
@@ -44,6 +43,10 @@ Future<void> showLanguageDialog(BuildContext context, WidgetRef ref) async {
               RadioListTile<AppLanguageOption>(
                 value: AppLanguageOption.spanish,
                 title: Text(context.l10n.spanish),
+              ),
+              RadioListTile<AppLanguageOption>(
+                value: AppLanguageOption.french,
+                title: Text(context.l10n.french),
               ),
               RadioListTile<AppLanguageOption>(
                 value: AppLanguageOption.chinese,

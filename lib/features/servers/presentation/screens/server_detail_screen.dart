@@ -1,4 +1,5 @@
 // features/servers/presentation/screens/server_detail_screen.dart
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -81,12 +82,30 @@ class ServerDetailScreen extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(error.toString()),
-          ),
-        ),
+        error: (error, stackTrace) {
+          FlutterError.reportError(
+            FlutterErrorDetails(
+              exception: error,
+              stack: stackTrace,
+              library: 'server_detail_screen',
+              context: ErrorDescription(
+                'while loading server details for serverId=$serverId',
+              ),
+            ),
+          );
+
+          if (kDebugMode) {
+            debugPrint('ServerDetailScreen error: $error');
+            debugPrintStack(stackTrace: stackTrace);
+          }
+
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(context.l10n.genericError),
+            ),
+          );
+        },
       ),
     );
   }

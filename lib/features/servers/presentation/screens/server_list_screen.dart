@@ -131,7 +131,7 @@ class _ServerListScreenState extends ConsumerState<ServerListScreen> {
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Text(error.toString()),
+                        child: Text(context.l10n.genericError),
                       ),
                     ),
                   ],
