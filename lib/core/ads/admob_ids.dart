@@ -1,32 +1,40 @@
 // core/ads/admob_ids.dart
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 class AdMobIds {
   const AdMobIds._();
 
-  /// Während der Entwicklung auf `true` lassen.
-  /// Erst kurz vor echtem Release auf `false` stellen.
   static const bool useTestAds = true;
 
-  static String get banner {
+  static bool get isSupportedPlatform {
+    if (kIsWeb) return false;
+    return defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS;
+  }
+
+  static String? get banner {
+    if (!isSupportedPlatform) {
+      return null;
+    }
+
     if (useTestAds) {
-      if (Platform.isAndroid) {
-        return 'ca-app-pub-3940256099942544/6300978111';
-      }
-
-      if (Platform.isIOS) {
-        return 'ca-app-pub-3940256099942544/2934735716';
-      }
-    } else {
-      if (Platform.isAndroid) {
-        return 'ca-app-pub-7269049262039376/8103339657';
-      }
-
-      if (Platform.isIOS) {
-        return 'ca-app-pub-7269049262039376/7438324350';
+      switch (defaultTargetPlatform) {
+        case TargetPlatform.android:
+          return 'ca-app-pub-3940256099942544/6300978111';
+        case TargetPlatform.iOS:
+          return 'ca-app-pub-3940256099942544/2934735716';
+        default:
+          return null;
       }
     }
 
-    throw UnsupportedError('Banner ads are only supported on Android and iOS.');
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return 'ca-app-pub-7269049262039376/8103339657';
+      case TargetPlatform.iOS:
+        return 'ca-app-pub-7269049262039376/7438324350';
+      default:
+        return null;
+    }
   }
 }

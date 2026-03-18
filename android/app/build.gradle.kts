@@ -56,3 +56,11 @@ android {
 }
 
 flutter { source = "../.." }
+            isShrinkResources = true
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}

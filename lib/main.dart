@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'app/app.dart';
+import 'core/ads/admob_ids.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -12,7 +13,9 @@ Future<void> main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  await MobileAds.instance.initialize();
+  if (AdMobIds.isSupportedPlatform) {
+    await MobileAds.instance.initialize();
+  }
 
   runApp(const ProviderScope(child: AsaServerEyeApp()));
 }

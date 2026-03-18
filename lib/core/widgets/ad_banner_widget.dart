@@ -1,8 +1,7 @@
 // core/widgets/ad_banner_widget.dart
+import 'package:asa_server_eye/core/ads/admob_ids.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
-import '../ads/admob_ids.dart';
 
 class AdBannerWidget extends StatefulWidget {
   const AdBannerWidget({super.key});
@@ -22,10 +21,16 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   }
 
   void _loadBanner() {
+    final adUnitId = AdMobIds.banner;
+
+    if (adUnitId == null) {
+      return;
+    }
+
     final bannerAd = BannerAd(
-      adUnitId: AdMobIds.banner,
-      request: const AdRequest(),
+      adUnitId: adUnitId,
       size: AdSize.banner,
+      request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
           if (!mounted) {
@@ -40,15 +45,6 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
         },
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
-
-          if (!mounted) {
-            return;
-          }
-
-          setState(() {
-            _bannerAd = null;
-            _isLoaded = false;
-          });
         },
       ),
     );
@@ -64,6 +60,10 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (!AdMobIds.isSupportedPlatform) {
+      return const SizedBox.shrink();
+    }
+
     if (!_isLoaded || _bannerAd == null) {
       return const SizedBox.shrink();
     }

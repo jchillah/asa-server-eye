@@ -8,22 +8,36 @@ import '../../../../core/extensions/context_l10n.dart';
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});
 
+  void _showLaunchError(ScaffoldMessengerState messenger, String errorMessage) {
+    messenger.showSnackBar(SnackBar(content: Text(errorMessage)));
+  }
+
   Future<void> _sendEmail(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final supportEmailSubject = context.l10n.supportEmailSubject;
+    final supportEmailBodyTemplate = context.l10n.supportEmailBodyTemplate;
+    final emailAppCouldNotBeOpened = context.l10n.emailAppCouldNotBeOpened;
+
     final uri = Uri(
       scheme: 'mailto',
       path: AppContact.supportEmail,
       queryParameters: {
-        'subject': context.l10n.supportEmailSubject,
-        'body': context.l10n.supportEmailBodyTemplate,
+        'subject': supportEmailSubject,
+        'body': supportEmailBodyTemplate,
       },
     );
 
-    final launched = await launchUrl(uri, mode: LaunchMode.externalApplication);
-
-    if (!launched && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.emailAppCouldNotBeOpened)),
+    try {
+      final launched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
       );
+
+      if (!launched) {
+        _showLaunchError(messenger, emailAppCouldNotBeOpened);
+      }
+    } catch (_) {
+      _showLaunchError(messenger, emailAppCouldNotBeOpened);
     }
   }
 
