@@ -1,5 +1,5 @@
-name: ark_server_eye
-description: ARK Server Eye – real time server population tracker for ARK Survival Ascended.
+name: asa_server_eye
+description: ARK SA Server Eye – real time server population tracker for ARK Survival Ascended.
 
 publish_to: 'none'
 
@@ -56,5 +56,5 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: assets/icons/app_icon.png
+  image_path: assets/icons/app_icon4.png
   remove_alpha_ios: true

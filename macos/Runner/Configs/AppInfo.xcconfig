@@ -8,7 +8,7 @@
 PRODUCT_NAME = asa_server_eye
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.jchillah.asaServerEye
+PRODUCT_BUNDLE_IDENTIFIER = com.appakademie.asaservereye
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2026 com.jchillah. All rights reserved.

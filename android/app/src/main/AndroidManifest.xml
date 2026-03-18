@@ -10,7 +10,7 @@
             android:value="ca-app-pub-7269049262039376~1470882075" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.jchillah.asaservereye.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:taskAffinity=""

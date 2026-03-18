@@ -1,5 +1,5 @@
 // features/favorites/presentation/favorites_controller.dart
-import 'package:ark_server_eye/features/auth/presentation/providers/auth_providers.dart';
+import 'package:asa_server_eye/features/auth/presentation/providers/auth_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/favorites_repository.dart';
