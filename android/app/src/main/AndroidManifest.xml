@@ -1,52 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jchillah.asaservereye">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Erforderliche Berechtigungen für Netzwerk und AdMob / Ads -->
+    <!-- REQUIRED FOR ADS + FIREBASE -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- Ab Android 13 (API 33): Werbe-ID Berechtigung -->
+    <!-- REQUIRED FOR ANDROID 13+ ADS -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 
     <application
-        android:name="${applicationName}"
         android:label="ASA Server Eye"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher"
-        android:theme="@style/LaunchTheme"
-        android:hardwareAccelerated="true"
-        android:windowSoftInputMode="adjustResize"
-        android:exported="true">
-        
-        <!-- Meta-Daten: AdMob App ID (beibehalten) -->
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher">
+
+        <!-- ADMOB APP ID -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7269049262039376~1470882075" />
 
         <activity
             android:name="com.jchillah.asaservereye.MainActivity"
+            android:exported="true"
             android:launchMode="singleTop"
+            android:taskAffinity=""
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:windowSoftInputMode="adjustResize"
-            android:taskAffinity=""
-            android:exported="true">
-            
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
 
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
     </application>
 
-    <!-- (Optional) Query-Einstellungen / Deep Links -->
     <queries>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
