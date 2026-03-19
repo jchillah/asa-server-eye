@@ -68,3 +68,9 @@ android/key.properties
 # Firebase local / logs
 .firebase/
 firebase-debug.log
+
+# Gradle / build reports
+**/build/
+**/.gradle/
+**/reports/
+**/configuration-cache-report.html
