@@ -1,5 +1,5 @@
 // app/presentation/app_shell.dart
-import 'package:ark_server_eye/app/presentation/widgets/app_bottom_navigation_bar.dart';
+import 'package:asa_server_eye/app/presentation/widgets/app_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/favorites/presentation/screens/favorites_screen.dart';

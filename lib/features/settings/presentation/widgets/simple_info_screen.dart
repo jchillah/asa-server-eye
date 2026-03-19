@@ -16,16 +16,9 @@ class SimpleInfoScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          Text(title, style: theme.textTheme.headlineSmall),
+          SelectableText(title, style: theme.textTheme.headlineSmall),
           const SizedBox(height: 12),
-          Text(body, style: theme.textTheme.bodyLarge),
-          const SizedBox(height: 24),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(body, style: theme.textTheme.bodyMedium),
-            ),
-          ),
+          SelectableText(body, style: theme.textTheme.bodyLarge),
         ],
       ),
     );

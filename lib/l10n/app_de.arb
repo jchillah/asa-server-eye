@@ -278,5 +278,37 @@
   "authEmailAlreadyInUse": "Diese E-Mail wird bereits verwendet.",
   "@authEmailAlreadyInUse": {
     "description": "Wird angezeigt, wenn die E-Mail schon registriert ist"
+  },
+  "aboutBody": "ASA Server Eye ist eine Companion-App für ARK: Survival Ascended. Die App zeigt Serverinformationen, unterstützt Favoriten und bildet die Grundlage für spätere Funktionen wie Watchlist, Benachrichtigungen und Premium-Features.\n\nVerantwortlich für Entwicklung und Betrieb:\nMichael Winkler\nE-Mail: michael.winkler.developer@gmail.com",
+  "@aboutBody": {
+    "description": "Inhalt der About-Seite"
+  },
+  "privacyBody": "Datenschutzerklärung\n\nVerantwortlich für die Datenverarbeitung:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nE-Mail: michael.winkler.developer@gmail.com\n\nDiese App verwendet Firebase Authentication zur Anmeldung von Nutzerkonten, Cloud Firestore zum Speichern persönlicher Favoriten sowie Google AdMob zur Auslieferung von Werbung.\n\nDabei können je nach Nutzung technische Daten verarbeitet werden, insbesondere Kontodaten, Geräteinformationen, App-Interaktionen, Kennungen, Diagnoseinformationen und werbebezogene Daten. Favoriten werden nutzerbezogen gespeichert, damit sie nach einem erneuten Start der App und auf mehreren Geräten verfügbar bleiben.\n\nDie Verarbeitung erfolgt zur Bereitstellung der App-Funktionen, zur Authentifizierung, zur Speicherung nutzerbezogener Einstellungen und zur Finanzierung der App über Werbung.\n\nEs kann nicht ausgeschlossen werden, dass eingesetzte Drittanbieter Daten außerhalb der Europäischen Union verarbeiten. Maßgeblich sind insoweit auch die Datenschutzinformationen der jeweils eingebundenen Dienste, insbesondere von Google Firebase und Google AdMob.\n\nBei Fragen zum Datenschutz oder zur Löschung deiner Daten kontaktiere bitte:\nmichael.winkler.developer@gmail.com\n\nHinweis: Vor einem endgültigen öffentlichen Release sollte diese Datenschutzerklärung noch einmal rechtlich geprüft und um vollständige Angaben zu Rechtsgrundlagen, Speicherdauer, Betroffenenrechten und allen eingebundenen Diensten ergänzt werden.",
+  "@privacyBody": {
+    "description": "Inhalt der Datenschutz-Seite"
+  },
+  "imprintBody": "Impressum\n\nAngaben gemäß § 5 TMG / § 18 MStV\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nDeutschland\n\nE-Mail:\nmichael.winkler.developer@gmail.com\n\nVerantwortlich für den Inhalt:\nMichael Winkler",
+  "@imprintBody": {
+    "description": "Inhalt der Impressum-Seite"
+  },
+  "supportBody": "Support\n\nBei Fragen, Problemen oder Feedback zur App kontaktiere bitte:\n\nMichael Winkler\nE-Mail: michael.winkler.developer@gmail.com\n\nBitte beschreibe dein Problem möglichst genau und nenne dabei möglichst auch dein Gerät sowie die verwendete App-Version.",
+  "@supportBody": {
+    "description": "Inhalt der Support-Seite"
+  },
+  "contactSupport": "Support kontaktieren",
+  "@contactSupport": {
+    "description": "Button text to contact support"
+  },
+  "emailAppCouldNotBeOpened": "E-Mail-App konnte nicht geöffnet werden.",
+  "@emailAppCouldNotBeOpened": {
+    "description": "Shown when no email app can be opened"
+  },
+  "supportEmailSubject": "ASA Server Eye Support",
+  "@supportEmailSubject": {
+    "description": "Subject line for support email"
+  },
+  "supportEmailBodyTemplate": "Hallo Michael,\n\nich habe folgendes Problem:\n\n\n---\nApp-Version:\nGerät:\n",
+  "@supportEmailBodyTemplate": {
+    "description": "Prefilled support email body"
   }
 }

@@ -49,3 +49,28 @@ android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 macos/Runner/GoogleService-Info.plist
 lib/firebase_options.dart
+
+key.properties
+**/*.keystore
+**/*.jks
+
+# Android signing
+android/key.properties
+*.jks
+*.keystore
+
+# Env / secrets
+.env
+.env.*
+*.pem
+*.p12
+
+# Firebase local / logs
+.firebase/
+firebase-debug.log
+
+# Gradle / build reports
+**/build/
+**/.gradle/
+**/reports/
+**/configuration-cache-report.html

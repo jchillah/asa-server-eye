@@ -11,7 +11,7 @@ class ImprintScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleInfoScreen(
       title: context.l10n.imprint,
-      body: context.l10n.legalInformation,
+      body: context.l10n.imprintBody,
     );
   }
 }

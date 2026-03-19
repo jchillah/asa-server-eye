@@ -496,6 +496,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This email is already in use.'**
   String get authEmailAlreadyInUse;
+
+  /// Body content for the About screen
+  ///
+  /// In en, this message translates to:
+  /// **'ASA Server Eye is a companion app for ARK: Survival Ascended. The app shows server information, supports favorites, and provides the foundation for future features such as watchlists, notifications, and premium features.\n\nDeveloped and operated by:\nMichael Winkler\nEmail: michael.winkler.developer@gmail.com'**
+  String get aboutBody;
+
+  /// Body content for the Privacy screen
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy\n\nController responsible for data processing:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\nEmail: michael.winkler.developer@gmail.com\n\nThis app uses Firebase Authentication for account sign-in, Cloud Firestore to store personal favorites, and Google AdMob to serve ads.\n\nDepending on how the app is used, technical data may be processed, including account data, device information, app interactions, identifiers, diagnostics, and advertising-related data. Favorites are stored per user so they remain available after restarting the app and across multiple devices.\n\nProcessing is carried out to provide app functionality, authenticate users, store user-related settings, and finance the app through advertising.\n\nIt cannot be ruled out that integrated third-party services process data outside the European Union. In this respect, the privacy information of the respective services applies, especially Google Firebase and Google AdMob.\n\nFor privacy-related questions or deletion requests, please contact:\nmichael.winkler.developer@gmail.com\n\nNote: Before a final public release, this privacy policy should be reviewed and expanded with full details on legal bases, retention periods, user rights, and all integrated services.'**
+  String get privacyBody;
+
+  /// Body content for the Imprint screen
+  ///
+  /// In en, this message translates to:
+  /// **'Imprint / Legal Notice\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\n\nEmail:\nmichael.winkler.developer@gmail.com\n\nResponsible for content:\nMichael Winkler'**
+  String get imprintBody;
+
+  /// Body content for the Support screen
+  ///
+  /// In en, this message translates to:
+  /// **'Support\n\nFor questions, issues, or feedback about the app, please contact:\n\nMichael Winkler\nEmail: michael.winkler.developer@gmail.com\n\nPlease describe your issue as precisely as possible and include your device and app version if available.'**
+  String get supportBody;
+
+  /// Button text to contact support
+  ///
+  /// In en, this message translates to:
+  /// **'Contact support'**
+  String get contactSupport;
+
+  /// Shown when no email app can be opened
+  ///
+  /// In en, this message translates to:
+  /// **'Email app could not be opened.'**
+  String get emailAppCouldNotBeOpened;
+
+  /// Subject line for support email
+  ///
+  /// In en, this message translates to:
+  /// **'ASA Server Eye Support'**
+  String get supportEmailSubject;
+
+  /// Prefilled support email body
+  ///
+  /// In en, this message translates to:
+  /// **'Hello Michael,\n\nI have the following issue:\n\n\n---\nApp version:\nDevice:\n'**
+  String get supportEmailBodyTemplate;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
