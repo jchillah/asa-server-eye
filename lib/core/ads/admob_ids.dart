@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 class AdMobIds {
   const AdMobIds._();
 
-  static const bool useTestAds = true;
+  static const bool useTestAds = false;
 
   static bool get isSupportedPlatform {
     if (kIsWeb) return false;
