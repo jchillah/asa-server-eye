@@ -297,18 +297,18 @@
   },
   "contactSupport": "Support kontaktieren",
   "@contactSupport": {
-    "description": "Button text to contact support"
+    "description": "Button text zum Kontaktieren des Supports"
   },
   "emailAppCouldNotBeOpened": "E-Mail-App konnte nicht geöffnet werden.",
   "@emailAppCouldNotBeOpened": {
-    "description": "Shown when no email app can be opened"
+    "description": "Wird angezeigt, wenn die E-Mail-App nicht geöffnet werden kann"
   },
   "supportEmailSubject": "ASA Server Eye Support",
   "@supportEmailSubject": {
-    "description": "Subject line for support email"
+    "description": "Betreff für die Support-E-Mail"
   },
   "supportEmailBodyTemplate": "Hallo Michael,\n\nich habe folgendes Problem:\n\n\n---\nApp-Version:\nGerät:\n",
   "@supportEmailBodyTemplate": {
-    "description": "Prefilled support email body"
+    "description": "Vorlage für den Inhalt der Support-E-Mail"
   }
 }

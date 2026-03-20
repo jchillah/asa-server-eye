@@ -297,18 +297,18 @@
     },
     "contactSupport": "联系支持",
     "@contactSupport": {
-        "description": "Button text to contact support"
+        "description": "联系支持的按钮文本"
     },
     "emailAppCouldNotBeOpened": "无法打开电子邮件应用。",
     "@emailAppCouldNotBeOpened": {
-        "description": "Shown when no email app can be opened"
+        "description": "当无法打开电子邮件应用时显示"
     },
     "supportEmailSubject": "ASA Server Eye 支持",
     "@supportEmailSubject": {
-        "description": "Subject line for support email"
+        "description": "支持电子邮件的主题行"
     },
     "supportEmailBodyTemplate": "你好 Michael，\n\n我遇到了以下问题：\n\n\n---\n应用版本：\n设备：\n",
     "@supportEmailBodyTemplate": {
-        "description": "Prefilled support email body"
+        "description": "支持电子邮件的预填充正文"
     }
 }
