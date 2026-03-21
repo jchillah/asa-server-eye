@@ -219,6 +219,14 @@
     "@password": {
         "description": "密码字段标签"
     },
+    "repeatPassword": "重复输入密码",
+    "@repeatPassword": {
+        "description": "重复密码字段标签"
+    },
+    "passwordsDoNotMatch": "两次输入的密码不一致",
+    "@passwordsDoNotMatch": {
+        "description": "当密码和重复输入的密码不一致时显示"
+    },
     "welcomeBack": "欢迎回来",
     "@welcomeBack": {
         "description": "登录页标题"

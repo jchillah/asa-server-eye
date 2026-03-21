@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
+import '../utils/support_actions.dart';
 import '../widgets/simple_info_screen.dart';
 
 class PrivacyScreen extends StatelessWidget {
@@ -12,6 +13,20 @@ class PrivacyScreen extends StatelessWidget {
     return SimpleInfoScreen(
       title: context.l10n.privacyPolicy,
       body: context.l10n.privacyBody,
+      bottom: Column(
+        children: [
+          const SizedBox(height: 24),
+          FilledButton(
+            onPressed: SupportActions.openPrivacyPolicy,
+            child: const Text('Full Privacy Policy'),
+          ),
+          const SizedBox(height: 12),
+          OutlinedButton(
+            onPressed: SupportActions.openDeleteAccount,
+            child: const Text('Delete Account'),
+          ),
+        ],
+      ),
     );
   }
 }

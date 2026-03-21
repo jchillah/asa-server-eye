@@ -6,13 +6,10 @@ import '../../../../core/extensions/context_l10n.dart';
 import '../../../../core/presentation/l10n/app_language.dart';
 import '../../../../core/presentation/l10n/locale_controller.dart';
 import '../../../auth/presentation/providers/auth_providers.dart';
+import '../utils/settings_navigation.dart';
 import '../widgets/language_dialog.dart';
 import '../widgets/settings_section_header.dart';
 import '../widgets/settings_tile.dart';
-import 'about_screen.dart';
-import 'imprint_screen.dart';
-import 'privacy_screen.dart';
-import 'support_screen.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -46,42 +43,26 @@ class SettingsScreen extends ConsumerWidget {
             icon: Icons.info_outline,
             title: context.l10n.about,
             subtitle: context.l10n.appInformation,
-            onTap: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const AboutScreen()));
-            },
+            onTap: () => SettingsNavigation.openAbout(context),
           ),
           SettingsSectionHeader(title: context.l10n.legal),
           SettingsTile(
             icon: Icons.privacy_tip_outlined,
             title: context.l10n.privacyPolicy,
             subtitle: context.l10n.howDataIsHandled,
-            onTap: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const PrivacyScreen()));
-            },
+            onTap: () => SettingsNavigation.openPrivacy(context),
           ),
           SettingsTile(
             icon: Icons.gavel_outlined,
             title: context.l10n.imprint,
             subtitle: context.l10n.legalInformation,
-            onTap: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const ImprintScreen()));
-            },
+            onTap: () => SettingsNavigation.openImprint(context),
           ),
           SettingsTile(
             icon: Icons.support_agent,
             title: context.l10n.support,
             subtitle: context.l10n.getHelpAndContactSupport,
-            onTap: () {
-              Navigator.of(
-                context,
-              ).push(MaterialPageRoute(builder: (_) => const SupportScreen()));
-            },
+            onTap: () => SettingsNavigation.openSupport(context),
           ),
           SettingsSectionHeader(title: context.l10n.account),
           SettingsTile(

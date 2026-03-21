@@ -219,6 +219,14 @@
     "@password": {
         "description": "Etiqueta del campo de contraseña"
     },
+    "repeatPassword": "Repetir contraseña",
+    "@repeatPassword": {
+        "description": "Etiqueta del campo para repetir la contraseña"
+    },
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "@passwordsDoNotMatch": {
+        "description": "Se muestra cuando la contraseña y la repetición no coinciden"
+    },
     "welcomeBack": "Bienvenido de nuevo",
     "@welcomeBack": {
         "description": "Encabezado de la pantalla de inicio de sesión"

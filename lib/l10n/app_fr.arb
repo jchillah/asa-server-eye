@@ -219,6 +219,14 @@
     "@password": {
         "description": "Libellé du champ mot de passe"
     },
+    "repeatPassword": "Répéter le mot de passe",
+    "@repeatPassword": {
+        "description": "Libellé du champ de confirmation du mot de passe"
+    },
+    "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+    "@passwordsDoNotMatch": {
+        "description": "Affiché lorsque le mot de passe et sa répétition sont différents"
+    },
     "welcomeBack": "Bon retour",
     "@welcomeBack": {
         "description": "Titre de l'écran de connexion"

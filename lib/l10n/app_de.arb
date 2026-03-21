@@ -219,6 +219,14 @@
   "@password": {
     "description": "Beschriftung für Passwort-Feld"
   },
+  "repeatPassword": "Passwort wiederholen",
+  "@repeatPassword": {
+    "description": "Beschriftung für Passwort-Wiederholen-Feld"
+  },
+  "passwordsDoNotMatch": "Die Passwörter stimmen nicht überein",
+  "@passwordsDoNotMatch": {
+    "description": "Wird angezeigt, wenn Passwort und Wiederholung nicht identisch sind"
+  },
   "welcomeBack": "Willkommen zurück",
   "@welcomeBack": {
     "description": "Überschrift auf dem Anmeldebildschirm"

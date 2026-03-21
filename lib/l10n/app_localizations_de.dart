@@ -168,6 +168,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get password => 'Passwort';
 
   @override
+  String get repeatPassword => 'Passwort wiederholen';
+
+  @override
+  String get passwordsDoNotMatch => 'Die Passwörter stimmen nicht überein';
+
+  @override
   String get welcomeBack => 'Willkommen zurück';
 
   @override

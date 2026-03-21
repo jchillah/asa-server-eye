@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../utils/app_navigation_destinations.dart';
 
 class AppBottomNavigationBar extends StatelessWidget {
   const AppBottomNavigationBar({
@@ -16,27 +17,20 @@ class AppBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final destinations = AppNavigationDestinations.fromL10n(l10n);
 
     return NavigationBar(
       selectedIndex: currentIndex,
       onDestinationSelected: onDestinationSelected,
-      destinations: [
-        NavigationDestination(
-          icon: const Icon(Icons.dns_outlined),
-          selectedIcon: const Icon(Icons.dns),
-          label: l10n.servers,
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.star_border),
-          selectedIcon: const Icon(Icons.star),
-          label: l10n.favorites,
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.settings_outlined),
-          selectedIcon: const Icon(Icons.settings),
-          label: l10n.settings,
-        ),
-      ],
+      destinations: destinations
+          .map(
+            (item) => NavigationDestination(
+              icon: Icon(item.icon),
+              selectedIcon: Icon(item.selectedIcon),
+              label: item.label,
+            ),
+          )
+          .toList(),
     );
   }
 }

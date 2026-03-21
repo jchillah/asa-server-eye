@@ -219,6 +219,14 @@
   "@password": {
     "description": "Password field label"
   },
+  "repeatPassword": "Repeat password",
+  "@repeatPassword": {
+    "description": "Label for repeat password field"
+  },
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Shown when password and repeated password are different"
+  },
   "welcomeBack": "Welcome back",
   "@welcomeBack": {
     "description": "Heading on sign in screen"

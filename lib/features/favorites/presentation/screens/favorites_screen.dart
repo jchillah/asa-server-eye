@@ -3,142 +3,71 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
-import '../../../servers/presentation/providers/server_providers.dart';
-import '../../../servers/presentation/screens/server_detail_screen.dart';
-import '../favorites_controller.dart';
+import '../../../servers/presentation/utils/server_navigation.dart';
+import '../providers/favorite_servers_provider.dart';
+import '../utils/favorite_actions.dart';
+import '../widgets/favorite_server_list_item.dart';
+import '../widgets/favorites_remove_background.dart';
 
 class FavoritesScreen extends ConsumerWidget {
   const FavoritesScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favoriteIdsAsync = ref.watch(favoriteIdsProvider);
-    final serversAsync = ref.watch(serversProvider);
+    final favoriteServersAsync = ref.watch(favoriteServersProvider);
+    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.favorites)),
-      body: favoriteIdsAsync.when(
-        data: (favoriteIds) {
-          return serversAsync.when(
-            data: (servers) {
-              final favoriteServers = servers
-                  .where((server) => favoriteIds.contains(server.id))
-                  .toList();
+      body: favoriteServersAsync.when(
+        data: (favoriteServers) {
+          if (favoriteServers.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Text(
+                  context.l10n.noFavoritesYet,
+                  style: theme.textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          }
 
-              if (favoriteServers.isEmpty) {
-                return Center(child: Text(context.l10n.noFavoritesYet));
-              }
+          return ListView.separated(
+            padding: const EdgeInsets.all(16),
+            itemCount: favoriteServers.length,
+            separatorBuilder: (_, _) => const SizedBox(height: 12),
+            itemBuilder: (context, index) {
+              final server = favoriteServers[index];
 
-              return ListView.builder(
-                itemCount: favoriteServers.length,
-                itemBuilder: (context, index) {
-                  final server = favoriteServers[index];
-
-                  return Dismissible(
-                    key: ValueKey(server.id),
-                    direction: DismissDirection.endToStart,
-                    background: Container(
-                      alignment: Alignment.centerRight,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      color: Colors.red,
-                      child: const Icon(
-                        Icons.delete_outline,
-                        color: Colors.white,
-                      ),
-                    ),
-                    confirmDismiss: (_) async {
-                      final shouldRemove =
-                          await showDialog<bool>(
-                            context: context,
-                            builder: (dialogContext) {
-                              return AlertDialog(
-                                title: Text(context.l10n.removeFavorite),
-                                content: Text(
-                                  context.l10n.removeFavoriteQuestion(
-                                    server.name,
-                                  ),
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(dialogContext).pop(false);
-                                    },
-                                    child: Text(context.l10n.cancel),
-                                  ),
-                                  FilledButton(
-                                    onPressed: () {
-                                      Navigator.of(dialogContext).pop(true);
-                                    },
-                                    child: Text(context.l10n.remove),
-                                  ),
-                                ],
-                              );
-                            },
-                          ) ??
-                          false;
-
-                      if (!shouldRemove) {
-                        return false;
-                      }
-
-                      try {
-                        await ref
-                            .read(favoritesControllerProvider)
-                            .removeFavorite(server.id);
-                        return true;
-                      } catch (_) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(context.l10n.genericError)),
-                          );
-                        }
-                        return false;
-                      }
-                    },
-                    onDismissed: (_) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            context.l10n.removedServerFromFavorites(
-                              server.name,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      title: Text(server.name),
-                      subtitle: Text(
-                        '${server.map} • ${server.players}/${server.maxPlayers}',
-                      ),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                ServerDetailScreen(serverId: server.id),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                },
+              return Dismissible(
+                key: ValueKey(server.id),
+                direction: DismissDirection.endToStart,
+                background: const FavoritesRemoveBackground(),
+                confirmDismiss: (_) => FavoriteActions.removeFavorite(
+                  context: context,
+                  ref: ref,
+                  serverId: server.id,
+                  serverName: server.name,
+                ),
+                onDismissed: (_) => FavoriteActions.showRemovedMessage(
+                  context: context,
+                  serverName: server.name,
+                ),
+                child: FavoriteServerListItem(
+                  server: server,
+                  onTap: () => ServerNavigation.openDetails(context, server.id),
+                ),
               );
             },
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, stackTrace) => Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Text(context.l10n.genericError),
-              ),
-            ),
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(context.l10n.genericError),
+            child: Text(context.l10n.genericError, textAlign: TextAlign.center),
           ),
         ),
       ),
