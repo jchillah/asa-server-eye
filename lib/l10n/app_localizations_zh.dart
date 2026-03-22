@@ -168,6 +168,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get password => '密码';
 
   @override
+  String get repeatPassword => '重复输入密码';
+
+  @override
+  String get passwordsDoNotMatch => '两次输入的密码不一致';
+
+  @override
   String get welcomeBack => '欢迎回来';
 
   @override
@@ -235,4 +241,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get supportEmailBodyTemplate => '你好 Michael，\n\n我遇到了以下问题：\n\n\n---\n应用版本：\n设备：\n';
+
+  @override
+  String get fullPrivacyPolicy => '完整隐私政策';
+
+  @override
+  String get deleteAccount => '删除账户';
 }

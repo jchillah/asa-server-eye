@@ -1,14 +1,12 @@
 // features/servers/presentation/screens/server_detail_screen.dart
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
-import '../../../favorites/presentation/favorites_controller.dart';
-import '../../domain/server.dart';
-import '../providers/server_providers.dart';
-
-const _logTag = 'ServerDetailScreen';
+import '../../../favorites/presentation/utils/favorite_actions.dart';
+import '../providers/server_view_providers.dart';
+import '../widgets/server_detail_header_card.dart';
+import '../widgets/server_detail_info_card.dart';
 
 class ServerDetailScreen extends ConsumerWidget {
   const ServerDetailScreen({super.key, required this.serverId});
@@ -17,133 +15,73 @@ class ServerDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favoriteIdsAsync = ref.watch(favoriteIdsProvider);
-    final serversAsync = ref.watch(serversProvider);
+    final serverAsync = ref.watch(serverByIdProvider(serverId));
+    final isFavoriteAsync = ref.watch(isFavoriteServerProvider(serverId));
+
+    if (serverAsync.hasError || isFavoriteAsync.hasError) {
+      return Scaffold(
+        appBar: AppBar(title: Text(context.l10n.serverDetails)),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Text(context.l10n.genericError, textAlign: TextAlign.center),
+          ),
+        ),
+      );
+    }
+
+    if (serverAsync.isLoading || isFavoriteAsync.isLoading) {
+      return Scaffold(
+        appBar: AppBar(title: Text(context.l10n.serverDetails)),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final server = serverAsync.value;
+    final isFavorite = isFavoriteAsync.value ?? false;
 
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.serverDetails)),
-      body: favoriteIdsAsync.when(
-        data: (favoriteIds) {
-          final isFavorite = favoriteIds.contains(serverId);
-
-          return serversAsync.when(
-            data: (servers) {
-              final server = _findServerById(servers, serverId);
-
-              if (server == null) {
-                return Center(child: Text(context.l10n.serverNotFound));
-              }
-
-              return ListView(
-                padding: const EdgeInsets.all(16),
-                children: [
-                  Text(
-                    server.name,
-                    style: Theme.of(context).textTheme.headlineSmall,
+      body: server == null
+          ? Center(child: Text(context.l10n.serverNotFound))
+          : ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                ServerDetailHeaderCard(
+                  server: server,
+                  officialLabel: context.l10n.official,
+                  unofficialLabel: context.l10n.unofficial,
+                ),
+                const SizedBox(height: 16),
+                ServerDetailInfoCard(
+                  mapLabel: context.l10n.map,
+                  mapValue: server.map,
+                  populationLabel: context.l10n.population,
+                  populationValue: '${server.players}/${server.maxPlayers}',
+                  typeLabel: context.l10n.type,
+                  typeValue: server.official
+                      ? context.l10n.official
+                      : context.l10n.unofficial,
+                ),
+                const SizedBox(height: 20),
+                FilledButton.icon(
+                  onPressed: () => FavoriteActions.toggleFavorite(
+                    context: context,
+                    ref: ref,
+                    serverId: server.id,
+                    isFavorite: isFavorite,
                   ),
-                  const SizedBox(height: 16),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(context.l10n.map),
-                    subtitle: Text(server.map),
+                  icon: Icon(
+                    isFavorite ? Icons.star_rounded : Icons.star_border_rounded,
                   ),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(context.l10n.population),
-                    subtitle: Text('${server.players}/${server.maxPlayers}'),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(context.l10n.type),
-                    subtitle: Text(
-                      server.official
-                          ? context.l10n.official
-                          : context.l10n.unofficial,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  FilledButton.icon(
-                    onPressed: () async {
-                      try {
-                        await ref
-                            .read(favoritesControllerProvider)
-                            .toggleFavorite(server.id);
-
-                        if (!context.mounted) {
-                          return;
-                        }
-
-                        final message = isFavorite
-                            ? context.l10n.removedFromFavorites
-                            : context.l10n.addedToFavorites;
-
-                        ScaffoldMessenger.of(
-                          context,
-                        ).showSnackBar(SnackBar(content: Text(message)));
-                      } catch (_) {
-                        if (!context.mounted) {
-                          return;
-                        }
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(context.l10n.genericError)),
-                        );
-                      }
-                    },
-                    icon: Icon(isFavorite ? Icons.star : Icons.star_border),
-                    label: Text(
-                      isFavorite
-                          ? context.l10n.removeFromFavorites
-                          : context.l10n.addToFavorites,
-                    ),
-                  ),
-                ],
-              );
-            },
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, stackTrace) {
-              FlutterError.reportError(
-                FlutterErrorDetails(
-                  exception: error,
-                  stack: stackTrace,
-                  library: _logTag,
-                  context: ErrorDescription(
-                    'while loading server details for serverId=$serverId',
+                  label: Text(
+                    isFavorite
+                        ? context.l10n.removeFromFavorites
+                        : context.l10n.addToFavorites,
                   ),
                 ),
-              );
-
-              if (kDebugMode) {
-                debugPrint('$_logTag error: $error');
-                debugPrintStack(stackTrace: stackTrace);
-              }
-
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Text(context.l10n.genericError),
-                ),
-              );
-            },
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(context.l10n.genericError),
-          ),
-        ),
-      ),
+              ],
+            ),
     );
-  }
-
-  Server? _findServerById(List<Server> servers, String serverId) {
-    for (final server in servers) {
-      if (server.id == serverId) {
-        return server;
-      }
-    }
-    return null;
   }
 }

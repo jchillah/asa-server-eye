@@ -219,6 +219,14 @@
     "@password": {
         "description": "Libellé du champ mot de passe"
     },
+    "repeatPassword": "Répéter le mot de passe",
+    "@repeatPassword": {
+        "description": "Libellé du champ de confirmation du mot de passe"
+    },
+    "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+    "@passwordsDoNotMatch": {
+        "description": "Affiché lorsque le mot de passe et sa répétition sont différents"
+    },
     "welcomeBack": "Bon retour",
     "@welcomeBack": {
         "description": "Titre de l'écran de connexion"
@@ -310,5 +318,13 @@
     "supportEmailBodyTemplate": "Bonjour Michael,\n\nj’ai le problème suivant :\n\n\n---\nVersion de l’application :\nAppareil :\n",
     "@supportEmailBodyTemplate": {
         "description": "Corps d'e-mail pre-rempli pour le support"
+    },
+    "fullPrivacyPolicy": "Politique de confidentialité complète",
+    "@fullPrivacyPolicy": {
+        "description": "Bouton pour afficher la politique de confidentialité complète"
+    },
+    "deleteAccount": "Supprimer le compte",
+    "@deleteAccount": {
+        "description": "Bouton pour supprimer le compte utilisateur"
     }
 }

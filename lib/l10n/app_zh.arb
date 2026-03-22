@@ -219,6 +219,14 @@
     "@password": {
         "description": "密码字段标签"
     },
+    "repeatPassword": "重复输入密码",
+    "@repeatPassword": {
+        "description": "重复密码字段标签"
+    },
+    "passwordsDoNotMatch": "两次输入的密码不一致",
+    "@passwordsDoNotMatch": {
+        "description": "当密码和重复输入的密码不一致时显示"
+    },
     "welcomeBack": "欢迎回来",
     "@welcomeBack": {
         "description": "登录页标题"
@@ -310,5 +318,13 @@
     "supportEmailBodyTemplate": "你好 Michael，\n\n我遇到了以下问题：\n\n\n---\n应用版本：\n设备：\n",
     "@supportEmailBodyTemplate": {
         "description": "支持电子邮件的预填充正文"
+    },
+    "fullPrivacyPolicy": "完整隐私政策",
+    "@fullPrivacyPolicy": {
+        "description": "查看完整隐私政策的按钮"
+    },
+    "deleteAccount": "删除账户",
+    "@deleteAccount": {
+        "description": "删除用户账户的按钮"
     }
 }

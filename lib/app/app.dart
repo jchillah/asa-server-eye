@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/presentation/l10n/locale_controller.dart';
 import '../features/auth/presentation/screens/auth_gate.dart';
 import '../l10n/app_localizations.dart';
+import 'theme/app_theme.dart';
 
 class AsaServerEyeApp extends ConsumerWidget {
   const AsaServerEyeApp({super.key});
@@ -25,7 +26,9 @@ class AsaServerEyeApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      theme: ThemeData(useMaterial3: true),
+      theme: AppTheme.dark,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.dark,
       home: const AuthGate(),
     );
   }

@@ -168,6 +168,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get password => 'Contraseña';
 
   @override
+  String get repeatPassword => 'Repetir contraseña';
+
+  @override
+  String get passwordsDoNotMatch => 'Las contraseñas no coinciden';
+
+  @override
   String get welcomeBack => 'Bienvenido de nuevo';
 
   @override
@@ -235,4 +241,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get supportEmailBodyTemplate => 'Hola Michael,\n\ntengo el siguiente problema:\n\n\n---\nVersión de la app:\nDispositivo:\n';
+
+  @override
+  String get fullPrivacyPolicy => 'Política de privacidad completa';
+
+  @override
+  String get deleteAccount => 'Eliminar cuenta';
 }
