@@ -241,4 +241,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get supportEmailBodyTemplate => '你好 Michael，\n\n我遇到了以下问题：\n\n\n---\n应用版本：\n设备：\n';
+
+  @override
+  String get fullPrivacyPolicy => '完整隐私政策';
+
+  @override
+  String get deleteAccount => '删除账户';
 }

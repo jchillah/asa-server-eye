@@ -241,4 +241,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get supportEmailBodyTemplate => 'Hola Michael,\n\ntengo el siguiente problema:\n\n\n---\nVersión de la app:\nDispositivo:\n';
+
+  @override
+  String get fullPrivacyPolicy => 'Política de privacidad completa';
+
+  @override
+  String get deleteAccount => 'Eliminar cuenta';
 }

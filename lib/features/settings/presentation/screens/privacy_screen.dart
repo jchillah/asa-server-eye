@@ -18,12 +18,12 @@ class PrivacyScreen extends StatelessWidget {
           const SizedBox(height: 24),
           FilledButton(
             onPressed: SupportActions.openPrivacyPolicy,
-            child: const Text('Full Privacy Policy'),
+            child: Text(context.l10n.fullPrivacyPolicy),
           ),
           const SizedBox(height: 12),
           OutlinedButton(
             onPressed: SupportActions.openDeleteAccount,
-            child: const Text('Delete Account'),
+            child: Text(context.l10n.deleteAccount),
           ),
         ],
       ),

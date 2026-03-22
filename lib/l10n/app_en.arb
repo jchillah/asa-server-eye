@@ -318,5 +318,13 @@
   "supportEmailBodyTemplate": "Hello Michael,\n\nI have the following issue:\n\n\n---\nApp version:\nDevice:\n",
   "@supportEmailBodyTemplate": {
     "description": "Prefilled support email body"
+  },
+  "fullPrivacyPolicy": "Full Privacy Policy",
+  "@fullPrivacyPolicy": {
+    "description": "Button to open full privacy policy"
+  },
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": {
+    "description": "Button to delete user account"
   }
 }

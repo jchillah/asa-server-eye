@@ -318,5 +318,13 @@
     "supportEmailBodyTemplate": "你好 Michael，\n\n我遇到了以下问题：\n\n\n---\n应用版本：\n设备：\n",
     "@supportEmailBodyTemplate": {
         "description": "支持电子邮件的预填充正文"
+    },
+    "fullPrivacyPolicy": "完整隐私政策",
+    "@fullPrivacyPolicy": {
+        "description": "查看完整隐私政策的按钮"
+    },
+    "deleteAccount": "删除账户",
+    "@deleteAccount": {
+        "description": "删除用户账户的按钮"
     }
 }

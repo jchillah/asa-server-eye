@@ -318,5 +318,13 @@
     "supportEmailBodyTemplate": "Hola Michael,\n\ntengo el siguiente problema:\n\n\n---\nVersión de la app:\nDispositivo:\n",
     "@supportEmailBodyTemplate": {
         "description": "Plantilla prellenada para el cuerpo del correo de soporte"
+    },
+    "fullPrivacyPolicy": "Política de privacidad completa",
+    "@fullPrivacyPolicy": {
+        "description": "Botón para ver la política de privacidad completa"
+    },
+    "deleteAccount": "Eliminar cuenta",
+    "@deleteAccount": {
+        "description": "Botón para eliminar la cuenta del usuario"
     }
 }

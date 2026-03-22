@@ -556,6 +556,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hello Michael,\n\nI have the following issue:\n\n\n---\nApp version:\nDevice:\n'**
   String get supportEmailBodyTemplate;
+
+  /// Button to open full privacy policy
+  ///
+  /// In en, this message translates to:
+  /// **'Full Privacy Policy'**
+  String get fullPrivacyPolicy;
+
+  /// Button to delete user account
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
