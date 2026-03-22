@@ -61,7 +61,11 @@ class SignUpController {
         networkError: l10n.networkError,
         genericError: l10n.genericError,
       );
-    } catch (_) {
+    } on FirebaseException catch (e) {
+      return e.message;
+    } catch (e, stack) {
+      debugPrint('🔥 AUTH ERROR: $e');
+      debugPrintStack(stackTrace: stack);
       return l10n.genericError;
     }
   }

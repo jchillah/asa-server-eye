@@ -14,7 +14,7 @@ abstract final class FavoriteActions {
     required bool isFavorite,
   }) async {
     try {
-      await ref.read(favoritesControllerProvider).toggleFavorite(serverId);
+      await ref.read(favoriteIdsProvider.notifier).toggle(serverId);
 
       if (!context.mounted) return;
 
@@ -25,7 +25,9 @@ abstract final class FavoriteActions {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(message)));
-    } catch (_) {
+    } catch (e) {
+      debugPrint('🔥 FAVORITE ERROR: $e');
+
       if (!context.mounted) return;
 
       ScaffoldMessenger.of(
@@ -80,9 +82,10 @@ abstract final class FavoriteActions {
     }
 
     try {
-      await ref.read(favoritesControllerProvider).removeFavorite(serverId);
+      await ref.read(favoriteIdsProvider.notifier).toggle(serverId);
       return true;
-    } catch (_) {
+    } catch (e) {
+      debugPrint('🔥 FAVORITE REMOVE ERROR: $e');
       if (context.mounted) {
         ScaffoldMessenger.of(
           context,

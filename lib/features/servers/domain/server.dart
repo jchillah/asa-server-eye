@@ -15,4 +15,15 @@ class Server {
     required this.maxPlayers,
     required this.official,
   });
+
+  factory Server.fromJson(Map<String, dynamic> json) {
+    return Server(
+      id: json['SessionId']?.toString() ?? '',
+      name: json['Name'] ?? '',
+      map: json['MapName'] ?? '',
+      players: json['NumPlayers'] ?? 0,
+      maxPlayers: json['MaxPlayers'] ?? 0,
+      official: json['Official'] == true,
+    );
+  }
 }
