@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:asa_server_eye/features/auth/presentation/providers/auth_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/utils/app_logger.dart';
 import '../../data/favorites_repository.dart';
 
 final favoriteIdsProvider =
@@ -24,6 +25,7 @@ class FavoriteIdsNotifier extends StateNotifier<AsyncValue<List<String>>> {
   final String? _userId;
 
   StreamSubscription<List<String>>? _sub;
+  final Set<String> _pendingToggles = <String>{};
 
   void _init() {
     final userId = _userId;
@@ -39,8 +41,8 @@ class FavoriteIdsNotifier extends StateNotifier<AsyncValue<List<String>>> {
           (ids) {
             state = AsyncValue.data(ids);
           },
-          onError: (e, st) {
-            state = AsyncValue.error(e, st);
+          onError: (error, stackTrace) {
+            state = AsyncValue.error(error, stackTrace);
           },
         );
   }
@@ -56,7 +58,17 @@ class FavoriteIdsNotifier extends StateNotifier<AsyncValue<List<String>>> {
       throw ArgumentError('Server ID is empty');
     }
 
-    final current = state.value ?? [];
+    if (_pendingToggles.contains(serverId)) {
+      AppLogger.warning(
+        'FavoriteIdsNotifier',
+        'Ignored duplicate toggle while request is pending for serverId=$serverId.',
+      );
+      return;
+    }
+
+    _pendingToggles.add(serverId);
+
+    final current = List<String>.from(state.value ?? <String>[]);
     final isFavorite = current.contains(serverId);
 
     final updated = isFavorite
@@ -71,9 +83,19 @@ class FavoriteIdsNotifier extends StateNotifier<AsyncValue<List<String>>> {
       } else {
         await _repository.saveFavorite(userId: userId, serverId: serverId);
       }
-    } catch (e) {
+    } catch (error, stackTrace) {
       state = AsyncValue.data(current);
+
+      AppLogger.error(
+        'FavoriteIdsNotifier',
+        'Failed to toggle favorite for serverId=$serverId.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
       rethrow;
+    } finally {
+      _pendingToggles.remove(serverId);
     }
   }
 
