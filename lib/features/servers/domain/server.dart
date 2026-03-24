@@ -24,9 +24,7 @@ class Server {
     ]);
 
     return Server(
-      id: resolvedId.isNotEmpty
-          ? resolvedId
-          : _readString(json, const ['Name'], fallback: 'unknown-server'),
+      id: resolvedId,
       name: _readString(json, const ['Name'], fallback: 'Unknown Server'),
       map: _readString(json, const ['MapName'], fallback: 'Unknown Map'),
       players: _readInt(json, const ['NumPlayers']),
