@@ -29,7 +29,9 @@ final favoriteServersProvider = Provider.autoDispose<AsyncValue<List<Server>>>((
   final favoriteIds = favoriteIdsAsync.value ?? [];
   final servers = serversAsync.value ?? [];
 
-  final filtered = servers.where((s) => favoriteIds.contains(s.id)).toList();
+  final filtered = servers
+      .where((server) => favoriteIds.contains(server.id))
+      .toList();
 
   return AsyncValue.data(filtered);
 });

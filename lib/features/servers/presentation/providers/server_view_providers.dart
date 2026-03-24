@@ -5,8 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../favorites/presentation/controllers/favorites_controller.dart';
 import '../../domain/server.dart';
 import '../controllers/server_search_controller.dart';
-import '../utils/server_filters.dart';
+import '../utils/server_filter_cache.dart';
 import '../utils/server_lookup.dart';
+
+final serverFilterCacheProvider = Provider.autoDispose<ServerFilterCache>((
+  ref,
+) {
+  return ServerFilterCache();
+});
 
 final filteredServersProvider = Provider.autoDispose<AsyncValue<List<Server>>>((
   ref,
@@ -16,30 +22,27 @@ final filteredServersProvider = Provider.autoDispose<AsyncValue<List<Server>>>((
   );
 
   final serversAsync = ref.watch(serversProvider);
+  final filterCache = ref.watch(serverFilterCacheProvider);
 
   return serversAsync.whenData(
-    (servers) => ServerFilters.byQuery(servers: servers, query: query),
+    (servers) => filterCache.filter(servers: servers, query: query),
   );
 });
 
-final serverByIdProvider = Provider.family<AsyncValue<Server?>, String>((
-  ref,
-  serverId,
-) {
-  final serversAsync = ref.watch(serversProvider);
+final serverByIdProvider = Provider.autoDispose
+    .family<AsyncValue<Server?>, String>((ref, serverId) {
+      final serversAsync = ref.watch(serversProvider);
 
-  return serversAsync.whenData(
-    (servers) => ServerLookup.byId(servers, serverId),
-  );
-});
+      return serversAsync.whenData(
+        (servers) => ServerLookup.byId(servers, serverId),
+      );
+    });
 
-final isFavoriteServerProvider = Provider.family<AsyncValue<bool>, String>((
-  ref,
-  serverId,
-) {
-  final favoriteIdsAsync = ref.watch(favoriteIdsProvider);
+final isFavoriteServerProvider = Provider.autoDispose
+    .family<AsyncValue<bool>, String>((ref, serverId) {
+      final favoriteIdsAsync = ref.watch(favoriteIdsProvider);
 
-  return favoriteIdsAsync.whenData((favoriteIds) {
-    return favoriteIds.contains(serverId);
-  });
-});
+      return favoriteIdsAsync.whenData((favoriteIds) {
+        return favoriteIds.contains(serverId);
+      });
+    });
