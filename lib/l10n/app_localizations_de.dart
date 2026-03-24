@@ -150,7 +150,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get french => 'Französisch';
 
   @override
-  String get genericError => 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.';
+  String get genericError =>
+      'Ein Fehler ist aufgetreten. Bitte versuche es erneut.';
 
   @override
   String get loading => 'Lädt';
@@ -177,7 +178,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get welcomeBack => 'Willkommen zurück';
 
   @override
-  String get signInToContinue => 'Melde dich an, um mit deinen gespeicherten Daten fortzufahren.';
+  String get signInToContinue =>
+      'Melde dich an, um mit deinen gespeicherten Daten fortzufahren.';
 
   @override
   String get createAccount => 'Konto erstellen';
@@ -186,7 +188,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get createYourAccount => 'Erstelle dein Konto';
 
   @override
-  String get signUpToSaveFavorites => 'Registriere dich, um deine Favoriten geräteübergreifend zu speichern.';
+  String get signUpToSaveFavorites =>
+      'Registriere dich, um deine Favoriten geräteübergreifend zu speichern.';
 
   @override
   String get account => 'Konto';
@@ -201,7 +204,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get authMissingEmailOrPassword => 'Bitte gib E-Mail und Passwort ein.';
 
   @override
-  String get authInvalidEmailFormat => 'Bitte gib eine gültige E-Mail-Adresse ein.';
+  String get authInvalidEmailFormat =>
+      'Bitte gib eine gültige E-Mail-Adresse ein.';
 
   @override
   String get authUserDisabled => 'Dieses Konto wurde deaktiviert.';
@@ -213,34 +217,41 @@ class AppLocalizationsDe extends AppLocalizations {
   String get networkError => 'Netzwerkfehler. Bitte versuche es erneut.';
 
   @override
-  String get authWeakPassword => 'Das Passwort muss mindestens 6 Zeichen lang sein.';
+  String get authWeakPassword =>
+      'Das Passwort muss mindestens 6 Zeichen lang sein.';
 
   @override
   String get authEmailAlreadyInUse => 'Diese E-Mail wird bereits verwendet.';
 
   @override
-  String get aboutBody => 'ASA Server Eye ist eine Companion-App für ARK: Survival Ascended. Die App zeigt Serverinformationen, unterstützt Favoriten und bildet die Grundlage für spätere Funktionen wie Watchlist, Benachrichtigungen und Premium-Features.\n\nVerantwortlich für Entwicklung und Betrieb:\nMichael Winkler\nE-Mail: Jchillah@gmail.com';
+  String get aboutBody =>
+      'ASA Server Eye ist eine Companion-App für ARK: Survival Ascended. Die App zeigt Serverinformationen, unterstützt Favoriten und bildet die Grundlage für spätere Funktionen wie Watchlist, Benachrichtigungen und Premium-Features.\n\nVerantwortlich für Entwicklung und Betrieb:\nMichael Winkler\nE-Mail: Jchillah@gmail.com';
 
   @override
-  String get privacyBody => 'Datenschutzerklärung\n\nVerantwortlich für die Datenverarbeitung:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nE-Mail: Jchillah@gmail.com\n\nDiese App verwendet Firebase Authentication zur Anmeldung von Nutzerkonten, Cloud Firestore zum Speichern persönlicher Favoriten sowie Google AdMob zur Auslieferung von Werbung.\n\nDabei können je nach Nutzung technische Daten verarbeitet werden, insbesondere Kontodaten, Geräteinformationen, App-Interaktionen, Kennungen, Diagnoseinformationen und werbebezogene Daten. Favoriten werden nutzerbezogen gespeichert, damit sie nach einem erneuten Start der App und auf mehreren Geräten verfügbar bleiben.\n\nDie Verarbeitung erfolgt zur Bereitstellung der App-Funktionen, zur Authentifizierung, zur Speicherung nutzerbezogener Einstellungen und zur Finanzierung der App über Werbung.\n\nEs kann nicht ausgeschlossen werden, dass eingesetzte Drittanbieter Daten außerhalb der Europäischen Union verarbeiten. Maßgeblich sind insoweit auch die Datenschutzinformationen der jeweils eingebundenen Dienste, insbesondere von Google Firebase und Google AdMob.\n\nBei Fragen zum Datenschutz oder zur Löschung deiner Daten kontaktiere bitte:\nJchillah@gmail.com\n\nHinweis: Vor einem endgültigen öffentlichen Release sollte diese Datenschutzerklärung noch einmal rechtlich geprüft und um vollständige Angaben zu Rechtsgrundlagen, Speicherdauer, Betroffenenrechten und allen eingebundenen Diensten ergänzt werden.';
+  String get privacyBody =>
+      'Datenschutzerklärung\n\nVerantwortlich für die Datenverarbeitung:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nE-Mail: Jchillah@gmail.com\n\nDiese App verwendet Firebase Authentication zur Anmeldung von Nutzerkonten, Cloud Firestore zum Speichern persönlicher Favoriten sowie Google AdMob zur Auslieferung von Werbung.\n\nDabei können je nach Nutzung technische Daten verarbeitet werden, insbesondere Kontodaten, Geräteinformationen, App-Interaktionen, Kennungen, Diagnoseinformationen und werbebezogene Daten. Favoriten werden nutzerbezogen gespeichert, damit sie nach einem erneuten Start der App und auf mehreren Geräten verfügbar bleiben.\n\nDie Verarbeitung erfolgt zur Bereitstellung der App-Funktionen, zur Authentifizierung, zur Speicherung nutzerbezogener Einstellungen und zur Finanzierung der App über Werbung.\n\nEs kann nicht ausgeschlossen werden, dass eingesetzte Drittanbieter Daten außerhalb der Europäischen Union verarbeiten. Maßgeblich sind insoweit auch die Datenschutzinformationen der jeweils eingebundenen Dienste, insbesondere von Google Firebase und Google AdMob.\n\nBei Fragen zum Datenschutz oder zur Löschung deiner Daten kontaktiere bitte:\nJchillah@gmail.com\n\nHinweis: Vor einem endgültigen öffentlichen Release sollte diese Datenschutzerklärung noch einmal rechtlich geprüft und um vollständige Angaben zu Rechtsgrundlagen, Speicherdauer, Betroffenenrechten und allen eingebundenen Diensten ergänzt werden.';
 
   @override
-  String get imprintBody => 'Impressum\n\nAngaben gemäß § 5 TMG / § 18 MStV\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nDeutschland\n\nE-Mail:\nJchillah@gmail.com\n\nVerantwortlich für den Inhalt:\nMichael Winkler';
+  String get imprintBody =>
+      'Impressum\n\nAngaben gemäß § 5 TMG / § 18 MStV\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nDeutschland\n\nE-Mail:\nJchillah@gmail.com\n\nVerantwortlich für den Inhalt:\nMichael Winkler';
 
   @override
-  String get supportBody => 'Support\n\nBei Fragen, Problemen oder Feedback zur App kontaktiere bitte:\n\nMichael Winkler\nE-Mail: Jchillah@gmail.com\n\nBitte beschreibe dein Problem möglichst genau und nenne dabei möglichst auch dein Gerät sowie die verwendete App-Version.';
+  String get supportBody =>
+      'Support\n\nBei Fragen, Problemen oder Feedback zur App kontaktiere bitte:\n\nMichael Winkler\nE-Mail: Jchillah@gmail.com\n\nBitte beschreibe dein Problem möglichst genau und nenne dabei möglichst auch dein Gerät sowie die verwendete App-Version.';
 
   @override
   String get contactSupport => 'Support kontaktieren';
 
   @override
-  String get emailAppCouldNotBeOpened => 'E-Mail-App konnte nicht geöffnet werden.';
+  String get emailAppCouldNotBeOpened =>
+      'E-Mail-App konnte nicht geöffnet werden.';
 
   @override
   String get supportEmailSubject => 'ASA Server Eye Support';
 
   @override
-  String get supportEmailBodyTemplate => 'Hallo Michael,\n\nich habe folgendes Problem:\n\n\n---\nApp-Version:\nGerät:\n';
+  String get supportEmailBodyTemplate =>
+      'Hallo Michael,\n\nich habe folgendes Problem:\n\n\n---\nApp-Version:\nGerät:\n';
 
   @override
   String get fullPrivacyPolicy => 'Vollständige Datenschutzerklärung';

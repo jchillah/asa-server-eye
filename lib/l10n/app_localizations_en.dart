@@ -186,7 +186,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createYourAccount => 'Create your account';
 
   @override
-  String get signUpToSaveFavorites => 'Sign up to save your favorites across devices.';
+  String get signUpToSaveFavorites =>
+      'Sign up to save your favorites across devices.';
 
   @override
   String get account => 'Account';
@@ -198,7 +199,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signOutDescription => 'Log out of your current account';
 
   @override
-  String get authMissingEmailOrPassword => 'Please enter your email and password.';
+  String get authMissingEmailOrPassword =>
+      'Please enter your email and password.';
 
   @override
   String get authInvalidEmailFormat => 'Please enter a valid email address.';
@@ -219,16 +221,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authEmailAlreadyInUse => 'This email is already in use.';
 
   @override
-  String get aboutBody => 'ASA Server Eye is a companion app for ARK: Survival Ascended. The app shows server information, supports favorites, and provides the foundation for future features such as watchlists, notifications, and premium features.\n\nDeveloped and operated by:\nMichael Winkler\nEmail: Jchillah@gmail.com';
+  String get aboutBody =>
+      'ASA Server Eye is a companion app for ARK: Survival Ascended. The app shows server information, supports favorites, and provides the foundation for future features such as watchlists, notifications, and premium features.\n\nDeveloped and operated by:\nMichael Winkler\nEmail: Jchillah@gmail.com';
 
   @override
-  String get privacyBody => 'Privacy Policy\n\nController responsible for data processing:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\nEmail: Jchillah@gmail.com\n\nThis app uses Firebase Authentication for account sign-in, Cloud Firestore to store personal favorites, and Google AdMob to serve ads.\n\nDepending on how the app is used, technical data may be processed, including account data, device information, app interactions, identifiers, diagnostics, and advertising-related data. Favorites are stored per user so they remain available after restarting the app and across multiple devices.\n\nProcessing is carried out to provide app functionality, authenticate users, store user-related settings, and finance the app through advertising.\n\nIt cannot be ruled out that integrated third-party services process data outside the European Union. In this respect, the privacy information of the respective services applies, especially Google Firebase and Google AdMob.\n\nFor privacy-related questions or deletion requests, please contact:\nJchillah@gmail.com\n\nNote: Before a final public release, this privacy policy should be reviewed and expanded with full details on legal bases, retention periods, user rights, and all integrated services.';
+  String get privacyBody =>
+      'Privacy Policy\n\nController responsible for data processing:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\nEmail: Jchillah@gmail.com\n\nThis app uses Firebase Authentication for account sign-in, Cloud Firestore to store personal favorites, and Google AdMob to serve ads.\n\nDepending on how the app is used, technical data may be processed, including account data, device information, app interactions, identifiers, diagnostics, and advertising-related data. Favorites are stored per user so they remain available after restarting the app and across multiple devices.\n\nProcessing is carried out to provide app functionality, authenticate users, store user-related settings, and finance the app through advertising.\n\nIt cannot be ruled out that integrated third-party services process data outside the European Union. In this respect, the privacy information of the respective services applies, especially Google Firebase and Google AdMob.\n\nFor privacy-related questions or deletion requests, please contact:\nJchillah@gmail.com\n\nNote: Before a final public release, this privacy policy should be reviewed and expanded with full details on legal bases, retention periods, user rights, and all integrated services.';
 
   @override
-  String get imprintBody => 'Imprint / Legal Notice\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\n\nEmail:\nJchillah@gmail.com\n\nResponsible for content:\nMichael Winkler';
+  String get imprintBody =>
+      'Imprint / Legal Notice\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\n\nEmail:\nJchillah@gmail.com\n\nResponsible for content:\nMichael Winkler';
 
   @override
-  String get supportBody => 'Support\n\nFor questions, issues, or feedback about the app, please contact:\n\nMichael Winkler\nEmail: Jchillah@gmail.com\n\nPlease describe your issue as precisely as possible and include your device and app version if available.';
+  String get supportBody =>
+      'Support\n\nFor questions, issues, or feedback about the app, please contact:\n\nMichael Winkler\nEmail: Jchillah@gmail.com\n\nPlease describe your issue as precisely as possible and include your device and app version if available.';
 
   @override
   String get contactSupport => 'Contact support';
@@ -240,7 +246,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportEmailSubject => 'ASA Server Eye Support';
 
   @override
-  String get supportEmailBodyTemplate => 'Hello Michael,\n\nI have the following issue:\n\n\n---\nApp version:\nDevice:\n';
+  String get supportEmailBodyTemplate =>
+      'Hello Michael,\n\nI have the following issue:\n\n\n---\nApp version:\nDevice:\n';
 
   @override
   String get fullPrivacyPolicy => 'Full Privacy Policy';

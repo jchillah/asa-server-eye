@@ -1,7 +1,7 @@
 // features/servers/data/server_repository.dart
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 
+import '../../../core/utils/app_logger.dart';
 import '../domain/server.dart';
 
 class ServerRepository {
@@ -15,42 +15,49 @@ class ServerRepository {
   Future<List<Server>> fetchServers() async {
     try {
       final response = await _dio.get(_url);
-
       final data = response.data;
 
       if (data is! List) {
-        throw Exception('Invalid server response');
+        throw const FormatException('Invalid server response format.');
       }
 
-      final servers = data.map<Server>((json) {
-        final id = json['SessionID']?.toString();
+      final servers = <Server>[];
 
-        if (id == null || id.isEmpty) {
-          debugPrint('⚠️ Server ohne gültige ID: ${json['Name']}');
+      for (final item in data) {
+        if (item is! Map<String, dynamic>) {
+          AppLogger.warning(
+            'ServerRepository',
+            'Skipped invalid server item because it is not a JSON object.',
+          );
+          continue;
         }
 
-        final safeId = id != null && id.isNotEmpty
-            ? id
-            : json['Name']?.toString() ??
-                  DateTime.now().millisecondsSinceEpoch.toString();
+        final server = Server.fromJson(item);
 
-        return Server(
-          id: safeId,
-          name: json['Name'] ?? 'Unknown Server',
-          map: json['MapName'] ?? 'Unknown Map',
-          players: json['NumPlayers'] ?? 0,
-          maxPlayers: json['MaxPlayers'] ?? 0,
+        if (server.id.isEmpty) {
+          AppLogger.warning(
+            'ServerRepository',
+            'Skipped server because no stable id could be resolved.',
+          );
+          continue;
+        }
 
-          official: json['IsOfficial'] == 1 || json['IsOfficial'] == '1',
-        );
-      }).toList();
+        servers.add(server);
+      }
 
-      debugPrint('✅ Loaded servers: ${servers.length}');
+      AppLogger.info(
+        'ServerRepository',
+        'Loaded ${servers.length} servers successfully.',
+      );
 
       return servers;
-    } catch (e, stack) {
-      debugPrint('🔥 SERVER FETCH ERROR: $e');
-      debugPrintStack(stackTrace: stack);
+    } catch (error, stackTrace) {
+      AppLogger.error(
+        'ServerRepository',
+        'Failed to fetch servers.',
+        error: error,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }

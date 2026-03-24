@@ -6,15 +6,15 @@ import '../../data/server_repository.dart';
 import '../../domain/server.dart';
 import '../controllers/server_sync_controller.dart';
 
-final dioProvider = Provider<Dio>((ref) {
+final dioProvider = Provider.autoDispose<Dio>((ref) {
   return Dio();
 });
 
-final serverRepositoryProvider = Provider<ServerRepository>((ref) {
+final serverRepositoryProvider = Provider.autoDispose<ServerRepository>((ref) {
   final dio = ref.watch(dioProvider);
   return ServerRepository(dio);
 });
 
-final serversProvider = Provider<AsyncValue<List<Server>>>((ref) {
+final serversProvider = Provider.autoDispose<AsyncValue<List<Server>>>((ref) {
   return ref.watch(serverSyncControllerProvider);
 });
