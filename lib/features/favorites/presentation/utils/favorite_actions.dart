@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import '../../../../core/extensions/context_l10n.dart';
+import '../../../../core/utils/app_logger.dart';
 import '../controllers/favorites_controller.dart';
 
 abstract final class FavoriteActions {
@@ -14,9 +15,11 @@ abstract final class FavoriteActions {
     required bool isFavorite,
   }) async {
     try {
-      await ref.read(favoritesControllerProvider).toggleFavorite(serverId);
+      await ref.read(favoriteIdsProvider.notifier).toggle(serverId);
 
-      if (!context.mounted) return;
+      if (!context.mounted) {
+        return;
+      }
 
       final message = isFavorite
           ? context.l10n.removedFromFavorites
@@ -25,8 +28,17 @@ abstract final class FavoriteActions {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(message)));
-    } catch (_) {
-      if (!context.mounted) return;
+    } catch (error, stackTrace) {
+      AppLogger.error(
+        'FavoriteActions',
+        'Failed to toggle favorite.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
+      if (!context.mounted) {
+        return;
+      }
 
       ScaffoldMessenger.of(
         context,
@@ -80,14 +92,22 @@ abstract final class FavoriteActions {
     }
 
     try {
-      await ref.read(favoritesControllerProvider).removeFavorite(serverId);
+      await ref.read(favoriteIdsProvider.notifier).toggle(serverId);
       return true;
-    } catch (_) {
+    } catch (error, stackTrace) {
+      AppLogger.error(
+        'FavoriteActions',
+        'Failed to remove favorite.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
       if (context.mounted) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(context.l10n.genericError)));
       }
+
       return false;
     }
   }

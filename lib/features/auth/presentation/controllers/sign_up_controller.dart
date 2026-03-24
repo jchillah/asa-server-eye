@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
+import '../../../../core/utils/app_logger.dart';
 import '../../data/auth_repository.dart';
 import '../providers/auth_providers.dart';
 import '../utils/auth_error_mapper.dart';
@@ -52,7 +53,19 @@ class SignUpController {
     try {
       await _repository.signUp(email: email.trim(), password: password);
       return null;
-    } on FirebaseAuthException catch (error) {
+    } on FirebaseAuthException catch (error, stackTrace) {
+      AppLogger.warning(
+        'SignUpController',
+        'FirebaseAuthException during sign-up: ${error.code}',
+      );
+
+      AppLogger.error(
+        'SignUpController',
+        'Sign-up failed with FirebaseAuthException.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
       return AuthErrorMapper.mapSignUpError(
         code: error.code,
         invalidEmailFormat: l10n.authInvalidEmailFormat,
@@ -61,7 +74,23 @@ class SignUpController {
         networkError: l10n.networkError,
         genericError: l10n.genericError,
       );
-    } catch (_) {
+    } on FirebaseException catch (error, stackTrace) {
+      AppLogger.error(
+        'SignUpController',
+        'Sign-up failed with FirebaseException.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
+      return error.message ?? l10n.genericError;
+    } catch (error, stackTrace) {
+      AppLogger.error(
+        'SignUpController',
+        'Unexpected sign-up error.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
       return l10n.genericError;
     }
   }

@@ -2,5 +2,5 @@
 class AppContact {
   const AppContact._();
 
-  static const String supportEmail = 'michael.winkler.developer@gmail.com';
+  static const String supportEmail = 'asa.server.eye@gmail.com';
 }
