@@ -1,5 +1,7 @@
+// l10n/app_localizations_es.dart
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -226,19 +228,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get aboutBody =>
-      'ASA Server Eye es una aplicación complementaria para ARK: Survival Ascended. La aplicación muestra información de servidores, admite favoritos y constituye la base para futuras funciones como listas de seguimiento, notificaciones y funciones premium.\n\nDesarrollado y operado por:\nMichael Winkler\nCorreo electrónico: Jchillah@gmail.com';
+      'ASA Server Eye es una aplicación complementaria para ARK: Survival Ascended. La aplicación muestra información de servidores, admite favoritos y constituye la base para futuras funciones como listas de seguimiento, notificaciones y funciones premium.\n\nDesarrollado y operado por:\nMichael Winkler\nCorreo electrónico: asa.server.eye@gmail.com';
 
   @override
   String get privacyBody =>
-      'Política de privacidad\n\nResponsable del tratamiento de datos:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAlemania\nCorreo electrónico: Jchillah@gmail.com\n\nEsta aplicación utiliza Firebase Authentication para el inicio de sesión, Cloud Firestore para almacenar favoritos personales y Google AdMob para mostrar anuncios.\n\nDependiendo del uso de la aplicación, pueden procesarse datos técnicos, incluidos datos de cuenta, información del dispositivo, interacciones con la aplicación, identificadores, datos de diagnóstico y datos relacionados con la publicidad. Los favoritos se almacenan por usuario para que sigan disponibles después de reiniciar la aplicación y en varios dispositivos.\n\nEl tratamiento se realiza para proporcionar la funcionalidad de la aplicación, autenticar usuarios, guardar ajustes relacionados con el usuario y financiar la aplicación mediante publicidad.\n\nNo puede descartarse que los servicios de terceros integrados procesen datos fuera de la Unión Europea. En este sentido, también se aplican las políticas de privacidad de los servicios utilizados, en particular Google Firebase y Google AdMob.\n\nPara preguntas relacionadas con la privacidad o solicitudes de eliminación de datos, contacta con:\nJchillah@gmail.com\n\nNota: Antes de una publicación pública definitiva, esta política de privacidad debería revisarse y ampliarse con información completa sobre bases legales, plazos de conservación, derechos de los usuarios y todos los servicios integrados.';
+      'Política de privacidad\n\nResponsable del tratamiento de datos:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAlemania\nCorreo electrónico: asa.server.eye@gmail.com\n\nEsta aplicación utiliza Firebase Authentication para el inicio de sesión, Cloud Firestore para almacenar favoritos personales y Google AdMob para mostrar anuncios.\n\nDependiendo del uso de la aplicación, pueden procesarse datos técnicos, incluidos datos de cuenta, información del dispositivo, interacciones con la aplicación, identificadores, datos de diagnóstico y datos relacionados con la publicidad. Los favoritos se almacenan por usuario para que sigan disponibles después de reiniciar la aplicación y en varios dispositivos.\n\nEl tratamiento se realiza para proporcionar la funcionalidad de la aplicación, autenticar usuarios, guardar ajustes relacionados con el usuario y financiar la aplicación mediante publicidad.\n\nNo puede descartarse que los servicios de terceros integrados procesen datos fuera de la Unión Europea. En este sentido, también se aplican las políticas de privacidad de los servicios utilizados, en particular Google Firebase y Google AdMob.\n\nPara preguntas relacionadas con la privacidad o solicitudes de eliminación de datos, contacta con:\nasa.server.eye@gmail.com\n\nNota: Antes de una publicación pública definitiva, esta política de privacidad debería revisarse y ampliarse con información completa sobre bases legales, plazos de conservación, derechos de los usuarios y todos los servicios integrados.';
 
   @override
   String get imprintBody =>
-      'Aviso legal\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAlemania\n\nCorreo electrónico:\nJchillah@gmail.com\n\nResponsable del contenido:\nMichael Winkler';
+      'Aviso legal\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAlemania\n\nCorreo electrónico:\nasa.server.eye@gmail.com\n\nResponsable del contenido:\nMichael Winkler';
 
   @override
   String get supportBody =>
-      'Soporte\n\nPara preguntas, problemas o comentarios sobre la aplicación, contacta con:\n\nMichael Winkler\nCorreo electrónico: Jchillah@gmail.com\n\nDescribe tu problema lo más exactamente posible e incluye tu dispositivo y la versión de la aplicación si es posible.';
+      'Soporte\n\nPara preguntas, problemas o comentarios sobre la aplicación, contacta con:\n\nMichael Winkler\nCorreo electrónico: asa.server.eye@gmail.com\n\nDescribe tu problema lo más exactamente posible e incluye tu dispositivo y la versión de la aplicación si es posible.';
 
   @override
   String get contactSupport => 'Contactar con soporte';
