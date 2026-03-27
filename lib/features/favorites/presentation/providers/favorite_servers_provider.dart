@@ -1,13 +1,19 @@
 // features/favorites/presentation/providers/favorite_servers_provider.dart
+import 'package:asa_server_eye/features/servers/presentation/providers/servers_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../servers/domain/server.dart';
-import '../../../servers/presentation/providers/server_providers.dart';
 import '../controllers/favorites_controller.dart';
 
-final favoriteServersProvider = Provider<AsyncValue<List<Server>>>((ref) {
+final favoriteServersProvider = Provider.autoDispose<AsyncValue<List<Server>>>((
+  ref,
+) {
   final favoriteIdsAsync = ref.watch(favoriteIdsProvider);
   final serversAsync = ref.watch(serversProvider);
+
+  if (favoriteIdsAsync.isLoading || serversAsync.isLoading) {
+    return const AsyncValue.loading();
+  }
 
   if (favoriteIdsAsync.hasError) {
     return AsyncValue.error(
@@ -20,16 +26,10 @@ final favoriteServersProvider = Provider<AsyncValue<List<Server>>>((ref) {
     return AsyncValue.error(serversAsync.error!, serversAsync.stackTrace!);
   }
 
-  if (favoriteIdsAsync.isLoading || serversAsync.isLoading) {
-    return const AsyncValue.loading();
-  }
+  final favoriteIds = favoriteIdsAsync.value ?? [];
+  final servers = serversAsync.value ?? [];
 
-  final favoriteIds = favoriteIdsAsync.value ?? <String>[];
-  final servers = serversAsync.value ?? <Server>[];
+  final filtered = servers.where((s) => favoriteIds.contains(s.id)).toList();
 
-  final favoriteServers = servers
-      .where((server) => favoriteIds.contains(server.id))
-      .toList();
-
-  return AsyncValue.data(favoriteServers);
+  return AsyncValue.data(filtered);
 });
