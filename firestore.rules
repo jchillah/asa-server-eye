@@ -6,63 +6,164 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function currentUserDocPath() {
+    function currentUserPath() {
       return /databases/$(database)/documents/users/$(request.auth.uid);
     }
 
     function currentUserDocExists() {
-      return isSignedIn() && exists(currentUserDocPath());
+      return isSignedIn() && exists(currentUserPath());
     }
 
-    function currentUserAccessLevel() {
+    function currentAccessLevel() {
       return currentUserDocExists()
-        ? get(currentUserDocPath()).data.sightingsAccessLevel
-        : 'free';
-    }
-
-    function allowedVisibilityLevelForCurrentUser() {
-      return currentUserAccessLevel() == 'admin'
-        ? 'admin'
-        : currentUserAccessLevel() == 'premium'
-          ? 'premium'
+          ? get(currentUserPath()).data.sightingsAccessLevel
           : 'free';
     }
 
-    function isOwner() {
-      return isSignedIn() && resource.data.createdByUserId == request.auth.uid;
+    function isAdmin() {
+      return currentAccessLevel() == 'admin';
     }
 
-    function isCreateOwner() {
+    function isPremiumOrAdmin() {
+      return currentAccessLevel() == 'premium' || isAdmin();
+    }
+
+    function isOwner(data) {
+      return isSignedIn() && data.createdByUserId == request.auth.uid;
+    }
+
+    function canReadSighting(data) {
+      return isAdmin()
+        || isOwner(data)
+        || (
+          data.isVisible == true
+          && data.sharingScope == 'premiumShared'
+          && isPremiumOrAdmin()
+        );
+    }
+
+    function hasOnlySightingKeys() {
+      return request.resource.data.keys().hasOnly([
+        'serverId',
+        'playerId',
+        'inGameName',
+        'tribeName',
+        'platform',
+        'createdAt',
+        'createdByUserId',
+        'createdByUsername',
+        'createdByEmail',
+        'creatorLevel',
+        'sharingScope',
+        'isVisible',
+        'note',
+        'updatedAt',
+        'updatedByUserId',
+        'deletedAt',
+        'deletedByUserId',
+        'deleteReason'
+      ]);
+    }
+
+    function isValidPlatform() {
+      return request.resource.data.platform in ['steam', 'xbox', 'psn', 'unknown'];
+    }
+
+    function isValidCreatorLevel() {
+      return request.resource.data.creatorLevel in ['free', 'premium', 'admin'];
+    }
+
+    function isValidSharingScope() {
+      return request.resource.data.sharingScope in ['ownerOnly', 'premiumShared', 'adminOnly'];
+    }
+
+    function isValidBaseSightingWrite() {
+      return hasOnlySightingKeys()
+        && request.resource.data.serverId is string
+        && request.resource.data.serverId.size() > 0
+        && request.resource.data.playerId is string
+        && request.resource.data.playerId.size() > 0
+        && request.resource.data.inGameName is string
+        && request.resource.data.inGameName.size() > 0
+        && request.resource.data.tribeName is string
+        && request.resource.data.tribeName.size() > 0
+        && request.resource.data.createdByUserId is string
+        && request.resource.data.createdByUserId == request.auth.uid
+        && request.resource.data.createdByUsername is string
+        && request.resource.data.createdByUsername.size() > 0
+        && request.resource.data.createdByEmail is string
+        && request.resource.data.createdByEmail.size() > 0
+        && isValidPlatform()
+        && isValidCreatorLevel()
+        && isValidSharingScope()
+        && request.resource.data.isVisible is bool;
+    }
+
+    function isAllowedCreateForRole() {
+      return (
+        currentAccessLevel() == 'free'
+        && request.resource.data.creatorLevel == 'free'
+        && request.resource.data.sharingScope == 'ownerOnly'
+      ) || (
+        currentAccessLevel() == 'premium'
+        && request.resource.data.creatorLevel == 'premium'
+        && request.resource.data.sharingScope in ['ownerOnly', 'premiumShared']
+      ) || (
+        currentAccessLevel() == 'admin'
+        && request.resource.data.creatorLevel == 'admin'
+      );
+    }
+
+    function isValidCreate() {
       return isSignedIn()
-        && request.resource.data.createdByUserId == request.auth.uid;
+        && isValidBaseSightingWrite()
+        && request.resource.data.updatedAt == null
+        && request.resource.data.updatedByUserId == null
+        && request.resource.data.deletedAt == null
+        && request.resource.data.deletedByUserId == null
+        && request.resource.data.deleteReason == null
+        && request.resource.data.isVisible == true
+        && isAllowedCreateForRole();
     }
 
-    function isOwnerEdit() {
-      return isOwner()
+    function isValidOwnerUpdate() {
+      return isOwner(resource.data)
         && request.resource.data.serverId == resource.data.serverId
-        && request.resource.data.createdByUserId == resource.data.createdByUserId
-        && request.resource.data.visibilityLevel == resource.data.visibilityLevel
         && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.createdByUserId == resource.data.createdByUserId
+        && request.resource.data.createdByUsername == resource.data.createdByUsername
+        && request.resource.data.createdByEmail == resource.data.createdByEmail
+        && request.resource.data.creatorLevel == resource.data.creatorLevel
         && request.resource.data.isVisible == resource.data.isVisible
         && request.resource.data.deletedAt == resource.data.deletedAt
         && request.resource.data.deletedByUserId == resource.data.deletedByUserId
-        && request.resource.data.deleteReason == resource.data.deleteReason;
+        && request.resource.data.deleteReason == resource.data.deleteReason
+        && (
+          resource.data.creatorLevel == 'free'
+            ? request.resource.data.sharingScope == 'ownerOnly'
+            : resource.data.creatorLevel == 'premium'
+              ? request.resource.data.sharingScope in ['ownerOnly', 'premiumShared']
+              : true
+        );
     }
 
-    function isSoftDeleteByOwner() {
-      return isOwner()
+    function isValidSoftDelete() {
+      return (isOwner(resource.data) || isAdmin())
+        && request.resource.data.serverId == resource.data.serverId
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.createdByUserId == resource.data.createdByUserId
+        && request.resource.data.createdByUsername == resource.data.createdByUsername
+        && request.resource.data.createdByEmail == resource.data.createdByEmail
+        && request.resource.data.creatorLevel == resource.data.creatorLevel
+        && request.resource.data.playerId == resource.data.playerId
+        && request.resource.data.inGameName == resource.data.inGameName
+        && request.resource.data.tribeName == resource.data.tribeName
+        && request.resource.data.platform == resource.data.platform
+        && request.resource.data.sharingScope == resource.data.sharingScope
         && request.resource.data.isVisible == false
         && request.resource.data.deletedByUserId == request.auth.uid
         && request.resource.data.deleteReason is string
-        && request.resource.data.deleteReason.size() > 0
-        && request.resource.data.serverId == resource.data.serverId
-        && request.resource.data.createdByUserId == resource.data.createdByUserId
-        && request.resource.data.visibilityLevel == resource.data.visibilityLevel
-        && request.resource.data.sharingScope == resource.data.sharingScope
-        && request.resource.data.playerName == resource.data.playerName
-        && request.resource.data.playerId == resource.data.playerId
-        && request.resource.data.platform == resource.data.platform
-        && request.resource.data.createdAt == resource.data.createdAt;
+        && request.resource.data.deleteReason.size() > 0;
     }
 
     function isValidHistoryAction() {
@@ -102,19 +203,14 @@ service cloud.firestore {
       }
     }
 
-    match /player_sightings/{document} {
-      allow read: if isSignedIn();
-
-      allow create: if isSignedIn()
-        && isCreateOwner()
-        && request.resource.data.visibilityLevel == allowedVisibilityLevelForCurrentUser();
-
-      allow update: if isSignedIn() && (isOwnerEdit() || isSoftDeleteByOwner());
-
+    match /player_sightings/{documentId} {
+      allow read: if isSignedIn() && canReadSighting(resource.data);
+      allow create: if isValidCreate();
+      allow update: if isSignedIn() && (isValidOwnerUpdate() || isValidSoftDelete());
       allow delete: if false;
     }
 
-    match /player_sighting_history/{document} {
+    match /player_sighting_history/{documentId} {
       allow read: if isSignedIn();
       allow create: if isValidHistoryWrite();
       allow update, delete: if false;

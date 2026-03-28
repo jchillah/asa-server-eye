@@ -68,7 +68,7 @@ android/key.properties
 # Firebase local / logs
 .firebase/
 firebase-debug.log
-firebase.json
+*firebase.json
 .firebaserc
 
 # Gradle / build reports
