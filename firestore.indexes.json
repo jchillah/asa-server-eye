@@ -45,7 +45,11 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "serverId",
+          "fieldPath": "isVisible",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "sharingScope",
           "order": "ASCENDING"
         },
         {

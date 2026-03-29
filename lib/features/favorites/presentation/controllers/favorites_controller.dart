@@ -1,7 +1,7 @@
 // features/favorites/presentation/controllers/favorites_controller.dart
 import 'dart:async';
 
-import 'package:asa_server_eye/features/auth/presentation/providers/auth_providers.dart';
+import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/utils/app_logger.dart';

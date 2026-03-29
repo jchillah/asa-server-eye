@@ -1,19 +1,12 @@
 // features/auth/presentation/controllers/sign_up_controller.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
 import '../../../../core/utils/app_logger.dart';
 import '../../data/auth_repository.dart';
-import '../providers/auth_providers.dart';
 import '../utils/auth_error_mapper.dart';
 import '../utils/auth_form_validators.dart';
-
-final signUpControllerProvider = Provider<SignUpController>((ref) {
-  final repository = ref.watch(authRepositoryProvider);
-  return SignUpController(repository);
-});
 
 class SignUpController {
   const SignUpController(this._repository);
@@ -22,11 +15,20 @@ class SignUpController {
 
   Future<String?> signUp({
     required BuildContext context,
+    required String username,
     required String email,
     required String password,
     required String repeatPassword,
   }) async {
     final l10n = context.l10n;
+
+    final usernameError = AuthFormValidators.validateUsername(
+      context,
+      username,
+    );
+    if (usernameError != null) {
+      return usernameError;
+    }
 
     final emailError = AuthFormValidators.validateEmail(context, email);
     if (emailError != null) {
@@ -51,7 +53,11 @@ class SignUpController {
     }
 
     try {
-      await _repository.signUp(email: email.trim(), password: password);
+      await _repository.signUp(
+        username: username.trim(),
+        email: email.trim(),
+        password: password,
+      );
       return null;
     } on FirebaseAuthException catch (error, stackTrace) {
       AppLogger.warning(

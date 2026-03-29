@@ -1,7 +1,7 @@
 // features/sightings/presentation/controllers/delete_player_sighting_controller.dart
+import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../domain/player_sighting.dart';
 import '../providers/sightings_providers.dart';
 

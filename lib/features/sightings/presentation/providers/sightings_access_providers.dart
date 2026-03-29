@@ -1,8 +1,8 @@
 // features/sightings/presentation/providers/sightings_access_providers.dart
+import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../data/models/sightings_user_profile_model.dart';
 import '../../domain/sightings_access_level.dart';
 

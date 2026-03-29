@@ -326,5 +326,79 @@
     "deleteAccount": "删除账户",
     "@deleteAccount": {
         "description": "删除用户账户的按钮"
+    },
+    "profile": "个人资料",
+    "@profile": {
+        "description": "设置中个人资料部分的标题"
+    },
+    "profileLoadError": "无法加载个人资料。",
+    "@profileLoadError": {
+        "description": "加载个人资料失败时显示的错误消息"
+    },
+    "username": "用户名",
+    "@username": {
+        "description": "用户名标签"
+    },
+    "accessLevel": "访问级别",
+    "@accessLevel": {
+        "description": "访问级别标签"
+    },
+    "save": "保存",
+    "@save": {
+        "description": "保存操作"
+    },
+    "profileSavedSuccessfully": "个人资料保存成功。",
+    "@profileSavedSuccessfully": {
+        "description": "个人资料保存成功时显示的消息"
+    },
+    "profileSaveError": "个人资料保存失败。",
+    "@profileSaveError": {
+        "description": "保存个人资料时显示的错误消息"
+    },
+    "profileDeleteError": "账户删除失败。",
+    "@profileDeleteError": {
+        "description": "删除账户时显示的错误消息"
+    },
+    "deleteAccountHint": "删除账户时，个人资料将被移除。已创建的观测记录将被保留。",
+    "@deleteAccountHint": {
+        "description": "删除账户按钮下的提示文本"
+    },
+    "savedFavoritesCount": "{count} 个已保存的收藏",
+    "@savedFavoritesCount": {
+        "description": "已保存的收藏数量",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "usernameEmpty": "请输入用户名。",
+    "@usernameEmpty": {
+        "description": "当用户名为空时显示的错误消息"
+    },
+    "usernameTooShort": "用户名必须至少有 3 个字符。",
+    "@usernameTooShort": {
+        "description": "当用户名太短时显示的错误消息"
+    },
+    "usernameTooLong": "用户名最多可以有 20 个字符。",
+    "@usernameTooLong": {
+        "description": "当用户名太长时显示的错误消息"
+    },
+    "usernameInvalidCharacters": "用户名只能包含字母、数字、点、下划线和连字符。",
+    "@usernameInvalidCharacters": {
+        "description": "当用户名包含无效字符时显示的错误消息"
+    },
+    "deleteAccountDialogTitle": "删除账户",
+    "@deleteAccountDialogTitle": {
+        "description": "删除账户对话框的标题"
+    },
+    "deleteAccountDialogDescription": "请输入 {email} 的密码以删除账户。",
+    "@deleteAccountDialogDescription": {
+        "description": "删除账户对话框的描述",
+        "placeholders": {
+            "email": {
+                "type": "String"
+            }
+        }
     }
 }

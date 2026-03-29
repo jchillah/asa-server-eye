@@ -1,8 +1,8 @@
 // features/sightings/presentation/screens/server_sightings_screen.dart
+import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../domain/sightings_access_level.dart';
 import '../controllers/server_sightings_controller.dart';
 import '../providers/sightings_access_providers.dart';

@@ -326,5 +326,79 @@
   "deleteAccount": "Konto löschen",
   "@deleteAccount": {
     "description": "Button zum Löschen des Benutzerkontos"
+  },
+  "profile": "Profil",
+  "@profile": {
+    "description": "Titel der Profilseite"
+  },
+  "profileLoadError": "Profil konnte nicht geladen werden.",
+  "@profileLoadError": {
+    "description": "Fehlermeldung beim Laden des Profils"
+  },
+  "username": "Benutzername",
+  "@username": {
+    "description": "Beschriftung für Benutzername"
+  },
+  "accessLevel": "Zugriffslevel",
+  "@accessLevel": {
+    "description": "Beschriftung für das Zugriffslevel"
+  },
+  "save": "Speichern",
+  "@save": {
+    "description": "Speichern-Aktion"
+  },
+  "profileSavedSuccessfully": "Profil erfolgreich gespeichert.",
+  "@profileSavedSuccessfully": {
+    "description": "Snackbar nach erfolgreichem Speichern des Profils"
+  },
+  "profileSaveError": "Profil konnte nicht gespeichert werden.",
+  "@profileSaveError": {
+    "description": "Fehlermeldung beim Speichern des Profils"
+  },
+  "profileDeleteError": "Konto konnte nicht gelöscht werden.",
+  "@profileDeleteError": {
+    "description": "Fehlermeldung beim Löschen des Kontos"
+  },
+  "deleteAccountHint": "Beim Löschen wird das Profil entfernt. Bereits erstellte Sightings bleiben erhalten.",
+  "@deleteAccountHint": {
+    "description": "Hinweistext unter dem Button zum Löschen des Kontos"
+  },
+  "savedFavoritesCount": "{count} gespeichert",
+  "@savedFavoritesCount": {
+    "description": "Anzahl gespeicherter Favoriten",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usernameEmpty": "Bitte gib einen Benutzernamen ein.",
+  "@usernameEmpty": {
+    "description": "Fehlermeldung wenn Benutzername leer ist"
+  },
+  "usernameTooShort": "Der Benutzername muss mindestens 3 Zeichen lang sein.",
+  "@usernameTooShort": {
+    "description": "Fehlermeldung wenn Benutzername zu kurz ist"
+  },
+  "usernameTooLong": "Der Benutzername darf maximal 20 Zeichen lang sein.",
+  "@usernameTooLong": {
+    "description": "Fehlermeldung wenn Benutzername zu lang ist"
+  },
+  "usernameInvalidCharacters": "Der Benutzername darf nur Buchstaben, Zahlen, Punkt, Unterstrich und Bindestrich enthalten.",
+  "@usernameInvalidCharacters": {
+    "description": "Fehlermeldung bei ungültigen Zeichen im Benutzernamen"
+  },
+  "deleteAccountDialogTitle": "Konto löschen",
+  "@deleteAccountDialogTitle": {
+    "description": "Titel des Dialogs zum Löschen des Kontos"
+  },
+  "deleteAccountDialogDescription": "Bitte gib dein Passwort für {email} ein, um den Account zu löschen.",
+  "@deleteAccountDialogDescription": {
+    "description": "Beschreibung im Dialog zum Löschen des Kontos",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -1,4 +1,3 @@
-// l10n/app_localizations.dart
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -66,8 +65,7 @@ import 'app_localizations_zh.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -75,8 +73,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -88,13 +85,12 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
@@ -102,7 +98,7 @@ abstract class AppLocalizations {
     Locale('en'),
     Locale('es'),
     Locale('fr'),
-    Locale('zh'),
+    Locale('zh')
   ];
 
   /// The application name
@@ -572,10 +568,105 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete Account'**
   String get deleteAccount;
+
+  /// Profile section title in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// Error message when loading the profile fails
+  ///
+  /// In en, this message translates to:
+  /// **'Profile could not be loaded.'**
+  String get profileLoadError;
+
+  /// Label for username field
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
+
+  /// Label for access level field
+  ///
+  /// In en, this message translates to:
+  /// **'Access Level'**
+  String get accessLevel;
+
+  /// Save action
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// Snackbar after successfully saving the profile
+  ///
+  /// In en, this message translates to:
+  /// **'Profile saved successfully.'**
+  String get profileSavedSuccessfully;
+
+  /// Error message when saving the profile fails
+  ///
+  /// In en, this message translates to:
+  /// **'Profile could not be saved.'**
+  String get profileSaveError;
+
+  /// Error message when deleting the account fails
+  ///
+  /// In en, this message translates to:
+  /// **'Account could not be deleted.'**
+  String get profileDeleteError;
+
+  /// Hint text under the delete account button
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting your account will remove your profile. Existing sightings will remain.'**
+  String get deleteAccountHint;
+
+  /// Label showing how many favorites are saved
+  ///
+  /// In en, this message translates to:
+  /// **'{count} saved'**
+  String savedFavoritesCount(int count);
+
+  /// Error message when username is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a username.'**
+  String get usernameEmpty;
+
+  /// Error message when username is too short
+  ///
+  /// In en, this message translates to:
+  /// **'The username must be at least 3 characters long.'**
+  String get usernameTooShort;
+
+  /// Error message when username is too long
+  ///
+  /// In en, this message translates to:
+  /// **'The username may be at most 20 characters long.'**
+  String get usernameTooLong;
+
+  /// Error message when username contains invalid characters
+  ///
+  /// In en, this message translates to:
+  /// **'The username may only contain letters, numbers, periods, underscores, and hyphens.'**
+  String get usernameInvalidCharacters;
+
+  /// Title of the dialog for deleting the account
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccountDialogTitle;
+
+  /// Description in the dialog for deleting the account
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your password for {email} to delete your account.'**
+  String deleteAccountDialogDescription(String email);
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -584,32 +675,28 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['de', 'en', 'es', 'fr', 'zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['de', 'en', 'es', 'fr', 'zh'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
 AppLocalizations lookupAppLocalizations(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'de':
-      return AppLocalizationsDe();
-    case 'en':
-      return AppLocalizationsEn();
-    case 'es':
-      return AppLocalizationsEs();
-    case 'fr':
-      return AppLocalizationsFr();
-    case 'zh':
-      return AppLocalizationsZh();
+    case 'de': return AppLocalizationsDe();
+    case 'en': return AppLocalizationsEn();
+    case 'es': return AppLocalizationsEs();
+    case 'fr': return AppLocalizationsFr();
+    case 'zh': return AppLocalizationsZh();
   }
 
   throw FlutterError(
     'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
     'an issue with the localizations generation tool. Please file an issue '
     'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.',
+    'that was used.'
   );
 }

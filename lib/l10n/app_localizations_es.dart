@@ -1,7 +1,5 @@
-// l10n/app_localizations_es.dart
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -141,8 +139,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get support => 'Soporte';
 
   @override
-  String get getHelpAndContactSupport =>
-      'Obtener ayuda y contactar con soporte';
+  String get getHelpAndContactSupport => 'Obtener ayuda y contactar con soporte';
 
   @override
   String comingSoon(String title) {
@@ -180,8 +177,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get welcomeBack => 'Bienvenido de nuevo';
 
   @override
-  String get signInToContinue =>
-      'Inicia sesión para seguir usando tus datos guardados.';
+  String get signInToContinue => 'Inicia sesión para seguir usando tus datos guardados.';
 
   @override
   String get createAccount => 'Crear cuenta';
@@ -190,8 +186,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get createYourAccount => 'Crea tu cuenta';
 
   @override
-  String get signUpToSaveFavorites =>
-      'Regístrate para guardar tus favoritos en todos tus dispositivos.';
+  String get signUpToSaveFavorites => 'Regístrate para guardar tus favoritos en todos tus dispositivos.';
 
   @override
   String get account => 'Cuenta';
@@ -203,12 +198,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get signOutDescription => 'Cerrar sesión de tu cuenta actual';
 
   @override
-  String get authMissingEmailOrPassword =>
-      'Introduce tu correo electrónico y contraseña.';
+  String get authMissingEmailOrPassword => 'Introduce tu correo electrónico y contraseña.';
 
   @override
-  String get authInvalidEmailFormat =>
-      'Introduce una dirección de correo válida.';
+  String get authInvalidEmailFormat => 'Introduce una dirección de correo válida.';
 
   @override
   String get authUserDisabled => 'Esta cuenta ha sido deshabilitada.';
@@ -220,45 +213,90 @@ class AppLocalizationsEs extends AppLocalizations {
   String get networkError => 'Error de red. Inténtalo de nuevo.';
 
   @override
-  String get authWeakPassword =>
-      'La contraseña debe tener al menos 6 caracteres.';
+  String get authWeakPassword => 'La contraseña debe tener al menos 6 caracteres.';
 
   @override
   String get authEmailAlreadyInUse => 'Este correo electrónico ya está en uso.';
 
   @override
-  String get aboutBody =>
-      'ASA Server Eye es una aplicación complementaria para ARK: Survival Ascended. La aplicación muestra información de servidores, admite favoritos y constituye la base para futuras funciones como listas de seguimiento, notificaciones y funciones premium.\n\nDesarrollado y operado por:\nMichael Winkler\nCorreo electrónico: asa.server.eye@gmail.com';
+  String get aboutBody => 'ASA Server Eye es una aplicación complementaria para ARK: Survival Ascended. La aplicación muestra información de servidores, admite favoritos y constituye la base para futuras funciones como listas de seguimiento, notificaciones y funciones premium.\n\nDesarrollado y operado por:\nMichael Winkler\nCorreo electrónico: asa.server.eye@gmail.com';
 
   @override
-  String get privacyBody =>
-      'Política de privacidad\n\nResponsable del tratamiento de datos:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAlemania\nCorreo electrónico: asa.server.eye@gmail.com\n\nEsta aplicación utiliza Firebase Authentication para el inicio de sesión, Cloud Firestore para almacenar favoritos personales y Google AdMob para mostrar anuncios.\n\nDependiendo del uso de la aplicación, pueden procesarse datos técnicos, incluidos datos de cuenta, información del dispositivo, interacciones con la aplicación, identificadores, datos de diagnóstico y datos relacionados con la publicidad. Los favoritos se almacenan por usuario para que sigan disponibles después de reiniciar la aplicación y en varios dispositivos.\n\nEl tratamiento se realiza para proporcionar la funcionalidad de la aplicación, autenticar usuarios, guardar ajustes relacionados con el usuario y financiar la aplicación mediante publicidad.\n\nNo puede descartarse que los servicios de terceros integrados procesen datos fuera de la Unión Europea. En este sentido, también se aplican las políticas de privacidad de los servicios utilizados, en particular Google Firebase y Google AdMob.\n\nPara preguntas relacionadas con la privacidad o solicitudes de eliminación de datos, contacta con:\nasa.server.eye@gmail.com\n\nNota: Antes de una publicación pública definitiva, esta política de privacidad debería revisarse y ampliarse con información completa sobre bases legales, plazos de conservación, derechos de los usuarios y todos los servicios integrados.';
+  String get privacyBody => 'Política de privacidad\n\nResponsable del tratamiento de datos:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAlemania\nCorreo electrónico: asa.server.eye@gmail.com\n\nEsta aplicación utiliza Firebase Authentication para el inicio de sesión, Cloud Firestore para almacenar favoritos personales y Google AdMob para mostrar anuncios.\n\nDependiendo del uso de la aplicación, pueden procesarse datos técnicos, incluidos datos de cuenta, información del dispositivo, interacciones con la aplicación, identificadores, datos de diagnóstico y datos relacionados con la publicidad. Los favoritos se almacenan por usuario para que sigan disponibles después de reiniciar la aplicación y en varios dispositivos.\n\nEl tratamiento se realiza para proporcionar la funcionalidad de la aplicación, autenticar usuarios, guardar ajustes relacionados con el usuario y financiar la aplicación mediante publicidad.\n\nNo puede descartarse que los servicios de terceros integrados procesen datos fuera de la Unión Europea. En este sentido, también se aplican las políticas de privacidad de los servicios utilizados, en particular Google Firebase y Google AdMob.\n\nPara preguntas relacionadas con la privacidad o solicitudes de eliminación de datos, contacta con:\nasa.server.eye@gmail.com\n\nNota: Antes de una publicación pública definitiva, esta política de privacidad debería revisarse y ampliarse con información completa sobre bases legales, plazos de conservación, derechos de los usuarios y todos los servicios integrados.';
 
   @override
-  String get imprintBody =>
-      'Aviso legal\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAlemania\n\nCorreo electrónico:\nasa.server.eye@gmail.com\n\nResponsable del contenido:\nMichael Winkler';
+  String get imprintBody => 'Aviso legal\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAlemania\n\nCorreo electrónico:\nasa.server.eye@gmail.com\n\nResponsable del contenido:\nMichael Winkler';
 
   @override
-  String get supportBody =>
-      'Soporte\n\nPara preguntas, problemas o comentarios sobre la aplicación, contacta con:\n\nMichael Winkler\nCorreo electrónico: asa.server.eye@gmail.com\n\nDescribe tu problema lo más exactamente posible e incluye tu dispositivo y la versión de la aplicación si es posible.';
+  String get supportBody => 'Soporte\n\nPara preguntas, problemas o comentarios sobre la aplicación, contacta con:\n\nMichael Winkler\nCorreo electrónico: asa.server.eye@gmail.com\n\nDescribe tu problema lo más exactamente posible e incluye tu dispositivo y la versión de la aplicación si es posible.';
 
   @override
   String get contactSupport => 'Contactar con soporte';
 
   @override
-  String get emailAppCouldNotBeOpened =>
-      'No se pudo abrir la aplicación de correo.';
+  String get emailAppCouldNotBeOpened => 'No se pudo abrir la aplicación de correo.';
 
   @override
   String get supportEmailSubject => 'Soporte de ASA Server Eye';
 
   @override
-  String get supportEmailBodyTemplate =>
-      'Hola Michael,\n\ntengo el siguiente problema:\n\n\n---\nVersión de la app:\nDispositivo:\n';
+  String get supportEmailBodyTemplate => 'Hola Michael,\n\ntengo el siguiente problema:\n\n\n---\nVersión de la app:\nDispositivo:\n';
 
   @override
   String get fullPrivacyPolicy => 'Política de privacidad completa';
 
   @override
   String get deleteAccount => 'Eliminar cuenta';
+
+  @override
+  String get profile => 'Perfil';
+
+  @override
+  String get profileLoadError => 'No se pudo cargar el perfil.';
+
+  @override
+  String get username => 'Nombre de usuario';
+
+  @override
+  String get accessLevel => 'Nivel de acceso';
+
+  @override
+  String get save => 'Guardar';
+
+  @override
+  String get profileSavedSuccessfully => 'Perfil guardado correctamente.';
+
+  @override
+  String get profileSaveError => 'No se pudo guardar el perfil.';
+
+  @override
+  String get profileDeleteError => 'No se pudo eliminar el cuenta.';
+
+  @override
+  String get deleteAccountHint => 'Eliminar tu cuenta eliminará todos tus datos guardados, incluidos tus favoritos. Esta acción no se puede deshacer.';
+
+  @override
+  String savedFavoritesCount(int count) {
+    return '$count favoritos guardados';
+  }
+
+  @override
+  String get usernameEmpty => 'Por favor, introduce un nombre de usuario.';
+
+  @override
+  String get usernameTooShort => 'El nombre de usuario debe tener al menos 3 caracteres.';
+
+  @override
+  String get usernameTooLong => 'El nombre de usuario no puede tener más de 20 caracteres.';
+
+  @override
+  String get usernameInvalidCharacters => 'El nombre de usuario solo puede contener letras, números, puntos, guiones bajos y guiones.';
+
+  @override
+  String get deleteAccountDialogTitle => 'Eliminar cuenta';
+
+  @override
+  String deleteAccountDialogDescription(String email) {
+    return 'Por favor, introduce tu contraseña para $email para eliminar la cuenta.';
+  }
 }

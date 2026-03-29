@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/extensions/context_l10n.dart';
 import '../../../../core/utils/app_logger.dart';
 import '../../data/auth_repository.dart';
-import '../providers/auth_providers.dart';
+import '../providers/auth_repository_provider.dart';
 import '../utils/auth_error_mapper.dart';
 import '../utils/auth_form_validators.dart';
 

@@ -1,7 +1,5 @@
-// l10n/app_localizations_zh.dart
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -221,20 +219,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get authEmailAlreadyInUse => '该电子邮件已被使用。';
 
   @override
-  String get aboutBody =>
-      'ASA Server Eye 是一款适用于 ARK: Survival Ascended 的伴侣应用。该应用可显示服务器信息、支持收藏功能，并为后续的关注列表、通知和高级功能奠定基础。\n\n开发和运营者：\nMichael Winkler\n电子邮件：asa.server.eye@gmail.com';
+  String get aboutBody => 'ASA Server Eye 是一款适用于 ARK: Survival Ascended 的伴侣应用。该应用可显示服务器信息、支持收藏功能，并为后续的关注列表、通知和高级功能奠定基础。\n\n开发和运营者：\nMichael Winkler\n电子邮件：asa.server.eye@gmail.com';
 
   @override
-  String get privacyBody =>
-      '隐私政策\n\n数据处理负责人：\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\n德国\n电子邮件：asa.server.eye@gmail.com\n\n本应用使用 Firebase Authentication 进行账户登录，使用 Cloud Firestore 存储个人收藏，并使用 Google AdMob 提供广告。\n\n根据应用的使用方式，可能会处理技术数据，包括账户数据、设备信息、应用交互、标识符、诊断数据以及与广告相关的数据。收藏内容会按用户存储，以便在重新启动应用后以及在多个设备之间继续可用。\n\n这些数据处理用于提供应用功能、验证用户身份、保存与用户相关的设置以及通过广告为应用提供资金支持。\n\n不能排除集成的第三方服务会在欧盟以外处理数据。在这方面，也适用相关服务各自的隐私信息，尤其是 Google Firebase 和 Google AdMob。\n\n如有与隐私相关的问题或数据删除请求，请联系：\nasa.server.eye@gmail.com\n\n注意：在最终公开发布之前，应再次审查并补充本隐私政策，包括法律依据、保存期限、用户权利以及所有集成服务的完整信息。';
+  String get privacyBody => '隐私政策\n\n数据处理负责人：\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\n德国\n电子邮件：asa.server.eye@gmail.com\n\n本应用使用 Firebase Authentication 进行账户登录，使用 Cloud Firestore 存储个人收藏，并使用 Google AdMob 提供广告。\n\n根据应用的使用方式，可能会处理技术数据，包括账户数据、设备信息、应用交互、标识符、诊断数据以及与广告相关的数据。收藏内容会按用户存储，以便在重新启动应用后以及在多个设备之间继续可用。\n\n这些数据处理用于提供应用功能、验证用户身份、保存与用户相关的设置以及通过广告为应用提供资金支持。\n\n不能排除集成的第三方服务会在欧盟以外处理数据。在这方面，也适用相关服务各自的隐私信息，尤其是 Google Firebase 和 Google AdMob。\n\n如有与隐私相关的问题或数据删除请求，请联系：\nasa.server.eye@gmail.com\n\n注意：在最终公开发布之前，应再次审查并补充本隐私政策，包括法律依据、保存期限、用户权利以及所有集成服务的完整信息。';
 
   @override
-  String get imprintBody =>
-      '法律声明\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\n德国\n\n电子邮件：\nasa.server.eye@gmail.com\n\n内容负责人：\nMichael Winkler';
+  String get imprintBody => '法律声明\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\n德国\n\n电子邮件：\nasa.server.eye@gmail.com\n\n内容负责人：\nMichael Winkler';
 
   @override
-  String get supportBody =>
-      '支持\n\n如果你对本应用有任何问题、故障或反馈，请联系：\n\nMichael Winkler\n电子邮件：asa.server.eye@gmail.com\n\n请尽可能准确地描述你的问题，并尽量附上你的设备信息和应用版本。';
+  String get supportBody => '支持\n\n如果你对本应用有任何问题、故障或反馈，请联系：\n\nMichael Winkler\n电子邮件：asa.server.eye@gmail.com\n\n请尽可能准确地描述你的问题，并尽量附上你的设备信息和应用版本。';
 
   @override
   String get contactSupport => '联系支持';
@@ -246,12 +240,63 @@ class AppLocalizationsZh extends AppLocalizations {
   String get supportEmailSubject => 'ASA Server Eye 支持';
 
   @override
-  String get supportEmailBodyTemplate =>
-      '你好 Michael，\n\n我遇到了以下问题：\n\n\n---\n应用版本：\n设备：\n';
+  String get supportEmailBodyTemplate => '你好 Michael，\n\n我遇到了以下问题：\n\n\n---\n应用版本：\n设备：\n';
 
   @override
   String get fullPrivacyPolicy => '完整隐私政策';
 
   @override
   String get deleteAccount => '删除账户';
+
+  @override
+  String get profile => '个人资料';
+
+  @override
+  String get profileLoadError => '无法加载个人资料。';
+
+  @override
+  String get username => '用户名';
+
+  @override
+  String get accessLevel => '访问级别';
+
+  @override
+  String get save => '保存';
+
+  @override
+  String get profileSavedSuccessfully => '个人资料保存成功。';
+
+  @override
+  String get profileSaveError => '个人资料保存失败。';
+
+  @override
+  String get profileDeleteError => '账户删除失败。';
+
+  @override
+  String get deleteAccountHint => '删除账户时，个人资料将被移除。已创建的观测记录将被保留。';
+
+  @override
+  String savedFavoritesCount(int count) {
+    return '$count 个已保存的收藏';
+  }
+
+  @override
+  String get usernameEmpty => '请输入用户名。';
+
+  @override
+  String get usernameTooShort => '用户名必须至少有 3 个字符。';
+
+  @override
+  String get usernameTooLong => '用户名最多可以有 20 个字符。';
+
+  @override
+  String get usernameInvalidCharacters => '用户名只能包含字母、数字、点、下划线和连字符。';
+
+  @override
+  String get deleteAccountDialogTitle => '删除账户';
+
+  @override
+  String deleteAccountDialogDescription(String email) {
+    return '请输入 $email 的密码以删除账户。';
+  }
 }

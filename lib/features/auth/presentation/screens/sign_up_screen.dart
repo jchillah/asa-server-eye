@@ -1,14 +1,15 @@
 // features/auth/presentation/screens/sign_up_screen.dart
+import 'package:asa_server_eye/features/auth/presentation/providers/sign_up_form_controller_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
-import '../controllers/sign_up_form_controller.dart';
 import '../utils/auth_feedback.dart';
 import '../utils/auth_navigation.dart';
 import '../widgets/auth_email_field.dart';
 import '../widgets/auth_password_field.dart';
 import '../widgets/auth_screen_header.dart';
+import '../widgets/auth_username_field.dart';
 
 class SignUpScreen extends ConsumerWidget {
   const SignUpScreen({super.key});
@@ -34,6 +35,12 @@ class SignUpScreen extends ConsumerWidget {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
+                    AuthUsernameField(
+                      controller: formController.usernameController,
+                      labelText: 'Benutzername',
+                      hintText: 'z. B. MichaelW',
+                    ),
+                    const SizedBox(height: 16),
                     AuthEmailField(
                       controller: formController.emailController,
                       labelText: context.l10n.email,

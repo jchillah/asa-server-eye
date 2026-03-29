@@ -326,5 +326,79 @@
     "deleteAccount": "Supprimer le compte",
     "@deleteAccount": {
         "description": "Bouton pour supprimer le compte utilisateur"
+    },
+    "profile": "Profil",
+    "@profile": {
+        "description": "Titre de la section Profil dans les paramètres"
+    },
+    "profileLoadError": "Le profil n’a pas pu être chargé.",
+    "@profileLoadError": {
+        "description": "Message d’erreur lorsque le chargement du profil échoue"
+    },
+    "username": "Nom d’utilisateur",
+    "@username": {
+        "description": "Etiquette pour le nom d’utilisateur"
+    },
+    "accessLevel": "Niveau d’accès",
+    "@accessLevel": {
+        "description": "Etiquette pour le niveau d’accès"
+    },
+    "save": "Enregistrer",
+    "@save": {
+        "description": "Action d’enregistrement"
+    },
+    "profileSavedSuccessfully": "Profil enregistré avec succès.",
+    "@profileSavedSuccessfully": {
+        "description": "Snackbar après un enregistrement réussi du profil"
+    },
+    "profileSaveError": "Le profil n’a pas pu être enregistré.",
+    "@profileSaveError": {
+        "description": "Message d’erreur lorsque l’enregistrement du profil échoue"
+    },
+    "profileDeleteError": "Le compte n’a pas pu être supprimé.",
+    "@profileDeleteError": {
+        "description": "Message d’erreur lorsque la suppression du compte échoue"
+    },
+    "deleteAccountHint": "En supprimant votre compte, votre profil sera supprimé. Les observations déjà créées resteront conservées.",
+    "@deleteAccountHint": {
+        "description": "Message d’avertissement avant la suppression du compte"
+    },
+    "savedFavoritesCount": "{count} favoris enregistrés",
+    "@savedFavoritesCount": {
+        "description": "Nombre de favoris enregistrés",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "usernameEmpty": "Le nom d’utilisateur ne peut pas être vide.",
+    "@usernameEmpty": {
+        "description": "Message d’erreur lorsque le nom d’utilisateur est vide"
+    },
+    "usernameTooShort": "Le nom d’utilisateur doit contenir au moins 3 caractères.",
+    "@usernameTooShort": {
+        "description": "Message d’erreur lorsque le nom d’utilisateur est trop court"
+    },
+    "usernameTooLong": "Le nom d’utilisateur ne peut pas dépasser 20 caractères.",
+    "@usernameTooLong": {
+        "description": "Message d’erreur lorsque le nom d’utilisateur est trop long"
+    },
+    "usernameInvalidCharacters": "Le nom d’utilisateur ne peut contenir que des lettres, des chiffres, des points, des tirets bas et des tirets.",
+    "@usernameInvalidCharacters": {
+        "description": "Message d’erreur lorsque le nom d’utilisateur contient des caractères invalides"
+    },
+    "deleteAccountDialogTitle": "Supprimer le compte",
+    "@deleteAccountDialogTitle": {
+        "description": "Titre du dialogue de confirmation pour la suppression du compte"
+    },
+    "deleteAccountDialogDescription": "Veuillez saisir votre mot de passe pour {email} afin de supprimer le compte.",
+    "@deleteAccountDialogDescription": {
+        "description": "Description du dialogue de confirmation pour la suppression du compte",
+        "placeholders": {
+            "email": {
+                "type": "String"
+            }
+        }
     }
 }

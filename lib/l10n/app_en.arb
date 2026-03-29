@@ -326,5 +326,79 @@
   "deleteAccount": "Delete Account",
   "@deleteAccount": {
     "description": "Button to delete user account"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile section title in settings"
+  },
+  "profileLoadError": "Profile could not be loaded.",
+  "@profileLoadError": {
+    "description": "Error message when loading the profile fails"
+  },
+  "username": "Username",
+  "@username": {
+    "description": "Label for username field"
+  },
+  "accessLevel": "Access Level",
+  "@accessLevel": {
+    "description": "Label for access level field"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save action"
+  },
+  "profileSavedSuccessfully": "Profile saved successfully.",
+  "@profileSavedSuccessfully": {
+    "description": "Snackbar after successfully saving the profile"
+  },
+  "profileSaveError": "Profile could not be saved.",
+  "@profileSaveError": {
+    "description": "Error message when saving the profile fails"
+  },
+  "profileDeleteError": "Account could not be deleted.",
+  "@profileDeleteError": {
+    "description": "Error message when deleting the account fails"
+  },
+  "deleteAccountHint": "Deleting your account will remove your profile. Existing sightings will remain.",
+  "@deleteAccountHint": {
+    "description": "Hint text under the delete account button"
+  },
+  "savedFavoritesCount": "{count} saved",
+  "@savedFavoritesCount": {
+    "description": "Label showing how many favorites are saved",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usernameEmpty": "Please enter a username.",
+  "@usernameEmpty": {
+    "description": "Error message when username is empty"
+  },
+  "usernameTooShort": "The username must be at least 3 characters long.",
+  "@usernameTooShort": {
+    "description": "Error message when username is too short"
+  },
+  "usernameTooLong": "The username may be at most 20 characters long.",
+  "@usernameTooLong": {
+    "description": "Error message when username is too long"
+  },
+  "usernameInvalidCharacters": "The username may only contain letters, numbers, periods, underscores, and hyphens.",
+  "@usernameInvalidCharacters": {
+    "description": "Error message when username contains invalid characters"
+  },
+  "deleteAccountDialogTitle": "Delete Account",
+  "@deleteAccountDialogTitle": {
+    "description": "Title of the dialog for deleting the account"
+  },
+  "deleteAccountDialogDescription": "Please enter your password for {email} to delete your account.",
+  "@deleteAccountDialogDescription": {
+    "description": "Description in the dialog for deleting the account",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
   }
 }

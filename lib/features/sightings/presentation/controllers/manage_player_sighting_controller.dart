@@ -1,7 +1,7 @@
 // features/sightings/presentation/controllers/manage_player_sighting_controller.dart
+import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../auth/presentation/providers/auth_providers.dart';
 import '../../domain/player_sighting.dart';
 import '../../domain/sightings_visibility_mapper.dart';
 import '../providers/sightings_access_providers.dart';

@@ -4,6 +4,29 @@ import 'package:flutter/material.dart';
 import '../../../../core/extensions/context_l10n.dart';
 
 abstract final class AuthFormValidators {
+  static String? validateUsername(BuildContext context, String username) {
+    final trimmedUsername = username.trim();
+
+    if (trimmedUsername.isEmpty) {
+      return 'Bitte gib einen Benutzernamen ein.';
+    }
+
+    if (trimmedUsername.length < 3) {
+      return 'Der Benutzername muss mindestens 3 Zeichen lang sein.';
+    }
+
+    if (trimmedUsername.length > 20) {
+      return 'Der Benutzername darf maximal 20 Zeichen lang sein.';
+    }
+
+    final usernameRegex = RegExp(r'^[a-zA-Z0-9._-]+$');
+    if (!usernameRegex.hasMatch(trimmedUsername)) {
+      return 'Der Benutzername darf nur Buchstaben, Zahlen, Punkt, Unterstrich und Bindestrich enthalten.';
+    }
+
+    return null;
+  }
+
   static String? validateEmail(BuildContext context, String email) {
     final trimmedEmail = email.trim();
 
