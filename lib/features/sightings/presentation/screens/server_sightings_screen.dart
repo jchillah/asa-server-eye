@@ -4,8 +4,10 @@ import 'package:asa_server_eye/features/auth/presentation/providers/current_user
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/player_sighting.dart';
 import '../../domain/sightings_access_level.dart';
 import '../controllers/server_sightings_controller.dart';
+import '../models/server_sighting_menu_action.dart';
 import '../providers/sightings_access_providers.dart';
 import '../widgets/player_sighting_list_item.dart';
 import 'delete_player_sighting_screen.dart';
@@ -29,7 +31,7 @@ class ServerSightingsScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(context.l10n.playerSightings)),
       body: accessLevelAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
+        error: (_, _) => Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
@@ -40,6 +42,16 @@ class ServerSightingsScreen extends ConsumerWidget {
         ),
         data: (accessLevel) {
           return sightingsAsync.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (_, _) => Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Text(
+                  context.l10n.sightingsLoadError,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
             data: (sightings) {
               if (sightings.isEmpty) {
                 return Center(
@@ -69,79 +81,84 @@ class ServerSightingsScreen extends ConsumerWidget {
                       isOwner &&
                       sighting.isVisible &&
                       accessLevel != SightingsAccessLevel.admin;
-
                   final canSeeHistory =
                       accessLevel == SightingsAccessLevel.admin || isOwner;
 
                   return PlayerSightingListItem(
                     sighting: sighting,
-                    trailing: PopupMenuButton<String>(
-                      onSelected: (value) {
-                        switch (value) {
-                          case 'edit':
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => EditPlayerSightingScreen(
-                                  sighting: sighting,
-                                ),
-                              ),
-                            );
-                            break;
-                          case 'delete':
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => DeletePlayerSightingScreen(
-                                  sighting: sighting,
-                                ),
-                              ),
-                            );
-                            break;
-                          case 'history':
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => PlayerSightingHistoryScreen(
-                                  sightingId: sighting.id,
-                                ),
-                              ),
-                            );
-                            break;
-                        }
-                      },
-                      itemBuilder: (_) => [
-                        if (canEdit)
-                          PopupMenuItem<String>(
-                            value: 'edit',
-                            child: Text(context.l10n.edit),
-                          ),
-                        if (canDelete)
-                          PopupMenuItem<String>(
-                            value: 'delete',
-                            child: Text(context.l10n.delete),
-                          ),
-                        if (canSeeHistory)
-                          PopupMenuItem<String>(
-                            value: 'history',
-                            child: Text(context.l10n.viewHistory),
-                          ),
-                      ],
+                    trailing: PopupMenuButton<ServerSightingMenuAction>(
+                      onSelected: (action) => _handleMenuAction(
+                        context: context,
+                        action: action,
+                        sighting: sighting,
+                      ),
+                      itemBuilder: (_) => _buildMenuItems(
+                        context: context,
+                        canEdit: canEdit,
+                        canDelete: canDelete,
+                        canSeeHistory: canSeeHistory,
+                      ),
                     ),
                   );
                 },
               );
             },
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, stackTrace) => Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Text(
-                  context.l10n.sightingsLoadError,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
           );
         },
       ),
     );
+  }
+
+  List<PopupMenuEntry<ServerSightingMenuAction>> _buildMenuItems({
+    required BuildContext context,
+    required bool canEdit,
+    required bool canDelete,
+    required bool canSeeHistory,
+  }) {
+    return [
+      if (canEdit)
+        PopupMenuItem<ServerSightingMenuAction>(
+          value: ServerSightingMenuAction.edit,
+          child: Text(context.l10n.edit),
+        ),
+      if (canDelete)
+        PopupMenuItem<ServerSightingMenuAction>(
+          value: ServerSightingMenuAction.delete,
+          child: Text(context.l10n.delete),
+        ),
+      if (canSeeHistory)
+        PopupMenuItem<ServerSightingMenuAction>(
+          value: ServerSightingMenuAction.history,
+          child: Text(context.l10n.viewHistory),
+        ),
+    ];
+  }
+
+  void _handleMenuAction({
+    required BuildContext context,
+    required ServerSightingMenuAction action,
+    required PlayerSighting sighting,
+  }) {
+    switch (action) {
+      case ServerSightingMenuAction.edit:
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => EditPlayerSightingScreen(sighting: sighting),
+          ),
+        );
+      case ServerSightingMenuAction.delete:
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => DeletePlayerSightingScreen(sighting: sighting),
+          ),
+        );
+      case ServerSightingMenuAction.history:
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) =>
+                PlayerSightingHistoryScreen(sightingId: sighting.id),
+          ),
+        );
+    }
   }
 }

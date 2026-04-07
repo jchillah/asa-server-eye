@@ -18,6 +18,16 @@ class PlayerSightingHistoryScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.sightingHistory)),
       body: historyAsync.when(
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (_, _) => Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Text(
+              context.l10n.sightingHistoryLoadError,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
         data: (logs) {
           if (logs.isEmpty) {
             return Center(
@@ -40,16 +50,6 @@ class PlayerSightingHistoryScreen extends ConsumerWidget {
             },
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Text(
-              context.l10n.sightingHistoryLoadError,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
       ),
     );
   }
