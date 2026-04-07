@@ -1,16 +1,20 @@
 // features/sightings/presentation/providers/sightings_providers.dart
 import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
+import 'package:asa_server_eye/features/sightings/domain/sightings_visibility_policy.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/repositories/sightings_repository.dart';
 import '../../domain/player_sighting.dart';
 import '../../domain/sighting_change_log.dart';
-import '../../domain/sightings_visibility_policy.dart';
 import 'sightings_access_providers.dart';
 
 final firebaseFirestoreProvider = Provider<FirebaseFirestore>((ref) {
   return FirebaseFirestore.instance;
+});
+
+final currentUserIdProvider = Provider<String?>((ref) {
+  return ref.watch(currentUserProvider)?.uid;
 });
 
 final sightingsRepositoryProvider = Provider<SightingsRepository>((ref) {

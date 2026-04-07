@@ -6,10 +6,14 @@ import '../../domain/sightings_access_level.dart';
 class SightingsUserProfileModel {
   const SightingsUserProfileModel({
     required this.userId,
+    required this.username,
+    required this.email,
     required this.accessLevel,
   });
 
   final String userId;
+  final String username;
+  final String email;
   final SightingsAccessLevel accessLevel;
 
   factory SightingsUserProfileModel.fromFirestore(
@@ -19,6 +23,8 @@ class SightingsUserProfileModel {
 
     return SightingsUserProfileModel(
       userId: doc.id,
+      username: data['username']?.toString() ?? '',
+      email: data['email']?.toString() ?? '',
       accessLevel: _accessLevelFromString(data['sightingsAccessLevel']),
     );
   }

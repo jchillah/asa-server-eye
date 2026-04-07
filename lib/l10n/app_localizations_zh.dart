@@ -264,39 +264,249 @@ class AppLocalizationsZh extends AppLocalizations {
   String get save => '保存';
 
   @override
-  String get profileSavedSuccessfully => '个人资料保存成功。';
+  String get profileSavedSuccessfully => '个人资料已成功保存。';
 
   @override
-  String get profileSaveError => '个人资料保存失败。';
+  String get profileSaveError => '无法保存个人资料。';
 
   @override
-  String get profileDeleteError => '账户删除失败。';
+  String get profileDeleteError => '无法删除账户。';
 
   @override
-  String get deleteAccountHint => '删除账户时，个人资料将被移除。已创建的观测记录将被保留。';
+  String get deleteAccountHint => '删除账户将移除你的个人资料。已创建的 sightings 将会保留。';
 
   @override
   String savedFavoritesCount(int count) {
-    return '$count 个已保存的收藏';
+    return '已保存 $count 个';
   }
 
   @override
   String get usernameEmpty => '请输入用户名。';
 
   @override
-  String get usernameTooShort => '用户名必须至少有 3 个字符。';
+  String get usernameTooShort => '用户名至少需要 3 个字符。';
 
   @override
-  String get usernameTooLong => '用户名最多可以有 20 个字符。';
+  String get usernameTooLong => '用户名最多只能有 20 个字符。';
 
   @override
-  String get usernameInvalidCharacters => '用户名只能包含字母、数字、点、下划线和连字符。';
+  String get usernameInvalidCharacters => '用户名只能包含字母、数字、句点、下划线和连字符。';
 
   @override
   String get deleteAccountDialogTitle => '删除账户';
 
   @override
   String deleteAccountDialogDescription(String email) {
-    return '请输入 $email 的密码以删除账户。';
+    return '请输入 $email 的密码以删除你的账户。';
   }
+
+  @override
+  String get signUpUsernameHint => '这将是其他用户可见的公开用户名。';
+
+  @override
+  String get emailHint => 'name@email.com';
+
+  @override
+  String get sightings => '目击记录';
+
+  @override
+  String get playerSightingReport => '报告玩家目击记录';
+
+  @override
+  String get editSighting => '编辑目击记录';
+
+  @override
+  String get deleteSighting => '删除目击记录';
+
+  @override
+  String get sightingHistory => '变更历史';
+
+  @override
+  String get platformId => '平台 ID';
+
+  @override
+  String get platformIdHint => 'Steam / Xbox / PSN ID';
+
+  @override
+  String get inGameName => '游戏内名称';
+
+  @override
+  String get tribeName => '部落名称';
+
+  @override
+  String get tribeNameHint => '部落名称';
+
+  @override
+  String get platform => '平台';
+
+  @override
+  String get note => '备注';
+
+  @override
+  String get optional => '可选';
+
+  @override
+  String get visibleToPremiumUsers => '对高级用户可见';
+
+  @override
+  String get saveSighting => '保存目击记录';
+
+  @override
+  String get updateSighting => '保存更改';
+
+  @override
+  String get hideSighting => '隐藏目击记录';
+
+  @override
+  String get saving => '正在保存...';
+
+  @override
+  String get sightingSaved => '目击记录已保存。';
+
+  @override
+  String get sightingUpdated => '目击记录已更新。';
+
+  @override
+  String get sightingHidden => '目击记录已隐藏。';
+
+  @override
+  String get sightingSaveError => '无法保存目击记录。';
+
+  @override
+  String get sightingUpdateError => '无法更新目击记录。';
+
+  @override
+  String get sightingHideError => '无法隐藏目击记录。';
+
+  @override
+  String get sightingRequiresLogin => '你必须登录后才能报告目击记录。';
+
+  @override
+  String get sightingDeleteNotAllowed => '你无权删除此目击记录。';
+
+  @override
+  String get sightingEditNotAllowed => '你无权编辑此目击记录。';
+
+  @override
+  String get sightingInGameNameRequired => '请输入玩家名称。';
+
+  @override
+  String get sightingPlatformIdRequired => '请输入平台 ID。';
+
+  @override
+  String get sightingTribeNameRequired => '请输入部落名称。';
+
+  @override
+  String get sightingReasonRequired => '请输入原因。';
+
+  @override
+  String get sightingDeleteHint => '该目击记录不会被永久删除。它只会对普通用户隐藏，并仍可供管理员追踪。';
+
+  @override
+  String get reason => '原因';
+
+  @override
+  String get reasonHint => '请输入原因';
+
+  @override
+  String get noVisibleSightings => '目前还没有可见的 sightings。';
+
+  @override
+  String get sightingsLoadError => '无法加载 sightings。';
+
+  @override
+  String get sightingHistoryLoadError => '无法加载历史记录。';
+
+  @override
+  String get noSightingHistory => '暂无历史记录。';
+
+  @override
+  String get accessLevelLoadError => '无法加载访问级别。';
+
+  @override
+  String get edit => '编辑';
+
+  @override
+  String get delete => '删除';
+
+  @override
+  String get viewHistory => '查看历史';
+
+  @override
+  String get platformSteam => 'Steam';
+
+  @override
+  String get platformXbox => 'Xbox';
+
+  @override
+  String get platformPsn => 'PSN';
+
+  @override
+  String get platformUnknown => '未知';
+
+  @override
+  String get sightingUserProfileLoadError => '无法加载用户资料。';
+
+  @override
+  String get playerSightings => '玩家目击记录';
+
+  @override
+  String platformLabel(String value) {
+    return '平台：$value';
+  }
+
+  @override
+  String visibilityLabel(String value) {
+    return '可见性：$value';
+  }
+
+  @override
+  String sharingLabel(String value) {
+    return '共享：$value';
+  }
+
+  @override
+  String editedAtLabel(String value) {
+    return '编辑于：$value';
+  }
+
+  @override
+  String get softDeleted => '软删除';
+
+  @override
+  String reasonLabel(String value) {
+    return '原因：$value';
+  }
+
+  @override
+  String changedByLabel(String value) {
+    return '修改者：$value';
+  }
+
+  @override
+  String get sightingCreatorLevelFree => 'Free';
+
+  @override
+  String get sightingCreatorLevelPremium => 'Premium';
+
+  @override
+  String get sightingCreatorLevelAdmin => 'Admin';
+
+  @override
+  String get sightingSharingOwnerOnly => '仅创建者';
+
+  @override
+  String get sightingSharingPremiumShared => '与 Premium 共享';
+
+  @override
+  String get sightingSharingAdminOnly => '仅管理员';
+
+  @override
+  String get sightingActionCreated => '已创建';
+
+  @override
+  String get sightingActionUpdated => '已更新';
+
+  @override
+  String get sightingActionSoftDeleted => '已隐藏';
 }

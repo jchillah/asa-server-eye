@@ -1,10 +1,11 @@
 // features/sightings/presentation/controllers/report_player_sighting_controller.dart
 import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
+import 'package:asa_server_eye/features/sightings/domain/gaming_platform.dart';
+import 'package:asa_server_eye/features/sightings/domain/sighting_creator_level_policy.dart';
+import 'package:asa_server_eye/features/sightings/domain/sightings_access_level.dart';
+import 'package:asa_server_eye/features/sightings/domain/sightings_sharing_policy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/player_sighting.dart';
-import '../../domain/sightings_access_level.dart';
-import '../../domain/sightings_visibility_mapper.dart';
 import '../providers/sightings_access_providers.dart';
 import '../providers/sightings_providers.dart';
 
@@ -18,50 +19,58 @@ final reportPlayerSightingControllerProvider = StateNotifierProvider.autoDispose
 
 class ReportPlayerSightingState {
   const ReportPlayerSightingState({
-    this.playerName = '',
-    this.playerId = '',
+    this.inGameName = '',
+    this.playerPlatformId = '',
+    this.tribeName = '',
     this.note = '',
     this.platform = GamingPlatform.steam,
     this.shareWithPremiumUsers = true,
     this.canChoosePremiumSharing = false,
     this.isSubmitting = false,
-    this.playerNameError,
-    this.playerIdError,
-    this.submitError,
+    this.inGameNameErrorKey,
+    this.playerPlatformIdErrorKey,
+    this.tribeNameErrorKey,
+    this.submitErrorKey,
     this.isSuccess = false,
   });
 
-  final String playerName;
-  final String playerId;
+  final String inGameName;
+  final String playerPlatformId;
+  final String tribeName;
   final String note;
   final GamingPlatform platform;
   final bool shareWithPremiumUsers;
   final bool canChoosePremiumSharing;
   final bool isSubmitting;
-  final String? playerNameError;
-  final String? playerIdError;
-  final String? submitError;
+  final String? inGameNameErrorKey;
+  final String? playerPlatformIdErrorKey;
+  final String? tribeNameErrorKey;
+  final String? submitErrorKey;
   final bool isSuccess;
 
   ReportPlayerSightingState copyWith({
-    String? playerName,
-    String? playerId,
+    String? inGameName,
+    String? playerPlatformId,
+    String? tribeName,
     String? note,
     GamingPlatform? platform,
     bool? shareWithPremiumUsers,
     bool? canChoosePremiumSharing,
     bool? isSubmitting,
-    String? playerNameError,
-    String? playerIdError,
-    String? submitError,
+    String? inGameNameErrorKey,
+    String? playerPlatformIdErrorKey,
+    String? tribeNameErrorKey,
+    String? submitErrorKey,
     bool? isSuccess,
-    bool clearPlayerNameError = false,
-    bool clearPlayerIdError = false,
+    bool clearInGameNameError = false,
+    bool clearPlayerPlatformIdError = false,
+    bool clearTribeNameError = false,
     bool clearSubmitError = false,
   }) {
     return ReportPlayerSightingState(
-      playerName: playerName ?? this.playerName,
-      playerId: playerId ?? this.playerId,
+      inGameName: inGameName ?? this.inGameName,
+      playerPlatformId: playerPlatformId ?? this.playerPlatformId,
+      tribeName: tribeName ?? this.tribeName,
       note: note ?? this.note,
       platform: platform ?? this.platform,
       shareWithPremiumUsers:
@@ -69,13 +78,18 @@ class ReportPlayerSightingState {
       canChoosePremiumSharing:
           canChoosePremiumSharing ?? this.canChoosePremiumSharing,
       isSubmitting: isSubmitting ?? this.isSubmitting,
-      playerNameError: clearPlayerNameError
+      inGameNameErrorKey: clearInGameNameError
           ? null
-          : playerNameError ?? this.playerNameError,
-      playerIdError: clearPlayerIdError
+          : inGameNameErrorKey ?? this.inGameNameErrorKey,
+      playerPlatformIdErrorKey: clearPlayerPlatformIdError
           ? null
-          : playerIdError ?? this.playerIdError,
-      submitError: clearSubmitError ? null : submitError ?? this.submitError,
+          : playerPlatformIdErrorKey ?? this.playerPlatformIdErrorKey,
+      tribeNameErrorKey: clearTribeNameError
+          ? null
+          : tribeNameErrorKey ?? this.tribeNameErrorKey,
+      submitErrorKey: clearSubmitError
+          ? null
+          : submitErrorKey ?? this.submitErrorKey,
       isSuccess: isSuccess ?? this.isSuccess,
     );
   }
@@ -100,19 +114,28 @@ class ReportPlayerSightingController
     );
   }
 
-  void updatePlayerName(String value) {
+  void updateInGameName(String value) {
     state = state.copyWith(
-      playerName: value,
-      clearPlayerNameError: true,
+      inGameName: value,
+      clearInGameNameError: true,
       clearSubmitError: true,
       isSuccess: false,
     );
   }
 
-  void updatePlayerId(String value) {
+  void updatePlayerPlatformId(String value) {
     state = state.copyWith(
-      playerId: value,
-      clearPlayerIdError: true,
+      playerPlatformId: value,
+      clearPlayerPlatformIdError: true,
+      clearSubmitError: true,
+      isSuccess: false,
+    );
+  }
+
+  void updateTribeName(String value) {
+    state = state.copyWith(
+      tribeName: value,
+      clearTribeNameError: true,
       clearSubmitError: true,
       isSuccess: false,
     );
@@ -143,24 +166,33 @@ class ReportPlayerSightingController
   }
 
   Future<bool> submit() async {
-    final playerName = state.playerName.trim();
-    final playerId = state.playerId.trim();
+    final inGameName = state.inGameName.trim();
+    final playerPlatformId = state.playerPlatformId.trim();
+    final tribeName = state.tribeName.trim();
 
-    String? playerNameError;
-    String? playerIdError;
+    String? inGameNameErrorKey;
+    String? playerPlatformIdErrorKey;
+    String? tribeNameErrorKey;
 
-    if (playerName.isEmpty) {
-      playerNameError = 'Bitte Spielernamen eingeben.';
+    if (inGameName.isEmpty) {
+      inGameNameErrorKey = 'sightingInGameNameRequired';
     }
 
-    if (playerId.isEmpty) {
-      playerIdError = 'Bitte Plattform-ID eingeben.';
+    if (playerPlatformId.isEmpty) {
+      playerPlatformIdErrorKey = 'sightingPlatformIdRequired';
     }
 
-    if (playerNameError != null || playerIdError != null) {
+    if (tribeName.isEmpty) {
+      tribeNameErrorKey = 'sightingTribeNameRequired';
+    }
+
+    if (inGameNameErrorKey != null ||
+        playerPlatformIdErrorKey != null ||
+        tribeNameErrorKey != null) {
       state = state.copyWith(
-        playerNameError: playerNameError,
-        playerIdError: playerIdError,
+        inGameNameErrorKey: inGameNameErrorKey,
+        playerPlatformIdErrorKey: playerPlatformIdErrorKey,
+        tribeNameErrorKey: tribeNameErrorKey,
         clearSubmitError: true,
         isSuccess: false,
       );
@@ -171,9 +203,10 @@ class ReportPlayerSightingController
 
     if (currentUser == null) {
       state = state.copyWith(
-        submitError: 'Du musst eingeloggt sein, um eine Sichtung zu melden.',
-        clearPlayerNameError: true,
-        clearPlayerIdError: true,
+        submitErrorKey: 'sightingRequiresLogin',
+        clearInGameNameError: true,
+        clearPlayerPlatformIdError: true,
+        clearTribeNameError: true,
         isSuccess: false,
       );
       return false;
@@ -186,28 +219,38 @@ class ReportPlayerSightingController
     );
 
     try {
-      final accessLevel = await _ref.read(sightingsAccessLevelProvider.future);
+      final userProfile = await _ref.read(sightingsUserProfileProvider.future);
 
-      final visibilityLevel =
-          SightingsVisibilityMapper.creationVisibilityForAccessLevel(
-            accessLevel,
-          );
+      if (userProfile == null) {
+        state = state.copyWith(
+          isSubmitting: false,
+          submitErrorKey: 'sightingUserProfileLoadError',
+          isSuccess: false,
+        );
+        return false;
+      }
 
-      final sharingScope =
-          SightingsVisibilityMapper.creationSharingScopeForAccessLevel(
-            accessLevel: accessLevel,
-            shareWithPremiumUsers: state.shareWithPremiumUsers,
-          );
+      final creatorLevel = SightingCreatorLevelPolicy.resolve(
+        accessLevel: userProfile.accessLevel,
+      );
+
+      final sharingScope = SightingSharingPolicy.resolve(
+        accessLevel: userProfile.accessLevel,
+        shareWithPremiumUsers: state.shareWithPremiumUsers,
+      );
 
       final repository = _ref.read(sightingsRepositoryProvider);
 
       await repository.createSighting(
         serverId: _serverId,
-        playerName: playerName,
-        playerId: playerId,
+        inGameName: inGameName,
+        playerPlatformId: playerPlatformId,
+        tribeName: tribeName,
         platform: state.platform,
         createdByUserId: currentUser.uid,
-        visibilityLevel: visibilityLevel,
+        createdByUsername: userProfile.username,
+        createdByEmail: userProfile.email,
+        creatorLevel: creatorLevel,
         sharingScope: sharingScope,
         note: state.note.trim().isEmpty ? null : state.note.trim(),
       );
@@ -215,6 +258,7 @@ class ReportPlayerSightingController
       _ref.invalidate(rawServerSightingsProvider(_serverId));
       _ref.invalidate(serverSightingsProvider(_serverId));
       _ref.invalidate(sightingsAccessLevelProvider);
+      _ref.invalidate(sightingsUserProfileProvider);
 
       state = state.copyWith(
         isSubmitting: false,
@@ -226,7 +270,7 @@ class ReportPlayerSightingController
     } catch (_) {
       state = state.copyWith(
         isSubmitting: false,
-        submitError: 'Sichtung konnte nicht gespeichert werden.',
+        submitErrorKey: 'sightingSaveError',
         isSuccess: false,
       );
       return false;

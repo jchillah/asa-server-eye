@@ -1,4 +1,5 @@
 // features/sightings/presentation/screens/player_sighting_history_screen.dart
+import 'package:asa_server_eye/core/extensions/context_l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,15 +16,15 @@ class PlayerSightingHistoryScreen extends ConsumerWidget {
     final historyAsync = ref.watch(sightingHistoryProvider(sightingId));
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Änderungsverlauf')),
+      appBar: AppBar(title: Text(context.l10n.sightingHistory)),
       body: historyAsync.when(
         data: (logs) {
           if (logs.isEmpty) {
-            return const Center(
+            return Center(
               child: Padding(
-                padding: EdgeInsets.all(24),
+                padding: const EdgeInsets.all(24),
                 child: Text(
-                  'Noch kein Verlauf vorhanden.',
+                  context.l10n.noSightingHistory,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -40,11 +41,11 @@ class PlayerSightingHistoryScreen extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => const Center(
+        error: (error, stackTrace) => Center(
           child: Padding(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Text(
-              'Verlauf konnte nicht geladen werden.',
+              context.l10n.sightingHistoryLoadError,
               textAlign: TextAlign.center,
             ),
           ),

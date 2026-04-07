@@ -258,7 +258,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get username => 'Username';
 
   @override
-  String get accessLevel => 'Access Level';
+  String get accessLevel => 'Access level';
 
   @override
   String get save => 'Save';
@@ -293,10 +293,220 @@ class AppLocalizationsEn extends AppLocalizations {
   String get usernameInvalidCharacters => 'The username may only contain letters, numbers, periods, underscores, and hyphens.';
 
   @override
-  String get deleteAccountDialogTitle => 'Delete Account';
+  String get deleteAccountDialogTitle => 'Delete account';
 
   @override
   String deleteAccountDialogDescription(String email) {
     return 'Please enter your password for $email to delete your account.';
   }
+
+  @override
+  String get signUpUsernameHint => 'This will be your public username visible to other users.';
+
+  @override
+  String get emailHint => 'name@email.com';
+
+  @override
+  String get sightings => 'Sightings';
+
+  @override
+  String get playerSightingReport => 'Report player sighting';
+
+  @override
+  String get editSighting => 'Edit sighting';
+
+  @override
+  String get deleteSighting => 'Delete sighting';
+
+  @override
+  String get sightingHistory => 'Change history';
+
+  @override
+  String get platformId => 'Platform ID';
+
+  @override
+  String get platformIdHint => 'Steam / Xbox / PSN ID';
+
+  @override
+  String get inGameName => 'In-game name';
+
+  @override
+  String get tribeName => 'Tribe name';
+
+  @override
+  String get tribeNameHint => 'Name of the tribe';
+
+  @override
+  String get platform => 'Platform';
+
+  @override
+  String get note => 'Note';
+
+  @override
+  String get optional => 'Optional';
+
+  @override
+  String get visibleToPremiumUsers => 'Visible to premium users';
+
+  @override
+  String get saveSighting => 'Save sighting';
+
+  @override
+  String get updateSighting => 'Save changes';
+
+  @override
+  String get hideSighting => 'Hide sighting';
+
+  @override
+  String get saving => 'Saving...';
+
+  @override
+  String get sightingSaved => 'Sighting saved.';
+
+  @override
+  String get sightingUpdated => 'Sighting updated.';
+
+  @override
+  String get sightingHidden => 'Sighting hidden.';
+
+  @override
+  String get sightingSaveError => 'Sighting could not be saved.';
+
+  @override
+  String get sightingUpdateError => 'Sighting could not be updated.';
+
+  @override
+  String get sightingHideError => 'Sighting could not be hidden.';
+
+  @override
+  String get sightingRequiresLogin => 'You must be logged in to report a sighting.';
+
+  @override
+  String get sightingDeleteNotAllowed => 'You are not allowed to delete this sighting.';
+
+  @override
+  String get sightingEditNotAllowed => 'You are not allowed to edit this sighting.';
+
+  @override
+  String get sightingInGameNameRequired => 'Please enter a player name.';
+
+  @override
+  String get sightingPlatformIdRequired => 'Please enter a platform ID.';
+
+  @override
+  String get sightingTribeNameRequired => 'Please enter a tribe name.';
+
+  @override
+  String get sightingReasonRequired => 'Please enter a reason.';
+
+  @override
+  String get sightingDeleteHint => 'This sighting will not be permanently deleted. It will only be hidden from normal users and remain traceable for admins.';
+
+  @override
+  String get reason => 'Reason';
+
+  @override
+  String get reasonHint => 'Please enter a reason';
+
+  @override
+  String get noVisibleSightings => 'No visible sightings yet.';
+
+  @override
+  String get sightingsLoadError => 'Sightings could not be loaded.';
+
+  @override
+  String get sightingHistoryLoadError => 'History could not be loaded.';
+
+  @override
+  String get noSightingHistory => 'No history available yet.';
+
+  @override
+  String get accessLevelLoadError => 'Access level could not be loaded.';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get viewHistory => 'View history';
+
+  @override
+  String get platformSteam => 'Steam';
+
+  @override
+  String get platformXbox => 'Xbox';
+
+  @override
+  String get platformPsn => 'PSN';
+
+  @override
+  String get platformUnknown => 'Unknown';
+
+  @override
+  String get sightingUserProfileLoadError => 'User profile could not be loaded.';
+
+  @override
+  String get playerSightings => 'Player Sightings';
+
+  @override
+  String platformLabel(String value) {
+    return 'Platform: $value';
+  }
+
+  @override
+  String visibilityLabel(String value) {
+    return 'Visibility: $value';
+  }
+
+  @override
+  String sharingLabel(String value) {
+    return 'Sharing: $value';
+  }
+
+  @override
+  String editedAtLabel(String value) {
+    return 'Edited: $value';
+  }
+
+  @override
+  String get softDeleted => 'Soft deleted';
+
+  @override
+  String reasonLabel(String value) {
+    return 'Reason: $value';
+  }
+
+  @override
+  String changedByLabel(String value) {
+    return 'Changed by: $value';
+  }
+
+  @override
+  String get sightingCreatorLevelFree => 'Free';
+
+  @override
+  String get sightingCreatorLevelPremium => 'Premium';
+
+  @override
+  String get sightingCreatorLevelAdmin => 'Admin';
+
+  @override
+  String get sightingSharingOwnerOnly => 'Owner only';
+
+  @override
+  String get sightingSharingPremiumShared => 'Shared with premium';
+
+  @override
+  String get sightingSharingAdminOnly => 'Admins only';
+
+  @override
+  String get sightingActionCreated => 'Created';
+
+  @override
+  String get sightingActionUpdated => 'Updated';
+
+  @override
+  String get sightingActionSoftDeleted => 'Soft deleted';
 }

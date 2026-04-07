@@ -1,6 +1,6 @@
 // core/extensions/date_time_formatting_extension.dart
 extension DateTimeFormattingExtension on DateTime {
-  String toGermanDateTime() {
+  String toAppDateTime() {
     final local = toLocal();
     final day = local.day.toString().padLeft(2, '0');
     final month = local.month.toString().padLeft(2, '0');

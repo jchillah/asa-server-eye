@@ -329,41 +329,41 @@
     },
     "profile": "Profil",
     "@profile": {
-        "description": "Titre de la section Profil dans les paramètres"
+        "description": "Titre de la section profil"
     },
-    "profileLoadError": "Le profil n’a pas pu être chargé.",
+    "profileLoadError": "Le profil n'a pas pu être chargé.",
     "@profileLoadError": {
-        "description": "Message d’erreur lorsque le chargement du profil échoue"
+        "description": "Erreur lors du chargement du profil"
     },
-    "username": "Nom d’utilisateur",
+    "username": "Nom d'utilisateur",
     "@username": {
-        "description": "Etiquette pour le nom d’utilisateur"
+        "description": "Libellé du nom d'utilisateur"
     },
-    "accessLevel": "Niveau d’accès",
+    "accessLevel": "Niveau d'accès",
     "@accessLevel": {
-        "description": "Etiquette pour le niveau d’accès"
+        "description": "Libellé du niveau d'accès"
     },
     "save": "Enregistrer",
     "@save": {
-        "description": "Action d’enregistrement"
+        "description": "Action d'enregistrement"
     },
     "profileSavedSuccessfully": "Profil enregistré avec succès.",
     "@profileSavedSuccessfully": {
-        "description": "Snackbar après un enregistrement réussi du profil"
+        "description": "Snackbar après enregistrement du profil"
     },
-    "profileSaveError": "Le profil n’a pas pu être enregistré.",
+    "profileSaveError": "Le profil n'a pas pu être enregistré.",
     "@profileSaveError": {
-        "description": "Message d’erreur lorsque l’enregistrement du profil échoue"
+        "description": "Erreur lors de l'enregistrement du profil"
     },
-    "profileDeleteError": "Le compte n’a pas pu être supprimé.",
+    "profileDeleteError": "Le compte n'a pas pu être supprimé.",
     "@profileDeleteError": {
-        "description": "Message d’erreur lorsque la suppression du compte échoue"
+        "description": "Erreur lors de la suppression du compte"
     },
-    "deleteAccountHint": "En supprimant votre compte, votre profil sera supprimé. Les observations déjà créées resteront conservées.",
+    "deleteAccountHint": "La suppression de votre compte supprimera votre profil. Les sightings existants resteront disponibles.",
     "@deleteAccountHint": {
-        "description": "Message d’avertissement avant la suppression du compte"
+        "description": "Texte d'information sous le bouton de suppression du compte"
     },
-    "savedFavoritesCount": "{count} favoris enregistrés",
+    "savedFavoritesCount": "{count} enregistrés",
     "@savedFavoritesCount": {
         "description": "Nombre de favoris enregistrés",
         "placeholders": {
@@ -372,33 +372,327 @@
             }
         }
     },
-    "usernameEmpty": "Le nom d’utilisateur ne peut pas être vide.",
+    "usernameEmpty": "Veuillez saisir un nom d'utilisateur.",
     "@usernameEmpty": {
-        "description": "Message d’erreur lorsque le nom d’utilisateur est vide"
+        "description": "Validation si le nom d'utilisateur est vide"
     },
-    "usernameTooShort": "Le nom d’utilisateur doit contenir au moins 3 caractères.",
+    "usernameTooShort": "Le nom d'utilisateur doit contenir au moins 3 caractères.",
     "@usernameTooShort": {
-        "description": "Message d’erreur lorsque le nom d’utilisateur est trop court"
+        "description": "Validation si le nom d'utilisateur est trop court"
     },
-    "usernameTooLong": "Le nom d’utilisateur ne peut pas dépasser 20 caractères.",
+    "usernameTooLong": "Le nom d'utilisateur ne peut pas dépasser 20 caractères.",
     "@usernameTooLong": {
-        "description": "Message d’erreur lorsque le nom d’utilisateur est trop long"
+        "description": "Validation si le nom d'utilisateur est trop long"
     },
-    "usernameInvalidCharacters": "Le nom d’utilisateur ne peut contenir que des lettres, des chiffres, des points, des tirets bas et des tirets.",
+    "usernameInvalidCharacters": "Le nom d'utilisateur ne peut contenir que des lettres, chiffres, points, tirets bas et traits d'union.",
     "@usernameInvalidCharacters": {
-        "description": "Message d’erreur lorsque le nom d’utilisateur contient des caractères invalides"
+        "description": "Validation si le nom d'utilisateur contient des caractères invalides"
     },
     "deleteAccountDialogTitle": "Supprimer le compte",
     "@deleteAccountDialogTitle": {
-        "description": "Titre du dialogue de confirmation pour la suppression du compte"
+        "description": "Titre du dialogue de suppression du compte"
     },
-    "deleteAccountDialogDescription": "Veuillez saisir votre mot de passe pour {email} afin de supprimer le compte.",
+    "deleteAccountDialogDescription": "Veuillez saisir votre mot de passe pour {email} afin de supprimer votre compte.",
     "@deleteAccountDialogDescription": {
-        "description": "Description du dialogue de confirmation pour la suppression du compte",
+        "description": "Description du dialogue de suppression du compte",
         "placeholders": {
             "email": {
                 "type": "String"
             }
         }
+    },
+    "signUpUsernameHint": "Ce sera votre nom d'utilisateur public visible par les autres utilisateurs.",
+    "@signUpUsernameHint": {
+        "description": "Texte d'aide pour le nom d'utilisateur à l'inscription"
+    },
+    "emailHint": "nom@email.com",
+    "@emailHint": {
+        "description": "Texte d'aide pour l'e-mail"
+    },
+    "sightings": "Signalements",
+    "@sightings": {
+        "description": "Titre des sightings"
+    },
+    "playerSightingReport": "Signaler une observation de joueur",
+    "@playerSightingReport": {
+        "description": "Titre de l'écran de signalement"
+    },
+    "editSighting": "Modifier le signalement",
+    "@editSighting": {
+        "description": "Titre de l'écran de modification"
+    },
+    "deleteSighting": "Supprimer le signalement",
+    "@deleteSighting": {
+        "description": "Titre de l'écran de suppression"
+    },
+    "sightingHistory": "Historique des modifications",
+    "@sightingHistory": {
+        "description": "Titre de l'écran d'historique"
+    },
+    "platformId": "ID de plateforme",
+    "@platformId": {
+        "description": "Libellé de l'ID de plateforme"
+    },
+    "platformIdHint": "ID Steam / Xbox / PSN",
+    "@platformIdHint": {
+        "description": "Texte d'aide pour l'ID de plateforme"
+    },
+    "inGameName": "Nom en jeu",
+    "@inGameName": {
+        "description": "Libellé du nom en jeu"
+    },
+    "tribeName": "Nom de la tribu",
+    "@tribeName": {
+        "description": "Libellé du nom de la tribu"
+    },
+    "tribeNameHint": "Nom de la tribu",
+    "@tribeNameHint": {
+        "description": "Texte d'aide pour le nom de la tribu"
+    },
+    "platform": "Plateforme",
+    "@platform": {
+        "description": "Libellé de la plateforme"
+    },
+    "note": "Note",
+    "@note": {
+        "description": "Libellé de la note"
+    },
+    "optional": "Optionnel",
+    "@optional": {
+        "description": "Indication facultative"
+    },
+    "visibleToPremiumUsers": "Visible pour les utilisateurs premium",
+    "@visibleToPremiumUsers": {
+        "description": "Texte du commutateur de visibilité premium"
+    },
+    "saveSighting": "Enregistrer le signalement",
+    "@saveSighting": {
+        "description": "Texte du bouton d'enregistrement"
+    },
+    "updateSighting": "Enregistrer les modifications",
+    "@updateSighting": {
+        "description": "Texte du bouton de mise à jour"
+    },
+    "hideSighting": "Masquer le signalement",
+    "@hideSighting": {
+        "description": "Texte du bouton pour masquer le signalement"
+    },
+    "saving": "Enregistrement...",
+    "@saving": {
+        "description": "Texte affiché pendant l'enregistrement"
+    },
+    "sightingSaved": "Signalement enregistré.",
+    "@sightingSaved": {
+        "description": "Snackbar après enregistrement"
+    },
+    "sightingUpdated": "Signalement mis à jour.",
+    "@sightingUpdated": {
+        "description": "Snackbar après mise à jour"
+    },
+    "sightingHidden": "Signalement masqué.",
+    "@sightingHidden": {
+        "description": "Snackbar après masquage"
+    },
+    "sightingSaveError": "Le signalement n'a pas pu être enregistré.",
+    "@sightingSaveError": {
+        "description": "Erreur lors de l'enregistrement"
+    },
+    "sightingUpdateError": "Le signalement n'a pas pu être mis à jour.",
+    "@sightingUpdateError": {
+        "description": "Erreur lors de la mise à jour"
+    },
+    "sightingHideError": "Le signalement n'a pas pu être masqué.",
+    "@sightingHideError": {
+        "description": "Erreur lors du masquage"
+    },
+    "sightingRequiresLogin": "Vous devez être connecté pour signaler une observation.",
+    "@sightingRequiresLogin": {
+        "description": "Erreur si l'utilisateur n'est pas connecté"
+    },
+    "sightingDeleteNotAllowed": "Vous n'êtes pas autorisé à supprimer ce signalement.",
+    "@sightingDeleteNotAllowed": {
+        "description": "Erreur si la suppression n'est pas autorisée"
+    },
+    "sightingEditNotAllowed": "Vous n'êtes pas autorisé à modifier ce signalement.",
+    "@sightingEditNotAllowed": {
+        "description": "Erreur si la modification n'est pas autorisée"
+    },
+    "sightingInGameNameRequired": "Veuillez saisir un nom de joueur.",
+    "@sightingInGameNameRequired": {
+        "description": "Validation pour nom de joueur manquant"
+    },
+    "sightingPlatformIdRequired": "Veuillez saisir un ID de plateforme.",
+    "@sightingPlatformIdRequired": {
+        "description": "Validation pour ID de plateforme manquant"
+    },
+    "sightingTribeNameRequired": "Veuillez saisir un nom de tribu.",
+    "@sightingTribeNameRequired": {
+        "description": "Validation pour nom de tribu manquant"
+    },
+    "sightingReasonRequired": "Veuillez indiquer une raison.",
+    "@sightingReasonRequired": {
+        "description": "Validation pour raison manquante"
+    },
+    "sightingDeleteHint": "Ce signalement ne sera pas supprimé définitivement. Il sera seulement masqué pour les utilisateurs normaux et restera traçable pour les administrateurs.",
+    "@sightingDeleteHint": {
+        "description": "Texte d'information sur l'écran de suppression"
+    },
+    "reason": "Raison",
+    "@reason": {
+        "description": "Libellé de la raison"
+    },
+    "reasonHint": "Veuillez indiquer une raison",
+    "@reasonHint": {
+        "description": "Texte d'aide pour la raison"
+    },
+    "noVisibleSightings": "Aucun signalement visible pour le moment.",
+    "@noVisibleSightings": {
+        "description": "État vide pour les sightings"
+    },
+    "sightingsLoadError": "Les sightings n'ont pas pu être chargés.",
+    "@sightingsLoadError": {
+        "description": "Erreur lors du chargement des sightings"
+    },
+    "sightingHistoryLoadError": "L'historique n'a pas pu être chargé.",
+    "@sightingHistoryLoadError": {
+        "description": "Erreur lors du chargement de l'historique"
+    },
+    "noSightingHistory": "Aucun historique disponible pour le moment.",
+    "@noSightingHistory": {
+        "description": "État vide pour l'historique"
+    },
+    "accessLevelLoadError": "Le niveau d'accès n'a pas pu être chargé.",
+    "@accessLevelLoadError": {
+        "description": "Erreur lors du chargement du niveau d'accès"
+    },
+    "edit": "Modifier",
+    "@edit": {
+        "description": "Action modifier"
+    },
+    "delete": "Supprimer",
+    "@delete": {
+        "description": "Action supprimer"
+    },
+    "viewHistory": "Voir l'historique",
+    "@viewHistory": {
+        "description": "Action voir l'historique"
+    },
+    "platformSteam": "Steam",
+    "@platformSteam": {
+        "description": "Libellé pour Steam"
+    },
+    "platformXbox": "Xbox",
+    "@platformXbox": {
+        "description": "Libellé pour Xbox"
+    },
+    "platformPsn": "PSN",
+    "@platformPsn": {
+        "description": "Libellé pour PSN"
+    },
+    "platformUnknown": "Inconnu",
+    "@platformUnknown": {
+        "description": "Libellé pour plateforme inconnue"
+    },
+    "sightingUserProfileLoadError": "Le profil utilisateur n'a pas pu être chargé.",
+    "@sightingUserProfileLoadError": {
+        "description": "Erreur si le profil utilisateur nécessaire au signalement n'a pas pu être chargé"
+    },
+    "playerSightings": "Observations de joueurs",
+    "@playerSightings": {
+        "description": "Titre de l'écran des sightings serveur"
+    },
+    "platformLabel": "Plateforme : {value}",
+    "@platformLabel": {
+        "description": "Libellé de la plateforme dans une sighting",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "visibilityLabel": "Visibilité : {value}",
+    "@visibilityLabel": {
+        "description": "Libellé du niveau du créateur dans une sighting",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "sharingLabel": "Partage : {value}",
+    "@sharingLabel": {
+        "description": "Libellé du niveau de partage dans une sighting",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "editedAtLabel": "Modifié : {value}",
+    "@editedAtLabel": {
+        "description": "Libellé de la date de modification",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "softDeleted": "Suppression logique",
+    "@softDeleted": {
+        "description": "Indique qu'une sighting a été supprimée logiquement"
+    },
+    "reasonLabel": "Raison : {value}",
+    "@reasonLabel": {
+        "description": "Libellé de la raison de suppression",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "changedByLabel": "Modifié par : {value}",
+    "@changedByLabel": {
+        "description": "Libellé de l'utilisateur ayant modifié l'historique",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "sightingCreatorLevelFree": "Free",
+    "@sightingCreatorLevelFree": {
+        "description": "Libellé du niveau créateur free"
+    },
+    "sightingCreatorLevelPremium": "Premium",
+    "@sightingCreatorLevelPremium": {
+        "description": "Libellé du niveau créateur premium"
+    },
+    "sightingCreatorLevelAdmin": "Admin",
+    "@sightingCreatorLevelAdmin": {
+        "description": "Libellé du niveau créateur admin"
+    },
+    "sightingSharingOwnerOnly": "Créateur uniquement",
+    "@sightingSharingOwnerOnly": {
+        "description": "Libellé du partage ownerOnly"
+    },
+    "sightingSharingPremiumShared": "Partagé avec premium",
+    "@sightingSharingPremiumShared": {
+        "description": "Libellé du partage premiumShared"
+    },
+    "sightingSharingAdminOnly": "Admins uniquement",
+    "@sightingSharingAdminOnly": {
+        "description": "Libellé du partage adminOnly"
+    },
+    "sightingActionCreated": "Créé",
+    "@sightingActionCreated": {
+        "description": "Action d'historique créée"
+    },
+    "sightingActionUpdated": "Modifié",
+    "@sightingActionUpdated": {
+        "description": "Action d'historique modifiée"
+    },
+    "sightingActionSoftDeleted": "Masqué",
+    "@sightingActionSoftDeleted": {
+        "description": "Action d'historique supprimée logiquement"
     }
 }

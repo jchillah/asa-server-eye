@@ -37,14 +37,14 @@ class SignUpScreen extends ConsumerWidget {
                   children: [
                     AuthUsernameField(
                       controller: formController.usernameController,
-                      labelText: 'Benutzername',
-                      hintText: 'z. B. MichaelW',
+                      labelText: context.l10n.username,
+                      hintText: context.l10n.signUpUsernameHint,
                     ),
                     const SizedBox(height: 16),
                     AuthEmailField(
                       controller: formController.emailController,
                       labelText: context.l10n.email,
-                      hintText: 'name@email.com',
+                      hintText: context.l10n.emailHint,
                     ),
                     const SizedBox(height: 16),
                     AuthPasswordField(

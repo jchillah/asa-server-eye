@@ -252,13 +252,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profile => 'Profil';
 
   @override
-  String get profileLoadError => 'Le profil n’a pas pu être chargé.';
+  String get profileLoadError => 'Le profil n\'a pas pu être chargé.';
 
   @override
-  String get username => 'Nom d’utilisateur';
+  String get username => 'Nom d\'utilisateur';
 
   @override
-  String get accessLevel => 'Niveau d’accès';
+  String get accessLevel => 'Niveau d\'accès';
 
   @override
   String get save => 'Enregistrer';
@@ -267,36 +267,246 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileSavedSuccessfully => 'Profil enregistré avec succès.';
 
   @override
-  String get profileSaveError => 'Le profil n’a pas pu être enregistré.';
+  String get profileSaveError => 'Le profil n\'a pas pu être enregistré.';
 
   @override
-  String get profileDeleteError => 'Le compte n’a pas pu être supprimé.';
+  String get profileDeleteError => 'Le compte n\'a pas pu être supprimé.';
 
   @override
-  String get deleteAccountHint => 'En supprimant votre compte, votre profil sera supprimé. Les observations déjà créées resteront conservées.';
+  String get deleteAccountHint => 'La suppression de votre compte supprimera votre profil. Les sightings existants resteront disponibles.';
 
   @override
   String savedFavoritesCount(int count) {
-    return '$count favoris enregistrés';
+    return '$count enregistrés';
   }
 
   @override
-  String get usernameEmpty => 'Le nom d’utilisateur ne peut pas être vide.';
+  String get usernameEmpty => 'Veuillez saisir un nom d\'utilisateur.';
 
   @override
-  String get usernameTooShort => 'Le nom d’utilisateur doit contenir au moins 3 caractères.';
+  String get usernameTooShort => 'Le nom d\'utilisateur doit contenir au moins 3 caractères.';
 
   @override
-  String get usernameTooLong => 'Le nom d’utilisateur ne peut pas dépasser 20 caractères.';
+  String get usernameTooLong => 'Le nom d\'utilisateur ne peut pas dépasser 20 caractères.';
 
   @override
-  String get usernameInvalidCharacters => 'Le nom d’utilisateur ne peut contenir que des lettres, des chiffres, des points, des tirets bas et des tirets.';
+  String get usernameInvalidCharacters => 'Le nom d\'utilisateur ne peut contenir que des lettres, chiffres, points, tirets bas et traits d\'union.';
 
   @override
   String get deleteAccountDialogTitle => 'Supprimer le compte';
 
   @override
   String deleteAccountDialogDescription(String email) {
-    return 'Veuillez saisir votre mot de passe pour $email afin de supprimer le compte.';
+    return 'Veuillez saisir votre mot de passe pour $email afin de supprimer votre compte.';
   }
+
+  @override
+  String get signUpUsernameHint => 'Ce sera votre nom d\'utilisateur public visible par les autres utilisateurs.';
+
+  @override
+  String get emailHint => 'nom@email.com';
+
+  @override
+  String get sightings => 'Signalements';
+
+  @override
+  String get playerSightingReport => 'Signaler une observation de joueur';
+
+  @override
+  String get editSighting => 'Modifier le signalement';
+
+  @override
+  String get deleteSighting => 'Supprimer le signalement';
+
+  @override
+  String get sightingHistory => 'Historique des modifications';
+
+  @override
+  String get platformId => 'ID de plateforme';
+
+  @override
+  String get platformIdHint => 'ID Steam / Xbox / PSN';
+
+  @override
+  String get inGameName => 'Nom en jeu';
+
+  @override
+  String get tribeName => 'Nom de la tribu';
+
+  @override
+  String get tribeNameHint => 'Nom de la tribu';
+
+  @override
+  String get platform => 'Plateforme';
+
+  @override
+  String get note => 'Note';
+
+  @override
+  String get optional => 'Optionnel';
+
+  @override
+  String get visibleToPremiumUsers => 'Visible pour les utilisateurs premium';
+
+  @override
+  String get saveSighting => 'Enregistrer le signalement';
+
+  @override
+  String get updateSighting => 'Enregistrer les modifications';
+
+  @override
+  String get hideSighting => 'Masquer le signalement';
+
+  @override
+  String get saving => 'Enregistrement...';
+
+  @override
+  String get sightingSaved => 'Signalement enregistré.';
+
+  @override
+  String get sightingUpdated => 'Signalement mis à jour.';
+
+  @override
+  String get sightingHidden => 'Signalement masqué.';
+
+  @override
+  String get sightingSaveError => 'Le signalement n\'a pas pu être enregistré.';
+
+  @override
+  String get sightingUpdateError => 'Le signalement n\'a pas pu être mis à jour.';
+
+  @override
+  String get sightingHideError => 'Le signalement n\'a pas pu être masqué.';
+
+  @override
+  String get sightingRequiresLogin => 'Vous devez être connecté pour signaler une observation.';
+
+  @override
+  String get sightingDeleteNotAllowed => 'Vous n\'êtes pas autorisé à supprimer ce signalement.';
+
+  @override
+  String get sightingEditNotAllowed => 'Vous n\'êtes pas autorisé à modifier ce signalement.';
+
+  @override
+  String get sightingInGameNameRequired => 'Veuillez saisir un nom de joueur.';
+
+  @override
+  String get sightingPlatformIdRequired => 'Veuillez saisir un ID de plateforme.';
+
+  @override
+  String get sightingTribeNameRequired => 'Veuillez saisir un nom de tribu.';
+
+  @override
+  String get sightingReasonRequired => 'Veuillez indiquer une raison.';
+
+  @override
+  String get sightingDeleteHint => 'Ce signalement ne sera pas supprimé définitivement. Il sera seulement masqué pour les utilisateurs normaux et restera traçable pour les administrateurs.';
+
+  @override
+  String get reason => 'Raison';
+
+  @override
+  String get reasonHint => 'Veuillez indiquer une raison';
+
+  @override
+  String get noVisibleSightings => 'Aucun signalement visible pour le moment.';
+
+  @override
+  String get sightingsLoadError => 'Les sightings n\'ont pas pu être chargés.';
+
+  @override
+  String get sightingHistoryLoadError => 'L\'historique n\'a pas pu être chargé.';
+
+  @override
+  String get noSightingHistory => 'Aucun historique disponible pour le moment.';
+
+  @override
+  String get accessLevelLoadError => 'Le niveau d\'accès n\'a pas pu être chargé.';
+
+  @override
+  String get edit => 'Modifier';
+
+  @override
+  String get delete => 'Supprimer';
+
+  @override
+  String get viewHistory => 'Voir l\'historique';
+
+  @override
+  String get platformSteam => 'Steam';
+
+  @override
+  String get platformXbox => 'Xbox';
+
+  @override
+  String get platformPsn => 'PSN';
+
+  @override
+  String get platformUnknown => 'Inconnu';
+
+  @override
+  String get sightingUserProfileLoadError => 'Le profil utilisateur n\'a pas pu être chargé.';
+
+  @override
+  String get playerSightings => 'Observations de joueurs';
+
+  @override
+  String platformLabel(String value) {
+    return 'Plateforme : $value';
+  }
+
+  @override
+  String visibilityLabel(String value) {
+    return 'Visibilité : $value';
+  }
+
+  @override
+  String sharingLabel(String value) {
+    return 'Partage : $value';
+  }
+
+  @override
+  String editedAtLabel(String value) {
+    return 'Modifié : $value';
+  }
+
+  @override
+  String get softDeleted => 'Suppression logique';
+
+  @override
+  String reasonLabel(String value) {
+    return 'Raison : $value';
+  }
+
+  @override
+  String changedByLabel(String value) {
+    return 'Modifié par : $value';
+  }
+
+  @override
+  String get sightingCreatorLevelFree => 'Free';
+
+  @override
+  String get sightingCreatorLevelPremium => 'Premium';
+
+  @override
+  String get sightingCreatorLevelAdmin => 'Admin';
+
+  @override
+  String get sightingSharingOwnerOnly => 'Créateur uniquement';
+
+  @override
+  String get sightingSharingPremiumShared => 'Partagé avec premium';
+
+  @override
+  String get sightingSharingAdminOnly => 'Admins uniquement';
+
+  @override
+  String get sightingActionCreated => 'Créé';
+
+  @override
+  String get sightingActionUpdated => 'Modifié';
+
+  @override
+  String get sightingActionSoftDeleted => 'Masqué';
 }

@@ -297,6 +297,216 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String deleteAccountDialogDescription(String email) {
-    return 'Bitte gib dein Passwort für $email ein, um den Account zu löschen.';
+    return 'Bitte gib dein Passwort für $email ein, um dein Konto zu löschen.';
   }
+
+  @override
+  String get signUpUsernameHint => 'Dein Name im ASA Server Eye';
+
+  @override
+  String get emailHint => 'name@email.com';
+
+  @override
+  String get sightings => 'Sichtungen';
+
+  @override
+  String get playerSightingReport => 'Spielersichtung melden';
+
+  @override
+  String get editSighting => 'Sichtung bearbeiten';
+
+  @override
+  String get deleteSighting => 'Sichtung löschen';
+
+  @override
+  String get sightingHistory => 'Änderungsverlauf';
+
+  @override
+  String get platformId => 'Plattform-ID';
+
+  @override
+  String get platformIdHint => 'Steam / Xbox / PSN ID';
+
+  @override
+  String get inGameName => 'Ingame-Name';
+
+  @override
+  String get tribeName => 'Tribe-Name';
+
+  @override
+  String get tribeNameHint => 'Name des Tribes';
+
+  @override
+  String get platform => 'Plattform';
+
+  @override
+  String get note => 'Notiz';
+
+  @override
+  String get optional => 'Optional';
+
+  @override
+  String get visibleToPremiumUsers => 'Für andere Premium-User sichtbar';
+
+  @override
+  String get saveSighting => 'Sichtung speichern';
+
+  @override
+  String get updateSighting => 'Änderungen speichern';
+
+  @override
+  String get hideSighting => 'Sichtung ausblenden';
+
+  @override
+  String get saving => 'Speichert...';
+
+  @override
+  String get sightingSaved => 'Sichtung gespeichert.';
+
+  @override
+  String get sightingUpdated => 'Sichtung aktualisiert.';
+
+  @override
+  String get sightingHidden => 'Sichtung ausgeblendet.';
+
+  @override
+  String get sightingSaveError => 'Sichtung konnte nicht gespeichert werden.';
+
+  @override
+  String get sightingUpdateError => 'Sichtung konnte nicht aktualisiert werden.';
+
+  @override
+  String get sightingHideError => 'Sichtung konnte nicht ausgeblendet werden.';
+
+  @override
+  String get sightingRequiresLogin => 'Du musst eingeloggt sein, um eine Sichtung zu melden.';
+
+  @override
+  String get sightingDeleteNotAllowed => 'Du darfst diese Sichtung nicht löschen.';
+
+  @override
+  String get sightingEditNotAllowed => 'Du darfst diese Sichtung nicht bearbeiten.';
+
+  @override
+  String get sightingInGameNameRequired => 'Bitte Spielernamen eingeben.';
+
+  @override
+  String get sightingPlatformIdRequired => 'Bitte Plattform-ID eingeben.';
+
+  @override
+  String get sightingTribeNameRequired => 'Bitte Tribe-Namen eingeben.';
+
+  @override
+  String get sightingReasonRequired => 'Bitte Grund angeben.';
+
+  @override
+  String get sightingDeleteHint => 'Die Sichtung wird nicht endgültig gelöscht. Sie wird nur für normale Nutzer ausgeblendet und bleibt für Admins nachvollziehbar.';
+
+  @override
+  String get reason => 'Grund';
+
+  @override
+  String get reasonHint => 'Bitte Grund angeben';
+
+  @override
+  String get noVisibleSightings => 'Noch keine sichtbaren Sightings vorhanden.';
+
+  @override
+  String get sightingsLoadError => 'Sightings konnten nicht geladen werden.';
+
+  @override
+  String get sightingHistoryLoadError => 'Verlauf konnte nicht geladen werden.';
+
+  @override
+  String get noSightingHistory => 'Noch kein Verlauf vorhanden.';
+
+  @override
+  String get accessLevelLoadError => 'Zugriffslevel konnte nicht geladen werden.';
+
+  @override
+  String get edit => 'Bearbeiten';
+
+  @override
+  String get delete => 'Löschen';
+
+  @override
+  String get viewHistory => 'Verlauf ansehen';
+
+  @override
+  String get platformSteam => 'Steam';
+
+  @override
+  String get platformXbox => 'Xbox';
+
+  @override
+  String get platformPsn => 'PSN';
+
+  @override
+  String get platformUnknown => 'Unbekannt';
+
+  @override
+  String get sightingUserProfileLoadError => 'Benutzerprofil konnte nicht geladen werden.';
+
+  @override
+  String get playerSightings => 'Player Sightings';
+
+  @override
+  String platformLabel(String value) {
+    return 'Plattform: $value';
+  }
+
+  @override
+  String visibilityLabel(String value) {
+    return 'Sichtbarkeit: $value';
+  }
+
+  @override
+  String sharingLabel(String value) {
+    return 'Freigabe: $value';
+  }
+
+  @override
+  String editedAtLabel(String value) {
+    return 'Bearbeitet: $value';
+  }
+
+  @override
+  String get softDeleted => 'Soft gelöscht';
+
+  @override
+  String reasonLabel(String value) {
+    return 'Grund: $value';
+  }
+
+  @override
+  String changedByLabel(String value) {
+    return 'Geändert von: $value';
+  }
+
+  @override
+  String get sightingCreatorLevelFree => 'Free';
+
+  @override
+  String get sightingCreatorLevelPremium => 'Premium';
+
+  @override
+  String get sightingCreatorLevelAdmin => 'Admin';
+
+  @override
+  String get sightingSharingOwnerOnly => 'Nur Ersteller';
+
+  @override
+  String get sightingSharingPremiumShared => 'Mit Premium geteilt';
+
+  @override
+  String get sightingSharingAdminOnly => 'Nur Admins';
+
+  @override
+  String get sightingActionCreated => 'Erstellt';
+
+  @override
+  String get sightingActionUpdated => 'Bearbeitet';
+
+  @override
+  String get sightingActionSoftDeleted => 'Ausgeblendet';
 }

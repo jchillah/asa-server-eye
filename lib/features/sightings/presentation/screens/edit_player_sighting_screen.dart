@@ -1,147 +1,118 @@
 // features/sightings/presentation/screens/edit_player_sighting_screen.dart
+import 'package:asa_server_eye/core/extensions/context_l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/player_sighting.dart';
 import '../controllers/edit_player_sighting_controller.dart';
+import '../utils/sightings_message_mapper.dart';
+import '../widgets/player_sighting_form.dart';
 
-class EditPlayerSightingScreen extends ConsumerWidget {
+class EditPlayerSightingScreen extends ConsumerStatefulWidget {
   const EditPlayerSightingScreen({super.key, required this.sighting});
 
   final PlayerSighting sighting;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(editPlayerSightingControllerProvider(sighting));
-    final controller = ref.read(
-      editPlayerSightingControllerProvider(sighting).notifier,
-    );
+  ConsumerState<EditPlayerSightingScreen> createState() =>
+      _EditPlayerSightingScreenState();
+}
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Sichtung bearbeiten')),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          TextField(
-            controller: TextEditingController(text: state.playerId)
-              ..selection = TextSelection.collapsed(
-                offset: state.playerId.length,
-              ),
-            onChanged: controller.updatePlayerId,
-            decoration: InputDecoration(
-              labelText: 'Plattform-ID',
-              errorText: state.playerIdError,
-              border: const OutlineInputBorder(),
-            ),
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: TextEditingController(text: state.playerName)
-              ..selection = TextSelection.collapsed(
-                offset: state.playerName.length,
-              ),
-            onChanged: controller.updatePlayerName,
-            decoration: InputDecoration(
-              labelText: 'Playername',
-              errorText: state.playerNameError,
-              border: const OutlineInputBorder(),
-            ),
-          ),
-          const SizedBox(height: 16),
-          DropdownButtonFormField<GamingPlatform>(
-            initialValue: state.platform,
-            decoration: const InputDecoration(
-              labelText: 'Plattform',
-              border: OutlineInputBorder(),
-            ),
-            items: GamingPlatform.values
-                .where((platform) => platform != GamingPlatform.unknown)
-                .map(
-                  (platform) => DropdownMenuItem<GamingPlatform>(
-                    value: platform,
-                    child: Text(_platformLabel(platform)),
-                  ),
-                )
-                .toList(),
-            onChanged: (value) {
-              if (value != null) {
-                controller.updatePlatform(value);
-              }
-            },
-          ),
-          const SizedBox(height: 16),
-          if (state.canChoosePremiumSharing)
-            SwitchListTile(
-              value: state.shareWithPremiumUsers,
-              onChanged: controller.updateShareWithPremiumUsers,
-              title: const Text('Für andere Premium-User sichtbar'),
-              contentPadding: EdgeInsets.zero,
-            ),
-          if (state.canChoosePremiumSharing) const SizedBox(height: 16),
-          TextField(
-            controller: TextEditingController(text: state.note)
-              ..selection = TextSelection.collapsed(offset: state.note.length),
-            onChanged: controller.updateNote,
-            minLines: 3,
-            maxLines: 5,
-            decoration: const InputDecoration(
-              labelText: 'Notiz',
-              border: OutlineInputBorder(),
-              alignLabelWithHint: true,
-            ),
-          ),
-          const SizedBox(height: 16),
-          if (state.submitError != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Text(
-                state.submitError!,
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
-              ),
-            ),
-          FilledButton.icon(
-            onPressed: state.isSubmitting
-                ? null
-                : () async {
-                    final success = await controller.submit();
+class _EditPlayerSightingScreenState
+    extends ConsumerState<EditPlayerSightingScreen> {
+  late final TextEditingController _playerPlatformIdController;
+  late final TextEditingController _inGameNameController;
+  late final TextEditingController _tribeNameController;
+  late final TextEditingController _noteController;
 
-                    if (!context.mounted) {
-                      return;
-                    }
+  bool _isHydrated = false;
 
-                    if (success) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Sichtung aktualisiert.')),
-                      );
-                      Navigator.of(context).pop();
-                    }
-                  },
-            icon: state.isSubmitting
-                ? const SizedBox(
-                    width: 18,
-                    height: 18,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                : const Icon(Icons.save_rounded),
-            label: Text(
-              state.isSubmitting ? 'Speichert...' : 'Änderungen speichern',
-            ),
-          ),
-        ],
-      ),
-    );
+  @override
+  void initState() {
+    super.initState();
+    _playerPlatformIdController = TextEditingController();
+    _inGameNameController = TextEditingController();
+    _tribeNameController = TextEditingController();
+    _noteController = TextEditingController();
   }
 
-  static String _platformLabel(GamingPlatform platform) {
-    switch (platform) {
-      case GamingPlatform.steam:
-        return 'Steam';
-      case GamingPlatform.xbox:
-        return 'Xbox';
-      case GamingPlatform.psn:
-        return 'PSN';
-      case GamingPlatform.unknown:
-        return 'Unknown';
-    }
+  @override
+  void dispose() {
+    _playerPlatformIdController.dispose();
+    _inGameNameController.dispose();
+    _tribeNameController.dispose();
+    _noteController.dispose();
+    super.dispose();
+  }
+
+  void _hydrateIfNeeded(EditPlayerSightingState state) {
+    if (_isHydrated) return;
+
+    _playerPlatformIdController.text = state.playerPlatformId;
+    _inGameNameController.text = state.inGameName;
+    _tribeNameController.text = state.tribeName;
+    _noteController.text = state.note;
+    _isHydrated = true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(
+      editPlayerSightingControllerProvider(widget.sighting),
+    );
+    final controller = ref.read(
+      editPlayerSightingControllerProvider(widget.sighting).notifier,
+    );
+
+    _hydrateIfNeeded(state);
+
+    return Scaffold(
+      appBar: AppBar(title: Text(context.l10n.editSighting)),
+      body: PlayerSightingForm(
+        playerPlatformIdController: _playerPlatformIdController,
+        inGameNameController: _inGameNameController,
+        tribeNameController: _tribeNameController,
+        noteController: _noteController,
+        platform: state.platform,
+        canChoosePremiumSharing: state.canChoosePremiumSharing,
+        shareWithPremiumUsers: state.shareWithPremiumUsers,
+        isSubmitting: state.isSubmitting,
+        playerPlatformIdErrorText: SightingsMessageMapper.map(
+          context,
+          state.playerPlatformIdErrorKey,
+        ),
+        inGameNameErrorText: SightingsMessageMapper.map(
+          context,
+          state.inGameNameErrorKey,
+        ),
+        tribeNameErrorText: SightingsMessageMapper.map(
+          context,
+          state.tribeNameErrorKey,
+        ),
+        submitErrorText: SightingsMessageMapper.map(
+          context,
+          state.submitErrorKey,
+        ),
+        submitButtonLabel: context.l10n.updateSighting,
+        onPlayerPlatformIdChanged: controller.updatePlayerPlatformId,
+        onInGameNameChanged: controller.updateInGameName,
+        onTribeNameChanged: controller.updateTribeName,
+        onNoteChanged: controller.updateNote,
+        onPlatformChanged: controller.updatePlatform,
+        onShareWithPremiumUsersChanged: controller.updateShareWithPremiumUsers,
+        onSubmit: () async {
+          final success = await controller.submit();
+
+          if (!context.mounted) return;
+
+          if (success) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(context.l10n.sightingUpdated)),
+            );
+            Navigator.of(context).pop();
+          }
+        },
+      ),
+    );
   }
 }

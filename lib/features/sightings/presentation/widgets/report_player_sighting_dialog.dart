@@ -11,15 +11,15 @@ class ReportPlayerSightingDialog extends StatefulWidget {
 
 class _ReportPlayerSightingDialogState
     extends State<ReportPlayerSightingDialog> {
-  final _playerNameController = TextEditingController();
-  final _playerIdController = TextEditingController();
+  final _inGameNameController = TextEditingController();
+  final _playerPlatformIdController = TextEditingController();
   final _noteController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _playerNameController.dispose();
-    _playerIdController.dispose();
+    _inGameNameController.dispose();
+    _playerPlatformIdController.dispose();
     _noteController.dispose();
     super.dispose();
   }
@@ -31,8 +31,8 @@ class _ReportPlayerSightingDialogState
 
     Navigator.of(context).pop(
       _ReportPlayerSightingResult(
-        playerName: _playerNameController.text.trim(),
-        playerId: _playerIdController.text.trim(),
+        inGameName: _inGameNameController.text.trim(),
+        playerPlatformId: _playerPlatformIdController.text.trim(),
         note: _noteController.text.trim().isEmpty
             ? null
             : _noteController.text.trim(),
@@ -52,7 +52,7 @@ class _ReportPlayerSightingDialogState
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
-                controller: _playerNameController,
+                controller: _inGameNameController,
                 decoration: const InputDecoration(
                   labelText: 'Player name',
                   border: OutlineInputBorder(),
@@ -66,7 +66,7 @@ class _ReportPlayerSightingDialogState
                 },
               ),
               TextFormField(
-                controller: _playerIdController,
+                controller: _playerPlatformIdController,
                 decoration: const InputDecoration(
                   labelText: 'Platform ID (Steam / Xbox / PSN)',
                   border: OutlineInputBorder(),
@@ -105,17 +105,17 @@ class _ReportPlayerSightingDialogState
 
 class _ReportPlayerSightingResult {
   const _ReportPlayerSightingResult({
-    required this.playerName,
-    required this.playerId,
+    required this.inGameName,
+    required this.playerPlatformId,
     required this.note,
   });
 
-  final String playerName;
-  final String playerId;
+  final String inGameName;
+  final String playerPlatformId;
   final String? note;
 }
 
-Future<(String playerName, String playerId, String? note)?>
+Future<(String inGameName, String playerPlatformId, String? note)?>
 showReportPlayerSightingDialog(BuildContext context) async {
   final result = await showDialog<_ReportPlayerSightingResult>(
     context: context,
@@ -126,5 +126,5 @@ showReportPlayerSightingDialog(BuildContext context) async {
     return null;
   }
 
-  return (result.playerName, result.playerId, result.note);
+  return (result.inGameName, result.playerPlatformId, result.note);
 }

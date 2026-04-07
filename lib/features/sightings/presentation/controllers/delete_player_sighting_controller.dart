@@ -1,7 +1,9 @@
 // features/sightings/presentation/controllers/delete_player_sighting_controller.dart
-import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
+import 'dart:ui';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../data/repositories/sightings_repository.dart';
 import '../../domain/player_sighting.dart';
 import '../providers/sightings_providers.dart';
 
@@ -11,28 +13,40 @@ final deletePlayerSightingControllerProvider = StateNotifierProvider.autoDispose
       DeletePlayerSightingState,
       PlayerSighting
     >((ref, sighting) {
-      return DeletePlayerSightingController(ref, sighting);
+      final repository = ref.watch(sightingsRepositoryProvider);
+      final currentUserId = ref.watch(currentUserIdProvider);
+
+      return DeletePlayerSightingController(
+        repository: repository,
+        sighting: sighting,
+        currentUserId: currentUserId,
+        onCompleted: () {
+          ref.invalidate(rawServerSightingsProvider(sighting.serverId));
+          ref.invalidate(serverSightingsProvider(sighting.serverId));
+          ref.invalidate(sightingHistoryProvider(sighting.id));
+        },
+      );
     });
 
 class DeletePlayerSightingState {
   const DeletePlayerSightingState({
     this.reason = '',
-    this.reasonError,
-    this.submitError,
+    this.reasonErrorKey,
+    this.submitErrorKey,
     this.isSubmitting = false,
     this.isSuccess = false,
   });
 
   final String reason;
-  final String? reasonError;
-  final String? submitError;
+  final String? reasonErrorKey;
+  final String? submitErrorKey;
   final bool isSubmitting;
   final bool isSuccess;
 
   DeletePlayerSightingState copyWith({
     String? reason,
-    String? reasonError,
-    String? submitError,
+    String? reasonErrorKey,
+    String? submitErrorKey,
     bool? isSubmitting,
     bool? isSuccess,
     bool clearReasonError = false,
@@ -40,8 +54,12 @@ class DeletePlayerSightingState {
   }) {
     return DeletePlayerSightingState(
       reason: reason ?? this.reason,
-      reasonError: clearReasonError ? null : reasonError ?? this.reasonError,
-      submitError: clearSubmitError ? null : submitError ?? this.submitError,
+      reasonErrorKey: clearReasonError
+          ? null
+          : reasonErrorKey ?? this.reasonErrorKey,
+      submitErrorKey: clearSubmitError
+          ? null
+          : submitErrorKey ?? this.submitErrorKey,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
     );
@@ -50,11 +68,21 @@ class DeletePlayerSightingState {
 
 class DeletePlayerSightingController
     extends StateNotifier<DeletePlayerSightingState> {
-  DeletePlayerSightingController(this._ref, this._sighting)
-    : super(const DeletePlayerSightingState());
+  DeletePlayerSightingController({
+    required SightingsRepository repository,
+    required PlayerSighting sighting,
+    required String? currentUserId,
+    required VoidCallback onCompleted,
+  }) : _repository = repository,
+       _sighting = sighting,
+       _currentUserId = currentUserId,
+       _onCompleted = onCompleted,
+       super(const DeletePlayerSightingState());
 
-  final Ref _ref;
+  final SightingsRepository _repository;
   final PlayerSighting _sighting;
+  final String? _currentUserId;
+  final VoidCallback _onCompleted;
 
   void updateReason(String value) {
     state = state.copyWith(
@@ -66,12 +94,8 @@ class DeletePlayerSightingController
   }
 
   Future<bool> submit() async {
-    final currentUser = _ref.read(currentUserProvider);
-
-    if (currentUser == null || currentUser.uid != _sighting.createdByUserId) {
-      state = state.copyWith(
-        submitError: 'Du darfst diese Sichtung nicht löschen.',
-      );
+    if (_currentUserId == null || _currentUserId != _sighting.createdByUserId) {
+      state = state.copyWith(submitErrorKey: 'sightingDeleteNotAllowed');
       return false;
     }
 
@@ -79,7 +103,7 @@ class DeletePlayerSightingController
 
     if (reason.isEmpty) {
       state = state.copyWith(
-        reasonError: 'Bitte Grund angeben.',
+        reasonErrorKey: 'sightingReasonRequired',
         clearSubmitError: true,
       );
       return false;
@@ -88,17 +112,13 @@ class DeletePlayerSightingController
     state = state.copyWith(isSubmitting: true, clearSubmitError: true);
 
     try {
-      final repository = _ref.read(sightingsRepositoryProvider);
-
-      await repository.softDeleteSighting(
+      await _repository.softDeleteSighting(
         sightingId: _sighting.id,
-        deletedByUserId: currentUser.uid,
+        deletedByUserId: _currentUserId,
         reason: reason,
       );
 
-      _ref.invalidate(rawServerSightingsProvider(_sighting.serverId));
-      _ref.invalidate(serverSightingsProvider(_sighting.serverId));
-      _ref.invalidate(sightingHistoryProvider(_sighting.id));
+      _onCompleted();
 
       state = state.copyWith(isSubmitting: false, isSuccess: true);
 
@@ -106,7 +126,7 @@ class DeletePlayerSightingController
     } catch (_) {
       state = state.copyWith(
         isSubmitting: false,
-        submitError: 'Sichtung konnte nicht ausgeblendet werden.',
+        submitErrorKey: 'sightingHideError',
       );
       return false;
     }

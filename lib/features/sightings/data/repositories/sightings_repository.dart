@@ -1,4 +1,7 @@
 // features/sightings/data/repositories/sightings_repository.dart
+import 'package:asa_server_eye/features/sightings/domain/gaming_platform.dart';
+import 'package:asa_server_eye/features/sightings/domain/sighting_creator_level.dart';
+import 'package:asa_server_eye/features/sightings/domain/sighting_sharing_scope.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/player_sighting.dart';
@@ -43,12 +46,15 @@ class SightingsRepository {
 
   Future<void> createSighting({
     required String serverId,
-    required String playerName,
-    required String playerId,
+    required String inGameName,
+    required String playerPlatformId,
+    required String tribeName,
     required GamingPlatform platform,
     required String createdByUserId,
-    required SightingVisibilityLevel visibilityLevel,
+    required SightingCreatorLevel creatorLevel,
     required SightingSharingScope sharingScope,
+    required String createdByUsername,
+    required String createdByEmail,
     String? note,
   }) async {
     final sightingRef = _sightingsCollection.doc();
@@ -58,16 +64,20 @@ class SightingsRepository {
     final sighting = PlayerSightingModel(
       id: sightingRef.id,
       serverId: serverId,
-      playerName: playerName.trim(),
-      playerId: playerId.trim(),
+      inGameName: inGameName.trim(),
+      playerPlatformId: playerPlatformId.trim(),
+      tribeName: tribeName.trim(),
       platform: platform,
       createdAt: now,
       createdByUserId: createdByUserId,
-      visibilityLevel: visibilityLevel,
+      createdByUsername: createdByUsername.trim(),
+      createdByEmail: createdByEmail.trim(),
+      creatorLevel: creatorLevel,
       sharingScope: sharingScope,
       isVisible: true,
       note: note?.trim().isEmpty == true ? null : note?.trim(),
       updatedAt: null,
+      updatedByUserId: null,
       deletedAt: null,
       deletedByUserId: null,
       deleteReason: null,
@@ -93,8 +103,9 @@ class SightingsRepository {
   Future<void> updateSighting({
     required String sightingId,
     required String editedByUserId,
-    required String playerName,
-    required String playerId,
+    required String inGameName,
+    required String playerPlatformId,
+    required String tribeName,
     required GamingPlatform platform,
     required SightingSharingScope sharingScope,
     String? note,
@@ -110,12 +121,14 @@ class SightingsRepository {
     final now = DateTime.now();
 
     final updated = current.copyWith(
-      playerName: playerName.trim(),
-      playerId: playerId.trim(),
+      inGameName: inGameName.trim(),
+      playerPlatformId: playerPlatformId.trim(),
+      tribeName: tribeName.trim(),
       platform: platform,
       sharingScope: sharingScope,
       note: note?.trim().isEmpty == true ? null : note?.trim(),
       updatedAt: now,
+      updatedByUserId: editedByUserId,
     );
 
     final historyRef = _historyCollection.doc();
@@ -157,6 +170,7 @@ class SightingsRepository {
       deletedByUserId: deletedByUserId,
       deleteReason: reason.trim(),
       updatedAt: now,
+      updatedByUserId: deletedByUserId,
     );
 
     final historyRef = _historyCollection.doc();
@@ -183,12 +197,16 @@ class SightingsRepository {
   }) {
     final changes = <String>[];
 
-    if (before.playerName != after.playerName) {
-      changes.add('playerName');
+    if (before.inGameName != after.inGameName) {
+      changes.add('inGameName');
     }
 
-    if (before.playerId != after.playerId) {
-      changes.add('playerId');
+    if (before.playerPlatformId != after.playerPlatformId) {
+      changes.add('playerPlatformId');
+    }
+
+    if (before.tribeName != after.tribeName) {
+      changes.add('tribeName');
     }
 
     if (before.platform != after.platform) {

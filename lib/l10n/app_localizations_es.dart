@@ -270,24 +270,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profileSaveError => 'No se pudo guardar el perfil.';
 
   @override
-  String get profileDeleteError => 'No se pudo eliminar el cuenta.';
+  String get profileDeleteError => 'No se pudo eliminar la cuenta.';
 
   @override
-  String get deleteAccountHint => 'Eliminar tu cuenta eliminará todos tus datos guardados, incluidos tus favoritos. Esta acción no se puede deshacer.';
+  String get deleteAccountHint => 'Eliminar tu cuenta quitará tu perfil. Los sightings existentes permanecerán.';
 
   @override
   String savedFavoritesCount(int count) {
-    return '$count favoritos guardados';
+    return '$count guardados';
   }
 
   @override
-  String get usernameEmpty => 'Por favor, introduce un nombre de usuario.';
+  String get usernameEmpty => 'Introduce un nombre de usuario.';
 
   @override
   String get usernameTooShort => 'El nombre de usuario debe tener al menos 3 caracteres.';
 
   @override
-  String get usernameTooLong => 'El nombre de usuario no puede tener más de 20 caracteres.';
+  String get usernameTooLong => 'El nombre de usuario puede tener como máximo 20 caracteres.';
 
   @override
   String get usernameInvalidCharacters => 'El nombre de usuario solo puede contener letras, números, puntos, guiones bajos y guiones.';
@@ -297,6 +297,216 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String deleteAccountDialogDescription(String email) {
-    return 'Por favor, introduce tu contraseña para $email para eliminar la cuenta.';
+    return 'Introduce tu contraseña para $email para eliminar tu cuenta.';
   }
+
+  @override
+  String get signUpUsernameHint => 'Este será tu nombre de usuario público visible para otros usuarios.';
+
+  @override
+  String get emailHint => 'nombre@email.com';
+
+  @override
+  String get sightings => 'Avistamientos';
+
+  @override
+  String get playerSightingReport => 'Reportar avistamiento de jugador';
+
+  @override
+  String get editSighting => 'Editar avistamiento';
+
+  @override
+  String get deleteSighting => 'Eliminar avistamiento';
+
+  @override
+  String get sightingHistory => 'Historial de cambios';
+
+  @override
+  String get platformId => 'ID de plataforma';
+
+  @override
+  String get platformIdHint => 'ID de Steam / Xbox / PSN';
+
+  @override
+  String get inGameName => 'Nombre dentro del juego';
+
+  @override
+  String get tribeName => 'Nombre de la tribu';
+
+  @override
+  String get tribeNameHint => 'Nombre de la tribu';
+
+  @override
+  String get platform => 'Plataforma';
+
+  @override
+  String get note => 'Nota';
+
+  @override
+  String get optional => 'Opcional';
+
+  @override
+  String get visibleToPremiumUsers => 'Visible para usuarios premium';
+
+  @override
+  String get saveSighting => 'Guardar avistamiento';
+
+  @override
+  String get updateSighting => 'Guardar cambios';
+
+  @override
+  String get hideSighting => 'Ocultar avistamiento';
+
+  @override
+  String get saving => 'Guardando...';
+
+  @override
+  String get sightingSaved => 'Avistamiento guardado.';
+
+  @override
+  String get sightingUpdated => 'Avistamiento actualizado.';
+
+  @override
+  String get sightingHidden => 'Avistamiento ocultado.';
+
+  @override
+  String get sightingSaveError => 'No se pudo guardar el avistamiento.';
+
+  @override
+  String get sightingUpdateError => 'No se pudo actualizar el avistamiento.';
+
+  @override
+  String get sightingHideError => 'No se pudo ocultar el avistamiento.';
+
+  @override
+  String get sightingRequiresLogin => 'Debes iniciar sesión para reportar un avistamiento.';
+
+  @override
+  String get sightingDeleteNotAllowed => 'No tienes permiso para eliminar este avistamiento.';
+
+  @override
+  String get sightingEditNotAllowed => 'No tienes permiso para editar este avistamiento.';
+
+  @override
+  String get sightingInGameNameRequired => 'Introduce un nombre de jugador.';
+
+  @override
+  String get sightingPlatformIdRequired => 'Introduce un ID de plataforma.';
+
+  @override
+  String get sightingTribeNameRequired => 'Introduce un nombre de tribu.';
+
+  @override
+  String get sightingReasonRequired => 'Introduce un motivo.';
+
+  @override
+  String get sightingDeleteHint => 'Este avistamiento no se eliminará de forma permanente. Solo se ocultará para los usuarios normales y seguirá siendo rastreable para los administradores.';
+
+  @override
+  String get reason => 'Motivo';
+
+  @override
+  String get reasonHint => 'Introduce un motivo';
+
+  @override
+  String get noVisibleSightings => 'Todavía no hay sightings visibles.';
+
+  @override
+  String get sightingsLoadError => 'No se pudieron cargar los sightings.';
+
+  @override
+  String get sightingHistoryLoadError => 'No se pudo cargar el historial.';
+
+  @override
+  String get noSightingHistory => 'Todavía no hay historial disponible.';
+
+  @override
+  String get accessLevelLoadError => 'No se pudo cargar el nivel de acceso.';
+
+  @override
+  String get edit => 'Editar';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get viewHistory => 'Ver historial';
+
+  @override
+  String get platformSteam => 'Steam';
+
+  @override
+  String get platformXbox => 'Xbox';
+
+  @override
+  String get platformPsn => 'PSN';
+
+  @override
+  String get platformUnknown => 'Desconocido';
+
+  @override
+  String get sightingUserProfileLoadError => 'No se pudo cargar el perfil del usuario.';
+
+  @override
+  String get playerSightings => 'Avistamientos de jugadores';
+
+  @override
+  String platformLabel(String value) {
+    return 'Plataforma: $value';
+  }
+
+  @override
+  String visibilityLabel(String value) {
+    return 'Visibilidad: $value';
+  }
+
+  @override
+  String sharingLabel(String value) {
+    return 'Compartición: $value';
+  }
+
+  @override
+  String editedAtLabel(String value) {
+    return 'Editado: $value';
+  }
+
+  @override
+  String get softDeleted => 'Eliminado lógicamente';
+
+  @override
+  String reasonLabel(String value) {
+    return 'Motivo: $value';
+  }
+
+  @override
+  String changedByLabel(String value) {
+    return 'Cambiado por: $value';
+  }
+
+  @override
+  String get sightingCreatorLevelFree => 'Free';
+
+  @override
+  String get sightingCreatorLevelPremium => 'Premium';
+
+  @override
+  String get sightingCreatorLevelAdmin => 'Admin';
+
+  @override
+  String get sightingSharingOwnerOnly => 'Solo propietario';
+
+  @override
+  String get sightingSharingPremiumShared => 'Compartido con premium';
+
+  @override
+  String get sightingSharingAdminOnly => 'Solo administradores';
+
+  @override
+  String get sightingActionCreated => 'Creado';
+
+  @override
+  String get sightingActionUpdated => 'Actualizado';
+
+  @override
+  String get sightingActionSoftDeleted => 'Ocultado';
 }

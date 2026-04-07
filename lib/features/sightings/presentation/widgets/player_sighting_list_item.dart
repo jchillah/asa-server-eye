@@ -1,7 +1,12 @@
 // features/sightings/presentation/widgets/player_sighting_list_item.dart
+import 'package:asa_server_eye/core/extensions/context_l10n.dart';
+import 'package:asa_server_eye/core/extensions/date_time_formatting_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/player_sighting.dart';
+import '../extensions/gaming_platform_l10n_extension.dart';
+import '../extensions/sighting_creator_level_l10n_extension.dart';
+import '../extensions/sighting_sharing_scope_l10n_extension.dart';
 
 class PlayerSightingListItem extends StatelessWidget {
   const PlayerSightingListItem({
@@ -13,42 +18,12 @@ class PlayerSightingListItem extends StatelessWidget {
   final PlayerSighting sighting;
   final Widget? trailing;
 
-  String get _platformLabel {
-    switch (sighting.platform) {
-      case GamingPlatform.steam:
-        return 'Steam';
-      case GamingPlatform.xbox:
-        return 'Xbox';
-      case GamingPlatform.psn:
-        return 'PSN';
-      case GamingPlatform.unknown:
-        return 'Unknown';
-    }
-  }
-
-  String get _visibilityLabel {
-    switch (sighting.visibilityLevel) {
-      case SightingVisibilityLevel.free:
-        return 'Free';
-      case SightingVisibilityLevel.premium:
-        return 'Premium';
-      case SightingVisibilityLevel.admin:
-        return 'Admin';
-    }
-  }
-
-  String get _sharingLabel {
-    switch (sighting.sharingScope) {
-      case SightingSharingScope.ownerOnly:
-        return 'Owner only';
-      case SightingSharingScope.premiumShared:
-        return 'Shared with premium';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    final createdAt = sighting.createdAt.toAppDateTime();
+    final updatedAt = sighting.updatedAt?.toAppDateTime();
 
     return Card(
       child: Padding(
@@ -60,40 +35,48 @@ class PlayerSightingListItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(sighting.playerId, style: theme.textTheme.labelLarge),
+                  Text(
+                    sighting.playerPlatformId,
+                    style: theme.textTheme.labelLarge,
+                  ),
                   const SizedBox(height: 4),
-                  Text(sighting.playerName, style: theme.textTheme.titleMedium),
+                  Text(sighting.inGameName, style: theme.textTheme.titleMedium),
+                  const SizedBox(height: 4),
+                  Text(sighting.tribeName, style: theme.textTheme.bodyMedium),
                   const SizedBox(height: 8),
                   Text(
-                    'Platform: $_platformLabel',
+                    context.l10n.platformLabel(
+                      sighting.platform.label(context),
+                    ),
                     style: theme.textTheme.bodySmall,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Visibility: $_visibilityLabel',
+                    context.l10n.visibilityLabel(
+                      sighting.creatorLevel.label(context),
+                    ),
                     style: theme.textTheme.bodySmall,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Sharing: $_sharingLabel',
+                    context.l10n.sharingLabel(
+                      sighting.sharingScope.label(context),
+                    ),
                     style: theme.textTheme.bodySmall,
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    _formatDateTime(sighting.createdAt),
-                    style: theme.textTheme.bodySmall,
-                  ),
-                  if (sighting.updatedAt != null) ...[
+                  Text(createdAt, style: theme.textTheme.bodySmall),
+                  if (updatedAt != null) ...[
                     const SizedBox(height: 4),
                     Text(
-                      'Edited: ${_formatDateTime(sighting.updatedAt!)}',
+                      context.l10n.editedAtLabel(updatedAt),
                       style: theme.textTheme.bodySmall,
                     ),
                   ],
                   if (!sighting.isVisible) ...[
                     const SizedBox(height: 4),
                     Text(
-                      'Soft deleted',
+                      context.l10n.softDeleted,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.error,
                       ),
@@ -102,7 +85,7 @@ class PlayerSightingListItem extends StatelessWidget {
                         sighting.deleteReason!.trim().isNotEmpty) ...[
                       const SizedBox(height: 4),
                       Text(
-                        'Reason: ${sighting.deleteReason!}',
+                        context.l10n.reasonLabel(sighting.deleteReason!),
                         style: theme.textTheme.bodySmall,
                       ),
                     ],
@@ -120,16 +103,5 @@ class PlayerSightingListItem extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _formatDateTime(DateTime value) {
-    final local = value.toLocal();
-    final day = local.day.toString().padLeft(2, '0');
-    final month = local.month.toString().padLeft(2, '0');
-    final year = local.year.toString();
-    final hour = local.hour.toString().padLeft(2, '0');
-    final minute = local.minute.toString().padLeft(2, '0');
-
-    return '$day.$month.$year  $hour:$minute';
   }
 }

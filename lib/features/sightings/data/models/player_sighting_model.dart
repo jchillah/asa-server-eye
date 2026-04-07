@@ -1,4 +1,7 @@
 // features/sightings/data/models/player_sighting_model.dart
+import 'package:asa_server_eye/features/sightings/domain/gaming_platform.dart';
+import 'package:asa_server_eye/features/sightings/domain/sighting_creator_level.dart';
+import 'package:asa_server_eye/features/sightings/domain/sighting_sharing_scope.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/player_sighting.dart';
@@ -7,16 +10,20 @@ class PlayerSightingModel extends PlayerSighting {
   const PlayerSightingModel({
     required super.id,
     required super.serverId,
-    required super.playerName,
-    required super.playerId,
+    required super.inGameName,
+    required super.playerPlatformId,
+    required super.tribeName,
     required super.platform,
     required super.createdAt,
     required super.createdByUserId,
-    required super.visibilityLevel,
+    required super.createdByUsername,
+    required super.createdByEmail,
+    required super.creatorLevel,
     required super.sharingScope,
     required super.isVisible,
     super.note,
     super.updatedAt,
+    super.updatedByUserId,
     super.deletedAt,
     super.deletedByUserId,
     super.deleteReason,
@@ -30,16 +37,20 @@ class PlayerSightingModel extends PlayerSighting {
     return PlayerSightingModel(
       id: doc.id,
       serverId: json['serverId']?.toString() ?? '',
-      playerName: json['playerName']?.toString() ?? '',
-      playerId: json['playerId']?.toString() ?? '',
+      inGameName: json['inGameName']?.toString() ?? '',
+      playerPlatformId: json['playerPlatformId']?.toString() ?? '',
+      tribeName: json['tribeName']?.toString() ?? '',
       platform: _platformFromString(json['platform']),
       createdAt: _dateTimeFromFirestore(json['createdAt']),
       createdByUserId: json['createdByUserId']?.toString() ?? '',
-      visibilityLevel: _visibilityFromString(json['visibilityLevel']),
+      createdByUsername: json['createdByUsername']?.toString() ?? '',
+      createdByEmail: json['createdByEmail']?.toString() ?? '',
+      creatorLevel: _creatorLevelFromString(json['creatorLevel']),
       sharingScope: _sharingScopeFromString(json['sharingScope']),
       isVisible: json['isVisible'] == true,
       note: json['note']?.toString(),
       updatedAt: _nullableDateTimeFromFirestore(json['updatedAt']),
+      updatedByUserId: json['updatedByUserId']?.toString(),
       deletedAt: _nullableDateTimeFromFirestore(json['deletedAt']),
       deletedByUserId: json['deletedByUserId']?.toString(),
       deleteReason: json['deleteReason']?.toString(),
@@ -49,16 +60,20 @@ class PlayerSightingModel extends PlayerSighting {
   Map<String, dynamic> toFirestore() {
     return {
       'serverId': serverId,
-      'playerName': playerName,
-      'playerId': playerId,
+      'inGameName': inGameName,
+      'playerPlatformId': playerPlatformId,
+      'tribeName': tribeName,
       'platform': platform.name,
       'createdAt': Timestamp.fromDate(createdAt),
       'createdByUserId': createdByUserId,
-      'visibilityLevel': visibilityLevel.name,
+      'createdByUsername': createdByUsername,
+      'createdByEmail': createdByEmail,
+      'creatorLevel': creatorLevel.name,
       'sharingScope': sharingScope.name,
       'isVisible': isVisible,
       'note': note,
       'updatedAt': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
+      'updatedByUserId': updatedByUserId,
       'deletedAt': deletedAt != null ? Timestamp.fromDate(deletedAt!) : null,
       'deletedByUserId': deletedByUserId,
       'deleteReason': deleteReason,
@@ -68,16 +83,20 @@ class PlayerSightingModel extends PlayerSighting {
   PlayerSightingModel copyWith({
     String? id,
     String? serverId,
-    String? playerName,
-    String? playerId,
+    String? inGameName,
+    String? playerPlatformId,
+    String? tribeName,
     GamingPlatform? platform,
     DateTime? createdAt,
     String? createdByUserId,
-    SightingVisibilityLevel? visibilityLevel,
+    String? createdByUsername,
+    String? createdByEmail,
+    SightingCreatorLevel? creatorLevel,
     SightingSharingScope? sharingScope,
     bool? isVisible,
     String? note,
     DateTime? updatedAt,
+    String? updatedByUserId,
     DateTime? deletedAt,
     String? deletedByUserId,
     String? deleteReason,
@@ -85,16 +104,20 @@ class PlayerSightingModel extends PlayerSighting {
     return PlayerSightingModel(
       id: id ?? this.id,
       serverId: serverId ?? this.serverId,
-      playerName: playerName ?? this.playerName,
-      playerId: playerId ?? this.playerId,
+      inGameName: inGameName ?? this.inGameName,
+      playerPlatformId: playerPlatformId ?? this.playerPlatformId,
+      tribeName: tribeName ?? this.tribeName,
       platform: platform ?? this.platform,
       createdAt: createdAt ?? this.createdAt,
       createdByUserId: createdByUserId ?? this.createdByUserId,
-      visibilityLevel: visibilityLevel ?? this.visibilityLevel,
+      createdByUsername: createdByUsername ?? this.createdByUsername,
+      createdByEmail: createdByEmail ?? this.createdByEmail,
+      creatorLevel: creatorLevel ?? this.creatorLevel,
       sharingScope: sharingScope ?? this.sharingScope,
       isVisible: isVisible ?? this.isVisible,
       note: note ?? this.note,
       updatedAt: updatedAt ?? this.updatedAt,
+      updatedByUserId: updatedByUserId ?? this.updatedByUserId,
       deletedAt: deletedAt ?? this.deletedAt,
       deletedByUserId: deletedByUserId ?? this.deletedByUserId,
       deleteReason: deleteReason ?? this.deleteReason,
@@ -116,16 +139,16 @@ class PlayerSightingModel extends PlayerSighting {
     }
   }
 
-  static SightingVisibilityLevel _visibilityFromString(dynamic value) {
+  static SightingCreatorLevel _creatorLevelFromString(dynamic value) {
     final normalized = value?.toString().trim().toLowerCase();
 
     switch (normalized) {
       case 'premium':
-        return SightingVisibilityLevel.premium;
+        return SightingCreatorLevel.premium;
       case 'admin':
-        return SightingVisibilityLevel.admin;
+        return SightingCreatorLevel.admin;
       default:
-        return SightingVisibilityLevel.free;
+        return SightingCreatorLevel.free;
     }
   }
 
@@ -136,6 +159,9 @@ class PlayerSightingModel extends PlayerSighting {
       case 'premiumshared':
       case 'premium_shared':
         return SightingSharingScope.premiumShared;
+      case 'adminonly':
+      case 'admin_only':
+        return SightingSharingScope.adminOnly;
       default:
         return SightingSharingScope.ownerOnly;
     }

@@ -1,26 +1,33 @@
 // features/sightings/domain/sightings_visibility_policy.dart
-import 'player_sighting.dart';
-import 'sightings_access_level.dart';
+import 'package:asa_server_eye/features/sightings/domain/player_sighting.dart';
+import 'package:asa_server_eye/features/sightings/domain/sighting_sharing_scope.dart';
+import 'package:asa_server_eye/features/sightings/domain/sightings_access_level.dart';
 
 abstract final class SightingsVisibilityPolicy {
-  static bool canAccess({
+  static bool canRead({
     required PlayerSighting sighting,
     required SightingsAccessLevel accessLevel,
     required String? currentUserId,
   }) {
-    switch (accessLevel) {
-      case SightingsAccessLevel.free:
-        return currentUserId != null &&
-            sighting.createdByUserId == currentUserId &&
-            sighting.isVisible;
+    if (accessLevel == SightingsAccessLevel.admin) {
+      return true;
+    }
 
-      case SightingsAccessLevel.premium:
-        return sighting.isVisible &&
-            (sighting.createdByUserId == currentUserId ||
-                sighting.sharingScope == SightingSharingScope.premiumShared);
+    if (currentUserId != null && sighting.createdByUserId == currentUserId) {
+      return true;
+    }
 
-      case SightingsAccessLevel.admin:
-        return true;
+    if (!sighting.isVisible) {
+      return false;
+    }
+
+    switch (sighting.sharingScope) {
+      case SightingSharingScope.ownerOnly:
+        return false;
+      case SightingSharingScope.premiumShared:
+        return accessLevel == SightingsAccessLevel.premium;
+      case SightingSharingScope.adminOnly:
+        return false;
     }
   }
 
@@ -31,7 +38,7 @@ abstract final class SightingsVisibilityPolicy {
   }) {
     return sightings
         .where(
-          (sighting) => canAccess(
+          (sighting) => canRead(
             sighting: sighting,
             accessLevel: accessLevel,
             currentUserId: currentUserId,

@@ -1,10 +1,12 @@
 // features/sightings/presentation/controllers/edit_player_sighting_controller.dart
 import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
+import 'package:asa_server_eye/features/sightings/domain/gaming_platform.dart';
+import 'package:asa_server_eye/features/sightings/domain/sighting_sharing_scope.dart';
+import 'package:asa_server_eye/features/sightings/domain/sightings_access_level.dart';
+import 'package:asa_server_eye/features/sightings/domain/sightings_sharing_policy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/player_sighting.dart';
-import '../../domain/sightings_access_level.dart';
-import '../../domain/sightings_visibility_mapper.dart';
 import '../providers/sightings_access_providers.dart';
 import '../providers/sightings_providers.dart';
 
@@ -19,63 +21,76 @@ final editPlayerSightingControllerProvider = StateNotifierProvider.autoDispose
 
 class EditPlayerSightingState {
   const EditPlayerSightingState({
-    required this.playerName,
-    required this.playerId,
+    required this.inGameName,
+    required this.playerPlatformId,
+    required this.tribeName,
     required this.note,
     required this.platform,
     required this.shareWithPremiumUsers,
     required this.canChoosePremiumSharing,
-    this.playerNameError,
-    this.playerIdError,
-    this.submitError,
+    this.inGameNameErrorKey,
+    this.playerPlatformIdErrorKey,
+    this.tribeNameErrorKey,
+    this.submitErrorKey,
     this.isSubmitting = false,
     this.isSuccess = false,
   });
 
-  final String playerName;
-  final String playerId;
+  final String inGameName;
+  final String playerPlatformId;
+  final String tribeName;
   final String note;
   final GamingPlatform platform;
   final bool shareWithPremiumUsers;
   final bool canChoosePremiumSharing;
-  final String? playerNameError;
-  final String? playerIdError;
-  final String? submitError;
+  final String? inGameNameErrorKey;
+  final String? playerPlatformIdErrorKey;
+  final String? tribeNameErrorKey;
+  final String? submitErrorKey;
   final bool isSubmitting;
   final bool isSuccess;
 
   EditPlayerSightingState copyWith({
-    String? playerName,
-    String? playerId,
+    String? inGameName,
+    String? playerPlatformId,
+    String? tribeName,
     String? note,
     GamingPlatform? platform,
     bool? shareWithPremiumUsers,
     bool? canChoosePremiumSharing,
-    String? playerNameError,
-    String? playerIdError,
-    String? submitError,
+    String? inGameNameErrorKey,
+    String? playerPlatformIdErrorKey,
+    String? tribeNameErrorKey,
+    String? submitErrorKey,
     bool? isSubmitting,
     bool? isSuccess,
-    bool clearPlayerNameError = false,
-    bool clearPlayerIdError = false,
+    bool clearInGameNameError = false,
+    bool clearPlayerPlatformIdError = false,
+    bool clearTribeNameError = false,
     bool clearSubmitError = false,
   }) {
     return EditPlayerSightingState(
-      playerName: playerName ?? this.playerName,
-      playerId: playerId ?? this.playerId,
+      inGameName: inGameName ?? this.inGameName,
+      playerPlatformId: playerPlatformId ?? this.playerPlatformId,
+      tribeName: tribeName ?? this.tribeName,
       note: note ?? this.note,
       platform: platform ?? this.platform,
       shareWithPremiumUsers:
           shareWithPremiumUsers ?? this.shareWithPremiumUsers,
       canChoosePremiumSharing:
           canChoosePremiumSharing ?? this.canChoosePremiumSharing,
-      playerNameError: clearPlayerNameError
+      inGameNameErrorKey: clearInGameNameError
           ? null
-          : playerNameError ?? this.playerNameError,
-      playerIdError: clearPlayerIdError
+          : inGameNameErrorKey ?? this.inGameNameErrorKey,
+      playerPlatformIdErrorKey: clearPlayerPlatformIdError
           ? null
-          : playerIdError ?? this.playerIdError,
-      submitError: clearSubmitError ? null : submitError ?? this.submitError,
+          : playerPlatformIdErrorKey ?? this.playerPlatformIdErrorKey,
+      tribeNameErrorKey: clearTribeNameError
+          ? null
+          : tribeNameErrorKey ?? this.tribeNameErrorKey,
+      submitErrorKey: clearSubmitError
+          ? null
+          : submitErrorKey ?? this.submitErrorKey,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
     );
@@ -87,8 +102,9 @@ class EditPlayerSightingController
   EditPlayerSightingController(this._ref, this._sighting)
     : super(
         EditPlayerSightingState(
-          playerName: _sighting.playerName,
-          playerId: _sighting.playerId,
+          inGameName: _sighting.inGameName,
+          playerPlatformId: _sighting.playerPlatformId,
+          tribeName: _sighting.tribeName,
           note: _sighting.note ?? '',
           platform: _sighting.platform,
           shareWithPremiumUsers:
@@ -110,19 +126,28 @@ class EditPlayerSightingController
     );
   }
 
-  void updatePlayerName(String value) {
+  void updateInGameName(String value) {
     state = state.copyWith(
-      playerName: value,
-      clearPlayerNameError: true,
+      inGameName: value,
+      clearInGameNameError: true,
       clearSubmitError: true,
       isSuccess: false,
     );
   }
 
-  void updatePlayerId(String value) {
+  void updatePlayerPlatformId(String value) {
     state = state.copyWith(
-      playerId: value,
-      clearPlayerIdError: true,
+      playerPlatformId: value,
+      clearPlayerPlatformIdError: true,
+      clearSubmitError: true,
+      isSuccess: false,
+    );
+  }
+
+  void updateTribeName(String value) {
+    state = state.copyWith(
+      tribeName: value,
+      clearTribeNameError: true,
       clearSubmitError: true,
       isSuccess: false,
     );
@@ -153,24 +178,33 @@ class EditPlayerSightingController
   }
 
   Future<bool> submit() async {
-    final playerName = state.playerName.trim();
-    final playerId = state.playerId.trim();
+    final inGameName = state.inGameName.trim();
+    final playerPlatformId = state.playerPlatformId.trim();
+    final tribeName = state.tribeName.trim();
 
-    String? playerNameError;
-    String? playerIdError;
+    String? inGameNameErrorKey;
+    String? playerPlatformIdErrorKey;
+    String? tribeNameErrorKey;
 
-    if (playerName.isEmpty) {
-      playerNameError = 'Bitte Spielernamen eingeben.';
+    if (inGameName.isEmpty) {
+      inGameNameErrorKey = 'sightingInGameNameRequired';
     }
 
-    if (playerId.isEmpty) {
-      playerIdError = 'Bitte Plattform-ID eingeben.';
+    if (playerPlatformId.isEmpty) {
+      playerPlatformIdErrorKey = 'sightingPlatformIdRequired';
     }
 
-    if (playerNameError != null || playerIdError != null) {
+    if (tribeName.isEmpty) {
+      tribeNameErrorKey = 'sightingTribeNameRequired';
+    }
+
+    if (inGameNameErrorKey != null ||
+        playerPlatformIdErrorKey != null ||
+        tribeNameErrorKey != null) {
       state = state.copyWith(
-        playerNameError: playerNameError,
-        playerIdError: playerIdError,
+        inGameNameErrorKey: inGameNameErrorKey,
+        playerPlatformIdErrorKey: playerPlatformIdErrorKey,
+        tribeNameErrorKey: tribeNameErrorKey,
         clearSubmitError: true,
         isSuccess: false,
       );
@@ -181,7 +215,7 @@ class EditPlayerSightingController
 
     if (currentUser == null || currentUser.uid != _sighting.createdByUserId) {
       state = state.copyWith(
-        submitError: 'Du darfst diese Sichtung nicht bearbeiten.',
+        submitErrorKey: 'sightingEditNotAllowed',
         isSuccess: false,
       );
       return false;
@@ -195,19 +229,19 @@ class EditPlayerSightingController
 
     try {
       final accessLevel = await _ref.read(sightingsAccessLevelProvider.future);
-      final sharingScope =
-          SightingsVisibilityMapper.creationSharingScopeForAccessLevel(
-            accessLevel: accessLevel,
-            shareWithPremiumUsers: state.shareWithPremiumUsers,
-          );
+      final sharingScope = SightingSharingPolicy.resolve(
+        accessLevel: accessLevel,
+        shareWithPremiumUsers: state.shareWithPremiumUsers,
+      );
 
       final repository = _ref.read(sightingsRepositoryProvider);
 
       await repository.updateSighting(
         sightingId: _sighting.id,
         editedByUserId: currentUser.uid,
-        playerName: playerName,
-        playerId: playerId,
+        inGameName: inGameName,
+        playerPlatformId: playerPlatformId,
+        tribeName: tribeName,
         platform: state.platform,
         sharingScope: sharingScope,
         note: state.note.trim().isEmpty ? null : state.note.trim(),
@@ -227,7 +261,7 @@ class EditPlayerSightingController
     } catch (_) {
       state = state.copyWith(
         isSubmitting: false,
-        submitError: 'Sichtung konnte nicht gespeichert werden.',
+        submitErrorKey: 'sightingUpdateError',
         isSuccess: false,
       );
       return false;

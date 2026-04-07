@@ -47,7 +47,7 @@ service cloud.firestore {
     function validSharingScope(s) {
       return s in ['ownerOnly', 'premiumShared', 'adminOnly'];
     }
-
+    
     // -------- USERS --------
     match /users/{uid} {
       allow read: if isSignedIn() && (request.auth.uid == uid || isAdmin());
@@ -110,8 +110,7 @@ service cloud.firestore {
         && request.resource.data.createdAt == resource.data.createdAt
         && request.resource.data.updatedAt == request.time;
 
-      allow delete: if isSignedIn()
-        && request.auth.uid == uid;
+      allow delete: if isSignedIn() && request.auth.uid == uid;
     }
 
     // -------- PLAYER SIGHTINGS --------
@@ -139,6 +138,7 @@ service cloud.firestore {
           'createdAt',
           'createdByUserId',
           'createdByUsername',
+          'createdByEmail',
           'creatorLevel',
           'sharingScope',
           'isVisible',
@@ -160,6 +160,8 @@ service cloud.firestore {
         && request.resource.data.createdByUserId == request.auth.uid
         && request.resource.data.createdByUsername is string
         && request.resource.data.createdByUsername.size() > 0
+        && request.resource.data.createdByEmail is string
+        && request.resource.data.createdByEmail.size() > 0
         && validPlatform(request.resource.data.platform)
         && validCreatorLevel(request.resource.data.creatorLevel)
         && validSharingScope(request.resource.data.sharingScope)
@@ -190,8 +192,13 @@ service cloud.firestore {
             && request.resource.data.serverId == resource.data.serverId
             && request.resource.data.createdAt == resource.data.createdAt
             && request.resource.data.createdByUserId == resource.data.createdByUserId
+            && request.resource.data.createdByUsername == resource.data.createdByUsername
+            && request.resource.data.createdByEmail == resource.data.createdByEmail
             && request.resource.data.creatorLevel == resource.data.creatorLevel
             && request.resource.data.isVisible == true
+            && request.resource.data.deletedAt == resource.data.deletedAt
+            && request.resource.data.deletedByUserId == resource.data.deletedByUserId
+            && request.resource.data.deleteReason == resource.data.deleteReason
             && (
               resource.data.creatorLevel == 'free'
                 ? request.resource.data.sharingScope == 'ownerOnly'
@@ -206,6 +213,14 @@ service cloud.firestore {
             && request.resource.data.serverId == resource.data.serverId
             && request.resource.data.createdAt == resource.data.createdAt
             && request.resource.data.createdByUserId == resource.data.createdByUserId
+            && request.resource.data.createdByUsername == resource.data.createdByUsername
+            && request.resource.data.createdByEmail == resource.data.createdByEmail
+            && request.resource.data.playerPlatformId == resource.data.playerPlatformId
+            && request.resource.data.inGameName == resource.data.inGameName
+            && request.resource.data.tribeName == resource.data.tribeName
+            && request.resource.data.platform == resource.data.platform
+            && request.resource.data.sharingScope == resource.data.sharingScope
+            && request.resource.data.creatorLevel == resource.data.creatorLevel
             && request.resource.data.isVisible == false
             && request.resource.data.deletedByUserId == request.auth.uid
             && request.resource.data.deleteReason is string
@@ -217,6 +232,8 @@ service cloud.firestore {
             && request.resource.data.serverId == resource.data.serverId
             && request.resource.data.createdAt == resource.data.createdAt
             && request.resource.data.createdByUserId == resource.data.createdByUserId
+            && request.resource.data.createdByUsername == resource.data.createdByUsername
+            && request.resource.data.createdByEmail == resource.data.createdByEmail
           )
         );
 
@@ -254,10 +271,16 @@ service cloud.firestore {
       allow create: if isSignedIn()
         && canWriteHistory()
         && request.resource.data.keys().hasOnly([
-          'sightingId','action','changedAt','changedByUserId','summary','beforeData','afterData'
+          'sightingId',
+          'action',
+          'changedAt',
+          'changedByUserId',
+          'summary',
+          'beforeData',
+          'afterData'
         ])
         && request.resource.data.changedByUserId == request.auth.uid
-        && request.resource.data.action in ['created','updated','softDeleted']
+        && request.resource.data.action in ['created', 'updated', 'softDeleted']
         && request.resource.data.summary is string
         && request.resource.data.summary.size() > 0;
 

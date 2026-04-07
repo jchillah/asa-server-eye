@@ -1,9 +1,9 @@
 // features/sightings/presentation/controllers/manage_player_sighting_controller.dart
 import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
+import 'package:asa_server_eye/features/sightings/domain/gaming_platform.dart';
+import 'package:asa_server_eye/features/sightings/domain/sightings_sharing_policy.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/player_sighting.dart';
-import '../../domain/sightings_visibility_mapper.dart';
 import '../providers/sightings_access_providers.dart';
 import '../providers/sightings_providers.dart';
 
@@ -44,8 +44,9 @@ class ManagePlayerSightingController {
   Future<void> update({
     required String sightingId,
     required String serverId,
-    required String playerName,
-    required String playerId,
+    required String inGameName,
+    required String playerPlatformId,
+    required String tribeName,
     required GamingPlatform platform,
     required bool shareWithPremiumUsers,
     String? note,
@@ -58,19 +59,19 @@ class ManagePlayerSightingController {
 
     final accessLevel = await _ref.read(sightingsAccessLevelProvider.future);
 
-    final sharingScope =
-        SightingsVisibilityMapper.creationSharingScopeForAccessLevel(
-          accessLevel: accessLevel,
-          shareWithPremiumUsers: shareWithPremiumUsers,
-        );
+    final sharingScope = SightingSharingPolicy.resolve(
+      accessLevel: accessLevel,
+      shareWithPremiumUsers: shareWithPremiumUsers,
+    );
 
     final repository = _ref.read(sightingsRepositoryProvider);
 
     await repository.updateSighting(
       sightingId: sightingId,
       editedByUserId: currentUser.uid,
-      playerName: playerName,
-      playerId: playerId,
+      inGameName: inGameName,
+      playerPlatformId: playerPlatformId,
+      tribeName: tribeName,
       platform: platform,
       sharingScope: sharingScope,
       note: note,

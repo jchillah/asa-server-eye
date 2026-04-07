@@ -329,7 +329,7 @@
   },
   "profile": "Profil",
   "@profile": {
-    "description": "Titel der Profilseite"
+    "description": "Titel des Profilbereichs"
   },
   "profileLoadError": "Profil konnte nicht geladen werden.",
   "@profileLoadError": {
@@ -341,7 +341,7 @@
   },
   "accessLevel": "Zugriffslevel",
   "@accessLevel": {
-    "description": "Beschriftung für das Zugriffslevel"
+    "description": "Beschriftung für Zugriffslevel"
   },
   "save": "Speichern",
   "@save": {
@@ -374,15 +374,15 @@
   },
   "usernameEmpty": "Bitte gib einen Benutzernamen ein.",
   "@usernameEmpty": {
-    "description": "Fehlermeldung wenn Benutzername leer ist"
+    "description": "Fehlermeldung bei leerem Benutzernamen"
   },
   "usernameTooShort": "Der Benutzername muss mindestens 3 Zeichen lang sein.",
   "@usernameTooShort": {
-    "description": "Fehlermeldung wenn Benutzername zu kurz ist"
+    "description": "Fehlermeldung bei zu kurzem Benutzernamen"
   },
   "usernameTooLong": "Der Benutzername darf maximal 20 Zeichen lang sein.",
   "@usernameTooLong": {
-    "description": "Fehlermeldung wenn Benutzername zu lang ist"
+    "description": "Fehlermeldung bei zu langem Benutzernamen"
   },
   "usernameInvalidCharacters": "Der Benutzername darf nur Buchstaben, Zahlen, Punkt, Unterstrich und Bindestrich enthalten.",
   "@usernameInvalidCharacters": {
@@ -392,7 +392,7 @@
   "@deleteAccountDialogTitle": {
     "description": "Titel des Dialogs zum Löschen des Kontos"
   },
-  "deleteAccountDialogDescription": "Bitte gib dein Passwort für {email} ein, um den Account zu löschen.",
+  "deleteAccountDialogDescription": "Bitte gib dein Passwort für {email} ein, um dein Konto zu löschen.",
   "@deleteAccountDialogDescription": {
     "description": "Beschreibung im Dialog zum Löschen des Kontos",
     "placeholders": {
@@ -400,5 +400,299 @@
         "type": "String"
       }
     }
+  },
+  "signUpUsernameHint": "Dein Name im ASA Server Eye",
+  "@signUpUsernameHint": {
+    "description": "Hinweistext für Benutzername bei der Registrierung"
+  },
+  "emailHint": "name@email.com",
+  "@emailHint": {
+    "description": "Hinweistext für E-Mail-Feld"
+  },
+  "sightings": "Sichtungen",
+  "@sightings": {
+    "description": "Titel für Sichtungen"
+  },
+  "playerSightingReport": "Spielersichtung melden",
+  "@playerSightingReport": {
+    "description": "Titel des Screens zum Melden einer Spielersichtung"
+  },
+  "editSighting": "Sichtung bearbeiten",
+  "@editSighting": {
+    "description": "Titel des Screens zum Bearbeiten einer Sichtung"
+  },
+  "deleteSighting": "Sichtung löschen",
+  "@deleteSighting": {
+    "description": "Titel des Screens zum Löschen einer Sichtung"
+  },
+  "sightingHistory": "Änderungsverlauf",
+  "@sightingHistory": {
+    "description": "Titel des Verlaufsscreens einer Sichtung"
+  },
+  "platformId": "Plattform-ID",
+  "@platformId": {
+    "description": "Beschriftung für Plattform-ID"
+  },
+  "platformIdHint": "Steam / Xbox / PSN ID",
+  "@platformIdHint": {
+    "description": "Hinweistext für Plattform-ID"
+  },
+  "inGameName": "Ingame-Name",
+  "@inGameName": {
+    "description": "Beschriftung für Ingame-Name"
+  },
+  "tribeName": "Tribe-Name",
+  "@tribeName": {
+    "description": "Beschriftung für Tribe-Name"
+  },
+  "tribeNameHint": "Name des Tribes",
+  "@tribeNameHint": {
+    "description": "Hinweistext für Tribe-Name"
+  },
+  "platform": "Plattform",
+  "@platform": {
+    "description": "Beschriftung für Plattform"
+  },
+  "note": "Notiz",
+  "@note": {
+    "description": "Beschriftung für Notiz"
+  },
+  "optional": "Optional",
+  "@optional": {
+    "description": "Hinweistext für optionale Felder"
+  },
+  "visibleToPremiumUsers": "Für andere Premium-User sichtbar",
+  "@visibleToPremiumUsers": {
+    "description": "Schaltertext für Premium-Sichtbarkeit"
+  },
+  "saveSighting": "Sichtung speichern",
+  "@saveSighting": {
+    "description": "Buttontext zum Speichern einer Sichtung"
+  },
+  "updateSighting": "Änderungen speichern",
+  "@updateSighting": {
+    "description": "Buttontext zum Aktualisieren einer Sichtung"
+  },
+  "hideSighting": "Sichtung ausblenden",
+  "@hideSighting": {
+    "description": "Buttontext zum Ausblenden einer Sichtung"
+  },
+  "saving": "Speichert...",
+  "@saving": {
+    "description": "Text während gespeichert wird"
+  },
+  "sightingSaved": "Sichtung gespeichert.",
+  "@sightingSaved": {
+    "description": "Snackbar nach erfolgreichem Speichern"
+  },
+  "sightingUpdated": "Sichtung aktualisiert.",
+  "@sightingUpdated": {
+    "description": "Snackbar nach erfolgreichem Aktualisieren"
+  },
+  "sightingHidden": "Sichtung ausgeblendet.",
+  "@sightingHidden": {
+    "description": "Snackbar nach erfolgreichem Ausblenden"
+  },
+  "sightingSaveError": "Sichtung konnte nicht gespeichert werden.",
+  "@sightingSaveError": {
+    "description": "Fehlermeldung beim Speichern"
+  },
+  "sightingUpdateError": "Sichtung konnte nicht aktualisiert werden.",
+  "@sightingUpdateError": {
+    "description": "Fehlermeldung beim Aktualisieren"
+  },
+  "sightingHideError": "Sichtung konnte nicht ausgeblendet werden.",
+  "@sightingHideError": {
+    "description": "Fehlermeldung beim Ausblenden"
+  },
+  "sightingRequiresLogin": "Du musst eingeloggt sein, um eine Sichtung zu melden.",
+  "@sightingRequiresLogin": {
+    "description": "Fehler wenn kein Nutzer angemeldet ist"
+  },
+  "sightingDeleteNotAllowed": "Du darfst diese Sichtung nicht löschen.",
+  "@sightingDeleteNotAllowed": {
+    "description": "Fehler wenn Löschen nicht erlaubt ist"
+  },
+  "sightingEditNotAllowed": "Du darfst diese Sichtung nicht bearbeiten.",
+  "@sightingEditNotAllowed": {
+    "description": "Fehler wenn Bearbeiten nicht erlaubt ist"
+  },
+  "sightingInGameNameRequired": "Bitte Spielernamen eingeben.",
+  "@sightingInGameNameRequired": {
+    "description": "Validierung für fehlenden Spielernamen"
+  },
+  "sightingPlatformIdRequired": "Bitte Plattform-ID eingeben.",
+  "@sightingPlatformIdRequired": {
+    "description": "Validierung für fehlende Plattform-ID"
+  },
+  "sightingTribeNameRequired": "Bitte Tribe-Namen eingeben.",
+  "@sightingTribeNameRequired": {
+    "description": "Validierung für fehlenden Tribe-Namen"
+  },
+  "sightingReasonRequired": "Bitte Grund angeben.",
+  "@sightingReasonRequired": {
+    "description": "Validierung für fehlenden Löschgrund"
+  },
+  "sightingDeleteHint": "Die Sichtung wird nicht endgültig gelöscht. Sie wird nur für normale Nutzer ausgeblendet und bleibt für Admins nachvollziehbar.",
+  "@sightingDeleteHint": {
+    "description": "Hinweistext im Delete-Screen"
+  },
+  "reason": "Grund",
+  "@reason": {
+    "description": "Beschriftung für Grund"
+  },
+  "reasonHint": "Bitte Grund angeben",
+  "@reasonHint": {
+    "description": "Hinweistext für Grund"
+  },
+  "noVisibleSightings": "Noch keine sichtbaren Sightings vorhanden.",
+  "@noVisibleSightings": {
+    "description": "Leerzustand für Server-Sichtungen"
+  },
+  "sightingsLoadError": "Sightings konnten nicht geladen werden.",
+  "@sightingsLoadError": {
+    "description": "Fehler beim Laden von Sichtungen"
+  },
+  "sightingHistoryLoadError": "Verlauf konnte nicht geladen werden.",
+  "@sightingHistoryLoadError": {
+    "description": "Fehler beim Laden des Verlaufs"
+  },
+  "noSightingHistory": "Noch kein Verlauf vorhanden.",
+  "@noSightingHistory": {
+    "description": "Leerzustand für Sichtungsverlauf"
+  },
+  "accessLevelLoadError": "Zugriffslevel konnte nicht geladen werden.",
+  "@accessLevelLoadError": {
+    "description": "Fehler beim Laden des Zugriffslevels"
+  },
+  "edit": "Bearbeiten",
+  "@edit": {
+    "description": "Bearbeiten-Aktion"
+  },
+  "delete": "Löschen",
+  "@delete": {
+    "description": "Löschen-Aktion"
+  },
+  "viewHistory": "Verlauf ansehen",
+  "@viewHistory": {
+    "description": "Aktion zum Anzeigen des Verlaufs"
+  },
+  "platformSteam": "Steam",
+  "@platformSteam": {
+    "description": "Bezeichnung für Steam"
+  },
+  "platformXbox": "Xbox",
+  "@platformXbox": {
+    "description": "Bezeichnung für Xbox"
+  },
+  "platformPsn": "PSN",
+  "@platformPsn": {
+    "description": "Bezeichnung für PSN"
+  },
+  "platformUnknown": "Unbekannt",
+  "@platformUnknown": {
+    "description": "Bezeichnung für unbekannte Plattform"
+  },
+  "sightingUserProfileLoadError": "Benutzerprofil konnte nicht geladen werden.",
+  "@sightingUserProfileLoadError": {
+    "description": "Fehler wenn das Benutzerprofil für eine Sichtung nicht geladen werden konnte"
+  },
+  "playerSightings": "Player Sightings",
+  "@playerSightings": {
+    "description": "Titel des Screens mit Server-Sichtungen"
+  },
+  "platformLabel": "Plattform: {value}",
+  "@platformLabel": {
+    "description": "Beschriftung für Plattform in einer Sichtung",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "visibilityLabel": "Sichtbarkeit: {value}",
+  "@visibilityLabel": {
+    "description": "Beschriftung für Creator-Level in einer Sichtung",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "sharingLabel": "Freigabe: {value}",
+  "@sharingLabel": {
+    "description": "Beschriftung für Sharing-Scope in einer Sichtung",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editedAtLabel": "Bearbeitet: {value}",
+  "@editedAtLabel": {
+    "description": "Beschriftung für Bearbeitungszeitpunkt",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "softDeleted": "Soft gelöscht",
+  "@softDeleted": {
+    "description": "Hinweis dass eine Sichtung soft gelöscht wurde"
+  },
+  "reasonLabel": "Grund: {value}",
+  "@reasonLabel": {
+    "description": "Beschriftung für Löschgrund",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "changedByLabel": "Geändert von: {value}",
+  "@changedByLabel": {
+    "description": "Beschriftung für die User-ID im Änderungsverlauf",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "sightingCreatorLevelFree": "Free",
+  "@sightingCreatorLevelFree": {
+    "description": "Bezeichnung für Creator-Level free"
+  },
+  "sightingCreatorLevelPremium": "Premium",
+  "@sightingCreatorLevelPremium": {
+    "description": "Bezeichnung für Creator-Level premium"
+  },
+  "sightingCreatorLevelAdmin": "Admin",
+  "@sightingCreatorLevelAdmin": {
+    "description": "Bezeichnung für Creator-Level admin"
+  },
+  "sightingSharingOwnerOnly": "Nur Ersteller",
+  "@sightingSharingOwnerOnly": {
+    "description": "Bezeichnung für Sharing-Scope ownerOnly"
+  },
+  "sightingSharingPremiumShared": "Mit Premium geteilt",
+  "@sightingSharingPremiumShared": {
+    "description": "Bezeichnung für Sharing-Scope premiumShared"
+  },
+  "sightingSharingAdminOnly": "Nur Admins",
+  "@sightingSharingAdminOnly": {
+    "description": "Bezeichnung für Sharing-Scope adminOnly"
+  },
+  "sightingActionCreated": "Erstellt",
+  "@sightingActionCreated": {
+    "description": "Änderungsaktion erstellt"
+  },
+  "sightingActionUpdated": "Bearbeitet",
+  "@sightingActionUpdated": {
+    "description": "Änderungsaktion bearbeitet"
+  },
+  "sightingActionSoftDeleted": "Ausgeblendet",
+  "@sightingActionSoftDeleted": {
+    "description": "Änderungsaktion soft gelöscht"
   }
 }

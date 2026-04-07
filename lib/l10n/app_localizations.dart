@@ -569,13 +569,13 @@ abstract class AppLocalizations {
   /// **'Delete Account'**
   String get deleteAccount;
 
-  /// Profile section title in settings
+  /// Profile section title
   ///
   /// In en, this message translates to:
   /// **'Profile'**
   String get profile;
 
-  /// Error message when loading the profile fails
+  /// Error when loading the profile fails
   ///
   /// In en, this message translates to:
   /// **'Profile could not be loaded.'**
@@ -587,10 +587,10 @@ abstract class AppLocalizations {
   /// **'Username'**
   String get username;
 
-  /// Label for access level field
+  /// Label for access level
   ///
   /// In en, this message translates to:
-  /// **'Access Level'**
+  /// **'Access level'**
   String get accessLevel;
 
   /// Save action
@@ -599,71 +599,467 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get save;
 
-  /// Snackbar after successfully saving the profile
+  /// Snackbar after saving the profile
   ///
   /// In en, this message translates to:
   /// **'Profile saved successfully.'**
   String get profileSavedSuccessfully;
 
-  /// Error message when saving the profile fails
+  /// Error when saving the profile fails
   ///
   /// In en, this message translates to:
   /// **'Profile could not be saved.'**
   String get profileSaveError;
 
-  /// Error message when deleting the account fails
+  /// Error when deleting the account fails
   ///
   /// In en, this message translates to:
   /// **'Account could not be deleted.'**
   String get profileDeleteError;
 
-  /// Hint text under the delete account button
+  /// Hint below the delete account button
   ///
   /// In en, this message translates to:
   /// **'Deleting your account will remove your profile. Existing sightings will remain.'**
   String get deleteAccountHint;
 
-  /// Label showing how many favorites are saved
+  /// Number of saved favorites
   ///
   /// In en, this message translates to:
   /// **'{count} saved'**
   String savedFavoritesCount(int count);
 
-  /// Error message when username is empty
+  /// Validation when username is empty
   ///
   /// In en, this message translates to:
   /// **'Please enter a username.'**
   String get usernameEmpty;
 
-  /// Error message when username is too short
+  /// Validation when username is too short
   ///
   /// In en, this message translates to:
   /// **'The username must be at least 3 characters long.'**
   String get usernameTooShort;
 
-  /// Error message when username is too long
+  /// Validation when username is too long
   ///
   /// In en, this message translates to:
   /// **'The username may be at most 20 characters long.'**
   String get usernameTooLong;
 
-  /// Error message when username contains invalid characters
+  /// Validation when username contains invalid characters
   ///
   /// In en, this message translates to:
   /// **'The username may only contain letters, numbers, periods, underscores, and hyphens.'**
   String get usernameInvalidCharacters;
 
-  /// Title of the dialog for deleting the account
+  /// Delete account dialog title
   ///
   /// In en, this message translates to:
-  /// **'Delete Account'**
+  /// **'Delete account'**
   String get deleteAccountDialogTitle;
 
-  /// Description in the dialog for deleting the account
+  /// Delete account dialog description
   ///
   /// In en, this message translates to:
   /// **'Please enter your password for {email} to delete your account.'**
   String deleteAccountDialogDescription(String email);
+
+  /// Hint text for username on sign up
+  ///
+  /// In en, this message translates to:
+  /// **'This will be your public username visible to other users.'**
+  String get signUpUsernameHint;
+
+  /// Hint text for email field
+  ///
+  /// In en, this message translates to:
+  /// **'name@email.com'**
+  String get emailHint;
+
+  /// Title for sightings
+  ///
+  /// In en, this message translates to:
+  /// **'Sightings'**
+  String get sightings;
+
+  /// Title of the report player sighting screen
+  ///
+  /// In en, this message translates to:
+  /// **'Report player sighting'**
+  String get playerSightingReport;
+
+  /// Title of the edit sighting screen
+  ///
+  /// In en, this message translates to:
+  /// **'Edit sighting'**
+  String get editSighting;
+
+  /// Title of the delete sighting screen
+  ///
+  /// In en, this message translates to:
+  /// **'Delete sighting'**
+  String get deleteSighting;
+
+  /// Title of the sighting history screen
+  ///
+  /// In en, this message translates to:
+  /// **'Change history'**
+  String get sightingHistory;
+
+  /// Label for platform ID
+  ///
+  /// In en, this message translates to:
+  /// **'Platform ID'**
+  String get platformId;
+
+  /// Hint text for platform ID
+  ///
+  /// In en, this message translates to:
+  /// **'Steam / Xbox / PSN ID'**
+  String get platformIdHint;
+
+  /// Label for in-game name
+  ///
+  /// In en, this message translates to:
+  /// **'In-game name'**
+  String get inGameName;
+
+  /// Label for tribe name
+  ///
+  /// In en, this message translates to:
+  /// **'Tribe name'**
+  String get tribeName;
+
+  /// Hint text for tribe name
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the tribe'**
+  String get tribeNameHint;
+
+  /// Label for platform
+  ///
+  /// In en, this message translates to:
+  /// **'Platform'**
+  String get platform;
+
+  /// Label for note
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get note;
+
+  /// Optional field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optional;
+
+  /// Switch label for premium visibility
+  ///
+  /// In en, this message translates to:
+  /// **'Visible to premium users'**
+  String get visibleToPremiumUsers;
+
+  /// Button text to save a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Save sighting'**
+  String get saveSighting;
+
+  /// Button text to update a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get updateSighting;
+
+  /// Button text to hide a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Hide sighting'**
+  String get hideSighting;
+
+  /// Text shown while saving
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get saving;
+
+  /// Snackbar after saving a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Sighting saved.'**
+  String get sightingSaved;
+
+  /// Snackbar after updating a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Sighting updated.'**
+  String get sightingUpdated;
+
+  /// Snackbar after hiding a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Sighting hidden.'**
+  String get sightingHidden;
+
+  /// Error when saving a sighting fails
+  ///
+  /// In en, this message translates to:
+  /// **'Sighting could not be saved.'**
+  String get sightingSaveError;
+
+  /// Error when updating a sighting fails
+  ///
+  /// In en, this message translates to:
+  /// **'Sighting could not be updated.'**
+  String get sightingUpdateError;
+
+  /// Error when hiding a sighting fails
+  ///
+  /// In en, this message translates to:
+  /// **'Sighting could not be hidden.'**
+  String get sightingHideError;
+
+  /// Error when user is not logged in
+  ///
+  /// In en, this message translates to:
+  /// **'You must be logged in to report a sighting.'**
+  String get sightingRequiresLogin;
+
+  /// Error when deleting is not allowed
+  ///
+  /// In en, this message translates to:
+  /// **'You are not allowed to delete this sighting.'**
+  String get sightingDeleteNotAllowed;
+
+  /// Error when editing is not allowed
+  ///
+  /// In en, this message translates to:
+  /// **'You are not allowed to edit this sighting.'**
+  String get sightingEditNotAllowed;
+
+  /// Validation for missing player name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a player name.'**
+  String get sightingInGameNameRequired;
+
+  /// Validation for missing platform ID
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a platform ID.'**
+  String get sightingPlatformIdRequired;
+
+  /// Validation for missing tribe name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a tribe name.'**
+  String get sightingTribeNameRequired;
+
+  /// Validation for missing delete reason
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a reason.'**
+  String get sightingReasonRequired;
+
+  /// Hint text on the delete sighting screen
+  ///
+  /// In en, this message translates to:
+  /// **'This sighting will not be permanently deleted. It will only be hidden from normal users and remain traceable for admins.'**
+  String get sightingDeleteHint;
+
+  /// Label for reason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get reason;
+
+  /// Hint text for reason
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a reason'**
+  String get reasonHint;
+
+  /// Empty state for server sightings
+  ///
+  /// In en, this message translates to:
+  /// **'No visible sightings yet.'**
+  String get noVisibleSightings;
+
+  /// Error when loading sightings fails
+  ///
+  /// In en, this message translates to:
+  /// **'Sightings could not be loaded.'**
+  String get sightingsLoadError;
+
+  /// Error when loading history fails
+  ///
+  /// In en, this message translates to:
+  /// **'History could not be loaded.'**
+  String get sightingHistoryLoadError;
+
+  /// Empty state for sighting history
+  ///
+  /// In en, this message translates to:
+  /// **'No history available yet.'**
+  String get noSightingHistory;
+
+  /// Error when loading access level fails
+  ///
+  /// In en, this message translates to:
+  /// **'Access level could not be loaded.'**
+  String get accessLevelLoadError;
+
+  /// Edit action
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// Delete action
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// Action to view history
+  ///
+  /// In en, this message translates to:
+  /// **'View history'**
+  String get viewHistory;
+
+  /// Label for Steam
+  ///
+  /// In en, this message translates to:
+  /// **'Steam'**
+  String get platformSteam;
+
+  /// Label for Xbox
+  ///
+  /// In en, this message translates to:
+  /// **'Xbox'**
+  String get platformXbox;
+
+  /// Label for PSN
+  ///
+  /// In en, this message translates to:
+  /// **'PSN'**
+  String get platformPsn;
+
+  /// Label for unknown platform
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get platformUnknown;
+
+  /// Error when the user profile for a sighting could not be loaded
+  ///
+  /// In en, this message translates to:
+  /// **'User profile could not be loaded.'**
+  String get sightingUserProfileLoadError;
+
+  /// Title of the server sightings screen
+  ///
+  /// In en, this message translates to:
+  /// **'Player Sightings'**
+  String get playerSightings;
+
+  /// Label for platform in a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Platform: {value}'**
+  String platformLabel(String value);
+
+  /// Label for creator level in a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility: {value}'**
+  String visibilityLabel(String value);
+
+  /// Label for sharing scope in a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing: {value}'**
+  String sharingLabel(String value);
+
+  /// Label for edit timestamp
+  ///
+  /// In en, this message translates to:
+  /// **'Edited: {value}'**
+  String editedAtLabel(String value);
+
+  /// Indicator that a sighting was soft deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Soft deleted'**
+  String get softDeleted;
+
+  /// Label for delete reason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {value}'**
+  String reasonLabel(String value);
+
+  /// Label for changed by user id in history
+  ///
+  /// In en, this message translates to:
+  /// **'Changed by: {value}'**
+  String changedByLabel(String value);
+
+  /// Label for creator level free
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get sightingCreatorLevelFree;
+
+  /// Label for creator level premium
+  ///
+  /// In en, this message translates to:
+  /// **'Premium'**
+  String get sightingCreatorLevelPremium;
+
+  /// Label for creator level admin
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get sightingCreatorLevelAdmin;
+
+  /// Label for sharing scope ownerOnly
+  ///
+  /// In en, this message translates to:
+  /// **'Owner only'**
+  String get sightingSharingOwnerOnly;
+
+  /// Label for sharing scope premiumShared
+  ///
+  /// In en, this message translates to:
+  /// **'Shared with premium'**
+  String get sightingSharingPremiumShared;
+
+  /// Label for sharing scope adminOnly
+  ///
+  /// In en, this message translates to:
+  /// **'Admins only'**
+  String get sightingSharingAdminOnly;
+
+  /// Change action created
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get sightingActionCreated;
+
+  /// Change action updated
+  ///
+  /// In en, this message translates to:
+  /// **'Updated'**
+  String get sightingActionUpdated;
+
+  /// Change action soft deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Soft deleted'**
+  String get sightingActionSoftDeleted;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

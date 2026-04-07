@@ -1,4 +1,5 @@
 // features/sightings/presentation/screens/server_sightings_screen.dart
+import 'package:asa_server_eye/core/extensions/context_l10n.dart';
 import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,14 +26,14 @@ class ServerSightingsScreen extends ConsumerWidget {
     final currentUser = ref.watch(currentUserProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Player Sightings')),
+      appBar: AppBar(title: Text(context.l10n.playerSightings)),
       body: accessLevelAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => const Center(
+        error: (error, stackTrace) => Center(
           child: Padding(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Text(
-              'Zugriffslevel konnte nicht geladen werden.',
+              context.l10n.accessLevelLoadError,
               textAlign: TextAlign.center,
             ),
           ),
@@ -41,11 +42,11 @@ class ServerSightingsScreen extends ConsumerWidget {
           return sightingsAsync.when(
             data: (sightings) {
               if (sightings.isEmpty) {
-                return const Center(
+                return Center(
                   child: Padding(
-                    padding: EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(24),
                     child: Text(
-                      'Noch keine sichtbaren Sightings vorhanden.',
+                      context.l10n.noVisibleSightings,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -108,19 +109,19 @@ class ServerSightingsScreen extends ConsumerWidget {
                       },
                       itemBuilder: (_) => [
                         if (canEdit)
-                          const PopupMenuItem<String>(
+                          PopupMenuItem<String>(
                             value: 'edit',
-                            child: Text('Bearbeiten'),
+                            child: Text(context.l10n.edit),
                           ),
                         if (canDelete)
-                          const PopupMenuItem<String>(
+                          PopupMenuItem<String>(
                             value: 'delete',
-                            child: Text('Löschen'),
+                            child: Text(context.l10n.delete),
                           ),
                         if (canSeeHistory)
-                          const PopupMenuItem<String>(
+                          PopupMenuItem<String>(
                             value: 'history',
-                            child: Text('Verlauf ansehen'),
+                            child: Text(context.l10n.viewHistory),
                           ),
                       ],
                     ),
@@ -129,11 +130,11 @@ class ServerSightingsScreen extends ConsumerWidget {
               );
             },
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, stackTrace) => const Center(
+            error: (error, stackTrace) => Center(
               child: Padding(
-                padding: EdgeInsets.all(24),
+                padding: const EdgeInsets.all(24),
                 child: Text(
-                  'Sightings konnten nicht geladen werden.',
+                  context.l10n.sightingsLoadError,
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -1,5 +1,5 @@
 // features/sightings/presentation/extensions/gaming_platform_ui_extension.dart
-import 'package:asa_server_eye/features/sightings/domain/player_sighting.dart';
+import 'package:asa_server_eye/features/sightings/domain/gaming_platform.dart';
 
 extension GamingPlatformUiExtension on GamingPlatform {
   String get label {
