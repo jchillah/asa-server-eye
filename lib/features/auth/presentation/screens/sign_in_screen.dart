@@ -1,6 +1,6 @@
 // features/auth/presentation/screens/sign_in_screen.dart
+import 'package:asa_server_eye/app/presentation/widgets/app_action_button.dart';
 import 'package:asa_server_eye/features/auth/presentation/widgets/app_gradient_background.dart';
-import 'package:asa_server_eye/features/auth/presentation/widgets/auth_submit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -53,9 +53,9 @@ class SignInScreen extends ConsumerWidget {
                           autofillHints: const [AutofillHints.password],
                         ),
                         const SizedBox(height: 20),
-                        AuthSubmitButton(
+                        AppActionButton(
                           label: context.l10n.signIn,
-                          isSubmitting: formController.isSubmitting,
+                          isLoading: formController.isSubmitting,
                           onPressed: () async {
                             final message = await formController.submit(
                               context,
@@ -67,10 +67,10 @@ class SignInScreen extends ConsumerWidget {
                           },
                         ),
                         const SizedBox(height: 8),
-                        AuthSubmitButton(
+                        AppActionButton(
                           label: context.l10n.createAccount,
-                          isSubmitting: formController.isSubmitting,
-                          variant: AuthSubmitButtonVariant.secondary,
+                          isLoading: formController.isSubmitting,
+                          variant: AppActionButtonVariant.secondary,
                           onPressed: () async {
                             AuthNavigation.openSignUp(context);
                           },
