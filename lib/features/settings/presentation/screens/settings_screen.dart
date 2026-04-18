@@ -1,5 +1,4 @@
 // features/settings/presentation/screens/settings_screen.dart
-import 'package:asa_server_eye/features/auth/presentation/providers/auth_repository_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -73,15 +72,6 @@ class SettingsScreen extends ConsumerWidget {
             title: context.l10n.support,
             subtitle: context.l10n.getHelpAndContactSupport,
             onTap: () => SettingsNavigation.openSupport(context),
-          ),
-          SettingsSectionHeader(title: context.l10n.account),
-          SettingsTile(
-            icon: Icons.logout,
-            title: context.l10n.signOut,
-            subtitle: context.l10n.signOutDescription,
-            onTap: () async {
-              await ref.read(authRepositoryProvider).signOut();
-            },
           ),
         ],
       ),

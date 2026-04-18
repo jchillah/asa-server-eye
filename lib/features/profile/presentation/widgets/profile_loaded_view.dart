@@ -1,5 +1,6 @@
 // features/profile/presentation/widgets/profile_loaded_view.dart
 import 'package:asa_server_eye/core/extensions/context_l10n.dart';
+import 'package:asa_server_eye/features/auth/presentation/providers/auth_repository_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -59,10 +60,15 @@ class ProfileLoadedView extends ConsumerWidget {
         ProfileActionButtons(
           isSaving: isSaving,
           isDeleting: isDeleting,
+          isSigningOut: false,
           saveLabel: context.l10n.save,
+          signOutLabel: context.l10n.signOut,
           deleteLabel: context.l10n.deleteAccount,
           deleteHint: context.l10n.deleteAccountHint,
           onSave: () => ProfileScreenActions.save(context: context, ref: ref),
+          onSignOut: () async {
+            await ref.read(authRepositoryProvider).signOut();
+          },
           onDelete: () =>
               ProfileScreenActions.delete(context: context, ref: ref),
         ),
