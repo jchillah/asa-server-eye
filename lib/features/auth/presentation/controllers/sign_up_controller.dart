@@ -58,19 +58,8 @@ class SignUpController {
         email: email.trim(),
         password: password,
       );
-      return null;
-    } on FirebaseAuthException catch (error, stackTrace) {
-      AppLogger.warning(
-        'SignUpController',
-        'FirebaseAuthException during sign-up: ${error.code}',
-      );
 
-      AppLogger.error(
-        'SignUpController',
-        'Sign-up failed with FirebaseAuthException.',
-        error: error,
-        stackTrace: stackTrace,
-      );
+      return null;
     } on FirebaseAuthException catch (error, stackTrace) {
       AppLogger.warning(
         'SignUpController',
