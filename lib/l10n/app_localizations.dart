@@ -1120,6 +1120,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You need Premium to save more than one favorite.'**
   String get premiumRequiredForMoreFavorites;
+
+  /// Short label for the servers tab in the bottom navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Servers'**
+  String get serversNavLabel;
+
+  /// Short label for the favorites tab in the bottom navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favoritesNavLabel;
+
+  /// Short label for the sightings tab in the bottom navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Sightings'**
+  String get sightingsNavLabel;
+
+  /// Short label for the settings tab in the bottom navigation
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsNavLabel;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

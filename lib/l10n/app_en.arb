@@ -734,5 +734,21 @@
   "premiumRequiredForMoreFavorites": "You need Premium to save more than one favorite.",
   "@premiumRequiredForMoreFavorites": {
     "description": "Shown when a free user tries to save more than one favorite"
+  },
+  "serversNavLabel": "Servers",
+  "@serversNavLabel": {
+    "description": "Short label for the servers tab in the bottom navigation"
+  },
+  "favoritesNavLabel": "Favorites",
+  "@favoritesNavLabel": {
+    "description": "Short label for the favorites tab in the bottom navigation"
+  },
+  "sightingsNavLabel": "Sightings",
+  "@sightingsNavLabel": {
+    "description": "Short label for the sightings tab in the bottom navigation"
+  },
+  "settingsNavLabel": "Settings",
+  "@settingsNavLabel": {
+    "description": "Short label for the settings tab in the bottom navigation"
   }
 }

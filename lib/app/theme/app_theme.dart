@@ -100,7 +100,7 @@ abstract final class AppTheme {
           return TextStyle(
             color: isSelected ? AppColors.neonGreen : AppColors.textSecondary,
             fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-            fontSize: 12,
+            fontSize: 11,
           );
         }),
         indicatorColor: AppColors.neonGreen.withValues(alpha: 0.16),

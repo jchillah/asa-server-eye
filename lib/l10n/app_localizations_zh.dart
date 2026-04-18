@@ -539,4 +539,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get premiumRequiredForMoreFavorites => '需要 Premium 才能保存更多收藏';
+
+  @override
+  String get serversNavLabel => '服务器';
+
+  @override
+  String get favoritesNavLabel => '收藏';
+
+  @override
+  String get sightingsNavLabel => '目击';
+
+  @override
+  String get settingsNavLabel => '设置';
 }

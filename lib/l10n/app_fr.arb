@@ -734,5 +734,21 @@
     "premiumRequiredForMoreFavorites": "Vous avez atteint la limite de favoris pour les utilisateurs gratuits. Passez à Premium pour enregistrer plus de favoris.",
     "@premiumRequiredForMoreFavorites": {
         "description": "Affiché lorsque l'utilisateur gratuit atteint la limite de favoris"
+    },
+    "serversNavLabel": "Serveurs",
+    "@serversNavLabel": {
+        "description": "Libellé court pour l’onglet des serveurs dans la navigation inférieure"
+    },
+    "favoritesNavLabel": "Favoris",
+    "@favoritesNavLabel": {
+        "description": "Libellé court pour l’onglet des favoris dans la navigation inférieure"
+    },
+    "sightingsNavLabel": "Observ.",
+    "@sightingsNavLabel": {
+        "description": "Libellé court pour l’onglet des observations dans la navigation inférieure"
+    },
+    "settingsNavLabel": "Réglages",
+    "@settingsNavLabel": {
+        "description": "Libellé court pour l’onglet des réglages dans la navigation inférieure"
     }
 }

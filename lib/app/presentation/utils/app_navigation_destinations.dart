@@ -10,22 +10,22 @@ abstract final class AppNavigationDestinations {
       AppNavigationDestinationItem(
         icon: Icons.dns_outlined,
         selectedIcon: Icons.dns,
-        label: l10n.servers,
+        label: l10n.serversNavLabel,
       ),
       AppNavigationDestinationItem(
         icon: Icons.star_border_rounded,
         selectedIcon: Icons.star_rounded,
-        label: l10n.favorites,
+        label: l10n.favoritesNavLabel,
       ),
       AppNavigationDestinationItem(
         icon: Icons.visibility_outlined,
         selectedIcon: Icons.visibility,
-        label: l10n.playerSightings,
+        label: l10n.sightingsNavLabel,
       ),
       AppNavigationDestinationItem(
         icon: Icons.settings_outlined,
         selectedIcon: Icons.settings,
-        label: l10n.settings,
+        label: l10n.settingsNavLabel,
       ),
     ];
   }

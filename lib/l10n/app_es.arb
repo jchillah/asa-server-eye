@@ -734,5 +734,21 @@
     "premiumRequiredForMoreFavorites": "Necesitas Premium para guardar más de un favorito.",
     "@premiumRequiredForMoreFavorites": {
         "description": "Mensaje mostrado cuando un usuario gratuito intenta guardar más de un favorito"
+    },
+    "serversNavLabel": "Servidores",
+    "@serversNavLabel": {
+        "description": "Etiqueta corta para la pestaña de servidores en la navegación inferior"
+    },
+    "favoritesNavLabel": "Favoritos",
+    "@favoritesNavLabel": {
+        "description": "Etiqueta corta para la pestaña de favoritos en la navegación inferior"
+    },
+    "sightingsNavLabel": "Avistam.",
+    "@sightingsNavLabel": {
+        "description": "Etiqueta corta para la pestaña de avistamientos en la navegación inferior"
+    },
+    "settingsNavLabel": "Ajustes",
+    "@settingsNavLabel": {
+        "description": "Etiqueta corta para la pestaña de ajustes en la navegación inferior"
     }
 }

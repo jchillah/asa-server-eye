@@ -539,4 +539,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get premiumRequiredForMoreFavorites => 'Vous avez atteint la limite de favoris pour les utilisateurs gratuits. Passez à Premium pour enregistrer plus de favoris.';
+
+  @override
+  String get serversNavLabel => 'Serveurs';
+
+  @override
+  String get favoritesNavLabel => 'Favoris';
+
+  @override
+  String get sightingsNavLabel => 'Observ.';
+
+  @override
+  String get settingsNavLabel => 'Réglages';
 }

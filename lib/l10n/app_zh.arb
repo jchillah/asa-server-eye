@@ -734,5 +734,21 @@
     "premiumRequiredForMoreFavorites": "需要 Premium 才能保存更多收藏",
     "@premiumRequiredForMoreFavorites": {
         "description": "当免费用户尝试保存超过一个收藏时显示"
+    },
+    "serversNavLabel": "服务器",
+    "@serversNavLabel": {
+        "description": "底部导航中服务器标签的简短文本"
+    },
+    "favoritesNavLabel": "收藏",
+    "@favoritesNavLabel": {
+        "description": "底部导航中收藏标签的简短文本"
+    },
+    "sightingsNavLabel": "目击",
+    "@sightingsNavLabel": {
+        "description": "底部导航中目击标签的简短文本"
+    },
+    "settingsNavLabel": "设置",
+    "@settingsNavLabel": {
+        "description": "底部导航中设置标签的简短文本"
     }
 }

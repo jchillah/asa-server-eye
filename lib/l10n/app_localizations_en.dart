@@ -539,4 +539,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get premiumRequiredForMoreFavorites => 'You need Premium to save more than one favorite.';
+
+  @override
+  String get serversNavLabel => 'Servers';
+
+  @override
+  String get favoritesNavLabel => 'Favorites';
+
+  @override
+  String get sightingsNavLabel => 'Sightings';
+
+  @override
+  String get settingsNavLabel => 'Settings';
 }

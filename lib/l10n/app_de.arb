@@ -734,5 +734,21 @@
   "premiumRequiredForMoreFavorites": "Für mehr als einen Favoriten benötigst du Premium.",
   "@premiumRequiredForMoreFavorites": {
     "description": "Wird angezeigt, wenn ein Nutzer ohne Premium versucht, mehr als einen Favoriten zu speichern"
-  }
+  },
+  "serversNavLabel": "Server",
+  "@serversNavLabel": {
+    "description": "Kurzes Label für den Server-Tab in der Bottom Navigation"
+  },
+ "favoritesNavLabel": "Favoriten",
+ "@favoritesNavLabel": {
+    "description": "Kurzes Label für den Favoriten-Tab in der Bottom Navigation"
+ },
+ "sightingsNavLabel": "Sichtungen",
+ "@sightingsNavLabel": {
+    "description": "Kurzes Label für den Sightings-Tab in der Bottom Navigation"
+ },
+ "settingsNavLabel": "Settings",
+ "@settingsNavLabel": {
+   "description": "Kurzes Label für den Settings-Tab in der Bottom Navigation"
+ }
 }
