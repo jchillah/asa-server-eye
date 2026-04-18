@@ -5,8 +5,13 @@ import 'package:asa_server_eye/features/auth/presentation/providers/current_user
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/utils/app_logger.dart';
+import '../../../../core/utils/app_logger.dart';
 import '../../data/favorites_repository.dart';
 
+final favoriteIdsProvider =
+    StateNotifierProvider<FavoriteIdsNotifier, AsyncValue<List<String>>>((ref) {
+      final repository = ref.watch(favoritesRepositoryProvider);
+      final user = ref.watch(currentUserProvider);
 final favoriteIdsProvider =
     StateNotifierProvider<FavoriteIdsNotifier, AsyncValue<List<String>>>((ref) {
       final repository = ref.watch(favoritesRepositoryProvider);

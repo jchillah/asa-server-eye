@@ -71,6 +71,18 @@ class SignUpController {
         error: error,
         stackTrace: stackTrace,
       );
+    } on FirebaseAuthException catch (error, stackTrace) {
+      AppLogger.warning(
+        'SignUpController',
+        'FirebaseAuthException during sign-up: ${error.code}',
+      );
+
+      AppLogger.error(
+        'SignUpController',
+        'Sign-up failed with FirebaseAuthException.',
+        error: error,
+        stackTrace: stackTrace,
+      );
 
       return AuthErrorMapper.mapSignUpError(
         code: error.code,

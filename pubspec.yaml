@@ -1,7 +1,7 @@
 name: asa_server_eye
 description: ARK SA Server Eye – real time server population tracker for ARK Survival Ascended.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 0.1.7+7
 

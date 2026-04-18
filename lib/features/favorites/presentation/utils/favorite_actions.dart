@@ -112,6 +112,13 @@ abstract final class FavoriteActions {
         error: error,
         stackTrace: stackTrace,
       );
+    } catch (error, stackTrace) {
+      AppLogger.error(
+        'FavoriteActions',
+        'Failed to remove favorite.',
+        error: error,
+        stackTrace: stackTrace,
+      );
 
       if (context.mounted) {
         _showMessage(context, context.l10n.genericError);
