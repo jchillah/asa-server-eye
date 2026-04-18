@@ -1,5 +1,5 @@
 // features/auth/presentation/screens/sign_in_screen.dart
-import 'package:asa_server_eye/app/presentation/widgets/app_action_button.dart';
+import 'package:asa_server_eye/core/presentation/widgets/app_action_button.dart';
 import 'package:asa_server_eye/features/auth/presentation/widgets/app_gradient_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

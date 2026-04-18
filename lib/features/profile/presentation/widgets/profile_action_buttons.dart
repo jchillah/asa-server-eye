@@ -1,5 +1,5 @@
 // features/profile/presentation/widgets/profile_action_buttons.dart
-import 'package:asa_server_eye/app/presentation/widgets/app_action_button.dart';
+import 'package:asa_server_eye/core/presentation/widgets/app_action_button.dart';
 import 'package:flutter/material.dart';
 
 class ProfileActionButtons extends StatelessWidget {
