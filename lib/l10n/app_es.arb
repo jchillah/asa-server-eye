@@ -750,5 +750,101 @@
     "settingsNavLabel": "Ajustes",
     "@settingsNavLabel": {
         "description": "Etiqueta corta para la pestaña de ajustes en la navegación inferior"
+    },
+    "premiumTitle": "Premium",
+    "@premiumTitle": {
+        "description": "Título para la sección premium en ajustes"
+    },
+    "premiumSettingsSubtitle": "Funciones premium y sus beneficios",
+    "@premiumSettingsSubtitle": {
+        "description": "Subtítulo para la sección premium en ajustes"
+    },
+    "premiumHeadline": "Mejora tu experiencia con Premium",
+    "@premiumHeadline": {
+        "description": "Título destacado para la promoción de premium"
+    },
+    "premiumDescription": "Obtén acceso a funciones exclusivas, mejora tu experiencia y apoya el desarrollo continuo de la aplicación con una suscripción premium.",
+    "@premiumDescription": {
+        "description": "Descripción para la promoción de premium"
+    },
+    "premiumBenefitSightingsTitle": "Avistamientos de jugadores",
+    "@premiumBenefitSightingsTitle": {
+        "description": "Título para el beneficio de avistamientos"
+    },
+    "premiumBenefitSightingsDescription": "Reporta avistamientos de jugadores en servidores específicos y hazlos visibles para otros usuarios premium.",
+    "@premiumBenefitSightingsDescription": {
+        "description": "Descripción para el beneficio de avistamientos"
+    },
+    "premiumBenefitFavoritesTitle": "Más favoritos",
+    "@premiumBenefitFavoritesTitle": {
+        "description": "Título para el beneficio de favoritos"
+    },
+    "premiumBenefitFavoritesDescription": "Guarda significativamente más servidores en tus favoritos.",
+    "@premiumBenefitFavoritesDescription": {
+        "description": "Descripción para el beneficio de favoritos"
+    },
+    "premiumBenefitAlertsTitle": "Alertas y seguimiento",
+    "@premiumBenefitAlertsTitle": {
+        "description": "Título para el beneficio de alertas y seguimiento"
+    },
+    "premiumBenefitAlertsDescription": "Prepárate para funciones premium futuras como el seguimiento mejorado y las alertas.",
+    "@premiumBenefitAlertsDescription": {
+        "description": "Descripción para el beneficio de alertas y seguimiento"
+    },
+    "premiumMonthlyPlan": "Mensual",
+    "@premiumMonthlyPlan": {
+        "description": "Plan mensual"
+    },
+    "premiumMonthlyPlanDescription": "Cancellation flexible",
+    "@premiumMonthlyPlanDescription": {
+        "description": "Descripción para el plan mensual"
+    },
+    "premiumYearlyPlan": "Anual",
+    "@premiumYearlyPlan": {
+        "description": "Plan anual"
+    },
+    "premiumYearlyPlanDescription": "Ahorro con suscripción anual",
+    "@premiumYearlyPlanDescription": {
+        "description": "Descripción para el plan anual"
+    },
+    "premiumStartMonthly": "Comenzar mensual",
+    "@premiumStartMonthly": {
+        "description": "CTA para compra mensual"
+    },
+    "premiumStartYearly": "Comenzar anual",
+    "@premiumStartYearly": {
+        "description": "CTA para compra anual"
+    },
+    "restorePurchases": "Restaurar compras",
+    "@restorePurchases": {
+        "description": "Acción para restaurar compras"
+    },
+    "premiumPurchaseComingSoon": "Compra de premium próximamente",
+    "@premiumPurchaseComingSoon": {
+        "description": "Snackbar para compra de premium no implementada"
+    },
+    "premiumUpgradeTitle": "Mejora a Premium",
+    "@premiumUpgradeTitle": {
+        "description": "Título para la promoción de actualización a premium en perfil"
+    },
+    "premiumUpgradeDescription": "Actualiza a Premium para desbloquear funciones exclusivas y mejorar tu experiencia en ASA Server Eye.",
+    "@premiumUpgradeDescription": {
+        "description": "Descripción para la promoción de actualización a premium en perfil"
+    },
+    "premiumActiveTitle": "Premium activo",
+    "@premiumActiveTitle": {
+        "description": "Título para indicar que el usuario ya tiene premium en perfil"
+    },
+    "premiumActiveDescription": "Tu suscripción Premium está activa. Gracias por apoyar el desarrollo de la aplicación. Disfruta de tus funciones exclusivas y mantente atento a futuras mejoras.",
+    "@premiumActiveDescription": {
+    "description": "Descripción para indicar que el usuario ya tiene premium en perfil"
+    },
+    "unlockPremium": "Desbloquear Premium",
+    "@unlockPremium": {
+        "description": "Botón para desbloquear premium"
+    },
+    "managePremium": "Gestionar Premium",
+    "@managePremium": {
+        "description": "Botón para gestionar premium"
     }
 }

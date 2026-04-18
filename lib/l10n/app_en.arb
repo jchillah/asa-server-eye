@@ -750,5 +750,101 @@
   "settingsNavLabel": "Settings",
   "@settingsNavLabel": {
     "description": "Short label for the settings tab in the bottom navigation"
-  }
+  },
+  "premiumTitle": "Premium",
+"@premiumTitle": {
+  "description": "Title for premium section"
+},
+"premiumSettingsSubtitle": "Unlock and manage premium",
+"@premiumSettingsSubtitle": {
+  "description": "Subtitle for premium entry in settings"
+},
+"premiumHeadline": "Unlock Premium",
+"@premiumHeadline": {
+  "description": "Headline on premium screen"
+},
+"premiumDescription": "With Premium, you get access to player sightings, more favorites, and future premium features.",
+"@premiumDescription": {
+  "description": "Premium description"
+},
+"premiumBenefitSightingsTitle": "Player sightings",
+"@premiumBenefitSightingsTitle": {
+  "description": "Title for sightings benefit"
+},
+"premiumBenefitSightingsDescription": "Access sightings directly from the navigation and use premium access across the sightings area.",
+"@premiumBenefitSightingsDescription": {
+  "description": "Description for sightings benefit"
+},
+"premiumBenefitFavoritesTitle": "More favorites",
+"@premiumBenefitFavoritesTitle": {
+  "description": "Title for favorites benefit"
+},
+"premiumBenefitFavoritesDescription": "Save significantly more servers to your favorites.",
+"@premiumBenefitFavoritesDescription": {
+  "description": "Description for favorites benefit"
+},
+"premiumBenefitAlertsTitle": "Future extras",
+"@premiumBenefitAlertsTitle": {
+  "description": "Title for future premium extras"
+},
+"premiumBenefitAlertsDescription": "Get ready for future premium features like enhanced tracking and alerts.",
+"@premiumBenefitAlertsDescription": {
+  "description": "Description for future premium extras"
+},
+"premiumMonthlyPlan": "Monthly",
+"@premiumMonthlyPlan": {
+  "description": "Monthly plan"
+},
+"premiumMonthlyPlanDescription": "Flexible cancellation",
+"@premiumMonthlyPlanDescription": {
+  "description": "Description for monthly plan"
+},
+"premiumYearlyPlan": "Yearly",
+"@premiumYearlyPlan": {
+  "description": "Yearly plan"
+},
+"premiumYearlyPlanDescription": "Best value for long-term use",
+"@premiumYearlyPlanDescription": {
+  "description": "Description for yearly plan"
+},
+"premiumStartMonthly": "Start monthly",
+"@premiumStartMonthly": {
+  "description": "CTA for monthly purchase"
+},
+"premiumStartYearly": "Start yearly",
+"@premiumStartYearly": {
+  "description": "CTA for yearly purchase"
+},
+"restorePurchases": "Restore purchases",
+"@restorePurchases": {
+  "description": "Button to restore purchases"
+},
+"premiumPurchaseComingSoon": "The purchase flow will be connected next.",
+"@premiumPurchaseComingSoon": {
+  "description": "Temporary info while purchase flow is not connected yet"
+},
+"premiumUpgradeTitle": "Upgrade to Premium",
+"@premiumUpgradeTitle": {
+  "description": "Title for premium upgrade card in profile"
+},
+"premiumUpgradeDescription": "Unlock the sightings tab and additional premium benefits.",
+"@premiumUpgradeDescription": {
+  "description": "Description for premium upgrade in profile"
+},
+"premiumActiveTitle": "Premium active",
+"@premiumActiveTitle": {
+  "description": "Title for active premium in profile"
+},
+"premiumActiveDescription": "Your account already has access to premium features.",
+"@premiumActiveDescription": {
+  "description": "Description for active premium in profile"
+},
+"unlockPremium": "Unlock Premium",
+"@unlockPremium": {
+  "description": "Button to unlock premium"
+},
+"managePremium": "Manage Premium",
+"@managePremium": {
+  "description": "Button to manage premium"
+}
 }

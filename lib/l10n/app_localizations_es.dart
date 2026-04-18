@@ -551,4 +551,76 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsNavLabel => 'Ajustes';
+
+  @override
+  String get premiumTitle => 'Premium';
+
+  @override
+  String get premiumSettingsSubtitle => 'Funciones premium y sus beneficios';
+
+  @override
+  String get premiumHeadline => 'Mejora tu experiencia con Premium';
+
+  @override
+  String get premiumDescription => 'Obtén acceso a funciones exclusivas, mejora tu experiencia y apoya el desarrollo continuo de la aplicación con una suscripción premium.';
+
+  @override
+  String get premiumBenefitSightingsTitle => 'Avistamientos de jugadores';
+
+  @override
+  String get premiumBenefitSightingsDescription => 'Reporta avistamientos de jugadores en servidores específicos y hazlos visibles para otros usuarios premium.';
+
+  @override
+  String get premiumBenefitFavoritesTitle => 'Más favoritos';
+
+  @override
+  String get premiumBenefitFavoritesDescription => 'Guarda significativamente más servidores en tus favoritos.';
+
+  @override
+  String get premiumBenefitAlertsTitle => 'Alertas y seguimiento';
+
+  @override
+  String get premiumBenefitAlertsDescription => 'Prepárate para funciones premium futuras como el seguimiento mejorado y las alertas.';
+
+  @override
+  String get premiumMonthlyPlan => 'Mensual';
+
+  @override
+  String get premiumMonthlyPlanDescription => 'Cancellation flexible';
+
+  @override
+  String get premiumYearlyPlan => 'Anual';
+
+  @override
+  String get premiumYearlyPlanDescription => 'Ahorro con suscripción anual';
+
+  @override
+  String get premiumStartMonthly => 'Comenzar mensual';
+
+  @override
+  String get premiumStartYearly => 'Comenzar anual';
+
+  @override
+  String get restorePurchases => 'Restaurar compras';
+
+  @override
+  String get premiumPurchaseComingSoon => 'Compra de premium próximamente';
+
+  @override
+  String get premiumUpgradeTitle => 'Mejora a Premium';
+
+  @override
+  String get premiumUpgradeDescription => 'Actualiza a Premium para desbloquear funciones exclusivas y mejorar tu experiencia en ASA Server Eye.';
+
+  @override
+  String get premiumActiveTitle => 'Premium activo';
+
+  @override
+  String get premiumActiveDescription => 'Tu suscripción Premium está activa. Gracias por apoyar el desarrollo de la aplicación. Disfruta de tus funciones exclusivas y mantente atento a futuras mejoras.';
+
+  @override
+  String get unlockPremium => 'Desbloquear Premium';
+
+  @override
+  String get managePremium => 'Gestionar Premium';
 }

@@ -1,6 +1,8 @@
 // features/profile/presentation/widgets/profile_loaded_view.dart
 import 'package:asa_server_eye/core/extensions/context_l10n.dart';
+import 'package:asa_server_eye/core/presentation/widgets/app_action_button.dart';
 import 'package:asa_server_eye/features/auth/presentation/providers/auth_repository_provider.dart';
+import 'package:asa_server_eye/features/subscriptions/presentation/utils/premium_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,6 +28,10 @@ class ProfileLoadedView extends ConsumerWidget {
   final bool isSaving;
   final bool isDeleting;
   final TextEditingController usernameController;
+
+  bool get _isPremiumOrAdmin =>
+      profile.sightingsAccessLevel == 'premium' ||
+      profile.sightingsAccessLevel == 'admin';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,6 +60,42 @@ class ProfileLoadedView extends ConsumerWidget {
           favoritesLabel: context.l10n.favorites,
           favoritesCountText: context.l10n.savedFavoritesCount(
             profile.favoriteIds.length,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _isPremiumOrAdmin
+                      ? context.l10n.premiumActiveTitle
+                      : context.l10n.premiumUpgradeTitle,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  _isPremiumOrAdmin
+                      ? context.l10n.premiumActiveDescription
+                      : context.l10n.premiumUpgradeDescription,
+                ),
+                const SizedBox(height: 12),
+                AppActionButton(
+                  label: _isPremiumOrAdmin
+                      ? context.l10n.managePremium
+                      : context.l10n.unlockPremium,
+                  isLoading: false,
+                  variant: _isPremiumOrAdmin
+                      ? AppActionButtonVariant.secondary
+                      : AppActionButtonVariant.primary,
+                  onPressed: () async {
+                    await PremiumNavigation.open(context);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 24),

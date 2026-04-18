@@ -750,5 +750,101 @@
     "settingsNavLabel": "Réglages",
     "@settingsNavLabel": {
         "description": "Libellé court pour l’onglet des réglages dans la navigation inférieure"
+    },
+    "premiumTitle": "Premium",
+    "@premiumTitle": {
+        "description": "Titre de l'entrée premium dans les paramètres"
+    },
+    "premiumSettingsSubtitle": "Découvrez les avantages de Premium et gérez votre abonnement.",
+    "@premiumSettingsSubtitle": {
+        "description": "Sous-titre de l'entrée premium dans les paramètres"
+    },
+    "premiumHeadline": "Passez à Premium pour plus de fonctionnalités",
+    "@premiumHeadline": {
+        "description": "Titre de l'écran de présentation de Premium"
+    },
+    "premiumDescription": "Premium offre des fonctionnalités exclusives pour améliorer votre expérience avec ASA Server Eye, notamment l'accès à la section des observations de joueurs, la possibilité d'enregistrer plus de favoris et des extras à venir pour les utilisateurs Premium.",
+    "@premiumDescription": {
+        "description": "Description de l'écran de présentation de Premium"
+    },
+    "premiumBenefitSightingsTitle": "Observations de joueurs",
+    "@premiumBenefitSightingsTitle": {
+        "description": "Titre pour le bénéfice des observations de joueurs"
+    },
+    "premiumBenefitSightingsDescription": "Accédez à la section exclusive des observations de joueurs pour signaler et consulter les activités suspectes en jeu.",
+    "@premiumBenefitSightingsDescription": {
+        "description": "Description pour le bénéfice des observations de joueurs"
+    },
+    "premiumBenefitFavoritesTitle": "Plus de favoris",
+    "@premiumBenefitFavoritesTitle": {
+        "description": "Titre pour le bénéfice des favoris"
+    },
+    "premiumBenefitFavoritesDescription": "Enregistrez significativement plus de serveurs dans vos favoris.",
+    "@premiumBenefitFavoritesDescription": {
+        "description": "Description pour le bénéfice des favoris"
+    },
+    "premiumBenefitAlertsTitle": "Alertes et extras à venir",
+    "@premiumBenefitAlertsTitle": {
+        "description": "Titre pour le bénéfice des alertes et extras à venir"
+    },
+    "premiumBenefitAlertsDescription": "Bénéficiez d'alertes personnalisées et d'extras exclusifs à venir pour les utilisateurs Premium.",
+    "@premiumBenefitAlertsDescription": {
+        "description": "Description pour le bénéfice des alertes et extras à venir"
+    },
+    "premiumMonthlyPlan": "Mensuel",
+    "@premiumMonthlyPlan": {
+        "description": "Plan mensuel"
+    },
+    "premiumMonthlyPlanDescription": "Idéal pour essayer les fonctionnalités Premium et profiter d'une flexibilité maximale.",
+    "@premiumMonthlyPlanDescription": {
+        "description": "Description pour le plan mensuel"
+    },
+    "premiumYearlyPlan": "Annuel",
+    "@premiumYearlyPlan": {
+        "description": "Plan annuel"
+    },
+    "premiumYearlyPlanDescription": "Meilleure valeur pour un usage à long terme",
+    "@premiumYearlyPlanDescription": {
+        "description": "Description pour le plan annuel"
+    },
+    "premiumStartMonthly": "Commencer mensuel",
+    "@premiumStartMonthly": {
+        "description": "CTA pour l'achat mensuel"
+    },
+    "premiumStartYearly": "Commencer annuel",
+    "@premiumStartYearly": {
+        "description": "CTA pour l'achat annuel"
+    },
+    "restorePurchases": "Restaurer les achats",
+    "@restorePurchases": {
+        "description": "Action pour restaurer les achats sur iOS"
+    },
+    "premiumPurchaseComingSoon": "L'achat de Premium arrive bientôt",
+    "@premiumPurchaseComingSoon": {
+        "description": "Snackbar pour les fonctions d'achat de premium non encore implémentées"
+    },
+    "premiumUpgradeTitle": "Passez à Premium",
+    "@premiumUpgradeTitle": {
+        "description": "Titre pour l'invite de mise à niveau vers premium dans le profil"
+    },
+    "premiumUpgradeDescription": "Débloquez des fonctionnalités exclusives et améliorez votre expérience avec ASA Server Eye en passant à Premium.",
+    "@premiumUpgradeDescription": {
+        "description": "Description pour l'invite de mise à niveau vers premium dans le profil"
+    },
+    "premiumActiveTitle": "Premium actif",
+    "@premiumActiveTitle": {
+        "description": "Titre pour indiquer que premium est actif dans le profil"
+    },
+    "premiumActiveDescription": "Vous profitez actuellement des avantages de Premium. Merci pour votre soutien !",
+    "@premiumActiveDescription": {
+        "description": "Description pour indiquer que premium est actif dans le profil"
+    },
+    "unlockPremium": "Débloquer Premium",
+    "@unlockPremium": {
+        "description": "Bouton pour débloquer premium depuis le profil"
+    },
+    "managePremium": "Gérer Premium",
+    "@managePremium": {
+        "description": "Bouton pour gérer premium depuis le profil"
     }
 }

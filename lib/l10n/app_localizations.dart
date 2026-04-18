@@ -1144,6 +1144,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settingsNavLabel;
+
+  /// Title for premium section
+  ///
+  /// In en, this message translates to:
+  /// **'Premium'**
+  String get premiumTitle;
+
+  /// Subtitle for premium entry in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock and manage premium'**
+  String get premiumSettingsSubtitle;
+
+  /// Headline on premium screen
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Premium'**
+  String get premiumHeadline;
+
+  /// Premium description
+  ///
+  /// In en, this message translates to:
+  /// **'With Premium, you get access to player sightings, more favorites, and future premium features.'**
+  String get premiumDescription;
+
+  /// Title for sightings benefit
+  ///
+  /// In en, this message translates to:
+  /// **'Player sightings'**
+  String get premiumBenefitSightingsTitle;
+
+  /// Description for sightings benefit
+  ///
+  /// In en, this message translates to:
+  /// **'Access sightings directly from the navigation and use premium access across the sightings area.'**
+  String get premiumBenefitSightingsDescription;
+
+  /// Title for favorites benefit
+  ///
+  /// In en, this message translates to:
+  /// **'More favorites'**
+  String get premiumBenefitFavoritesTitle;
+
+  /// Description for favorites benefit
+  ///
+  /// In en, this message translates to:
+  /// **'Save significantly more servers to your favorites.'**
+  String get premiumBenefitFavoritesDescription;
+
+  /// Title for future premium extras
+  ///
+  /// In en, this message translates to:
+  /// **'Future extras'**
+  String get premiumBenefitAlertsTitle;
+
+  /// Description for future premium extras
+  ///
+  /// In en, this message translates to:
+  /// **'Get ready for future premium features like enhanced tracking and alerts.'**
+  String get premiumBenefitAlertsDescription;
+
+  /// Monthly plan
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get premiumMonthlyPlan;
+
+  /// Description for monthly plan
+  ///
+  /// In en, this message translates to:
+  /// **'Flexible cancellation'**
+  String get premiumMonthlyPlanDescription;
+
+  /// Yearly plan
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get premiumYearlyPlan;
+
+  /// Description for yearly plan
+  ///
+  /// In en, this message translates to:
+  /// **'Best value for long-term use'**
+  String get premiumYearlyPlanDescription;
+
+  /// CTA for monthly purchase
+  ///
+  /// In en, this message translates to:
+  /// **'Start monthly'**
+  String get premiumStartMonthly;
+
+  /// CTA for yearly purchase
+  ///
+  /// In en, this message translates to:
+  /// **'Start yearly'**
+  String get premiumStartYearly;
+
+  /// Button to restore purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Restore purchases'**
+  String get restorePurchases;
+
+  /// Temporary info while purchase flow is not connected yet
+  ///
+  /// In en, this message translates to:
+  /// **'The purchase flow will be connected next.'**
+  String get premiumPurchaseComingSoon;
+
+  /// Title for premium upgrade card in profile
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Premium'**
+  String get premiumUpgradeTitle;
+
+  /// Description for premium upgrade in profile
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock the sightings tab and additional premium benefits.'**
+  String get premiumUpgradeDescription;
+
+  /// Title for active premium in profile
+  ///
+  /// In en, this message translates to:
+  /// **'Premium active'**
+  String get premiumActiveTitle;
+
+  /// Description for active premium in profile
+  ///
+  /// In en, this message translates to:
+  /// **'Your account already has access to premium features.'**
+  String get premiumActiveDescription;
+
+  /// Button to unlock premium
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Premium'**
+  String get unlockPremium;
+
+  /// Button to manage premium
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Premium'**
+  String get managePremium;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

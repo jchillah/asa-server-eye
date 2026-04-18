@@ -551,4 +551,76 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingsNavLabel => 'Settings';
+
+  @override
+  String get premiumTitle => 'Premium';
+
+  @override
+  String get premiumSettingsSubtitle => 'Premium freischalten und verwalten';
+
+  @override
+  String get premiumHeadline => 'Schalte Premium frei';
+
+  @override
+  String get premiumDescription => 'Mit Premium erhältst du Zugriff auf Spielersichtungen, mehr Favoriten und zukünftige Premium-Funktionen.';
+
+  @override
+  String get premiumBenefitSightingsTitle => 'Spielersichtungen';
+
+  @override
+  String get premiumBenefitSightingsDescription => 'Greife direkt über die Navigation auf Sichtungen zu und nutze Premium-Zugriff im gesamten Bereich.';
+
+  @override
+  String get premiumBenefitFavoritesTitle => 'Mehr Favoriten';
+
+  @override
+  String get premiumBenefitFavoritesDescription => 'Speichere deutlich mehr Server in deinen Favoriten.';
+
+  @override
+  String get premiumBenefitAlertsTitle => 'Zukünftige Extras';
+
+  @override
+  String get premiumBenefitAlertsDescription => 'Bereite dich auf kommende Premium-Funktionen wie erweiterte Beobachtung und Alarme vor.';
+
+  @override
+  String get premiumMonthlyPlan => 'Monatlich';
+
+  @override
+  String get premiumMonthlyPlanDescription => 'Flexibel kündbar';
+
+  @override
+  String get premiumYearlyPlan => 'Jährlich';
+
+  @override
+  String get premiumYearlyPlanDescription => 'Bester Wert für langfristige Nutzung';
+
+  @override
+  String get premiumStartMonthly => 'Monatlich starten';
+
+  @override
+  String get premiumStartYearly => 'Jährlich starten';
+
+  @override
+  String get restorePurchases => 'Käufe wiederherstellen';
+
+  @override
+  String get premiumPurchaseComingSoon => 'Der Kauf-Flow wird als Nächstes angebunden.';
+
+  @override
+  String get premiumUpgradeTitle => 'Upgrade auf Premium';
+
+  @override
+  String get premiumUpgradeDescription => 'Schalte den Sightings-Tab und weitere Premium-Vorteile frei.';
+
+  @override
+  String get premiumActiveTitle => 'Premium aktiv';
+
+  @override
+  String get premiumActiveDescription => 'Dein Konto hat bereits Zugriff auf Premium-Funktionen.';
+
+  @override
+  String get unlockPremium => 'Premium freischalten';
+
+  @override
+  String get managePremium => 'Premium verwalten';
 }
