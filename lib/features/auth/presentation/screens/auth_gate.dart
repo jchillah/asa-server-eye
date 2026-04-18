@@ -1,11 +1,11 @@
 // features/auth/presentation/screens/auth_gate.dart
+import 'package:asa_server_eye/features/auth/presentation/providers/auth_state_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app/presentation/app_shell.dart';
 import '../../../../core/extensions/context_l10n.dart';
-import '../providers/auth_providers.dart';
 import 'sign_in_screen.dart';
 
 const _authGateLogTag = 'AuthGate';

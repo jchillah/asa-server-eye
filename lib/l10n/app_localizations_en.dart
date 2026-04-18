@@ -1,7 +1,5 @@
-// l10n/app_localizations_en.dart
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -188,8 +186,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createYourAccount => 'Create your account';
 
   @override
-  String get signUpToSaveFavorites =>
-      'Sign up to save your favorites across devices.';
+  String get signUpToSaveFavorites => 'Sign up to save your favorites across devices.';
 
   @override
   String get account => 'Account';
@@ -201,8 +198,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signOutDescription => 'Log out of your current account';
 
   @override
-  String get authMissingEmailOrPassword =>
-      'Please enter your email and password.';
+  String get authMissingEmailOrPassword => 'Please enter your email and password.';
 
   @override
   String get authInvalidEmailFormat => 'Please enter a valid email address.';
@@ -223,20 +219,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authEmailAlreadyInUse => 'This email is already in use.';
 
   @override
-  String get aboutBody =>
-      'ASA Server Eye is a companion app for ARK: Survival Ascended. The app shows server information, supports favorites, and provides the foundation for future features such as watchlists, notifications, and premium features.\n\nDeveloped and operated by:\nMichael Winkler\nEmail: asa.server.eye@gmail.com';
+  String get aboutBody => 'ASA Server Eye is a companion app for ARK: Survival Ascended. The app shows server information, supports favorites, and provides the foundation for future features such as watchlists, notifications, and premium features.\n\nDeveloped and operated by:\nMichael Winkler\nEmail: asa.server.eye@gmail.com';
 
   @override
-  String get privacyBody =>
-      'Privacy Policy\n\nController responsible for data processing:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\nEmail: asa.server.eye@gmail.com\n\nThis app uses Firebase Authentication for account sign-in, Cloud Firestore to store personal favorites, and Google AdMob to serve ads.\n\nDepending on how the app is used, technical data may be processed, including account data, device information, app interactions, identifiers, diagnostics, and advertising-related data. Favorites are stored per user so they remain available after restarting the app and across multiple devices.\n\nProcessing is carried out to provide app functionality, authenticate users, store user-related settings, and finance the app through advertising.\n\nIt cannot be ruled out that integrated third-party services process data outside the European Union. In this respect, the privacy information of the respective services applies, especially Google Firebase and Google AdMob.\n\nFor privacy-related questions or deletion requests, please contact:\nasa.server.eye@gmail.com\n\nNote: Before a final public release, this privacy policy should be reviewed and expanded with full details on legal bases, retention periods, user rights, and all integrated services.';
+  String get privacyBody => 'Privacy Policy\n\nController responsible for data processing:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\nEmail: asa.server.eye@gmail.com\n\nThis app uses Firebase Authentication for account sign-in, Cloud Firestore to store personal favorites, and Google AdMob to serve ads.\n\nDepending on how the app is used, technical data may be processed, including account data, device information, app interactions, identifiers, diagnostics, and advertising-related data. Favorites are stored per user so they remain available after restarting the app and across multiple devices.\n\nProcessing is carried out to provide app functionality, authenticate users, store user-related settings, and finance the app through advertising.\n\nIt cannot be ruled out that integrated third-party services process data outside the European Union. In this respect, the privacy information of the respective services applies, especially Google Firebase and Google AdMob.\n\nFor privacy-related questions or deletion requests, please contact:\nasa.server.eye@gmail.com\n\nNote: Before a final public release, this privacy policy should be reviewed and expanded with full details on legal bases, retention periods, user rights, and all integrated services.';
 
   @override
-  String get imprintBody =>
-      'Imprint / Legal Notice\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\n\nEmail:\nasa.server.eye@gmail.com\n\nResponsible for content:\nMichael Winkler';
+  String get imprintBody => 'Imprint / Legal Notice\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\n\nEmail:\nasa.server.eye@gmail.com\n\nResponsible for content:\nMichael Winkler';
 
   @override
-  String get supportBody =>
-      'Support\n\nFor questions, issues, or feedback about the app, please contact:\n\nMichael Winkler\nEmail: asa.server.eye@gmail.com\n\nPlease describe your issue as precisely as possible and include your device and app version if available.';
+  String get supportBody => 'Support\n\nFor questions, issues, or feedback about the app, please contact:\n\nMichael Winkler\nEmail: asa.server.eye@gmail.com\n\nPlease describe your issue as precisely as possible and include your device and app version if available.';
 
   @override
   String get contactSupport => 'Contact support';
@@ -248,12 +240,315 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportEmailSubject => 'ASA Server Eye Support';
 
   @override
-  String get supportEmailBodyTemplate =>
-      'Hello Michael,\n\nI have the following issue:\n\n\n---\nApp version:\nDevice:\n';
+  String get supportEmailBodyTemplate => 'Hello Michael,\n\nI have the following issue:\n\n\n---\nApp version:\nDevice:\n';
 
   @override
   String get fullPrivacyPolicy => 'Full Privacy Policy';
 
   @override
   String get deleteAccount => 'Delete Account';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get profileLoadError => 'Profile could not be loaded.';
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get accessLevel => 'Access level';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get profileSavedSuccessfully => 'Profile saved successfully.';
+
+  @override
+  String get profileSaveError => 'Profile could not be saved.';
+
+  @override
+  String get profileDeleteError => 'Account could not be deleted.';
+
+  @override
+  String get deleteAccountHint => 'Deleting your account will remove your profile. Existing sightings will remain.';
+
+  @override
+  String savedFavoritesCount(int count) {
+    return '$count saved';
+  }
+
+  @override
+  String get usernameEmpty => 'Please enter a username.';
+
+  @override
+  String get usernameTooShort => 'The username must be at least 3 characters long.';
+
+  @override
+  String get usernameTooLong => 'The username may be at most 20 characters long.';
+
+  @override
+  String get usernameInvalidCharacters => 'The username may only contain letters, numbers, periods, underscores, and hyphens.';
+
+  @override
+  String get deleteAccountDialogTitle => 'Delete account';
+
+  @override
+  String deleteAccountDialogDescription(String email) {
+    return 'Please enter your password for $email to delete your account.';
+  }
+
+  @override
+  String get signUpUsernameHint => 'This will be your public username visible to other users.';
+
+  @override
+  String get emailHint => 'name@email.com';
+
+  @override
+  String get sightings => 'Sightings';
+
+  @override
+  String get playerSightingReport => 'Report player sighting';
+
+  @override
+  String get editSighting => 'Edit sighting';
+
+  @override
+  String get deleteSighting => 'Delete sighting';
+
+  @override
+  String get sightingHistory => 'Change history';
+
+  @override
+  String get platformId => 'Platform ID';
+
+  @override
+  String get platformIdHint => 'Steam / Xbox / PSN ID';
+
+  @override
+  String get inGameName => 'In-game name';
+
+  @override
+  String get tribeName => 'Tribe name';
+
+  @override
+  String get tribeNameHint => 'Name of the tribe';
+
+  @override
+  String get platform => 'Platform';
+
+  @override
+  String get note => 'Note';
+
+  @override
+  String get optional => 'Optional';
+
+  @override
+  String get visibleToPremiumUsers => 'Visible to premium users';
+
+  @override
+  String get saveSighting => 'Save sighting';
+
+  @override
+  String get updateSighting => 'Save changes';
+
+  @override
+  String get hideSighting => 'Hide sighting';
+
+  @override
+  String get saving => 'Saving...';
+
+  @override
+  String get sightingSaved => 'Sighting saved.';
+
+  @override
+  String get sightingUpdated => 'Sighting updated.';
+
+  @override
+  String get sightingHidden => 'Sighting hidden.';
+
+  @override
+  String get sightingSaveError => 'Sighting could not be saved.';
+
+  @override
+  String get sightingUpdateError => 'Sighting could not be updated.';
+
+  @override
+  String get sightingHideError => 'Sighting could not be hidden.';
+
+  @override
+  String get sightingRequiresLogin => 'You must be logged in to report a sighting.';
+
+  @override
+  String get sightingDeleteNotAllowed => 'You are not allowed to delete this sighting.';
+
+  @override
+  String get sightingEditNotAllowed => 'You are not allowed to edit this sighting.';
+
+  @override
+  String get sightingInGameNameRequired => 'Please enter a player name.';
+
+  @override
+  String get sightingPlatformIdRequired => 'Please enter a platform ID.';
+
+  @override
+  String get sightingTribeNameRequired => 'Please enter a tribe name.';
+
+  @override
+  String get sightingReasonRequired => 'Please enter a reason.';
+
+  @override
+  String get sightingDeleteHint => 'This sighting will not be permanently deleted. It will only be hidden from normal users and remain traceable for admins.';
+
+  @override
+  String get reason => 'Reason';
+
+  @override
+  String get reasonHint => 'Please enter a reason';
+
+  @override
+  String get noVisibleSightings => 'No visible sightings yet.';
+
+  @override
+  String get sightingsLoadError => 'Sightings could not be loaded.';
+
+  @override
+  String get sightingHistoryLoadError => 'History could not be loaded.';
+
+  @override
+  String get noSightingHistory => 'No history available yet.';
+
+  @override
+  String get accessLevelLoadError => 'Access level could not be loaded.';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get viewHistory => 'View history';
+
+  @override
+  String get platformSteam => 'Steam';
+
+  @override
+  String get platformXbox => 'Xbox';
+
+  @override
+  String get platformPsn => 'PSN';
+
+  @override
+  String get platformUnknown => 'Unknown';
+
+  @override
+  String get sightingUserProfileLoadError => 'User profile could not be loaded.';
+
+  @override
+  String get playerSightings => 'Player Sightings';
+
+  @override
+  String platformLabel(String value) {
+    return 'Platform: $value';
+  }
+
+  @override
+  String visibilityLabel(String value) {
+    return 'Visibility: $value';
+  }
+
+  @override
+  String sharingLabel(String value) {
+    return 'Sharing: $value';
+  }
+
+  @override
+  String editedAtLabel(String value) {
+    return 'Edited: $value';
+  }
+
+  @override
+  String get softDeleted => 'Soft deleted';
+
+  @override
+  String reasonLabel(String value) {
+    return 'Reason: $value';
+  }
+
+  @override
+  String changedByLabel(String value) {
+    return 'Changed by: $value';
+  }
+
+  @override
+  String get sightingCreatorLevelFree => 'Free';
+
+  @override
+  String get sightingCreatorLevelPremium => 'Premium';
+
+  @override
+  String get sightingCreatorLevelAdmin => 'Admin';
+
+  @override
+  String get sightingSharingOwnerOnly => 'Owner only';
+
+  @override
+  String get sightingSharingPremiumShared => 'Shared with premium';
+
+  @override
+  String get sightingSharingAdminOnly => 'Admins only';
+
+  @override
+  String get sightingActionCreated => 'Created';
+
+  @override
+  String get sightingActionUpdated => 'Updated';
+
+  @override
+  String get sightingActionSoftDeleted => 'Soft deleted';
+
+  @override
+  String get viewPlayerSightings => 'View player sightings';
+
+  @override
+  String get reportPlayerSighting => 'Report player sighting';
+
+  @override
+  String get accountCreated => 'Account created successfully';
+
+  @override
+  String get accountCreationFailed => 'Failed to create account. Please try again.';
+
+  @override
+  String get accountDeleted => 'Account deleted successfully';
+
+  @override
+  String get accountDeletionFailed => 'Failed to delete account. Please try again.';
+
+  @override
+  String get deletePermanently => 'Delete permanently';
+
+  @override
+  String get deletePermanentlyConfirmation => 'This sighting and its history will be permanently deleted. This action cannot be undone.';
+
+  @override
+  String get sightingDeletedPermanently => 'Sighting deleted permanently';
+
+  @override
+  String get premiumRequiredForMoreFavorites => 'You need Premium to save more than one favorite.';
+
+  @override
+  String get serversNavLabel => 'Servers';
+
+  @override
+  String get favoritesNavLabel => 'Favorites';
+
+  @override
+  String get sightingsNavLabel => 'Sightings';
+
+  @override
+  String get settingsNavLabel => 'Settings';
 }

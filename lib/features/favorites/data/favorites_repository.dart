@@ -11,15 +11,23 @@ class FavoritesRepository {
 
   final FirebaseFirestore _firestore;
 
-  CollectionReference<Map<String, dynamic>> _favoritesCollection(
-    String userId,
-  ) {
-    return _firestore.collection('users').doc(userId).collection('favorites');
+  DocumentReference<Map<String, dynamic>> _userDoc(String userId) {
+    return _firestore.collection('users').doc(userId);
   }
 
   Stream<List<String>> watchFavoriteIds(String userId) {
-    return _favoritesCollection(userId).snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) => doc.id).toList();
+    return _userDoc(userId).snapshots().map((snapshot) {
+      final data = snapshot.data();
+      if (data == null) {
+        return <String>[];
+      }
+
+      final favoriteIds = data['favoriteIds'];
+      if (favoriteIds is! List) {
+        return <String>[];
+      }
+
+      return favoriteIds.whereType<String>().toList(growable: false);
     });
   }
 
@@ -27,16 +35,19 @@ class FavoritesRepository {
     required String userId,
     required String serverId,
   }) async {
-    await _favoritesCollection(userId).doc(serverId).set({
-      'serverId': serverId,
-      'createdAt': FieldValue.serverTimestamp(),
-    });
+    await _userDoc(userId).set({
+      'favoriteIds': FieldValue.arrayUnion([serverId]),
+      'updatedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
   }
 
   Future<void> removeFavorite({
     required String userId,
     required String serverId,
   }) async {
-    await _favoritesCollection(userId).doc(serverId).delete();
+    await _userDoc(userId).set({
+      'favoriteIds': FieldValue.arrayRemove([serverId]),
+      'updatedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
   }
 }

@@ -326,5 +326,429 @@
     "deleteAccount": "Eliminar cuenta",
     "@deleteAccount": {
         "description": "Botón para eliminar la cuenta del usuario"
+    },
+    "profile": "Perfil",
+    "@profile": {
+        "description": "Título de la sección de perfil"
+    },
+    "profileLoadError": "No se pudo cargar el perfil.",
+    "@profileLoadError": {
+        "description": "Error al cargar el perfil"
+    },
+    "username": "Nombre de usuario",
+    "@username": {
+        "description": "Etiqueta para nombre de usuario"
+    },
+    "accessLevel": "Nivel de acceso",
+    "@accessLevel": {
+        "description": "Etiqueta para nivel de acceso"
+    },
+    "save": "Guardar",
+    "@save": {
+        "description": "Acción de guardar"
+    },
+    "profileSavedSuccessfully": "Perfil guardado correctamente.",
+    "@profileSavedSuccessfully": {
+        "description": "Snackbar tras guardar el perfil"
+    },
+    "profileSaveError": "No se pudo guardar el perfil.",
+    "@profileSaveError": {
+        "description": "Error al guardar el perfil"
+    },
+    "profileDeleteError": "No se pudo eliminar la cuenta.",
+    "@profileDeleteError": {
+        "description": "Error al eliminar la cuenta"
+    },
+    "deleteAccountHint": "Eliminar tu cuenta quitará tu perfil. Los sightings existentes permanecerán.",
+    "@deleteAccountHint": {
+        "description": "Texto informativo debajo del botón eliminar cuenta"
+    },
+    "savedFavoritesCount": "{count} guardados",
+    "@savedFavoritesCount": {
+        "description": "Cantidad de favoritos guardados",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "usernameEmpty": "Introduce un nombre de usuario.",
+    "@usernameEmpty": {
+        "description": "Validación cuando falta el nombre de usuario"
+    },
+    "usernameTooShort": "El nombre de usuario debe tener al menos 3 caracteres.",
+    "@usernameTooShort": {
+        "description": "Validación cuando el nombre de usuario es demasiado corto"
+    },
+    "usernameTooLong": "El nombre de usuario puede tener como máximo 20 caracteres.",
+    "@usernameTooLong": {
+        "description": "Validación cuando el nombre de usuario es demasiado largo"
+    },
+    "usernameInvalidCharacters": "El nombre de usuario solo puede contener letras, números, puntos, guiones bajos y guiones.",
+    "@usernameInvalidCharacters": {
+        "description": "Validación cuando el nombre de usuario contiene caracteres no válidos"
+    },
+    "deleteAccountDialogTitle": "Eliminar cuenta",
+    "@deleteAccountDialogTitle": {
+        "description": "Título del diálogo para eliminar cuenta"
+    },
+    "deleteAccountDialogDescription": "Introduce tu contraseña para {email} para eliminar tu cuenta.",
+    "@deleteAccountDialogDescription": {
+        "description": "Descripción del diálogo para eliminar cuenta",
+        "placeholders": {
+            "email": {
+                "type": "String"
+            }
+        }
+    },
+    "signUpUsernameHint": "Este será tu nombre de usuario público visible para otros usuarios.",
+    "@signUpUsernameHint": {
+        "description": "Texto de ayuda para el nombre de usuario al registrarse"
+    },
+    "emailHint": "nombre@email.com",
+    "@emailHint": {
+        "description": "Texto de ayuda para el correo electrónico"
+    },
+    "sightings": "Avistamientos",
+    "@sightings": {
+        "description": "Título para sightings"
+    },
+    "playerSightingReport": "Reportar avistamiento de jugador",
+    "@playerSightingReport": {
+        "description": "Título de la pantalla para reportar un avistamiento"
+    },
+    "editSighting": "Editar avistamiento",
+    "@editSighting": {
+        "description": "Título de la pantalla para editar un avistamiento"
+    },
+    "deleteSighting": "Eliminar avistamiento",
+    "@deleteSighting": {
+        "description": "Título de la pantalla para eliminar un avistamiento"
+    },
+    "sightingHistory": "Historial de cambios",
+    "@sightingHistory": {
+        "description": "Título de la pantalla del historial"
+    },
+    "platformId": "ID de plataforma",
+    "@platformId": {
+        "description": "Etiqueta para ID de plataforma"
+    },
+    "platformIdHint": "ID de Steam / Xbox / PSN",
+    "@platformIdHint": {
+        "description": "Texto de ayuda para ID de plataforma"
+    },
+    "inGameName": "Nombre dentro del juego",
+    "@inGameName": {
+        "description": "Etiqueta para nombre dentro del juego"
+    },
+    "tribeName": "Nombre de la tribu",
+    "@tribeName": {
+        "description": "Etiqueta para nombre de la tribu"
+    },
+    "tribeNameHint": "Nombre de la tribu",
+    "@tribeNameHint": {
+        "description": "Texto de ayuda para nombre de la tribu"
+    },
+    "platform": "Plataforma",
+    "@platform": {
+        "description": "Etiqueta para plataforma"
+    },
+    "note": "Nota",
+    "@note": {
+        "description": "Etiqueta para nota"
+    },
+    "optional": "Opcional",
+    "@optional": {
+        "description": "Indicador de campo opcional"
+    },
+    "visibleToPremiumUsers": "Visible para usuarios premium",
+    "@visibleToPremiumUsers": {
+        "description": "Texto del interruptor de visibilidad premium"
+    },
+    "saveSighting": "Guardar avistamiento",
+    "@saveSighting": {
+        "description": "Texto del botón para guardar"
+    },
+    "updateSighting": "Guardar cambios",
+    "@updateSighting": {
+        "description": "Texto del botón para actualizar"
+    },
+    "hideSighting": "Ocultar avistamiento",
+    "@hideSighting": {
+        "description": "Texto del botón para ocultar"
+    },
+    "saving": "Guardando...",
+    "@saving": {
+        "description": "Texto mostrado mientras se guarda"
+    },
+    "sightingSaved": "Avistamiento guardado.",
+    "@sightingSaved": {
+        "description": "Snackbar tras guardar"
+    },
+    "sightingUpdated": "Avistamiento actualizado.",
+    "@sightingUpdated": {
+        "description": "Snackbar tras actualizar"
+    },
+    "sightingHidden": "Avistamiento ocultado.",
+    "@sightingHidden": {
+        "description": "Snackbar tras ocultar"
+    },
+    "sightingSaveError": "No se pudo guardar el avistamiento.",
+    "@sightingSaveError": {
+        "description": "Error al guardar"
+    },
+    "sightingUpdateError": "No se pudo actualizar el avistamiento.",
+    "@sightingUpdateError": {
+        "description": "Error al actualizar"
+    },
+    "sightingHideError": "No se pudo ocultar el avistamiento.",
+    "@sightingHideError": {
+        "description": "Error al ocultar"
+    },
+    "sightingRequiresLogin": "Debes iniciar sesión para reportar un avistamiento.",
+    "@sightingRequiresLogin": {
+        "description": "Error si el usuario no ha iniciado sesión"
+    },
+    "sightingDeleteNotAllowed": "No tienes permiso para eliminar este avistamiento.",
+    "@sightingDeleteNotAllowed": {
+        "description": "Error si no se permite eliminar"
+    },
+    "sightingEditNotAllowed": "No tienes permiso para editar este avistamiento.",
+    "@sightingEditNotAllowed": {
+        "description": "Error si no se permite editar"
+    },
+    "sightingInGameNameRequired": "Introduce un nombre de jugador.",
+    "@sightingInGameNameRequired": {
+        "description": "Validación para nombre de jugador faltante"
+    },
+    "sightingPlatformIdRequired": "Introduce un ID de plataforma.",
+    "@sightingPlatformIdRequired": {
+        "description": "Validación para ID de plataforma faltante"
+    },
+    "sightingTribeNameRequired": "Introduce un nombre de tribu.",
+    "@sightingTribeNameRequired": {
+        "description": "Validación para nombre de tribu faltante"
+    },
+    "sightingReasonRequired": "Introduce un motivo.",
+    "@sightingReasonRequired": {
+        "description": "Validación para motivo faltante"
+    },
+    "sightingDeleteHint": "Este avistamiento no se eliminará de forma permanente. Solo se ocultará para los usuarios normales y seguirá siendo rastreable para los administradores.",
+    "@sightingDeleteHint": {
+        "description": "Texto informativo en la pantalla de eliminación"
+    },
+    "reason": "Motivo",
+    "@reason": {
+        "description": "Etiqueta para motivo"
+    },
+    "reasonHint": "Introduce un motivo",
+    "@reasonHint": {
+        "description": "Texto de ayuda para motivo"
+    },
+    "noVisibleSightings": "Todavía no hay sightings visibles.",
+    "@noVisibleSightings": {
+        "description": "Estado vacío para sightings"
+    },
+    "sightingsLoadError": "No se pudieron cargar los sightings.",
+    "@sightingsLoadError": {
+        "description": "Error al cargar sightings"
+    },
+    "sightingHistoryLoadError": "No se pudo cargar el historial.",
+    "@sightingHistoryLoadError": {
+        "description": "Error al cargar el historial"
+    },
+    "noSightingHistory": "Todavía no hay historial disponible.",
+    "@noSightingHistory": {
+        "description": "Estado vacío para historial"
+    },
+    "accessLevelLoadError": "No se pudo cargar el nivel de acceso.",
+    "@accessLevelLoadError": {
+        "description": "Error al cargar el nivel de acceso"
+    },
+    "edit": "Editar",
+    "@edit": {
+        "description": "Acción editar"
+    },
+    "delete": "Eliminar",
+    "@delete": {
+        "description": "Acción eliminar"
+    },
+    "viewHistory": "Ver historial",
+    "@viewHistory": {
+        "description": "Acción para ver historial"
+    },
+    "platformSteam": "Steam",
+    "@platformSteam": {
+        "description": "Etiqueta para Steam"
+    },
+    "platformXbox": "Xbox",
+    "@platformXbox": {
+        "description": "Etiqueta para Xbox"
+    },
+    "platformPsn": "PSN",
+    "@platformPsn": {
+        "description": "Etiqueta para PSN"
+    },
+    "platformUnknown": "Desconocido",
+    "@platformUnknown": {
+        "description": "Etiqueta para plataforma desconocida"
+    },
+    "sightingUserProfileLoadError": "No se pudo cargar el perfil del usuario.",
+    "@sightingUserProfileLoadError": {
+        "description": "Error si no se pudo cargar el perfil del usuario necesario para el avistamiento"
+    },
+    "playerSightings": "Avistamientos de jugadores",
+    "@playerSightings": {
+        "description": "Título de la pantalla de sightings del servidor"
+    },
+    "platformLabel": "Plataforma: {value}",
+    "@platformLabel": {
+        "description": "Etiqueta de plataforma en un sighting",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "visibilityLabel": "Visibilidad: {value}",
+    "@visibilityLabel": {
+        "description": "Etiqueta del nivel del creador en un sighting",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "sharingLabel": "Compartición: {value}",
+    "@sharingLabel": {
+        "description": "Etiqueta del nivel de compartición en un sighting",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "editedAtLabel": "Editado: {value}",
+    "@editedAtLabel": {
+        "description": "Etiqueta para la fecha de edición",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "softDeleted": "Eliminado lógicamente",
+    "@softDeleted": {
+        "description": "Indica que un sighting fue eliminado lógicamente"
+    },
+    "reasonLabel": "Motivo: {value}",
+    "@reasonLabel": {
+        "description": "Etiqueta del motivo de eliminación",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "changedByLabel": "Cambiado por: {value}",
+    "@changedByLabel": {
+        "description": "Etiqueta del usuario que realizó el cambio en el historial",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "sightingCreatorLevelFree": "Free",
+    "@sightingCreatorLevelFree": {
+        "description": "Etiqueta del nivel de creador free"
+    },
+    "sightingCreatorLevelPremium": "Premium",
+    "@sightingCreatorLevelPremium": {
+        "description": "Etiqueta del nivel de creador premium"
+    },
+    "sightingCreatorLevelAdmin": "Admin",
+    "@sightingCreatorLevelAdmin": {
+        "description": "Etiqueta del nivel de creador admin"
+    },
+    "sightingSharingOwnerOnly": "Solo propietario",
+    "@sightingSharingOwnerOnly": {
+        "description": "Etiqueta de compartición ownerOnly"
+    },
+    "sightingSharingPremiumShared": "Compartido con premium",
+    "@sightingSharingPremiumShared": {
+        "description": "Etiqueta de compartición premiumShared"
+    },
+    "sightingSharingAdminOnly": "Solo administradores",
+    "@sightingSharingAdminOnly": {
+        "description": "Etiqueta de compartición adminOnly"
+    },
+    "sightingActionCreated": "Creado",
+    "@sightingActionCreated": {
+        "description": "Acción de historial creada"
+    },
+    "sightingActionUpdated": "Actualizado",
+    "@sightingActionUpdated": {
+        "description": "Acción de historial actualizada"
+    },
+    "sightingActionSoftDeleted": "Ocultado",
+    "@sightingActionSoftDeleted": {
+        "description": "Acción de historial eliminada lógicamente"
+    },
+    "viewPlayerSightings": "Ver avistamientos",
+    "@viewPlayerSightings": {
+        "description": "Acción para ver los avistamientos de un jugador"
+    },
+    "reportPlayerSighting": "Reportar avistamiento de jugador",
+    "@reportPlayerSighting": {
+        "description": "Acción para reportar un avistamiento de jugador"
+    },
+    "accountCreated": "Cuenta creada exitosamente",
+    "@accountCreated": {
+        "description": "Se muestra cuando una cuenta es creada exitosamente"
+    },
+    "accountCreationFailed": "No se pudo crear la cuenta. Por favor, intenta de nuevo.",
+    "@accountCreationFailed": {
+        "description": "Se muestra cuando ocurre un error al crear una cuenta"
+    },
+    "accountDeleted": "Cuenta eliminada exitosamente",
+    "@accountDeleted": {
+        "description": "Se muestra cuando una cuenta es eliminada exitosamente"
+    },
+    "accountDeletionFailed": "No se pudo eliminar la cuenta. Por favor, intenta de nuevo.",
+    "@accountDeletionFailed": {
+        "description": "Se muestra cuando ocurre un error al eliminar una cuenta"
+    },
+    "deletePermanently": "Eliminar permanentemente",
+    "@deletePermanently": {
+        "description": "Acción para eliminar permanentemente un avistamiento"
+    },
+    "deletePermanentlyConfirmation": "Esta observación y su historial serán eliminados permanentemente. Esta acción no puede ser deshecha.",
+    "@deletePermanentlyConfirmation": {
+        "description": "Mensaje de confirmación para eliminar permanentemente un avistamiento"
+    },
+    "sightingDeletedPermanently": "Avistamiento eliminado permanentemente",
+    "@sightingDeletedPermanently": {
+        "description": "Snackbar después de eliminar permanentemente un avistamiento"
+    },
+    "premiumRequiredForMoreFavorites": "Necesitas Premium para guardar más de un favorito.",
+    "@premiumRequiredForMoreFavorites": {
+        "description": "Mensaje mostrado cuando un usuario gratuito intenta guardar más de un favorito"
+    },
+    "serversNavLabel": "Servidores",
+    "@serversNavLabel": {
+        "description": "Etiqueta corta para la pestaña de servidores en la navegación inferior"
+    },
+    "favoritesNavLabel": "Favoritos",
+    "@favoritesNavLabel": {
+        "description": "Etiqueta corta para la pestaña de favoritos en la navegación inferior"
+    },
+    "sightingsNavLabel": "Avistam.",
+    "@sightingsNavLabel": {
+        "description": "Etiqueta corta para la pestaña de avistamientos en la navegación inferior"
+    },
+    "settingsNavLabel": "Ajustes",
+    "@settingsNavLabel": {
+        "description": "Etiqueta corta para la pestaña de ajustes en la navegación inferior"
     }
 }

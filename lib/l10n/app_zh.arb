@@ -326,5 +326,429 @@
     "deleteAccount": "删除账户",
     "@deleteAccount": {
         "description": "删除用户账户的按钮"
+    },
+    "profile": "个人资料",
+    "@profile": {
+        "description": "个人资料部分标题"
+    },
+    "profileLoadError": "无法加载个人资料。",
+    "@profileLoadError": {
+        "description": "加载个人资料失败时的错误"
+    },
+    "username": "用户名",
+    "@username": {
+        "description": "用户名字段标签"
+    },
+    "accessLevel": "访问级别",
+    "@accessLevel": {
+        "description": "访问级别标签"
+    },
+    "save": "保存",
+    "@save": {
+        "description": "保存操作"
+    },
+    "profileSavedSuccessfully": "个人资料已成功保存。",
+    "@profileSavedSuccessfully": {
+        "description": "保存个人资料后的提示"
+    },
+    "profileSaveError": "无法保存个人资料。",
+    "@profileSaveError": {
+        "description": "保存个人资料失败时的错误"
+    },
+    "profileDeleteError": "无法删除账户。",
+    "@profileDeleteError": {
+        "description": "删除账户失败时的错误"
+    },
+    "deleteAccountHint": "删除账户将移除你的个人资料。已创建的 sightings 将会保留。",
+    "@deleteAccountHint": {
+        "description": "删除账户按钮下方的提示文本"
+    },
+    "savedFavoritesCount": "已保存 {count} 个",
+    "@savedFavoritesCount": {
+        "description": "已保存收藏数量",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "usernameEmpty": "请输入用户名。",
+    "@usernameEmpty": {
+        "description": "用户名为空时的验证提示"
+    },
+    "usernameTooShort": "用户名至少需要 3 个字符。",
+    "@usernameTooShort": {
+        "description": "用户名过短时的验证提示"
+    },
+    "usernameTooLong": "用户名最多只能有 20 个字符。",
+    "@usernameTooLong": {
+        "description": "用户名过长时的验证提示"
+    },
+    "usernameInvalidCharacters": "用户名只能包含字母、数字、句点、下划线和连字符。",
+    "@usernameInvalidCharacters": {
+        "description": "用户名包含无效字符时的验证提示"
+    },
+    "deleteAccountDialogTitle": "删除账户",
+    "@deleteAccountDialogTitle": {
+        "description": "删除账户对话框标题"
+    },
+    "deleteAccountDialogDescription": "请输入 {email} 的密码以删除你的账户。",
+    "@deleteAccountDialogDescription": {
+        "description": "删除账户对话框说明",
+        "placeholders": {
+            "email": {
+                "type": "String"
+            }
+        }
+    },
+    "signUpUsernameHint": "这将是其他用户可见的公开用户名。",
+    "@signUpUsernameHint": {
+        "description": "注册页面用户名提示文本"
+    },
+    "emailHint": "name@email.com",
+    "@emailHint": {
+        "description": "电子邮箱字段提示文本"
+    },
+    "sightings": "目击记录",
+    "@sightings": {
+        "description": "Sightings 标题"
+    },
+    "playerSightingReport": "报告玩家目击记录",
+    "@playerSightingReport": {
+        "description": "报告玩家目击记录页面标题"
+    },
+    "editSighting": "编辑目击记录",
+    "@editSighting": {
+        "description": "编辑目击记录页面标题"
+    },
+    "deleteSighting": "删除目击记录",
+    "@deleteSighting": {
+        "description": "删除目击记录页面标题"
+    },
+    "sightingHistory": "变更历史",
+    "@sightingHistory": {
+        "description": "目击记录历史页面标题"
+    },
+    "platformId": "平台 ID",
+    "@platformId": {
+        "description": "平台 ID 标签"
+    },
+    "platformIdHint": "Steam / Xbox / PSN ID",
+    "@platformIdHint": {
+        "description": "平台 ID 提示文本"
+    },
+    "inGameName": "游戏内名称",
+    "@inGameName": {
+        "description": "游戏内名称标签"
+    },
+    "tribeName": "部落名称",
+    "@tribeName": {
+        "description": "部落名称标签"
+    },
+    "tribeNameHint": "部落名称",
+    "@tribeNameHint": {
+        "description": "部落名称提示文本"
+    },
+    "platform": "平台",
+    "@platform": {
+        "description": "平台标签"
+    },
+    "note": "备注",
+    "@note": {
+        "description": "备注标签"
+    },
+    "optional": "可选",
+    "@optional": {
+        "description": "可选字段提示"
+    },
+    "visibleToPremiumUsers": "对高级用户可见",
+    "@visibleToPremiumUsers": {
+        "description": "高级可见性开关文本"
+    },
+    "saveSighting": "保存目击记录",
+    "@saveSighting": {
+        "description": "保存目击记录按钮文本"
+    },
+    "updateSighting": "保存更改",
+    "@updateSighting": {
+        "description": "更新目击记录按钮文本"
+    },
+    "hideSighting": "隐藏目击记录",
+    "@hideSighting": {
+        "description": "隐藏目击记录按钮文本"
+    },
+    "saving": "正在保存...",
+    "@saving": {
+        "description": "保存中显示的文本"
+    },
+    "sightingSaved": "目击记录已保存。",
+    "@sightingSaved": {
+        "description": "保存成功后的提示"
+    },
+    "sightingUpdated": "目击记录已更新。",
+    "@sightingUpdated": {
+        "description": "更新成功后的提示"
+    },
+    "sightingHidden": "目击记录已隐藏。",
+    "@sightingHidden": {
+        "description": "隐藏成功后的提示"
+    },
+    "sightingSaveError": "无法保存目击记录。",
+    "@sightingSaveError": {
+        "description": "保存失败时的错误"
+    },
+    "sightingUpdateError": "无法更新目击记录。",
+    "@sightingUpdateError": {
+        "description": "更新失败时的错误"
+    },
+    "sightingHideError": "无法隐藏目击记录。",
+    "@sightingHideError": {
+        "description": "隐藏失败时的错误"
+    },
+    "sightingRequiresLogin": "你必须登录后才能报告目击记录。",
+    "@sightingRequiresLogin": {
+        "description": "用户未登录时的错误"
+    },
+    "sightingDeleteNotAllowed": "你无权删除此目击记录。",
+    "@sightingDeleteNotAllowed": {
+        "description": "不允许删除时的错误"
+    },
+    "sightingEditNotAllowed": "你无权编辑此目击记录。",
+    "@sightingEditNotAllowed": {
+        "description": "不允许编辑时的错误"
+    },
+    "sightingInGameNameRequired": "请输入玩家名称。",
+    "@sightingInGameNameRequired": {
+        "description": "缺少玩家名称时的验证提示"
+    },
+    "sightingPlatformIdRequired": "请输入平台 ID。",
+    "@sightingPlatformIdRequired": {
+        "description": "缺少平台 ID 时的验证提示"
+    },
+    "sightingTribeNameRequired": "请输入部落名称。",
+    "@sightingTribeNameRequired": {
+        "description": "缺少部落名称时的验证提示"
+    },
+    "sightingReasonRequired": "请输入原因。",
+    "@sightingReasonRequired": {
+        "description": "缺少删除原因时的验证提示"
+    },
+    "sightingDeleteHint": "该目击记录不会被永久删除。它只会对普通用户隐藏，并仍可供管理员追踪。",
+    "@sightingDeleteHint": {
+        "description": "删除页面上的提示文本"
+    },
+    "reason": "原因",
+    "@reason": {
+        "description": "原因标签"
+    },
+    "reasonHint": "请输入原因",
+    "@reasonHint": {
+        "description": "原因提示文本"
+    },
+    "noVisibleSightings": "目前还没有可见的 sightings。",
+    "@noVisibleSightings": {
+        "description": "Sightings 空状态"
+    },
+    "sightingsLoadError": "无法加载 sightings。",
+    "@sightingsLoadError": {
+        "description": "加载 sightings 失败时的错误"
+    },
+    "sightingHistoryLoadError": "无法加载历史记录。",
+    "@sightingHistoryLoadError": {
+        "description": "加载历史记录失败时的错误"
+    },
+    "noSightingHistory": "暂无历史记录。",
+    "@noSightingHistory": {
+        "description": "历史记录空状态"
+    },
+    "accessLevelLoadError": "无法加载访问级别。",
+    "@accessLevelLoadError": {
+        "description": "加载访问级别失败时的错误"
+    },
+    "edit": "编辑",
+    "@edit": {
+        "description": "编辑操作"
+    },
+    "delete": "删除",
+    "@delete": {
+        "description": "删除操作"
+    },
+    "viewHistory": "查看历史",
+    "@viewHistory": {
+        "description": "查看历史操作"
+    },
+    "platformSteam": "Steam",
+    "@platformSteam": {
+        "description": "Steam 标签"
+    },
+    "platformXbox": "Xbox",
+    "@platformXbox": {
+        "description": "Xbox 标签"
+    },
+    "platformPsn": "PSN",
+    "@platformPsn": {
+        "description": "PSN 标签"
+    },
+    "platformUnknown": "未知",
+    "@platformUnknown": {
+        "description": "未知平台标签"
+    },
+    "sightingUserProfileLoadError": "无法加载用户资料。",
+    "@sightingUserProfileLoadError": {
+        "description": "无法加载创建目击记录所需的用户资料时的错误"
+    },
+    "playerSightings": "玩家目击记录",
+    "@playerSightings": {
+        "description": "服务器 sightings 页面标题"
+    },
+    "platformLabel": "平台：{value}",
+    "@platformLabel": {
+        "description": "sighting 中的平台标签",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "visibilityLabel": "可见性：{value}",
+    "@visibilityLabel": {
+        "description": "sighting 中的创建者级别标签",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "sharingLabel": "共享：{value}",
+    "@sharingLabel": {
+        "description": "sighting 中的共享范围标签",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "editedAtLabel": "编辑于：{value}",
+    "@editedAtLabel": {
+        "description": "编辑时间标签",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "softDeleted": "软删除",
+    "@softDeleted": {
+        "description": "表示 sighting 已被软删除"
+    },
+    "reasonLabel": "原因：{value}",
+    "@reasonLabel": {
+        "description": "删除原因标签",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "changedByLabel": "修改者：{value}",
+    "@changedByLabel": {
+        "description": "历史记录中修改用户标签",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "sightingCreatorLevelFree": "Free",
+    "@sightingCreatorLevelFree": {
+        "description": "创建者级别 free 标签"
+    },
+    "sightingCreatorLevelPremium": "Premium",
+    "@sightingCreatorLevelPremium": {
+        "description": "创建者级别 premium 标签"
+    },
+    "sightingCreatorLevelAdmin": "Admin",
+    "@sightingCreatorLevelAdmin": {
+        "description": "创建者级别 admin 标签"
+    },
+    "sightingSharingOwnerOnly": "仅创建者",
+    "@sightingSharingOwnerOnly": {
+        "description": "共享范围 ownerOnly 标签"
+    },
+    "sightingSharingPremiumShared": "与 Premium 共享",
+    "@sightingSharingPremiumShared": {
+        "description": "共享范围 premiumShared 标签"
+    },
+    "sightingSharingAdminOnly": "仅管理员",
+    "@sightingSharingAdminOnly": {
+        "description": "共享范围 adminOnly 标签"
+    },
+    "sightingActionCreated": "创建",
+    "@sightingActionCreated": {
+        "description": "创建操作"
+    },
+    "sightingActionUpdated": "更新",
+    "@sightingActionUpdated": {
+        "description": "更新操作"
+    },
+    "sightingActionSoftDeleted": "隐藏",
+    "@sightingActionSoftDeleted": {
+        "description": "软删除操作"
+    },
+    "viewPlayerSightings": "查看玩家目击记录",
+    "@viewPlayerSightings": {
+        "description": "查看玩家目击记录按钮标签"
+    },
+    "reportPlayerSighting": "举报玩家目击记录",
+    "@reportPlayerSighting": {
+        "description": "举报玩家目击记录按钮标签"
+    },
+    "accountCreated": "账户成功创建",
+    "@accountCreated": {
+        "description": "账户成功创建时显示"
+    },
+    "accountCreationFailed": "账户创建失败。请重试。",
+    "@accountCreationFailed": {
+        "description": "创建账户时出错显示"
+    },
+    "accountDeleted": "账户删除成功",
+    "@accountDeleted": {
+        "description": "账户删除成功时显示"
+    },
+    "accountDeletionFailed": "账户删除失败。请重试。",
+    "@accountDeletionFailed": {
+        "description": "删除账户时出错显示"
+    },
+    "deletePermanently": "永久删除",
+    "@deletePermanently": {
+        "description": "管理员永久删除目击记录的操作"
+    },
+    "deletePermanentlyConfirmation": "你确定要永久删除这个目击记录吗？这将无法恢复。",
+    "@deletePermanentlyConfirmation": {
+        "description": "永久删除确认对话框的文本"
+    },
+    "sightingDeletedPermanently": "目击记录已永久删除",
+    "@sightingDeletedPermanently": {
+        "description": "管理员永久删除目击记录后显示的消息"
+    },
+    "premiumRequiredForMoreFavorites": "需要 Premium 才能保存更多收藏",
+    "@premiumRequiredForMoreFavorites": {
+        "description": "当免费用户尝试保存超过一个收藏时显示"
+    },
+    "serversNavLabel": "服务器",
+    "@serversNavLabel": {
+        "description": "底部导航中服务器标签的简短文本"
+    },
+    "favoritesNavLabel": "收藏",
+    "@favoritesNavLabel": {
+        "description": "底部导航中收藏标签的简短文本"
+    },
+    "sightingsNavLabel": "目击",
+    "@sightingsNavLabel": {
+        "description": "底部导航中目击标签的简短文本"
+    },
+    "settingsNavLabel": "设置",
+    "@settingsNavLabel": {
+        "description": "底部导航中设置标签的简短文本"
     }
 }

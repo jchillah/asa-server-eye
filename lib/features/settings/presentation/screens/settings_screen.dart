@@ -1,11 +1,12 @@
 // features/settings/presentation/screens/settings_screen.dart
+import 'package:asa_server_eye/features/auth/presentation/providers/auth_repository_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
 import '../../../../core/presentation/l10n/app_language.dart';
 import '../../../../core/presentation/l10n/locale_controller.dart';
-import '../../../auth/presentation/providers/auth_providers.dart';
+import '../../../profile/presentation/utils/profile_navigation.dart';
 import '../utils/settings_navigation.dart';
 import '../widgets/language_dialog.dart';
 import '../widgets/settings_section_header.dart';
@@ -29,7 +30,16 @@ class SettingsScreen extends ConsumerWidget {
     };
 
     return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.settings)),
+      appBar: AppBar(
+        title: Text(context.l10n.settings),
+        actions: [
+          IconButton(
+            onPressed: () => ProfileNavigation.openProfile(context),
+            icon: const Icon(Icons.account_circle_outlined),
+            tooltip: 'Profil',
+          ),
+        ],
+      ),
       body: ListView(
         children: [
           SettingsSectionHeader(title: context.l10n.general),

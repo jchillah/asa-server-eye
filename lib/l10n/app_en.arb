@@ -326,5 +326,429 @@
   "deleteAccount": "Delete Account",
   "@deleteAccount": {
     "description": "Button to delete user account"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile section title"
+  },
+  "profileLoadError": "Profile could not be loaded.",
+  "@profileLoadError": {
+    "description": "Error when loading the profile fails"
+  },
+  "username": "Username",
+  "@username": {
+    "description": "Label for username field"
+  },
+  "accessLevel": "Access level",
+  "@accessLevel": {
+    "description": "Label for access level"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save action"
+  },
+  "profileSavedSuccessfully": "Profile saved successfully.",
+  "@profileSavedSuccessfully": {
+    "description": "Snackbar after saving the profile"
+  },
+  "profileSaveError": "Profile could not be saved.",
+  "@profileSaveError": {
+    "description": "Error when saving the profile fails"
+  },
+  "profileDeleteError": "Account could not be deleted.",
+  "@profileDeleteError": {
+    "description": "Error when deleting the account fails"
+  },
+  "deleteAccountHint": "Deleting your account will remove your profile. Existing sightings will remain.",
+  "@deleteAccountHint": {
+    "description": "Hint below the delete account button"
+  },
+  "savedFavoritesCount": "{count} saved",
+  "@savedFavoritesCount": {
+    "description": "Number of saved favorites",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usernameEmpty": "Please enter a username.",
+  "@usernameEmpty": {
+    "description": "Validation when username is empty"
+  },
+  "usernameTooShort": "The username must be at least 3 characters long.",
+  "@usernameTooShort": {
+    "description": "Validation when username is too short"
+  },
+  "usernameTooLong": "The username may be at most 20 characters long.",
+  "@usernameTooLong": {
+    "description": "Validation when username is too long"
+  },
+  "usernameInvalidCharacters": "The username may only contain letters, numbers, periods, underscores, and hyphens.",
+  "@usernameInvalidCharacters": {
+    "description": "Validation when username contains invalid characters"
+  },
+  "deleteAccountDialogTitle": "Delete account",
+  "@deleteAccountDialogTitle": {
+    "description": "Delete account dialog title"
+  },
+  "deleteAccountDialogDescription": "Please enter your password for {email} to delete your account.",
+  "@deleteAccountDialogDescription": {
+    "description": "Delete account dialog description",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "signUpUsernameHint": "This will be your public username visible to other users.",
+  "@signUpUsernameHint": {
+    "description": "Hint text for username on sign up"
+  },
+  "emailHint": "name@email.com",
+  "@emailHint": {
+    "description": "Hint text for email field"
+  },
+  "sightings": "Sightings",
+  "@sightings": {
+    "description": "Title for sightings"
+  },
+  "playerSightingReport": "Report player sighting",
+  "@playerSightingReport": {
+    "description": "Title of the report player sighting screen"
+  },
+  "editSighting": "Edit sighting",
+  "@editSighting": {
+    "description": "Title of the edit sighting screen"
+  },
+  "deleteSighting": "Delete sighting",
+  "@deleteSighting": {
+    "description": "Title of the delete sighting screen"
+  },
+  "sightingHistory": "Change history",
+  "@sightingHistory": {
+    "description": "Title of the sighting history screen"
+  },
+  "platformId": "Platform ID",
+  "@platformId": {
+    "description": "Label for platform ID"
+  },
+  "platformIdHint": "Steam / Xbox / PSN ID",
+  "@platformIdHint": {
+    "description": "Hint text for platform ID"
+  },
+  "inGameName": "In-game name",
+  "@inGameName": {
+    "description": "Label for in-game name"
+  },
+  "tribeName": "Tribe name",
+  "@tribeName": {
+    "description": "Label for tribe name"
+  },
+  "tribeNameHint": "Name of the tribe",
+  "@tribeNameHint": {
+    "description": "Hint text for tribe name"
+  },
+  "platform": "Platform",
+  "@platform": {
+    "description": "Label for platform"
+  },
+  "note": "Note",
+  "@note": {
+    "description": "Label for note"
+  },
+  "optional": "Optional",
+  "@optional": {
+    "description": "Optional field hint"
+  },
+  "visibleToPremiumUsers": "Visible to premium users",
+  "@visibleToPremiumUsers": {
+    "description": "Switch label for premium visibility"
+  },
+  "saveSighting": "Save sighting",
+  "@saveSighting": {
+    "description": "Button text to save a sighting"
+  },
+  "updateSighting": "Save changes",
+  "@updateSighting": {
+    "description": "Button text to update a sighting"
+  },
+  "hideSighting": "Hide sighting",
+  "@hideSighting": {
+    "description": "Button text to hide a sighting"
+  },
+  "saving": "Saving...",
+  "@saving": {
+    "description": "Text shown while saving"
+  },
+  "sightingSaved": "Sighting saved.",
+  "@sightingSaved": {
+    "description": "Snackbar after saving a sighting"
+  },
+  "sightingUpdated": "Sighting updated.",
+  "@sightingUpdated": {
+    "description": "Snackbar after updating a sighting"
+  },
+  "sightingHidden": "Sighting hidden.",
+  "@sightingHidden": {
+    "description": "Snackbar after hiding a sighting"
+  },
+  "sightingSaveError": "Sighting could not be saved.",
+  "@sightingSaveError": {
+    "description": "Error when saving a sighting fails"
+  },
+  "sightingUpdateError": "Sighting could not be updated.",
+  "@sightingUpdateError": {
+    "description": "Error when updating a sighting fails"
+  },
+  "sightingHideError": "Sighting could not be hidden.",
+  "@sightingHideError": {
+    "description": "Error when hiding a sighting fails"
+  },
+  "sightingRequiresLogin": "You must be logged in to report a sighting.",
+  "@sightingRequiresLogin": {
+    "description": "Error when user is not logged in"
+  },
+  "sightingDeleteNotAllowed": "You are not allowed to delete this sighting.",
+  "@sightingDeleteNotAllowed": {
+    "description": "Error when deleting is not allowed"
+  },
+  "sightingEditNotAllowed": "You are not allowed to edit this sighting.",
+  "@sightingEditNotAllowed": {
+    "description": "Error when editing is not allowed"
+  },
+  "sightingInGameNameRequired": "Please enter a player name.",
+  "@sightingInGameNameRequired": {
+    "description": "Validation for missing player name"
+  },
+  "sightingPlatformIdRequired": "Please enter a platform ID.",
+  "@sightingPlatformIdRequired": {
+    "description": "Validation for missing platform ID"
+  },
+  "sightingTribeNameRequired": "Please enter a tribe name.",
+  "@sightingTribeNameRequired": {
+    "description": "Validation for missing tribe name"
+  },
+  "sightingReasonRequired": "Please enter a reason.",
+  "@sightingReasonRequired": {
+    "description": "Validation for missing delete reason"
+  },
+  "sightingDeleteHint": "This sighting will not be permanently deleted. It will only be hidden from normal users and remain traceable for admins.",
+  "@sightingDeleteHint": {
+    "description": "Hint text on the delete sighting screen"
+  },
+  "reason": "Reason",
+  "@reason": {
+    "description": "Label for reason"
+  },
+  "reasonHint": "Please enter a reason",
+  "@reasonHint": {
+    "description": "Hint text for reason"
+  },
+  "noVisibleSightings": "No visible sightings yet.",
+  "@noVisibleSightings": {
+    "description": "Empty state for server sightings"
+  },
+  "sightingsLoadError": "Sightings could not be loaded.",
+  "@sightingsLoadError": {
+    "description": "Error when loading sightings fails"
+  },
+  "sightingHistoryLoadError": "History could not be loaded.",
+  "@sightingHistoryLoadError": {
+    "description": "Error when loading history fails"
+  },
+  "noSightingHistory": "No history available yet.",
+  "@noSightingHistory": {
+    "description": "Empty state for sighting history"
+  },
+  "accessLevelLoadError": "Access level could not be loaded.",
+  "@accessLevelLoadError": {
+    "description": "Error when loading access level fails"
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Edit action"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete action"
+  },
+  "viewHistory": "View history",
+  "@viewHistory": {
+    "description": "Action to view history"
+  },
+  "platformSteam": "Steam",
+  "@platformSteam": {
+    "description": "Label for Steam"
+  },
+  "platformXbox": "Xbox",
+  "@platformXbox": {
+    "description": "Label for Xbox"
+  },
+  "platformPsn": "PSN",
+  "@platformPsn": {
+    "description": "Label for PSN"
+  },
+  "platformUnknown": "Unknown",
+  "@platformUnknown": {
+    "description": "Label for unknown platform"
+  },
+  "sightingUserProfileLoadError": "User profile could not be loaded.",
+  "@sightingUserProfileLoadError": {
+    "description": "Error when the user profile for a sighting could not be loaded"
+  },
+  "playerSightings": "Player Sightings",
+  "@playerSightings": {
+    "description": "Title of the server sightings screen"
+  },
+  "platformLabel": "Platform: {value}",
+  "@platformLabel": {
+    "description": "Label for platform in a sighting",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "visibilityLabel": "Visibility: {value}",
+  "@visibilityLabel": {
+    "description": "Label for creator level in a sighting",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "sharingLabel": "Sharing: {value}",
+  "@sharingLabel": {
+    "description": "Label for sharing scope in a sighting",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "editedAtLabel": "Edited: {value}",
+  "@editedAtLabel": {
+    "description": "Label for edit timestamp",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "softDeleted": "Soft deleted",
+  "@softDeleted": {
+    "description": "Indicator that a sighting was soft deleted"
+  },
+  "reasonLabel": "Reason: {value}",
+  "@reasonLabel": {
+    "description": "Label for delete reason",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "changedByLabel": "Changed by: {value}",
+  "@changedByLabel": {
+    "description": "Label for changed by user id in history",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "sightingCreatorLevelFree": "Free",
+  "@sightingCreatorLevelFree": {
+    "description": "Label for creator level free"
+  },
+  "sightingCreatorLevelPremium": "Premium",
+  "@sightingCreatorLevelPremium": {
+    "description": "Label for creator level premium"
+  },
+  "sightingCreatorLevelAdmin": "Admin",
+  "@sightingCreatorLevelAdmin": {
+    "description": "Label for creator level admin"
+  },
+  "sightingSharingOwnerOnly": "Owner only",
+  "@sightingSharingOwnerOnly": {
+    "description": "Label for sharing scope ownerOnly"
+  },
+  "sightingSharingPremiumShared": "Shared with premium",
+  "@sightingSharingPremiumShared": {
+    "description": "Label for sharing scope premiumShared"
+  },
+  "sightingSharingAdminOnly": "Admins only",
+  "@sightingSharingAdminOnly": {
+    "description": "Label for sharing scope adminOnly"
+  },
+  "sightingActionCreated": "Created",
+  "@sightingActionCreated": {
+    "description": "History action for created sighting"
+  },
+  "sightingActionUpdated": "Updated",
+  "@sightingActionUpdated": {
+    "description": "History action for updated sighting"
+  },
+  "sightingActionSoftDeleted": "Soft deleted",
+  "@sightingActionSoftDeleted": {
+    "description": "History action for soft deleted sighting"
+  },
+  "viewPlayerSightings": "View player sightings",
+  "@viewPlayerSightings": {
+    "description": "Button label to open player sightings"
+  },
+  "reportPlayerSighting": "Report player sighting",
+  "@reportPlayerSighting": {
+    "description": "Button label to report a player sighting"
+  },
+  "accountCreated": "Account created successfully",
+  "@accountCreated": {
+    "description": "Message displayed when an account is created successfully"
+  },
+  "accountCreationFailed": "Failed to create account. Please try again.",
+  "@accountCreationFailed": {
+    "description": "Message displayed when account creation fails"
+  },
+  "accountDeleted": "Account deleted successfully",
+  "@accountDeleted": {
+    "description": "Message displayed when an account is deleted successfully"
+  },
+  "accountDeletionFailed": "Failed to delete account. Please try again.",
+  "@accountDeletionFailed": {
+    "description": "Message displayed when account deletion fails"
+  },
+  "deletePermanently": "Delete permanently",
+  "@deletePermanently": {
+    "description": "Admin action to permanently delete a sighting"
+  },
+  "deletePermanentlyConfirmation": "This sighting and its history will be permanently deleted. This action cannot be undone.",
+  "@deletePermanentlyConfirmation": {
+    "description": "Confirmation text before admin permanently deletes a sighting"
+  },
+  "sightingDeletedPermanently": "Sighting deleted permanently",
+  "@sightingDeletedPermanently": {
+    "description": "Shown after an admin permanently deleted a sighting"
+  },
+  "premiumRequiredForMoreFavorites": "You need Premium to save more than one favorite.",
+  "@premiumRequiredForMoreFavorites": {
+    "description": "Shown when a free user tries to save more than one favorite"
+  },
+  "serversNavLabel": "Servers",
+  "@serversNavLabel": {
+    "description": "Short label for the servers tab in the bottom navigation"
+  },
+  "favoritesNavLabel": "Favorites",
+  "@favoritesNavLabel": {
+    "description": "Short label for the favorites tab in the bottom navigation"
+  },
+  "sightingsNavLabel": "Sightings",
+  "@sightingsNavLabel": {
+    "description": "Short label for the sightings tab in the bottom navigation"
+  },
+  "settingsNavLabel": "Settings",
+  "@settingsNavLabel": {
+    "description": "Short label for the settings tab in the bottom navigation"
   }
 }
