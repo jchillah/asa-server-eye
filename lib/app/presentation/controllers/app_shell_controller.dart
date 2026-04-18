@@ -7,7 +7,7 @@ final appShellIndexProvider = NotifierProvider<AppShellController, int>(
 
 final shouldSyncServersProvider = Provider<bool>((ref) {
   final currentIndex = ref.watch(appShellIndexProvider);
-  return currentIndex == 0 || currentIndex == 1;
+  return currentIndex == 0 || currentIndex == 1 || currentIndex == 2;
 });
 
 class AppShellController extends Notifier<int> {

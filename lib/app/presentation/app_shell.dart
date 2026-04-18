@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/favorites/presentation/screens/favorites_screen.dart';
 import '../../features/servers/presentation/screens/server_list_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/sightings/presentation/screens/sightings_overview_screen.dart';
 import 'controllers/app_shell_controller.dart';
 import 'widgets/app_bottom_navigation_bar.dart';
 
@@ -14,6 +15,7 @@ class AppShell extends ConsumerWidget {
   static const List<Widget> _screens = [
     ServerListScreen(),
     FavoritesScreen(),
+    SightingsOverviewScreen(),
     SettingsScreen(),
   ];
 

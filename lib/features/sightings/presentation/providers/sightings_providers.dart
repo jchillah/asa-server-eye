@@ -18,53 +18,53 @@ final sightingsRepositoryProvider = Provider<SightingsRepository>((ref) {
   return SightingsRepository(firestore);
 });
 
-final serverSightingsProvider = FutureProvider.autoDispose
-    .family<List<PlayerSighting>, String>((ref, serverId) async {
+final serverSightingsProvider = StreamProvider.autoDispose
+    .family<List<PlayerSighting>, String>((ref, serverId) async* {
       final repository = ref.watch(sightingsRepositoryProvider);
       final accessLevel = await ref.watch(sightingsAccessLevelProvider.future);
       final currentUserId = ref.watch(currentUserIdProvider);
 
       if (currentUserId == null) {
-        return const <PlayerSighting>[];
+        yield const <PlayerSighting>[];
+        return;
       }
 
       switch (accessLevel) {
         case SightingsAccessLevel.free:
-          final ownSightings = await repository.fetchOwnSightingsByServerId(
+          yield* repository.watchOwnSightingsByServerId(
             serverId: serverId,
             userId: currentUserId,
           );
 
-          ownSightings.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-          return ownSightings;
-
         case SightingsAccessLevel.premium:
-          final results = await Future.wait([
-            repository.fetchOwnSightingsByServerId(
-              serverId: serverId,
-              userId: currentUserId,
-            ),
-            repository.fetchPremiumSharedSightingsByServerId(serverId),
-          ]);
-
-          final mergedById = <String, PlayerSighting>{};
-
-          for (final sighting in results.expand((list) => list)) {
-            mergedById[sighting.id] = sighting;
-          }
-
-          final merged = mergedById.values.toList()
-            ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
-
-          return merged;
-
-        case SightingsAccessLevel.admin:
-          final allSightings = await repository.fetchAllSightingsByServerId(
-            serverId,
+          yield* repository.watchVisibleOwnAndPremiumSharedSightingsByServerId(
+            serverId: serverId,
+            userId: currentUserId,
           );
 
-          allSightings.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-          return allSightings;
+        case SightingsAccessLevel.admin:
+          yield* repository.watchAllSightingsByServerId(serverId);
+      }
+    });
+
+final sightingsOverviewProvider =
+    StreamProvider.autoDispose<List<PlayerSighting>>((ref) async* {
+      final repository = ref.watch(sightingsRepositoryProvider);
+      final accessLevel = await ref.watch(sightingsAccessLevelProvider.future);
+      final currentUserId = ref.watch(currentUserIdProvider);
+
+      if (currentUserId == null) {
+        yield const <PlayerSighting>[];
+        return;
+      }
+
+      switch (accessLevel) {
+        case SightingsAccessLevel.free:
+        case SightingsAccessLevel.premium:
+          yield* repository.watchOwnSightings(userId: currentUserId);
+
+        case SightingsAccessLevel.admin:
+          yield* repository.watchAllSightings();
       }
     });
 

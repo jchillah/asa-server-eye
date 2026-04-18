@@ -18,6 +18,11 @@ abstract final class AppNavigationDestinations {
         label: l10n.favorites,
       ),
       AppNavigationDestinationItem(
+        icon: Icons.visibility_outlined,
+        selectedIcon: Icons.visibility,
+        label: l10n.playerSightings,
+      ),
+      AppNavigationDestinationItem(
         icon: Icons.settings_outlined,
         selectedIcon: Icons.settings,
         label: l10n.settings,

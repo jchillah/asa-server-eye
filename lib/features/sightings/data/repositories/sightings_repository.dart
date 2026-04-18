@@ -1,4 +1,6 @@
 // features/sightings/data/repositories/sightings_repository.dart
+import 'dart:async';
+
 import 'package:asa_server_eye/features/sightings/domain/gaming_platform.dart';
 import 'package:asa_server_eye/features/sightings/domain/sighting_change_log.dart';
 import 'package:asa_server_eye/features/sightings/domain/sighting_creator_level.dart';
@@ -348,5 +350,101 @@ class SightingsRepository {
     }
 
     return 'Updated: ${changes.join(', ')}';
+  }
+
+  Stream<List<PlayerSighting>> watchOwnSightingsByServerId({
+    required String serverId,
+    required String userId,
+  }) {
+    return _sightingsCollection
+        .where('serverId', isEqualTo: serverId)
+        .where('createdByUserId', isEqualTo: userId)
+        .where('isVisible', isEqualTo: true)
+        .snapshots()
+        .map(_mapSnapshotToSightings);
+  }
+
+  Stream<List<PlayerSighting>> watchPremiumSharedSightingsByServerId(
+    String serverId,
+  ) {
+    return _sightingsCollection
+        .where('serverId', isEqualTo: serverId)
+        .where('isVisible', isEqualTo: true)
+        .where('sharingScope', isEqualTo: 'premiumShared')
+        .snapshots()
+        .map(_mapSnapshotToSightings);
+  }
+
+  Stream<List<PlayerSighting>> watchAllSightingsByServerId(String serverId) {
+    return _sightingsCollection
+        .where('serverId', isEqualTo: serverId)
+        .snapshots()
+        .map(_mapSnapshotToSightings);
+  }
+
+  Stream<List<PlayerSighting>>
+  watchVisibleOwnAndPremiumSharedSightingsByServerId({
+    required String serverId,
+    required String userId,
+  }) {
+    return Stream.multi((controller) {
+      List<PlayerSighting> ownSightings = const [];
+      List<PlayerSighting> sharedSightings = const [];
+
+      void emitMerged() {
+        final mergedById = <String, PlayerSighting>{};
+
+        for (final sighting in [...ownSightings, ...sharedSightings]) {
+          mergedById[sighting.id] = sighting;
+        }
+
+        final merged = mergedById.values.toList()
+          ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+        controller.add(merged);
+      }
+
+      final ownSubscription =
+          watchOwnSightingsByServerId(
+            serverId: serverId,
+            userId: userId,
+          ).listen((data) {
+            ownSightings = data;
+            emitMerged();
+          }, onError: controller.addError);
+
+      final sharedSubscription = watchPremiumSharedSightingsByServerId(serverId)
+          .listen((data) {
+            sharedSightings = data;
+            emitMerged();
+          }, onError: controller.addError);
+
+      controller.onCancel = () async {
+        await ownSubscription.cancel();
+        await sharedSubscription.cancel();
+      };
+    });
+  }
+
+  Stream<List<PlayerSighting>> watchOwnSightings({required String userId}) {
+    return _sightingsCollection
+        .where('createdByUserId', isEqualTo: userId)
+        .where('isVisible', isEqualTo: true)
+        .snapshots()
+        .map(_mapSnapshotToSightings);
+  }
+
+  Stream<List<PlayerSighting>> watchAllSightings() {
+    return _sightingsCollection.snapshots().map(_mapSnapshotToSightings);
+  }
+
+  List<PlayerSighting> _mapSnapshotToSightings(
+    QuerySnapshot<Map<String, dynamic>> snapshot,
+  ) {
+    final sightings =
+        snapshot.docs.map(PlayerSightingModel.fromFirestore).toList()
+          ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+    return sightings;
   }
 }
