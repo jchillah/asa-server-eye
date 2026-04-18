@@ -20,13 +20,17 @@ class ServerSyncController extends StateNotifier<AsyncValue<List<Server>>> {
   bool _isFetching = false;
 
   void start() {
-    if (_timer != null) {
+    if (_timer != null || !mounted) {
       return;
     }
 
     unawaited(fetchServers());
 
     _timer = Timer.periodic(_refreshInterval, (_) {
+      if (!mounted) {
+        return;
+      }
+
       unawaited(fetchServers());
     });
   }
@@ -37,7 +41,7 @@ class ServerSyncController extends StateNotifier<AsyncValue<List<Server>>> {
   }
 
   Future<void> fetchServers() async {
-    if (_isFetching) {
+    if (!mounted || _isFetching) {
       return;
     }
 
@@ -45,14 +49,23 @@ class ServerSyncController extends StateNotifier<AsyncValue<List<Server>>> {
 
     final previous = state;
 
-    if (!previous.hasValue) {
+    if (!previous.hasValue && mounted) {
       state = const AsyncValue.loading();
     }
 
     try {
       final servers = await _repository.fetchServers();
+
+      if (!mounted) {
+        return;
+      }
+
       state = AsyncValue.data(servers);
     } catch (error, stackTrace) {
+      if (!mounted) {
+        return;
+      }
+
       state = previous.hasValue
           ? AsyncValue<List<Server>>.error(
               error,
