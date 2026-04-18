@@ -1,6 +1,6 @@
 // features/sightings/presentation/providers/sightings_access_providers.dart
-import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:asa_server_eye/features/auth/presentation/providers/current_user_provider.dart';
+import 'package:asa_server_eye/features/auth/presentation/providers/firestore_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/models/sightings_user_profile_model.dart';
@@ -14,7 +14,7 @@ final sightingsUserProfileProvider =
         return null;
       }
 
-      final firestore = FirebaseFirestore.instance;
+      final firestore = ref.watch(firestoreProvider);
       final doc = await firestore
           .collection('users')
           .doc(currentUser.uid)

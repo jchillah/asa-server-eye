@@ -683,16 +683,56 @@
     "@sightingSharingAdminOnly": {
         "description": "共享范围 adminOnly 标签"
     },
-    "sightingActionCreated": "已创建",
+    "sightingActionCreated": "创建",
     "@sightingActionCreated": {
-        "description": "历史动作 创建"
+        "description": "创建操作"
     },
-    "sightingActionUpdated": "已更新",
+    "sightingActionUpdated": "更新",
     "@sightingActionUpdated": {
-        "description": "历史动作 更新"
+        "description": "更新操作"
     },
-    "sightingActionSoftDeleted": "已隐藏",
+    "sightingActionSoftDeleted": "隐藏",
     "@sightingActionSoftDeleted": {
-        "description": "历史动作 软删除"
+        "description": "软删除操作"
+    },
+    "viewPlayerSightings": "查看玩家目击记录",
+    "@viewPlayerSightings": {
+        "description": "查看玩家目击记录按钮标签"
+    },
+    "reportPlayerSighting": "举报玩家目击记录",
+    "@reportPlayerSighting": {
+        "description": "举报玩家目击记录按钮标签"
+    },
+    "accountCreated": "账户成功创建",
+    "@accountCreated": {
+        "description": "账户成功创建时显示"
+    },
+    "accountCreationFailed": "账户创建失败。请重试。",
+    "@accountCreationFailed": {
+        "description": "创建账户时出错显示"
+    },
+    "accountDeleted": "账户删除成功",
+    "@accountDeleted": {
+        "description": "账户删除成功时显示"
+    },
+    "accountDeletionFailed": "账户删除失败。请重试。",
+    "@accountDeletionFailed": {
+        "description": "删除账户时出错显示"
+    },
+    "deletePermanently": "永久删除",
+    "@deletePermanently": {
+        "description": "管理员永久删除目击记录的操作"
+    },
+    "deletePermanentlyConfirmation": "你确定要永久删除这个目击记录吗？这将无法恢复。",
+    "@deletePermanentlyConfirmation": {
+        "description": "永久删除确认对话框的文本"
+    },
+    "sightingDeletedPermanently": "目击记录已永久删除",
+    "@sightingDeletedPermanently": {
+        "description": "管理员永久删除目击记录后显示的消息"
+    },
+    "premiumRequiredForMoreFavorites": "需要 Premium 才能保存更多收藏",
+    "@premiumRequiredForMoreFavorites": {
+        "description": "当免费用户尝试保存超过一个收藏时显示"
     }
 }

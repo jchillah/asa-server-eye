@@ -694,5 +694,45 @@
     "sightingActionSoftDeleted": "Ocultado",
     "@sightingActionSoftDeleted": {
         "description": "Acción de historial eliminada lógicamente"
+    },
+    "viewPlayerSightings": "Ver avistamientos",
+    "@viewPlayerSightings": {
+        "description": "Acción para ver los avistamientos de un jugador"
+    },
+    "reportPlayerSighting": "Reportar avistamiento de jugador",
+    "@reportPlayerSighting": {
+        "description": "Acción para reportar un avistamiento de jugador"
+    },
+    "accountCreated": "Cuenta creada exitosamente",
+    "@accountCreated": {
+        "description": "Se muestra cuando una cuenta es creada exitosamente"
+    },
+    "accountCreationFailed": "No se pudo crear la cuenta. Por favor, intenta de nuevo.",
+    "@accountCreationFailed": {
+        "description": "Se muestra cuando ocurre un error al crear una cuenta"
+    },
+    "accountDeleted": "Cuenta eliminada exitosamente",
+    "@accountDeleted": {
+        "description": "Se muestra cuando una cuenta es eliminada exitosamente"
+    },
+    "accountDeletionFailed": "No se pudo eliminar la cuenta. Por favor, intenta de nuevo.",
+    "@accountDeletionFailed": {
+        "description": "Se muestra cuando ocurre un error al eliminar una cuenta"
+    },
+    "deletePermanently": "Eliminar permanentemente",
+    "@deletePermanently": {
+        "description": "Acción para eliminar permanentemente un avistamiento"
+    },
+    "deletePermanentlyConfirmation": "Esta observación y su historial serán eliminados permanentemente. Esta acción no puede ser deshecha.",
+    "@deletePermanentlyConfirmation": {
+        "description": "Mensaje de confirmación para eliminar permanentemente un avistamiento"
+    },
+    "sightingDeletedPermanently": "Avistamiento eliminado permanentemente",
+    "@sightingDeletedPermanently": {
+        "description": "Snackbar después de eliminar permanentemente un avistamiento"
+    },
+    "premiumRequiredForMoreFavorites": "Necesitas Premium para guardar más de un favorito.",
+    "@premiumRequiredForMoreFavorites": {
+        "description": "Mensaje mostrado cuando un usuario gratuito intenta guardar más de un favorito"
     }
 }

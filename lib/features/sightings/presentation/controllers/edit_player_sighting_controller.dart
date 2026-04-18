@@ -1,5 +1,5 @@
 // features/sightings/presentation/controllers/edit_player_sighting_controller.dart
-import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
+import 'package:asa_server_eye/features/auth/presentation/providers/current_user_provider.dart';
 import 'package:asa_server_eye/features/sightings/domain/gaming_platform.dart';
 import 'package:asa_server_eye/features/sightings/domain/sighting_sharing_scope.dart';
 import 'package:asa_server_eye/features/sightings/domain/sightings_access_level.dart';
@@ -120,9 +120,12 @@ class EditPlayerSightingController
 
   Future<void> _loadAccessFlags() async {
     final accessLevel = await _ref.read(sightingsAccessLevelProvider.future);
+    final currentUserId = _ref.read(currentUserProvider)?.uid;
+    final isOwner = currentUserId == _sighting.createdByUserId;
 
     state = state.copyWith(
-      canChoosePremiumSharing: accessLevel == SightingsAccessLevel.premium,
+      canChoosePremiumSharing:
+          isOwner && accessLevel == SightingsAccessLevel.premium,
     );
   }
 
@@ -212,8 +215,13 @@ class EditPlayerSightingController
     }
 
     final currentUser = _ref.read(currentUserProvider);
+    final accessLevel = await _ref.read(sightingsAccessLevelProvider.future);
 
-    if (currentUser == null || currentUser.uid != _sighting.createdByUserId) {
+    final isOwner =
+        currentUser != null && currentUser.uid == _sighting.createdByUserId;
+    final isAdminModerator = accessLevel == SightingsAccessLevel.admin;
+
+    if (currentUser == null || (!isOwner && !isAdminModerator)) {
       state = state.copyWith(
         submitErrorKey: 'sightingEditNotAllowed',
         isSuccess: false,
@@ -228,26 +236,26 @@ class EditPlayerSightingController
     );
 
     try {
-      final accessLevel = await _ref.read(sightingsAccessLevelProvider.future);
-      final sharingScope = SightingSharingPolicy.resolve(
-        accessLevel: accessLevel,
-        shareWithPremiumUsers: state.shareWithPremiumUsers,
-      );
+      final sharingScope = state.canChoosePremiumSharing
+          ? SightingSharingPolicy.resolve(
+              accessLevel: accessLevel,
+              shareWithPremiumUsers: state.shareWithPremiumUsers,
+            )
+          : _sighting.sharingScope;
 
-      final repository = _ref.read(sightingsRepositoryProvider);
+      await _ref
+          .read(sightingsRepositoryProvider)
+          .updateSighting(
+            sightingId: _sighting.id,
+            editedByUserId: currentUser.uid,
+            inGameName: inGameName,
+            playerPlatformId: playerPlatformId,
+            tribeName: tribeName,
+            platform: state.platform,
+            sharingScope: sharingScope,
+            note: state.note.trim().isEmpty ? null : state.note.trim(),
+          );
 
-      await repository.updateSighting(
-        sightingId: _sighting.id,
-        editedByUserId: currentUser.uid,
-        inGameName: inGameName,
-        playerPlatformId: playerPlatformId,
-        tribeName: tribeName,
-        platform: state.platform,
-        sharingScope: sharingScope,
-        note: state.note.trim().isEmpty ? null : state.note.trim(),
-      );
-
-      _ref.invalidate(rawServerSightingsProvider(_sighting.serverId));
       _ref.invalidate(serverSightingsProvider(_sighting.serverId));
       _ref.invalidate(sightingHistoryProvider(_sighting.id));
 

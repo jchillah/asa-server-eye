@@ -685,14 +685,54 @@
   },
   "sightingActionCreated": "Created",
   "@sightingActionCreated": {
-    "description": "Change action created"
+    "description": "History action for created sighting"
   },
   "sightingActionUpdated": "Updated",
   "@sightingActionUpdated": {
-    "description": "Change action updated"
+    "description": "History action for updated sighting"
   },
   "sightingActionSoftDeleted": "Soft deleted",
   "@sightingActionSoftDeleted": {
-    "description": "Change action soft deleted"
+    "description": "History action for soft deleted sighting"
+  },
+  "viewPlayerSightings": "View player sightings",
+  "@viewPlayerSightings": {
+    "description": "Button label to open player sightings"
+  },
+  "reportPlayerSighting": "Report player sighting",
+  "@reportPlayerSighting": {
+    "description": "Button label to report a player sighting"
+  },
+  "accountCreated": "Account created successfully",
+  "@accountCreated": {
+    "description": "Message displayed when an account is created successfully"
+  },
+  "accountCreationFailed": "Failed to create account. Please try again.",
+  "@accountCreationFailed": {
+    "description": "Message displayed when account creation fails"
+  },
+  "accountDeleted": "Account deleted successfully",
+  "@accountDeleted": {
+    "description": "Message displayed when an account is deleted successfully"
+  },
+  "accountDeletionFailed": "Failed to delete account. Please try again.",
+  "@accountDeletionFailed": {
+    "description": "Message displayed when account deletion fails"
+  },
+  "deletePermanently": "Delete permanently",
+  "@deletePermanently": {
+    "description": "Admin action to permanently delete a sighting"
+  },
+  "deletePermanentlyConfirmation": "This sighting and its history will be permanently deleted. This action cannot be undone.",
+  "@deletePermanentlyConfirmation": {
+    "description": "Confirmation text before admin permanently deletes a sighting"
+  },
+  "sightingDeletedPermanently": "Sighting deleted permanently",
+  "@sightingDeletedPermanently": {
+    "description": "Shown after an admin permanently deleted a sighting"
+  },
+  "premiumRequiredForMoreFavorites": "You need Premium to save more than one favorite.",
+  "@premiumRequiredForMoreFavorites": {
+    "description": "Shown when a free user tries to save more than one favorite"
   }
 }

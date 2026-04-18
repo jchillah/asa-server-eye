@@ -81,6 +81,9 @@ class SignUpController {
         genericError: l10n.genericError,
       );
     } on FirebaseException catch (error, stackTrace) {
+      debugPrint('Firestore sign-up error code: ${error.code}');
+      debugPrint('Firestore sign-up error message: ${error.message}');
+
       AppLogger.error(
         'SignUpController',
         'Sign-up failed with FirebaseException.',

@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
 import '../../../../core/widgets/ad_banner_widget.dart';
-import '../controllers/server_search_controller.dart';
-import '../providers/server_view_providers.dart';
+import '../providers/filtered_servers_provider.dart';
+import '../providers/server_search_provider.dart';
 import '../utils/server_navigation.dart';
 import '../utils/server_refresh_action.dart';
 import '../widgets/server_list_item.dart';
@@ -16,7 +16,7 @@ class ServerListScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final searchController = ref.watch(serverSearchControllerProvider);
+    final searchController = ref.watch(serverSearchProvider);
     final filteredServersAsync = ref.watch(filteredServersProvider);
     final theme = Theme.of(context);
 

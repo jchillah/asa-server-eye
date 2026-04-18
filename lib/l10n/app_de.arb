@@ -597,7 +597,7 @@
   "@sightingUserProfileLoadError": {
     "description": "Fehler wenn das Benutzerprofil für eine Sichtung nicht geladen werden konnte"
   },
-  "playerSightings": "Player Sightings",
+  "playerSightings": "Spielersichtungen",
   "@playerSightings": {
     "description": "Titel des Screens mit Server-Sichtungen"
   },
@@ -694,5 +694,45 @@
   "sightingActionSoftDeleted": "Ausgeblendet",
   "@sightingActionSoftDeleted": {
     "description": "Änderungsaktion soft gelöscht"
+  },
+  "viewPlayerSightings": "Spielersichtungen ansehen",
+  "@viewPlayerSightings": {
+    "description": "Beschriftung für Button zum Ansehen von Spielersichtungen"
+  },
+  "reportPlayerSighting": "Spielersichtung melden",
+  "@reportPlayerSighting": {
+    "description": "Beschriftung für Button zum Melden einer Spielersichtung"
+  },
+  "accountCreated": "Konto erfolgreich erstellt",
+  "@accountCreated": {
+    "description": "Wird angezeigt, wenn ein Konto erfolgreich erstellt wurde"
+  },
+  "accountCreationFailed": "Konto konnte nicht erstellt werden. Bitte versuche es erneut.",
+  "@accountCreationFailed": {
+    "description": "Wird angezeigt, wenn beim Erstellen eines Kontos ein Fehler auftritt"
+  },
+  "accountDeleted": "Konto erfolgreich gelöscht",
+  "@accountDeleted": {
+    "description": "Wird angezeigt, wenn ein Konto erfolgreich gelöscht wurde"
+  },
+  "accountDeletionFailed": "Konto konnte nicht gelöscht werden. Bitte versuche es erneut.",
+  "@accountDeletionFailed": {
+    "description": "Wird angezeigt, wenn beim Löschen eines Kontos ein Fehler auftritt"
+  },
+  "deletePermanently": "Endgültig löschen",
+  "@deletePermanently": {
+    "description": "Buttontext für endgültiges Löschen einer Sichtung durch Admins"
+  },
+  "deletePermanentlyConfirmation": "Diese Sichtung und ihre Historie werden dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+  "@deletePermanentlyConfirmation": {
+    "description": "Bestätigungstext für endgültiges Löschen einer Sichtung durch Admins"
+  },
+  "sightingDeletedPermanently": "Sichtung dauerhaft gelöscht",
+  "@sightingDeletedPermanently": {
+    "description": "Snackbar nach endgültigem Löschen einer Sichtung durch Admins"
+  },
+  "premiumRequiredForMoreFavorites": "Für mehr als einen Favoriten benötigst du Premium.",
+  "@premiumRequiredForMoreFavorites": {
+    "description": "Wird angezeigt, wenn ein Nutzer ohne Premium versucht, mehr als einen Favoriten zu speichern"
   }
 }

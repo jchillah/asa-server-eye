@@ -509,4 +509,34 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get sightingActionSoftDeleted => 'Ocultado';
+
+  @override
+  String get viewPlayerSightings => 'Ver avistamientos';
+
+  @override
+  String get reportPlayerSighting => 'Reportar avistamiento de jugador';
+
+  @override
+  String get accountCreated => 'Cuenta creada exitosamente';
+
+  @override
+  String get accountCreationFailed => 'No se pudo crear la cuenta. Por favor, intenta de nuevo.';
+
+  @override
+  String get accountDeleted => 'Cuenta eliminada exitosamente';
+
+  @override
+  String get accountDeletionFailed => 'No se pudo eliminar la cuenta. Por favor, intenta de nuevo.';
+
+  @override
+  String get deletePermanently => 'Eliminar permanentemente';
+
+  @override
+  String get deletePermanentlyConfirmation => 'Esta observación y su historial serán eliminados permanentemente. Esta acción no puede ser deshecha.';
+
+  @override
+  String get sightingDeletedPermanently => 'Avistamiento eliminado permanentemente';
+
+  @override
+  String get premiumRequiredForMoreFavorites => 'Necesitas Premium para guardar más de un favorito.';
 }

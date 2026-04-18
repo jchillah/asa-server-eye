@@ -1,11 +1,11 @@
-// features/profile/data/profile_repository.dart
+// features/profile/data/repositories/profile_repository.dart
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import '../domain/app_user_profile.dart';
+import '../../domain/app_user_profile.dart';
 
 class ProfileRepository {
   ProfileRepository(this._firestore, this._auth, this._storage);
@@ -22,12 +22,14 @@ class ProfileRepository {
     return user;
   }
 
-  DocumentReference<Map<String, dynamic>> get _userDoc {
-    return _firestore.collection('users').doc(_currentUser.uid);
+  DocumentReference<Map<String, dynamic>> _userDoc(String userId) {
+    return _firestore.collection('users').doc(userId);
   }
 
   Stream<AppUserProfile?> watchProfile() {
-    return _userDoc.snapshots().map((doc) {
+    final user = _currentUser;
+
+    return _userDoc(user.uid).snapshots().map((doc) {
       final data = doc.data();
       if (data == null) {
         return null;
@@ -38,7 +40,9 @@ class ProfileRepository {
   }
 
   Future<String> uploadProfileImage(File file) async {
-    final ref = _storage.ref().child('users/${_currentUser.uid}/profile.jpg');
+    final user = _currentUser;
+    final ref = _storage.ref().child('users/${user.uid}/profile.jpg');
+
     await ref.putFile(file);
     return ref.getDownloadURL();
   }
@@ -48,23 +52,20 @@ class ProfileRepository {
     required String username,
     String? newPhotoUrl,
   }) async {
+    final user = _currentUser;
     final normalizedUsername = username.trim();
     final resolvedPhotoUrl = newPhotoUrl ?? currentProfile.photoUrl;
 
-    await _currentUser.updateDisplayName(normalizedUsername);
+    await user.updateDisplayName(normalizedUsername);
 
-    if (resolvedPhotoUrl != null) {
-      await _currentUser.updatePhotoURL(resolvedPhotoUrl);
+    if (user.photoURL != resolvedPhotoUrl) {
+      await user.updatePhotoURL(resolvedPhotoUrl);
     }
 
-    await _userDoc.update({
+    await _userDoc(user.uid).update({
       'username': normalizedUsername,
       'usernameLower': normalizedUsername.toLowerCase(),
-      'email': currentProfile.email,
       'photoUrl': resolvedPhotoUrl,
-      'favoriteIds': currentProfile.favoriteIds,
-      'sightingsAccessLevel': currentProfile.sightingsAccessLevel,
-      'createdAt': currentProfile.createdAt,
       'updatedAt': FieldValue.serverTimestamp(),
     });
   }
@@ -73,21 +74,23 @@ class ProfileRepository {
     required String email,
     required String password,
   }) async {
+    final user = _currentUser;
+    final normalizedEmail = email.trim().toLowerCase();
+    final userDoc = _userDoc(user.uid);
+    final imageRef = _storage.ref().child('users/${user.uid}/profile.jpg');
+
     final credential = EmailAuthProvider.credential(
-      email: email.trim(),
+      email: normalizedEmail,
       password: password,
     );
 
-    await _currentUser.reauthenticateWithCredential(credential);
+    await user.reauthenticateWithCredential(credential);
 
     try {
-      await _storage
-          .ref()
-          .child('users/${_currentUser.uid}/profile.jpg')
-          .delete();
+      await imageRef.delete();
     } catch (_) {}
 
-    await _userDoc.delete();
-    await _currentUser.delete();
+    await userDoc.delete();
+    await user.delete();
   }
 }

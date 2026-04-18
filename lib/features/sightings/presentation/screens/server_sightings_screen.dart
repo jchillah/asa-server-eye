@@ -1,6 +1,7 @@
 // features/sightings/presentation/screens/server_sightings_screen.dart
+import 'package:asa_server_eye/core/config/admin_config.dart';
 import 'package:asa_server_eye/core/extensions/context_l10n.dart';
-import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
+import 'package:asa_server_eye/features/auth/presentation/providers/current_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,6 +10,7 @@ import '../../domain/sightings_access_level.dart';
 import '../controllers/server_sightings_controller.dart';
 import '../models/server_sighting_menu_action.dart';
 import '../providers/sightings_access_providers.dart';
+import '../providers/sightings_providers.dart';
 import '../widgets/player_sighting_list_item.dart';
 import 'delete_player_sighting_screen.dart';
 import 'edit_player_sighting_screen.dart';
@@ -76,27 +78,36 @@ class ServerSightingsScreen extends ConsumerWidget {
                       currentUser != null &&
                       sighting.createdByUserId == currentUser.uid;
 
-                  final canEdit = isOwner && sighting.isVisible;
+                  final isAdminModerator =
+                      accessLevel == SightingsAccessLevel.admin;
+
+                  final isSuperAdminUser =
+                      currentUser?.uid == AdminConfig.superAdminUid &&
+                      isAdminModerator;
+
+                  final canEdit =
+                      sighting.isVisible && (isOwner || isAdminModerator);
                   final canDelete =
-                      isOwner &&
-                      sighting.isVisible &&
-                      accessLevel != SightingsAccessLevel.admin;
-                  final canSeeHistory =
-                      accessLevel == SightingsAccessLevel.admin || isOwner;
+                      sighting.isVisible && (isOwner || isAdminModerator);
+                  final canSeeHistory = isAdminModerator || isOwner;
+                  final canHardDelete = isSuperAdminUser;
 
                   return PlayerSightingListItem(
                     sighting: sighting,
                     trailing: PopupMenuButton<ServerSightingMenuAction>(
                       onSelected: (action) => _handleMenuAction(
                         context: context,
+                        ref: ref,
                         action: action,
                         sighting: sighting,
+                        serverId: serverId,
                       ),
                       itemBuilder: (_) => _buildMenuItems(
                         context: context,
                         canEdit: canEdit,
                         canDelete: canDelete,
                         canSeeHistory: canSeeHistory,
+                        canHardDelete: canHardDelete,
                       ),
                     ),
                   );
@@ -114,6 +125,7 @@ class ServerSightingsScreen extends ConsumerWidget {
     required bool canEdit,
     required bool canDelete,
     required bool canSeeHistory,
+    required bool canHardDelete,
   }) {
     return [
       if (canEdit)
@@ -126,6 +138,11 @@ class ServerSightingsScreen extends ConsumerWidget {
           value: ServerSightingMenuAction.delete,
           child: Text(context.l10n.delete),
         ),
+      if (canHardDelete)
+        PopupMenuItem<ServerSightingMenuAction>(
+          value: ServerSightingMenuAction.hardDelete,
+          child: Text(context.l10n.deletePermanently),
+        ),
       if (canSeeHistory)
         PopupMenuItem<ServerSightingMenuAction>(
           value: ServerSightingMenuAction.history,
@@ -136,9 +153,11 @@ class ServerSightingsScreen extends ConsumerWidget {
 
   void _handleMenuAction({
     required BuildContext context,
+    required WidgetRef ref,
     required ServerSightingMenuAction action,
     required PlayerSighting sighting,
-  }) {
+    required String serverId,
+  }) async {
     switch (action) {
       case ServerSightingMenuAction.edit:
         Navigator.of(context).push(
@@ -146,12 +165,16 @@ class ServerSightingsScreen extends ConsumerWidget {
             builder: (_) => EditPlayerSightingScreen(sighting: sighting),
           ),
         );
+        return;
+
       case ServerSightingMenuAction.delete:
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => DeletePlayerSightingScreen(sighting: sighting),
           ),
         );
+        return;
+
       case ServerSightingMenuAction.history:
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -159,6 +182,58 @@ class ServerSightingsScreen extends ConsumerWidget {
                 PlayerSightingHistoryScreen(sightingId: sighting.id),
           ),
         );
+        return;
+
+      case ServerSightingMenuAction.hardDelete:
+        final confirmed = await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) {
+            return AlertDialog(
+              title: Text(context.l10n.deletePermanently),
+              content: Text(context.l10n.deletePermanentlyConfirmation),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(false),
+                  child: Text(context.l10n.cancel),
+                ),
+                FilledButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(true),
+                  child: Text(context.l10n.delete),
+                ),
+              ],
+            );
+          },
+        );
+
+        if (confirmed != true || !context.mounted) {
+          return;
+        }
+
+        try {
+          await ref
+              .read(sightingsRepositoryProvider)
+              .hardDeleteSighting(sightingId: sighting.id);
+
+          ref.invalidate(serverSightingsProvider(serverId));
+          ref.invalidate(sightingHistoryProvider(sighting.id));
+
+          if (!context.mounted) {
+            return;
+          }
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(context.l10n.sightingDeletedPermanently)),
+          );
+        } catch (error) {
+          if (!context.mounted) {
+            return;
+          }
+
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(error.toString())));
+        }
+        return;
     }
   }
 }

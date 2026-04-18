@@ -509,4 +509,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sightingActionSoftDeleted => 'Soft deleted';
+
+  @override
+  String get viewPlayerSightings => 'View player sightings';
+
+  @override
+  String get reportPlayerSighting => 'Report player sighting';
+
+  @override
+  String get accountCreated => 'Account created successfully';
+
+  @override
+  String get accountCreationFailed => 'Failed to create account. Please try again.';
+
+  @override
+  String get accountDeleted => 'Account deleted successfully';
+
+  @override
+  String get accountDeletionFailed => 'Failed to delete account. Please try again.';
+
+  @override
+  String get deletePermanently => 'Delete permanently';
+
+  @override
+  String get deletePermanentlyConfirmation => 'This sighting and its history will be permanently deleted. This action cannot be undone.';
+
+  @override
+  String get sightingDeletedPermanently => 'Sighting deleted permanently';
+
+  @override
+  String get premiumRequiredForMoreFavorites => 'You need Premium to save more than one favorite.';
 }

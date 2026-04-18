@@ -35,19 +35,19 @@ class FavoritesRepository {
     required String userId,
     required String serverId,
   }) async {
-    await _userDoc(userId).update({
+    await _userDoc(userId).set({
       'favoriteIds': FieldValue.arrayUnion([serverId]),
       'updatedAt': FieldValue.serverTimestamp(),
-    });
+    }, SetOptions(merge: true));
   }
 
   Future<void> removeFavorite({
     required String userId,
     required String serverId,
   }) async {
-    await _userDoc(userId).update({
+    await _userDoc(userId).set({
       'favoriteIds': FieldValue.arrayRemove([serverId]),
       'updatedAt': FieldValue.serverTimestamp(),
-    });
+    }, SetOptions(merge: true));
   }
 }

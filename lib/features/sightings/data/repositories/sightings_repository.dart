@@ -1,11 +1,11 @@
 // features/sightings/data/repositories/sightings_repository.dart
 import 'package:asa_server_eye/features/sightings/domain/gaming_platform.dart';
+import 'package:asa_server_eye/features/sightings/domain/sighting_change_log.dart';
 import 'package:asa_server_eye/features/sightings/domain/sighting_creator_level.dart';
 import 'package:asa_server_eye/features/sightings/domain/sighting_sharing_scope.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/player_sighting.dart';
-import '../../domain/sighting_change_log.dart';
 import '../models/player_sighting_model.dart';
 import '../models/sighting_change_log_model.dart';
 
@@ -19,17 +19,6 @@ class SightingsRepository {
 
   CollectionReference<Map<String, dynamic>> get _historyCollection =>
       _firestore.collection('player_sighting_history');
-
-  Future<List<PlayerSighting>> fetchSightingsByServerId(String serverId) async {
-    final snapshot = await _sightingsCollection
-        .where('serverId', isEqualTo: serverId)
-        .orderBy('createdAt', descending: true)
-        .get();
-
-    return snapshot.docs
-        .map(PlayerSightingModel.fromFirestore)
-        .toList(growable: false);
-  }
 
   Future<List<SightingChangeLog>> fetchHistoryBySightingId(
     String sightingId,
@@ -59,44 +48,55 @@ class SightingsRepository {
   }) async {
     final sightingRef = _sightingsCollection.doc();
     final historyRef = _historyCollection.doc();
-    final now = DateTime.now();
+    final normalizedNote = note?.trim().isEmpty == true ? null : note?.trim();
 
-    final sighting = PlayerSightingModel(
-      id: sightingRef.id,
-      serverId: serverId,
-      inGameName: inGameName.trim(),
-      playerPlatformId: playerPlatformId.trim(),
-      tribeName: tribeName.trim(),
-      platform: platform,
-      createdAt: now,
-      createdByUserId: createdByUserId,
-      createdByUsername: createdByUsername.trim(),
-      createdByEmail: createdByEmail.trim(),
-      creatorLevel: creatorLevel,
-      sharingScope: sharingScope,
-      isVisible: true,
-      note: note?.trim().isEmpty == true ? null : note?.trim(),
-      updatedAt: null,
-      updatedByUserId: null,
-      deletedAt: null,
-      deletedByUserId: null,
-      deleteReason: null,
-    );
+    final sightingData = <String, dynamic>{
+      'serverId': serverId,
+      'inGameName': inGameName.trim(),
+      'playerPlatformId': playerPlatformId.trim(),
+      'tribeName': tribeName.trim(),
+      'platform': platform.name,
+      'createdAt': FieldValue.serverTimestamp(),
+      'createdByUserId': createdByUserId,
+      'createdByUsername': createdByUsername.trim(),
+      'createdByEmail': createdByEmail.trim(),
+      'creatorLevel': creatorLevel.name,
+      'sharingScope': sharingScope.name,
+      'isVisible': true,
+      'note': normalizedNote,
+      'updatedAt': null,
+      'updatedByUserId': null,
+      'deletedAt': null,
+      'deletedByUserId': null,
+      'deleteReason': null,
+    };
 
-    final history = SightingChangeLogModel(
-      id: historyRef.id,
-      sightingId: sightingRef.id,
-      action: SightingChangeAction.created,
-      changedAt: now,
-      changedByUserId: createdByUserId,
-      summary: 'Sighting created',
-      beforeData: null,
-      afterData: sighting.toFirestore(),
-    );
+    final historyData = <String, dynamic>{
+      'sightingId': sightingRef.id,
+      'action': SightingChangeAction.created.name,
+      'changedAt': FieldValue.serverTimestamp(),
+      'changedByUserId': createdByUserId,
+      'summary': 'Sighting created',
+      'beforeData': null,
+      'afterData': {
+        'serverId': serverId,
+        'inGameName': inGameName.trim(),
+        'playerPlatformId': playerPlatformId.trim(),
+        'tribeName': tribeName.trim(),
+        'platform': platform.name,
+        'createdByUserId': createdByUserId,
+        'createdByUsername': createdByUsername.trim(),
+        'createdByEmail': createdByEmail.trim(),
+        'creatorLevel': creatorLevel.name,
+        'sharingScope': sharingScope.name,
+        'isVisible': true,
+        'note': normalizedNote,
+      },
+    };
 
     final batch = _firestore.batch();
-    batch.set(sightingRef, sighting.toFirestore());
-    batch.set(historyRef, history.toFirestore());
+    batch.set(sightingRef, sightingData);
+    batch.set(historyRef, historyData);
     await batch.commit();
   }
 
@@ -118,34 +118,70 @@ class SightingsRepository {
     }
 
     final current = PlayerSightingModel.fromFirestore(currentDoc);
-    final now = DateTime.now();
+    final normalizedNote = note?.trim().isEmpty == true ? null : note?.trim();
 
-    final updated = current.copyWith(
-      inGameName: inGameName.trim(),
-      playerPlatformId: playerPlatformId.trim(),
-      tribeName: tribeName.trim(),
-      platform: platform,
-      sharingScope: sharingScope,
-      note: note?.trim().isEmpty == true ? null : note?.trim(),
-      updatedAt: now,
-      updatedByUserId: editedByUserId,
-    );
+    final updatedFields = <String, dynamic>{
+      'serverId': current.serverId,
+      'inGameName': inGameName.trim(),
+      'playerPlatformId': playerPlatformId.trim(),
+      'tribeName': tribeName.trim(),
+      'platform': platform.name,
+      'createdAt': Timestamp.fromDate(current.createdAt),
+      'createdByUserId': current.createdByUserId,
+      'createdByUsername': current.createdByUsername,
+      'createdByEmail': current.createdByEmail,
+      'creatorLevel': current.creatorLevel.name,
+      'sharingScope': sharingScope.name,
+      'isVisible': current.isVisible,
+      'note': normalizedNote,
+      'updatedAt': FieldValue.serverTimestamp(),
+      'updatedByUserId': editedByUserId,
+      'deletedAt': current.deletedAt != null
+          ? Timestamp.fromDate(current.deletedAt!)
+          : null,
+      'deletedByUserId': current.deletedByUserId,
+      'deleteReason': current.deleteReason,
+    };
 
     final historyRef = _historyCollection.doc();
-    final history = SightingChangeLogModel(
-      id: historyRef.id,
-      sightingId: current.id,
-      action: SightingChangeAction.updated,
-      changedAt: now,
-      changedByUserId: editedByUserId,
-      summary: _buildUpdateSummary(before: current, after: updated),
-      beforeData: current.toFirestore(),
-      afterData: updated.toFirestore(),
-    );
+    final historyData = <String, dynamic>{
+      'sightingId': current.id,
+      'action': SightingChangeAction.updated.name,
+      'changedAt': FieldValue.serverTimestamp(),
+      'changedByUserId': editedByUserId,
+      'summary': _buildUpdateSummary(
+        before: current,
+        after: current.copyWith(
+          inGameName: inGameName.trim(),
+          playerPlatformId: playerPlatformId.trim(),
+          tribeName: tribeName.trim(),
+          platform: platform,
+          sharingScope: sharingScope,
+          note: normalizedNote,
+          updatedByUserId: editedByUserId,
+        ),
+      ),
+      'beforeData': current.toFirestore(),
+      'afterData': {
+        'serverId': current.serverId,
+        'inGameName': inGameName.trim(),
+        'playerPlatformId': playerPlatformId.trim(),
+        'tribeName': tribeName.trim(),
+        'platform': platform.name,
+        'createdByUserId': current.createdByUserId,
+        'createdByUsername': current.createdByUsername,
+        'createdByEmail': current.createdByEmail,
+        'creatorLevel': current.creatorLevel.name,
+        'sharingScope': sharingScope.name,
+        'isVisible': current.isVisible,
+        'note': normalizedNote,
+        'updatedByUserId': editedByUserId,
+      },
+    };
 
     final batch = _firestore.batch();
-    batch.update(sightingRef, updated.toFirestore());
-    batch.set(historyRef, history.toFirestore());
+    batch.update(sightingRef, updatedFields);
+    batch.set(historyRef, historyData);
     await batch.commit();
   }
 
@@ -162,32 +198,118 @@ class SightingsRepository {
     }
 
     final current = PlayerSightingModel.fromFirestore(currentDoc);
-    final now = DateTime.now();
+    final normalizedReason = reason.trim();
 
-    final updated = current.copyWith(
-      isVisible: false,
-      deletedAt: now,
-      deletedByUserId: deletedByUserId,
-      deleteReason: reason.trim(),
-      updatedAt: now,
-      updatedByUserId: deletedByUserId,
-    );
+    final updatedFields = <String, dynamic>{
+      'serverId': current.serverId,
+      'inGameName': current.inGameName,
+      'playerPlatformId': current.playerPlatformId,
+      'tribeName': current.tribeName,
+      'platform': current.platform.name,
+      'createdAt': Timestamp.fromDate(current.createdAt),
+      'createdByUserId': current.createdByUserId,
+      'createdByUsername': current.createdByUsername,
+      'createdByEmail': current.createdByEmail,
+      'creatorLevel': current.creatorLevel.name,
+      'sharingScope': current.sharingScope.name,
+      'isVisible': false,
+      'note': current.note,
+      'updatedAt': FieldValue.serverTimestamp(),
+      'updatedByUserId': deletedByUserId,
+      'deletedAt': FieldValue.serverTimestamp(),
+      'deletedByUserId': deletedByUserId,
+      'deleteReason': normalizedReason,
+    };
 
     final historyRef = _historyCollection.doc();
-    final history = SightingChangeLogModel(
-      id: historyRef.id,
-      sightingId: current.id,
-      action: SightingChangeAction.softDeleted,
-      changedAt: now,
-      changedByUserId: deletedByUserId,
-      summary: 'Sighting soft deleted. Reason: ${reason.trim()}',
-      beforeData: current.toFirestore(),
-      afterData: updated.toFirestore(),
-    );
+    final historyData = <String, dynamic>{
+      'sightingId': current.id,
+      'action': SightingChangeAction.softDeleted.name,
+      'changedAt': FieldValue.serverTimestamp(),
+      'changedByUserId': deletedByUserId,
+      'summary': 'Sighting soft deleted. Reason: $normalizedReason',
+      'beforeData': current.toFirestore(),
+      'afterData': {
+        'serverId': current.serverId,
+        'inGameName': current.inGameName,
+        'playerPlatformId': current.playerPlatformId,
+        'tribeName': current.tribeName,
+        'platform': current.platform.name,
+        'createdByUserId': current.createdByUserId,
+        'createdByUsername': current.createdByUsername,
+        'createdByEmail': current.createdByEmail,
+        'creatorLevel': current.creatorLevel.name,
+        'sharingScope': current.sharingScope.name,
+        'isVisible': false,
+        'note': current.note,
+        'updatedByUserId': deletedByUserId,
+        'deletedByUserId': deletedByUserId,
+        'deleteReason': normalizedReason,
+      },
+    };
 
     final batch = _firestore.batch();
-    batch.update(sightingRef, updated.toFirestore());
-    batch.set(historyRef, history.toFirestore());
+    batch.update(sightingRef, updatedFields);
+    batch.set(historyRef, historyData);
+    await batch.commit();
+  }
+
+  Future<List<PlayerSighting>> fetchOwnSightingsByServerId({
+    required String serverId,
+    required String userId,
+  }) async {
+    final snapshot = await _sightingsCollection
+        .where('serverId', isEqualTo: serverId)
+        .where('createdByUserId', isEqualTo: userId)
+        .where('isVisible', isEqualTo: true)
+        .get();
+
+    return snapshot.docs
+        .map(PlayerSightingModel.fromFirestore)
+        .toList(growable: false);
+  }
+
+  Future<List<PlayerSighting>> fetchPremiumSharedSightingsByServerId(
+    String serverId,
+  ) async {
+    final snapshot = await _sightingsCollection
+        .where('serverId', isEqualTo: serverId)
+        .where('isVisible', isEqualTo: true)
+        .where('sharingScope', isEqualTo: 'premiumShared')
+        .get();
+
+    return snapshot.docs
+        .map(PlayerSightingModel.fromFirestore)
+        .toList(growable: false);
+  }
+
+  Future<List<PlayerSighting>> fetchAllSightingsByServerId(
+    String serverId,
+  ) async {
+    final snapshot = await _sightingsCollection
+        .where('serverId', isEqualTo: serverId)
+        .get();
+
+    return snapshot.docs
+        .map(PlayerSightingModel.fromFirestore)
+        .toList(growable: false);
+  }
+
+  Future<void> hardDeleteSighting({required String sightingId}) async {
+    final sightingRef = _sightingsCollection.doc(sightingId);
+
+    final historySnapshot = await _historyCollection
+        .where('sightingId', isEqualTo: sightingId)
+        .get();
+
+    final batch = _firestore.batch();
+
+    for (final doc in historySnapshot.docs) {
+      batch.delete(doc.reference);
+    }
+
+    batch.delete(sightingRef);
+
     await batch.commit();
   }
 

@@ -1,4 +1,4 @@
-// features/servers/presentation/providers/server_view_providers.dart
+// features/servers/presentation/providers/is_favorite_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../favorites/presentation/controllers/favorites_controller.dart';

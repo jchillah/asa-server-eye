@@ -16,7 +16,7 @@ class AuthRepository {
 
   Future<void> signIn({required String email, required String password}) async {
     await _firebaseAuth.signInWithEmailAndPassword(
-      email: email.trim(),
+      email: email.trim().toLowerCase(),
       password: password,
     );
   }
@@ -27,7 +27,7 @@ class AuthRepository {
     required String password,
   }) async {
     final normalizedUsername = username.trim();
-    final normalizedEmail = email.trim();
+    final normalizedEmail = email.trim().toLowerCase();
 
     final credential = await _firebaseAuth.createUserWithEmailAndPassword(
       email: normalizedEmail,
@@ -74,7 +74,7 @@ class AuthRepository {
     }
 
     final credential = EmailAuthProvider.credential(
-      email: email.trim(),
+      email: email.trim().toLowerCase(),
       password: password,
     );
 

@@ -6,7 +6,7 @@ import 'package:asa_server_eye/features/profile/presentation/models/profile_save
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../data/profile_repository.dart';
+import '../../data/repositories/profile_repository.dart';
 import '../../domain/app_user_profile.dart';
 
 class ProfileFormController extends ChangeNotifier {

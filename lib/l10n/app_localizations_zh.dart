@@ -502,11 +502,41 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sightingSharingAdminOnly => '仅管理员';
 
   @override
-  String get sightingActionCreated => '已创建';
+  String get sightingActionCreated => '创建';
 
   @override
-  String get sightingActionUpdated => '已更新';
+  String get sightingActionUpdated => '更新';
 
   @override
-  String get sightingActionSoftDeleted => '已隐藏';
+  String get sightingActionSoftDeleted => '隐藏';
+
+  @override
+  String get viewPlayerSightings => '查看玩家目击记录';
+
+  @override
+  String get reportPlayerSighting => '举报玩家目击记录';
+
+  @override
+  String get accountCreated => '账户成功创建';
+
+  @override
+  String get accountCreationFailed => '账户创建失败。请重试。';
+
+  @override
+  String get accountDeleted => '账户删除成功';
+
+  @override
+  String get accountDeletionFailed => '账户删除失败。请重试。';
+
+  @override
+  String get deletePermanently => '永久删除';
+
+  @override
+  String get deletePermanentlyConfirmation => '你确定要永久删除这个目击记录吗？这将无法恢复。';
+
+  @override
+  String get sightingDeletedPermanently => '目击记录已永久删除';
+
+  @override
+  String get premiumRequiredForMoreFavorites => '需要 Premium 才能保存更多收藏';
 }

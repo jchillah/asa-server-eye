@@ -1043,23 +1043,83 @@ abstract class AppLocalizations {
   /// **'Admins only'**
   String get sightingSharingAdminOnly;
 
-  /// Change action created
+  /// History action for created sighting
   ///
   /// In en, this message translates to:
   /// **'Created'**
   String get sightingActionCreated;
 
-  /// Change action updated
+  /// History action for updated sighting
   ///
   /// In en, this message translates to:
   /// **'Updated'**
   String get sightingActionUpdated;
 
-  /// Change action soft deleted
+  /// History action for soft deleted sighting
   ///
   /// In en, this message translates to:
   /// **'Soft deleted'**
   String get sightingActionSoftDeleted;
+
+  /// Button label to open player sightings
+  ///
+  /// In en, this message translates to:
+  /// **'View player sightings'**
+  String get viewPlayerSightings;
+
+  /// Button label to report a player sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Report player sighting'**
+  String get reportPlayerSighting;
+
+  /// Message displayed when an account is created successfully
+  ///
+  /// In en, this message translates to:
+  /// **'Account created successfully'**
+  String get accountCreated;
+
+  /// Message displayed when account creation fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create account. Please try again.'**
+  String get accountCreationFailed;
+
+  /// Message displayed when an account is deleted successfully
+  ///
+  /// In en, this message translates to:
+  /// **'Account deleted successfully'**
+  String get accountDeleted;
+
+  /// Message displayed when account deletion fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete account. Please try again.'**
+  String get accountDeletionFailed;
+
+  /// Admin action to permanently delete a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Delete permanently'**
+  String get deletePermanently;
+
+  /// Confirmation text before admin permanently deletes a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'This sighting and its history will be permanently deleted. This action cannot be undone.'**
+  String get deletePermanentlyConfirmation;
+
+  /// Shown after an admin permanently deleted a sighting
+  ///
+  /// In en, this message translates to:
+  /// **'Sighting deleted permanently'**
+  String get sightingDeletedPermanently;
+
+  /// Shown when a free user tries to save more than one favorite
+  ///
+  /// In en, this message translates to:
+  /// **'You need Premium to save more than one favorite.'**
+  String get premiumRequiredForMoreFavorites;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

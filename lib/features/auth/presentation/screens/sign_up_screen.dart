@@ -1,5 +1,7 @@
 // features/auth/presentation/screens/sign_up_screen.dart
 import 'package:asa_server_eye/features/auth/presentation/providers/sign_up_form_controller_provider.dart';
+import 'package:asa_server_eye/features/auth/presentation/widgets/app_gradient_background.dart';
+import 'package:asa_server_eye/features/auth/presentation/widgets/auth_submit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,78 +23,90 @@ class SignUpScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.signUp)),
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            AuthScreenHeader(
-              imagePath: 'assets/images/app_logo.png',
-              title: context.l10n.createYourAccount,
-              subtitle: context.l10n.signUpToSaveFavorites,
-            ),
-            const SizedBox(height: 24),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    AuthUsernameField(
-                      controller: formController.usernameController,
-                      labelText: context.l10n.username,
-                      hintText: context.l10n.signUpUsernameHint,
-                    ),
-                    const SizedBox(height: 16),
-                    AuthEmailField(
-                      controller: formController.emailController,
-                      labelText: context.l10n.email,
-                      hintText: context.l10n.emailHint,
-                    ),
-                    const SizedBox(height: 16),
-                    AuthPasswordField(
-                      controller: formController.passwordController,
-                      visibilityController:
-                          formController.passwordVisibilityController,
-                      labelText: context.l10n.password,
-                      autofillHints: const [AutofillHints.newPassword],
-                    ),
-                    const SizedBox(height: 16),
-                    AuthPasswordField(
-                      controller: formController.repeatPasswordController,
-                      visibilityController:
-                          formController.repeatPasswordVisibilityController,
-                      labelText: context.l10n.repeatPassword,
-                      autofillHints: const [AutofillHints.newPassword],
-                    ),
-                    const SizedBox(height: 20),
-                    FilledButton(
-                      onPressed: formController.isSubmitting
-                          ? null
-                          : () async {
-                              final message = await formController.submit(
-                                context,
-                              );
-
-                              if (!context.mounted) return;
-
-                              if (message != null) {
-                                AuthFeedback.showMessage(context, message);
-                                return;
-                              }
-
-                              AuthNavigation.close(context);
-                            },
-                      child: formController.isSubmitting
-                          ? const SizedBox(
-                              width: 22,
-                              height: 22,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : Text(context.l10n.signUp),
-                    ),
-                  ],
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: AppGradientBackground(
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                AuthScreenHeader(
+                  imagePath: 'assets/images/app_logo.png',
+                  title: context.l10n.createYourAccount,
+                  subtitle: context.l10n.signUpToSaveFavorites,
                 ),
-              ),
+                const SizedBox(height: 24),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        AuthUsernameField(
+                          controller: formController.usernameController,
+                          labelText: context.l10n.username,
+                          hintText: context.l10n.signUpUsernameHint,
+                        ),
+                        const SizedBox(height: 16),
+                        AuthEmailField(
+                          controller: formController.emailController,
+                          labelText: context.l10n.email,
+                          hintText: context.l10n.emailHint,
+                        ),
+                        const SizedBox(height: 16),
+                        AuthPasswordField(
+                          controller: formController.passwordController,
+                          visibilityController:
+                              formController.passwordVisibilityController,
+                          labelText: context.l10n.password,
+                          autofillHints: const [AutofillHints.newPassword],
+                        ),
+                        const SizedBox(height: 16),
+                        AuthPasswordField(
+                          controller: formController.repeatPasswordController,
+                          visibilityController:
+                              formController.repeatPasswordVisibilityController,
+                          labelText: context.l10n.repeatPassword,
+                          autofillHints: const [AutofillHints.newPassword],
+                        ),
+                        const SizedBox(height: 20),
+                        AuthSubmitButton(
+                          label: context.l10n.signUp,
+                          isSubmitting: formController.isSubmitting,
+                          onPressed: () async {
+                            final message = await formController.submit(
+                              context,
+                            );
+
+                            if (!context.mounted) return;
+
+                            if (message != null) {
+                              AuthFeedback.showMessage(context, message);
+                              return;
+                            }
+
+                            AuthFeedback.showMessage(
+                              context,
+                              context.l10n.accountCreated,
+                            );
+
+                            AuthNavigation.close(context);
+                          },
+                        ),
+                        const SizedBox(height: 8),
+                        AuthSubmitButton(
+                          label: context.l10n.signIn,
+                          isSubmitting: formController.isSubmitting,
+                          variant: AuthSubmitButtonVariant.secondary,
+                          onPressed: () async {
+                            AuthNavigation.close(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

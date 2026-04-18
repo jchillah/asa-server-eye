@@ -5,21 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/server_repository.dart';
 import '../../domain/server.dart';
-import '../providers/servers_provider.dart';
-
-final serverSyncControllerProvider =
-    StateNotifierProvider.autoDispose<
-      ServerSyncController,
-      AsyncValue<List<Server>>
-    >((ref) {
-      final repository = ref.watch(serverRepositoryProvider);
-      final controller = ServerSyncController(repository);
-
-      controller.start();
-      ref.onDispose(controller.stop);
-
-      return controller;
-    });
 
 class ServerSyncController extends StateNotifier<AsyncValue<List<Server>>> {
   ServerSyncController(

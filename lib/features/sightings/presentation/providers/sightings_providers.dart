@@ -1,46 +1,71 @@
 // features/sightings/presentation/providers/sightings_providers.dart
-import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
-import 'package:asa_server_eye/features/sightings/domain/sightings_visibility_policy.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:asa_server_eye/features/auth/presentation/providers/current_user_provider.dart';
+import 'package:asa_server_eye/features/auth/presentation/providers/firestore_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/repositories/sightings_repository.dart';
 import '../../domain/player_sighting.dart';
 import '../../domain/sighting_change_log.dart';
+import '../../domain/sightings_access_level.dart';
 import 'sightings_access_providers.dart';
-
-final firebaseFirestoreProvider = Provider<FirebaseFirestore>((ref) {
-  return FirebaseFirestore.instance;
-});
 
 final currentUserIdProvider = Provider<String?>((ref) {
   return ref.watch(currentUserProvider)?.uid;
 });
 
 final sightingsRepositoryProvider = Provider<SightingsRepository>((ref) {
-  final firestore = ref.watch(firebaseFirestoreProvider);
+  final firestore = ref.watch(firestoreProvider);
   return SightingsRepository(firestore);
 });
 
-final rawServerSightingsProvider = FutureProvider.autoDispose
-    .family<List<PlayerSighting>, String>((ref, serverId) async {
-      final repository = ref.watch(sightingsRepositoryProvider);
-      return repository.fetchSightingsByServerId(serverId);
-    });
-
 final serverSightingsProvider = FutureProvider.autoDispose
     .family<List<PlayerSighting>, String>((ref, serverId) async {
-      final sightings = await ref.watch(
-        rawServerSightingsProvider(serverId).future,
-      );
+      final repository = ref.watch(sightingsRepositoryProvider);
       final accessLevel = await ref.watch(sightingsAccessLevelProvider.future);
-      final currentUser = ref.watch(currentUserProvider);
+      final currentUserId = ref.watch(currentUserIdProvider);
 
-      return SightingsVisibilityPolicy.filterSightings(
-        sightings: sightings,
-        accessLevel: accessLevel,
-        currentUserId: currentUser?.uid,
-      );
+      if (currentUserId == null) {
+        return const <PlayerSighting>[];
+      }
+
+      switch (accessLevel) {
+        case SightingsAccessLevel.free:
+          final ownSightings = await repository.fetchOwnSightingsByServerId(
+            serverId: serverId,
+            userId: currentUserId,
+          );
+
+          ownSightings.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+          return ownSightings;
+
+        case SightingsAccessLevel.premium:
+          final results = await Future.wait([
+            repository.fetchOwnSightingsByServerId(
+              serverId: serverId,
+              userId: currentUserId,
+            ),
+            repository.fetchPremiumSharedSightingsByServerId(serverId),
+          ]);
+
+          final mergedById = <String, PlayerSighting>{};
+
+          for (final sighting in results.expand((list) => list)) {
+            mergedById[sighting.id] = sighting;
+          }
+
+          final merged = mergedById.values.toList()
+            ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+          return merged;
+
+        case SightingsAccessLevel.admin:
+          final allSightings = await repository.fetchAllSightingsByServerId(
+            serverId,
+          );
+
+          allSightings.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+          return allSightings;
+      }
     });
 
 final sightingHistoryProvider = FutureProvider.autoDispose

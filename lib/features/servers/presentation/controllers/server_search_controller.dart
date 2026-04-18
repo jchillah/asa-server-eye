@@ -1,14 +1,10 @@
-// features/settings/presentation/controllers/server_search_controller.dart
+// features/servers/presentation/controllers/server_search_controller.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-final serverSearchControllerProvider =
-    ChangeNotifierProvider.autoDispose<ServerSearchController>((ref) {
-      return ServerSearchController();
-    });
 
 class ServerSearchController extends ChangeNotifier {
-  final textController = TextEditingController();
+  ServerSearchController();
+
+  final TextEditingController textController = TextEditingController();
 
   String _query = '';
 

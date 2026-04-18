@@ -509,4 +509,34 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get sightingActionSoftDeleted => 'Masqué';
+
+  @override
+  String get viewPlayerSightings => 'Voir les signalements';
+
+  @override
+  String get reportPlayerSighting => 'Signaler une sighting';
+
+  @override
+  String get accountCreated => 'Compte créé avec succès';
+
+  @override
+  String get accountCreationFailed => 'Échec de la création du compte. Veuillez réessayer.';
+
+  @override
+  String get accountDeleted => 'Compte supprimé avec succès';
+
+  @override
+  String get accountDeletionFailed => 'Échec de la suppression du compte. Veuillez réessayer.';
+
+  @override
+  String get deletePermanently => 'Supprimer définitivement';
+
+  @override
+  String get deletePermanentlyConfirmation => 'Cette observation et son historique seront supprimés définitivement. Cette action ne peut pas être annulée.';
+
+  @override
+  String get sightingDeletedPermanently => 'Observation supprimée définitivement';
+
+  @override
+  String get premiumRequiredForMoreFavorites => 'Vous avez atteint la limite de favoris pour les utilisateurs gratuits. Passez à Premium pour enregistrer plus de favoris.';
 }

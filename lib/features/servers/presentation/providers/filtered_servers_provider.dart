@@ -1,15 +1,19 @@
 // features/servers/presentation/providers/filtered_servers_provider.dart
-import 'package:asa_server_eye/features/servers/presentation/providers/server_search_provider.dart';
-import 'package:asa_server_eye/features/servers/presentation/providers/servers_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/server.dart';
 import '../utils/server_filters.dart';
+import 'server_search_provider.dart';
+import 'servers_provider.dart';
 
 final filteredServersProvider = Provider.autoDispose<AsyncValue<List<Server>>>((
   ref,
 ) {
-  final query = ref.watch(serverSearchProvider.select((c) => c.query));
+  final query = ref.watch(
+    serverSearchProvider.select((controller) {
+      return controller.query;
+    }),
+  );
 
   final serversAsync = ref.watch(serversProvider);
 

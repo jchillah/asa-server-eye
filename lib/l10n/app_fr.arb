@@ -685,14 +685,54 @@
     },
     "sightingActionCreated": "Créé",
     "@sightingActionCreated": {
-        "description": "Action d'historique créée"
+        "description": "Action de création d'une sighting"
     },
     "sightingActionUpdated": "Modifié",
     "@sightingActionUpdated": {
-        "description": "Action d'historique modifiée"
+        "description": "Action de modification d'une sighting"
     },
     "sightingActionSoftDeleted": "Masqué",
     "@sightingActionSoftDeleted": {
         "description": "Action d'historique supprimée logiquement"
+    },
+    "viewPlayerSightings": "Voir les signalements",
+    "@viewPlayerSightings": {
+        "description": "Texte du bouton pour voir les signalements d'un joueur"
+    },
+    "reportPlayerSighting": "Signaler une sighting",
+    "@reportPlayerSighting": {
+        "description": "Texte du bouton pour signaler une sighting"
+    },
+    "accountCreated": "Compte créé avec succès",
+    "@accountCreated": {
+        "description": "Affiché lorsque un compte est créé avec succès"
+    },
+    "accountCreationFailed": "Échec de la création du compte. Veuillez réessayer.",
+    "@accountCreationFailed": {
+        "description": "Affiché lorsque la création du compte échoue"
+    },
+    "accountDeleted": "Compte supprimé avec succès",
+    "@accountDeleted": {
+        "description": "Affiché lorsque un compte est supprimé avec succès"
+    },
+    "accountDeletionFailed": "Échec de la suppression du compte. Veuillez réessayer.",
+    "@accountDeletionFailed": {
+        "description": "Affiché lorsque la suppression du compte échoue"
+    },
+    "deletePermanently": "Supprimer définitivement",
+    "@deletePermanently": {
+        "description": "Action d'administration pour supprimer définitivement une observation"
+    },
+    "deletePermanentlyConfirmation": "Cette observation et son historique seront supprimés définitivement. Cette action ne peut pas être annulée.",
+    "@deletePermanentlyConfirmation": {
+        "description": "Message de confirmation avant la suppression définitive d'une observation"
+    },
+    "sightingDeletedPermanently": "Observation supprimée définitivement",
+    "@sightingDeletedPermanently": {
+        "description": "Affiché après qu'un administrateur ait définitivement supprimé une observation"
+    },
+    "premiumRequiredForMoreFavorites": "Vous avez atteint la limite de favoris pour les utilisateurs gratuits. Passez à Premium pour enregistrer plus de favoris.",
+    "@premiumRequiredForMoreFavorites": {
+        "description": "Affiché lorsque l'utilisateur gratuit atteint la limite de favoris"
     }
 }

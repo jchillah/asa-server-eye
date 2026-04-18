@@ -448,7 +448,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sightingUserProfileLoadError => 'Benutzerprofil konnte nicht geladen werden.';
 
   @override
-  String get playerSightings => 'Player Sightings';
+  String get playerSightings => 'Spielersichtungen';
 
   @override
   String platformLabel(String value) {
@@ -509,4 +509,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get sightingActionSoftDeleted => 'Ausgeblendet';
+
+  @override
+  String get viewPlayerSightings => 'Spielersichtungen ansehen';
+
+  @override
+  String get reportPlayerSighting => 'Spielersichtung melden';
+
+  @override
+  String get accountCreated => 'Konto erfolgreich erstellt';
+
+  @override
+  String get accountCreationFailed => 'Konto konnte nicht erstellt werden. Bitte versuche es erneut.';
+
+  @override
+  String get accountDeleted => 'Konto erfolgreich gelöscht';
+
+  @override
+  String get accountDeletionFailed => 'Konto konnte nicht gelöscht werden. Bitte versuche es erneut.';
+
+  @override
+  String get deletePermanently => 'Endgültig löschen';
+
+  @override
+  String get deletePermanentlyConfirmation => 'Diese Sichtung und ihre Historie werden dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.';
+
+  @override
+  String get sightingDeletedPermanently => 'Sichtung dauerhaft gelöscht';
+
+  @override
+  String get premiumRequiredForMoreFavorites => 'Für mehr als einen Favoriten benötigst du Premium.';
 }

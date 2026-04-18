@@ -1,5 +1,5 @@
 // features/sightings/presentation/controllers/report_player_sighting_controller.dart
-import 'package:asa_server_eye/features/auth/presentation/providers/current_user.provider.dart';
+import 'package:asa_server_eye/features/auth/presentation/providers/current_user_provider.dart';
 import 'package:asa_server_eye/features/sightings/domain/gaming_platform.dart';
 import 'package:asa_server_eye/features/sightings/domain/sighting_creator_level_policy.dart';
 import 'package:asa_server_eye/features/sightings/domain/sightings_access_level.dart';
@@ -255,7 +255,6 @@ class ReportPlayerSightingController
         note: state.note.trim().isEmpty ? null : state.note.trim(),
       );
 
-      _ref.invalidate(rawServerSightingsProvider(_serverId));
       _ref.invalidate(serverSightingsProvider(_serverId));
       _ref.invalidate(sightingsAccessLevelProvider);
       _ref.invalidate(sightingsUserProfileProvider);
@@ -267,7 +266,12 @@ class ReportPlayerSightingController
       );
 
       return true;
-    } catch (_) {
+    } catch (error, stackTrace) {
+      // ignore: avoid_print
+      print('Sighting save failed: $error');
+      // ignore: avoid_print
+      print(stackTrace);
+
       state = state.copyWith(
         isSubmitting: false,
         submitErrorKey: 'sightingSaveError',

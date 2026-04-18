@@ -6,7 +6,8 @@ import '../../../../core/extensions/context_l10n.dart';
 import '../../../favorites/presentation/utils/favorite_actions.dart';
 import '../../../sightings/presentation/screens/report_player_sighting_screen.dart';
 import '../../../sightings/presentation/screens/server_sightings_screen.dart';
-import '../providers/server_view_providers.dart';
+import '../providers/is_favorite_provider.dart';
+import '../providers/server_by_id_provider.dart';
 import '../widgets/server_detail_header_card.dart';
 import '../widgets/server_detail_info_card.dart';
 
@@ -96,7 +97,7 @@ class ServerDetailScreen extends ConsumerWidget {
                       );
                     },
                     icon: const Icon(Icons.visibility_rounded),
-                    label: const Text('Sightings ansehen'),
+                    label: Text(context.l10n.viewPlayerSightings),
                   ),
                   const SizedBox(height: 12),
                   OutlinedButton.icon(
@@ -109,7 +110,7 @@ class ServerDetailScreen extends ConsumerWidget {
                       );
                     },
                     icon: const Icon(Icons.person_add_alt_1_rounded),
-                    label: const Text('Player melden'),
+                    label: Text(context.l10n.reportPlayerSighting),
                   ),
                 ],
               );

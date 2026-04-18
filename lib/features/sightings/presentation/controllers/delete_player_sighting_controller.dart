@@ -1,10 +1,9 @@
 // features/sightings/presentation/controllers/delete_player_sighting_controller.dart
-import 'dart:ui';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/repositories/sightings_repository.dart';
 import '../../domain/player_sighting.dart';
+import '../../domain/sightings_access_level.dart';
+import '../providers/sightings_access_providers.dart';
 import '../providers/sightings_providers.dart';
 
 final deletePlayerSightingControllerProvider = StateNotifierProvider.autoDispose
@@ -13,19 +12,7 @@ final deletePlayerSightingControllerProvider = StateNotifierProvider.autoDispose
       DeletePlayerSightingState,
       PlayerSighting
     >((ref, sighting) {
-      final repository = ref.watch(sightingsRepositoryProvider);
-      final currentUserId = ref.watch(currentUserIdProvider);
-
-      return DeletePlayerSightingController(
-        repository: repository,
-        sighting: sighting,
-        currentUserId: currentUserId,
-        onCompleted: () {
-          ref.invalidate(rawServerSightingsProvider(sighting.serverId));
-          ref.invalidate(serverSightingsProvider(sighting.serverId));
-          ref.invalidate(sightingHistoryProvider(sighting.id));
-        },
-      );
+      return DeletePlayerSightingController(ref, sighting);
     });
 
 class DeletePlayerSightingState {
@@ -68,21 +55,11 @@ class DeletePlayerSightingState {
 
 class DeletePlayerSightingController
     extends StateNotifier<DeletePlayerSightingState> {
-  DeletePlayerSightingController({
-    required SightingsRepository repository,
-    required PlayerSighting sighting,
-    required String? currentUserId,
-    required VoidCallback onCompleted,
-  }) : _repository = repository,
-       _sighting = sighting,
-       _currentUserId = currentUserId,
-       _onCompleted = onCompleted,
-       super(const DeletePlayerSightingState());
+  DeletePlayerSightingController(this._ref, this._sighting)
+    : super(const DeletePlayerSightingState());
 
-  final SightingsRepository _repository;
+  final Ref _ref;
   final PlayerSighting _sighting;
-  final String? _currentUserId;
-  final VoidCallback _onCompleted;
 
   void updateReason(String value) {
     state = state.copyWith(
@@ -94,8 +71,19 @@ class DeletePlayerSightingController
   }
 
   Future<bool> submit() async {
-    if (_currentUserId == null || _currentUserId != _sighting.createdByUserId) {
-      state = state.copyWith(submitErrorKey: 'sightingDeleteNotAllowed');
+    final currentUserId = _ref.read(currentUserIdProvider);
+    final accessLevel = await _ref.read(sightingsAccessLevelProvider.future);
+
+    final canDelete =
+        currentUserId != null &&
+        (currentUserId == _sighting.createdByUserId ||
+            accessLevel == SightingsAccessLevel.admin);
+
+    if (!canDelete) {
+      state = state.copyWith(
+        submitErrorKey: 'sightingDeleteNotAllowed',
+        isSuccess: false,
+      );
       return false;
     }
 
@@ -112,16 +100,18 @@ class DeletePlayerSightingController
     state = state.copyWith(isSubmitting: true, clearSubmitError: true);
 
     try {
-      await _repository.softDeleteSighting(
-        sightingId: _sighting.id,
-        deletedByUserId: _currentUserId,
-        reason: reason,
-      );
+      await _ref
+          .read(sightingsRepositoryProvider)
+          .softDeleteSighting(
+            sightingId: _sighting.id,
+            deletedByUserId: currentUserId,
+            reason: reason,
+          );
 
-      _onCompleted();
+      _ref.invalidate(serverSightingsProvider(_sighting.serverId));
+      _ref.invalidate(sightingHistoryProvider(_sighting.id));
 
       state = state.copyWith(isSubmitting: false, isSuccess: true);
-
       return true;
     } catch (_) {
       state = state.copyWith(
