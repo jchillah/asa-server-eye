@@ -770,5 +770,13 @@
     "premiumRestoreError": "购买恢复过程中发生错误。请重试。",
     "@premiumRestoreError": {
         "description": "购买恢复过程中发生错误时显示的消息"
+    },
+    "premiumPurchasePending": "购买正在处理中...",
+    "@premiumPurchasePending": {
+        "description": "购买正在处理中时显示的消息"
+    },
+    "premiumExpiredDescription": "您的 premium 访问已过期。您随时可以再次解锁 Premium。",
+    "@premiumExpiredDescription": {
+        "description": "当 premium 访问过期时显示的消息"
     }
 }

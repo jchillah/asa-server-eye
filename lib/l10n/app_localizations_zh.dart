@@ -638,4 +638,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get premiumRestoreError => '购买恢复过程中发生错误。请重试。';
+
+  @override
+  String get premiumPurchasePending => '购买正在处理中...';
+
+  @override
+  String get premiumExpiredDescription => '您的 premium 访问已过期。您随时可以再次解锁 Premium。';
 }

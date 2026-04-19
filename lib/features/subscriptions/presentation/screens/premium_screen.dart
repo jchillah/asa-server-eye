@@ -8,6 +8,7 @@ import '../../domain/store_subscription_product.dart';
 import '../../domain/subscription_plan.dart';
 import '../../domain/subscription_status.dart';
 import '../controllers/subscription_controller.dart';
+import '../providers/subscription_entitlement_providers.dart';
 
 class PremiumScreen extends ConsumerWidget {
   const PremiumScreen({super.key});
@@ -16,6 +17,7 @@ class PremiumScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(subscriptionControllerProvider);
     final controller = ref.read(subscriptionControllerProvider.notifier);
+    final entitlementAsync = ref.watch(currentSubscriptionEntitlementProvider);
 
     ref.listen(subscriptionControllerProvider, (previous, next) {
       final message = next.errorMessage ?? next.lastPurchaseMessage;
@@ -43,6 +45,46 @@ class PremiumScreen extends ConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
+            entitlementAsync.when(
+              loading: () => const Card(
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: LinearProgressIndicator(),
+                ),
+              ),
+              error: (_, _) => _StatusCard(
+                title: context.l10n.premiumUpgradeTitle,
+                description: context.l10n.premiumUpgradeDescription,
+              ),
+              data: (entitlement) {
+                if (entitlement?.isActive ?? false) {
+                  return _StatusCard(
+                    title: context.l10n.premiumActiveTitle,
+                    description: context.l10n.premiumActiveDescription,
+                  );
+                }
+
+                if (entitlement?.isPending ?? false) {
+                  return _StatusCard(
+                    title: context.l10n.premiumTitle,
+                    description: context.l10n.premiumPurchasePending,
+                  );
+                }
+
+                if (entitlement?.isExpired ?? false) {
+                  return _StatusCard(
+                    title: context.l10n.premiumTitle,
+                    description: context.l10n.premiumExpiredDescription,
+                  );
+                }
+
+                return _StatusCard(
+                  title: context.l10n.premiumUpgradeTitle,
+                  description: context.l10n.premiumUpgradeDescription,
+                );
+              },
+            ),
+            const SizedBox(height: 16),
             _HeroCard(
               title: context.l10n.premiumHeadline,
               description: context.l10n.premiumDescription,
@@ -99,6 +141,32 @@ class PremiumScreen extends ConsumerWidget {
               variant: AppActionButtonVariant.secondary,
               onPressed: controller.restorePurchases,
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StatusCard extends StatelessWidget {
+  const _StatusCard({required this.title, required this.description});
+
+  final String title;
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Text(description),
           ],
         ),
       ),

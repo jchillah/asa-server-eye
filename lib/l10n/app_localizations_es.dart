@@ -638,4 +638,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get premiumRestoreError => 'Error al restaurar compras. Por favor, intenta de nuevo.';
+
+  @override
+  String get premiumPurchasePending => 'Tu compra está siendo procesada. Premium se desbloqueará después de la verificación exitosa.';
+
+  @override
+  String get premiumExpiredDescription => 'Tu acceso premium ha expirado. Puedes desbloquear Premium nuevamente en cualquier momento.';
 }

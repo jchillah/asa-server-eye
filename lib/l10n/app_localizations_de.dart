@@ -638,4 +638,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get premiumRestoreError => 'Beim Wiederherstellen der Käufe ist ein Fehler aufgetreten. Bitte versuche es erneut.';
+
+  @override
+  String get premiumPurchasePending => 'Dein Kauf wird verarbeitet. Premium wird nach erfolgreicher Verifikation freigeschaltet.';
+
+  @override
+  String get premiumExpiredDescription => 'Dein Premium-Zugang ist abgelaufen. Du kannst jederzeit erneut Premium freischalten.';
 }

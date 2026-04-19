@@ -866,5 +866,13 @@
 "premiumRestoreError": "An error occurred while restoring purchases. Please try again.",
 "@premiumRestoreError": {
   "description": "Notification when an error occurs while restoring purchases"
+},
+"premiumPurchasePending": "Your purchase is being processed. Premium will unlock after successful verification.",
+"@premiumPurchasePending": {
+  "description": "Message while a purchase is pending verification"
+},
+"premiumExpiredDescription": "Your premium access has expired. You can unlock Premium again at any time.",
+"@premiumExpiredDescription": {
+  "description": "Message for expired premium access"
 }
 } 

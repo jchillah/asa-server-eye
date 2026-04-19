@@ -1318,6 +1318,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An error occurred while restoring purchases. Please try again.'**
   String get premiumRestoreError;
+
+  /// Message while a purchase is pending verification
+  ///
+  /// In en, this message translates to:
+  /// **'Your purchase is being processed. Premium will unlock after successful verification.'**
+  String get premiumPurchasePending;
+
+  /// Message for expired premium access
+  ///
+  /// In en, this message translates to:
+  /// **'Your premium access has expired. You can unlock Premium again at any time.'**
+  String get premiumExpiredDescription;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

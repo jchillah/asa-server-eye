@@ -866,5 +866,13 @@
     "premiumRestoreError": "Error al restaurar compras. Por favor, intenta de nuevo.",
     "@premiumRestoreError": {
         "description": "Mensaje cuando ocurre un error durante la restauración de compras"
+    },
+    "premiumPurchasePending": "Tu compra está siendo procesada. Premium se desbloqueará después de la verificación exitosa.",
+    "@premiumPurchasePending": {
+        "description": "Mensaje mientras una compra está pendiente de verificación"
+    },
+    "premiumExpiredDescription": "Tu acceso premium ha expirado. Puedes desbloquear Premium nuevamente en cualquier momento.",
+    "@premiumExpiredDescription": {
+        "description": "Mensaje cuando la suscripción premium ha expirado"
     }
 }

@@ -865,5 +865,13 @@
 },"premiumRestoreError": "Beim Wiederherstellen der Käufe ist ein Fehler aufgetreten. Bitte versuche es erneut.",
 "@premiumRestoreError": {
   "description": "Hinweis wenn ein Fehler beim Wiederherstellen der Käufe aufgetreten ist"      
+},
+"premiumPurchasePending": "Dein Kauf wird verarbeitet. Premium wird nach erfolgreicher Verifikation freigeschaltet.",
+"@premiumPurchasePending": {
+  "description": "Hinweis bei ausstehender Verifikation eines Kaufs"
+},
+"premiumExpiredDescription": "Dein Premium-Zugang ist abgelaufen. Du kannst jederzeit erneut Premium freischalten.",
+"@premiumExpiredDescription": {
+  "description": "Hinweis für abgelaufenes Premium"
 }
 }
