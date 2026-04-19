@@ -64,6 +64,8 @@ android/key.properties
 .env.*
 *.pem
 *.p12
+admin_config.dart
+firestore.rules
 
 # Firebase local / logs
 .firebase/
