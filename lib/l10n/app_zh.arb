@@ -750,5 +750,25 @@
     "settingsNavLabel": "设置",
     "@settingsNavLabel": {
         "description": "底部导航中设置标签的简短文本"
+    },
+    "premiumStoreUnavailable": "当前无法连接到商店。",
+    "@premiumStoreUnavailable": {
+        "description": "当无法连接到商店时显示的错误消息"
+    },
+    "premiumProductsUnavailable": "当前无法加载 Premium 产品。",
+    "@premiumProductsUnavailable": {
+        "description": "当无法加载 Premium 产品时显示的消息"
+    },
+    "premiumPurchaseError": "购买过程中发生错误。请重试。",
+    "@premiumPurchaseError": {
+        "description": "购买过程中发生错误时显示的消息"
+    },
+    "premiumRestoreSuccess": "购买恢复成功。",
+    "@premiumRestoreSuccess": {
+        "description": "购买恢复成功时显示的消息"
+    },
+    "premiumRestoreError": "购买恢复过程中发生错误。请重试。",
+    "@premiumRestoreError": {
+        "description": "购买恢复过程中发生错误时显示的消息"
     }
 }

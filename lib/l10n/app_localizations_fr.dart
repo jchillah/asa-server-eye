@@ -623,4 +623,19 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get managePremium => 'Gérer Premium';
+
+  @override
+  String get premiumStoreUnavailable => 'Le magasin de Premium n\'est pas disponible pour le moment. Veuillez réessayer plus tard.';
+
+  @override
+  String get premiumProductsUnavailable => 'Les produits Premium n\'ont pas pu être chargés pour le moment. Veuillez réessayer plus tard.';
+
+  @override
+  String get premiumPurchaseError => 'Une erreur s\'est produite lors de l\'achat de Premium. Veuillez réessayer.';
+
+  @override
+  String get premiumRestoreSuccess => 'Les achats ont été restaurés avec succès.';
+
+  @override
+  String get premiumRestoreError => 'Une erreur s\'est produite lors de la restauration des achats. Veuillez réessayer.';
 }

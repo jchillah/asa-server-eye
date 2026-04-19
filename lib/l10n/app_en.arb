@@ -846,5 +846,25 @@
 "managePremium": "Manage Premium",
 "@managePremium": {
   "description": "Button to manage premium"
+},
+"premiumStoreUnavailable": "The store is currently unavailable. Please try again later.",
+"@premiumStoreUnavailable": {
+  "description": "Notification when the store is not available"
+},
+"premiumProductsUnavailable": "Currently, no premium products could be loaded.",
+"@premiumProductsUnavailable": {
+  "description": "Notification when no premium products can be loaded"
+},
+"premiumPurchaseError": "An error occurred while purchasing. Please try again.",
+"@premiumPurchaseError": {
+  "description": "Notification when an error occurs during purchase"
+},
+"premiumRestoreSuccess": "Purchases restored successfully.",
+"@premiumRestoreSuccess": {
+  "description": "Notification when purchases are restored successfully"
+},
+"premiumRestoreError": "An error occurred while restoring purchases. Please try again.",
+"@premiumRestoreError": {
+  "description": "Notification when an error occurs while restoring purchases"
 }
-}
+} 

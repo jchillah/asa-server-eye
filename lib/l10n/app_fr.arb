@@ -846,5 +846,25 @@
     "managePremium": "Gérer Premium",
     "@managePremium": {
         "description": "Bouton pour gérer premium depuis le profil"
+    },
+    "premiumStoreUnavailable": "Le magasin de Premium n'est pas disponible pour le moment. Veuillez réessayer plus tard.",
+    "@premiumStoreUnavailable": {
+        "description": "Affiché lorsque le magasin de premium n'est pas disponible"
+    },
+    "premiumProductsUnavailable": "Les produits Premium n'ont pas pu être chargés pour le moment. Veuillez réessayer plus tard.",
+    "@premiumProductsUnavailable": {
+        "description": "Affiché lorsque les produits premium ne peuvent pas être chargés"
+    },
+    "premiumPurchaseError": "Une erreur s'est produite lors de l'achat de Premium. Veuillez réessayer.",
+    "@premiumPurchaseError": {
+        "description": "Affiché lorsque une erreur se produit lors de l'achat de premium"
+    },
+    "premiumRestoreSuccess": "Les achats ont été restaurés avec succès.",
+    "@premiumRestoreSuccess": {
+        "description": "Affiché lorsque les achats sont restaurés avec succès"
+    },
+    "premiumRestoreError": "Une erreur s'est produite lors de la restauration des achats. Veuillez réessayer.",
+    "@premiumRestoreError": {
+        "description": "Affiché lorsque une erreur se produit lors de la restauration des achats"
     }
 }

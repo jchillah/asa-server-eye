@@ -1288,6 +1288,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Manage Premium'**
   String get managePremium;
+
+  /// Notification when the store is not available
+  ///
+  /// In en, this message translates to:
+  /// **'The store is currently unavailable. Please try again later.'**
+  String get premiumStoreUnavailable;
+
+  /// Notification when no premium products can be loaded
+  ///
+  /// In en, this message translates to:
+  /// **'Currently, no premium products could be loaded.'**
+  String get premiumProductsUnavailable;
+
+  /// Notification when an error occurs during purchase
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred while purchasing. Please try again.'**
+  String get premiumPurchaseError;
+
+  /// Notification when purchases are restored successfully
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases restored successfully.'**
+  String get premiumRestoreSuccess;
+
+  /// Notification when an error occurs while restoring purchases
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred while restoring purchases. Please try again.'**
+  String get premiumRestoreError;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

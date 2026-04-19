@@ -846,5 +846,25 @@
     "managePremium": "Gestionar Premium",
     "@managePremium": {
         "description": "Botón para gestionar premium"
+    },
+    "premiumStoreUnavailable": "Tienda de premium no disponible",
+    "@premiumStoreUnavailable": {
+        "description": "Mensaje cuando la tienda de premium no está disponible"
+    },
+    "premiumProductsUnavailable": "Actualmente no se pueden cargar productos premium.",
+    "@premiumProductsUnavailable": {
+        "description": "Mensaje cuando no se pueden cargar productos premium"
+    },
+    "premiumPurchaseError": "Error al comprar premium. Por favor, intenta de nuevo.",
+    "@premiumPurchaseError": {
+        "description": "Mensaje cuando ocurre un error durante la compra de premium"      
+    },
+    "premiumRestoreSuccess": "Compras restauradas exitosamente",
+    "@premiumRestoreSuccess": {
+        "description": "Mensaje cuando las compras se restauran exitosamente"
+    },
+    "premiumRestoreError": "Error al restaurar compras. Por favor, intenta de nuevo.",
+    "@premiumRestoreError": {
+        "description": "Mensaje cuando ocurre un error durante la restauración de compras"
     }
 }

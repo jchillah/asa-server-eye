@@ -623,4 +623,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get managePremium => 'Manage Premium';
+
+  @override
+  String get premiumStoreUnavailable => 'The store is currently unavailable. Please try again later.';
+
+  @override
+  String get premiumProductsUnavailable => 'Currently, no premium products could be loaded.';
+
+  @override
+  String get premiumPurchaseError => 'An error occurred while purchasing. Please try again.';
+
+  @override
+  String get premiumRestoreSuccess => 'Purchases restored successfully.';
+
+  @override
+  String get premiumRestoreError => 'An error occurred while restoring purchases. Please try again.';
 }

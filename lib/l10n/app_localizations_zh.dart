@@ -623,4 +623,19 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get managePremium => 'Manage Premium';
+
+  @override
+  String get premiumStoreUnavailable => '当前无法连接到商店。';
+
+  @override
+  String get premiumProductsUnavailable => '当前无法加载 Premium 产品。';
+
+  @override
+  String get premiumPurchaseError => '购买过程中发生错误。请重试。';
+
+  @override
+  String get premiumRestoreSuccess => '购买恢复成功。';
+
+  @override
+  String get premiumRestoreError => '购买恢复过程中发生错误。请重试。';
 }

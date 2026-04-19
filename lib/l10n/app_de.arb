@@ -846,5 +846,24 @@
 "managePremium": "Premium verwalten",
 "@managePremium": {
   "description": "Button zum Verwalten von Premium"
+},
+"premiumStoreUnavailable": "Der Store ist aktuell nicht verfügbar.",
+"@premiumStoreUnavailable": {
+  "description": "Hinweis wenn der Store nicht verfügbar ist"
+},
+"premiumProductsUnavailable": "Aktuell konnten keine Premium-Produkte geladen werden.",
+"@premiumProductsUnavailable": {
+  "description": "Hinweis wenn keine Premium-Produkte geladen werden konnten"
+},
+"premiumPurchaseError": "Beim Kauf ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+"@premiumPurchaseError": {
+  "description": "Hinweis wenn ein Fehler beim Kauf aufgetreten ist"      
+},
+"premiumRestoreSuccess": "Käufe erfolgreich wiederhergestellt.",
+"@premiumRestoreSuccess": {
+  "description": "Hinweis wenn Käufe erfolgreich wiederhergestellt wurden"
+},"premiumRestoreError": "Beim Wiederherstellen der Käufe ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+"@premiumRestoreError": {
+  "description": "Hinweis wenn ein Fehler beim Wiederherstellen der Käufe aufgetreten ist"      
 }
 }
