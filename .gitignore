@@ -80,3 +80,4 @@ firebase-debug.log
 **/configuration-cache-report.html
 lib/core/config/admin_config.dart
 firestore.rules
+

@@ -17,3 +17,5 @@ android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 macos/Runner/GoogleService-Info.plist
 lib/firebase_options.dart
+lib/core/config/admin_config.dart
+firestore.rules
