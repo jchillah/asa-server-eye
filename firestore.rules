@@ -40,7 +40,7 @@ service cloud.firestore {
 
     function isSuperAdmin() {
       return isSignedIn()
-        && request.auth.uid == 'YourFirebaseUIDHere'; // TODO: replace with actual UID of the super admin user
+        && request.auth.uid == 'OTkKv7kyILeSwFUeZsU6KoQ57M02';
     }
 
     function canHardDeleteSightings() {
