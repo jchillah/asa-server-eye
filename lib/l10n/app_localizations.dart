@@ -1330,6 +1330,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your premium access has expired. You can unlock Premium again at any time.'**
   String get premiumExpiredDescription;
+
+  /// Message after purchase verification request was submitted
+  ///
+  /// In en, this message translates to:
+  /// **'Your purchase was submitted and is now being verified.'**
+  String get premiumVerificationQueued;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -874,5 +874,9 @@
     "premiumExpiredDescription": "Votre accès premium a expiré. Vous pouvez débloquer Premium à nouveau à tout moment.",
     "@premiumExpiredDescription": {
         "description": "Affiché lorsque l'accès premium a expiré"
+    },
+    "premiumVerificationQueued": "Votre achat a été soumis et est maintenant en cours de vérification.",
+    "@premiumVerificationQueued": {
+        "description": "Affiché lorsque l'achat de premium est en cours de vérification"
     }
 }

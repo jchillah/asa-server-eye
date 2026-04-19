@@ -739,139 +739,144 @@
   "@serversNavLabel": {
     "description": "Kurzes Label für den Server-Tab in der Bottom Navigation"
   },
- "favoritesNavLabel": "Favoriten",
- "@favoritesNavLabel": {
+  "favoritesNavLabel": "Favoriten",
+  "@favoritesNavLabel": {
     "description": "Kurzes Label für den Favoriten-Tab in der Bottom Navigation"
- },
- "sightingsNavLabel": "Sichtungen",
- "@sightingsNavLabel": {
+  },
+  "sightingsNavLabel": "Sichtungen",
+  "@sightingsNavLabel": {
     "description": "Kurzes Label für den Sightings-Tab in der Bottom Navigation"
- },
- "settingsNavLabel": "Settings",
- "@settingsNavLabel": {
+  },
+  "settingsNavLabel": "Settings",
+  "@settingsNavLabel": {
    "description": "Kurzes Label für den Settings-Tab in der Bottom Navigation"
- },
- "premiumTitle": "Premium",
-"@premiumTitle": {
-  "description": "Titel für Premium-Bereich"
-},
-"premiumSettingsSubtitle": "Premium freischalten und verwalten",
-"@premiumSettingsSubtitle": {
-  "description": "Untertitel für Premium-Eintrag in den Einstellungen"
-},
-"premiumHeadline": "Schalte Premium frei",
-"@premiumHeadline": {
-  "description": "Hauptüberschrift auf dem Premium-Screen"
-},
-"premiumDescription": "Mit Premium erhältst du Zugriff auf Spielersichtungen, mehr Favoriten und zukünftige Premium-Funktionen.",
-"@premiumDescription": {
-  "description": "Beschreibung der Premium-Vorteile"
-},
-"premiumBenefitSightingsTitle": "Spielersichtungen",
-"@premiumBenefitSightingsTitle": {
-  "description": "Titel für Sightings-Vorteil"
-},
-"premiumBenefitSightingsDescription": "Greife direkt über die Navigation auf Sichtungen zu und nutze Premium-Zugriff im gesamten Bereich.",
-"@premiumBenefitSightingsDescription": {
-  "description": "Beschreibung für Sightings-Vorteil"
-},
-"premiumBenefitFavoritesTitle": "Mehr Favoriten",
-"@premiumBenefitFavoritesTitle": {
-  "description": "Titel für Favoriten-Vorteil"
-},
-"premiumBenefitFavoritesDescription": "Speichere deutlich mehr Server in deinen Favoriten.",
-"@premiumBenefitFavoritesDescription": {
-  "description": "Beschreibung für Favoriten-Vorteil"
-},
-"premiumBenefitAlertsTitle": "Zukünftige Extras",
-"@premiumBenefitAlertsTitle": {
-  "description": "Titel für weitere Premium-Vorteile"
-},
-"premiumBenefitAlertsDescription": "Bereite dich auf kommende Premium-Funktionen wie erweiterte Beobachtung und Alarme vor.",
-"@premiumBenefitAlertsDescription": {
-  "description": "Beschreibung für weitere Premium-Vorteile"
-},
-"premiumMonthlyPlan": "Monatlich",
-"@premiumMonthlyPlan": {
-  "description": "Monatlicher Plan"
-},
-"premiumMonthlyPlanDescription": "Flexibel kündbar",
-"@premiumMonthlyPlanDescription": {
-  "description": "Beschreibung für monatlichen Plan"
-},
-"premiumYearlyPlan": "Jährlich",
-"@premiumYearlyPlan": {
-  "description": "Jährlicher Plan"
-},
-"premiumYearlyPlanDescription": "Bester Wert für langfristige Nutzung",
-"@premiumYearlyPlanDescription": {
-  "description": "Beschreibung für jährlichen Plan"
-},
-"premiumStartMonthly": "Monatlich starten",
-"@premiumStartMonthly": {
-  "description": "CTA für monatlichen Kauf"
-},
-"premiumStartYearly": "Jährlich starten",
-"@premiumStartYearly": {
-  "description": "CTA für jährlichen Kauf"
-},
-"restorePurchases": "Käufe wiederherstellen",
-"@restorePurchases": {
-  "description": "Button zum Wiederherstellen von Käufen"
-},
-"premiumPurchaseComingSoon": "Der Kauf-Flow wird als Nächstes angebunden.",
-"@premiumPurchaseComingSoon": {
-  "description": "Hinweis für noch nicht verbundenen Kauf-Flow"
-},
-"premiumUpgradeTitle": "Upgrade auf Premium",
-"@premiumUpgradeTitle": {
-  "description": "Titel für Premium-Upgrade-Karte im Profil"
-},
-"premiumUpgradeDescription": "Schalte den Sightings-Tab und weitere Premium-Vorteile frei.",
-"@premiumUpgradeDescription": {
-  "description": "Beschreibung für Premium-Upgrade im Profil"
-},
-"premiumActiveTitle": "Premium aktiv",
-"@premiumActiveTitle": {
-  "description": "Titel für aktives Premium im Profil"
-},
-"premiumActiveDescription": "Dein Konto hat bereits Zugriff auf Premium-Funktionen.",
-"@premiumActiveDescription": {
-  "description": "Beschreibung für aktives Premium im Profil"
-},
-"unlockPremium": "Premium freischalten",
-"@unlockPremium": {
-  "description": "Button zum Freischalten von Premium"
-},
-"managePremium": "Premium verwalten",
-"@managePremium": {
-  "description": "Button zum Verwalten von Premium"
-},
-"premiumStoreUnavailable": "Der Store ist aktuell nicht verfügbar.",
-"@premiumStoreUnavailable": {
-  "description": "Hinweis wenn der Store nicht verfügbar ist"
-},
-"premiumProductsUnavailable": "Aktuell konnten keine Premium-Produkte geladen werden.",
-"@premiumProductsUnavailable": {
-  "description": "Hinweis wenn keine Premium-Produkte geladen werden konnten"
-},
-"premiumPurchaseError": "Beim Kauf ist ein Fehler aufgetreten. Bitte versuche es erneut.",
-"@premiumPurchaseError": {
-  "description": "Hinweis wenn ein Fehler beim Kauf aufgetreten ist"      
-},
-"premiumRestoreSuccess": "Käufe erfolgreich wiederhergestellt.",
-"@premiumRestoreSuccess": {
-  "description": "Hinweis wenn Käufe erfolgreich wiederhergestellt wurden"
-},"premiumRestoreError": "Beim Wiederherstellen der Käufe ist ein Fehler aufgetreten. Bitte versuche es erneut.",
-"@premiumRestoreError": {
-  "description": "Hinweis wenn ein Fehler beim Wiederherstellen der Käufe aufgetreten ist"      
-},
-"premiumPurchasePending": "Dein Kauf wird verarbeitet. Premium wird nach erfolgreicher Verifikation freigeschaltet.",
-"@premiumPurchasePending": {
-  "description": "Hinweis bei ausstehender Verifikation eines Kaufs"
-},
-"premiumExpiredDescription": "Dein Premium-Zugang ist abgelaufen. Du kannst jederzeit erneut Premium freischalten.",
-"@premiumExpiredDescription": {
-  "description": "Hinweis für abgelaufenes Premium"
-}
+  },
+  "premiumTitle": "Premium",
+  "@premiumTitle": {
+    "description": "Titel für Premium-Bereich"
+  },
+  "premiumSettingsSubtitle": "Premium freischalten und verwalten",
+  "@premiumSettingsSubtitle": {
+    "description": "Untertitel für Premium-Eintrag in den Einstellungen"
+  },
+  "premiumHeadline": "Schalte Premium frei",
+  "@premiumHeadline": {
+    "description": "Hauptüberschrift auf dem Premium-Screen"
+  },
+  "premiumDescription": "Mit Premium erhältst du Zugriff auf Spielersichtungen, mehr Favoriten und zukünftige Premium-Funktionen.",
+  "@premiumDescription": {
+    "description": "Beschreibung der Premium-Vorteile"
+  },
+  "premiumBenefitSightingsTitle": "Spielersichtungen",
+  "@premiumBenefitSightingsTitle": {
+    "description": "Titel für Sightings-Vorteil"
+  },
+  "premiumBenefitSightingsDescription": "Greife direkt über die Navigation auf Sichtungen zu und nutze Premium-Zugriff im gesamten Bereich.",
+  "@premiumBenefitSightingsDescription": {
+    "description": "Beschreibung für Sightings-Vorteil"
+  },
+  "premiumBenefitFavoritesTitle": "Mehr Favoriten",
+  "@premiumBenefitFavoritesTitle": {
+    "description": "Titel für Favoriten-Vorteil"
+  },
+  "premiumBenefitFavoritesDescription": "Speichere deutlich mehr Server in deinen Favoriten.",
+  "@premiumBenefitFavoritesDescription": {
+    "description": "Beschreibung für Favoriten-Vorteil"
+  },
+  "premiumBenefitAlertsTitle": "Zukünftige Extras",
+  "@premiumBenefitAlertsTitle": {
+    "description": "Titel für weitere Premium-Vorteile"
+  },
+  "premiumBenefitAlertsDescription": "Bereite dich auf kommende Premium-Funktionen wie erweiterte Beobachtung und Alarme vor.",
+  "@premiumBenefitAlertsDescription": {
+    "description": "Beschreibung für weitere Premium-Vorteile"
+  },
+  "premiumMonthlyPlan": "Monatlich",
+  "@premiumMonthlyPlan": {
+    "description": "Monatlicher Plan"
+  },
+  "premiumMonthlyPlanDescription": "Flexibel kündbar",
+  "@premiumMonthlyPlanDescription": {
+    "description": "Beschreibung für monatlichen Plan"
+  },
+  "premiumYearlyPlan": "Jährlich",
+  "@premiumYearlyPlan": {
+    "description": "Jährlicher Plan"
+  },
+  "premiumYearlyPlanDescription": "Bester Wert für langfristige Nutzung",
+  "@premiumYearlyPlanDescription": {
+    "description": "Beschreibung für jährlichen Plan"
+  },
+  "premiumStartMonthly": "Monatlich starten",
+  "@premiumStartMonthly": {
+    "description": "CTA für monatlichen Kauf"
+  },
+  "premiumStartYearly": "Jährlich starten",
+  "@premiumStartYearly": {
+    "description": "CTA für jährlichen Kauf"
+  },
+  "restorePurchases": "Käufe wiederherstellen",
+  "@restorePurchases": {
+    "description": "Button zum Wiederherstellen von Käufen"
+  },
+  "premiumPurchaseComingSoon": "Der Kauf-Flow wird als Nächstes angebunden.",
+  "@premiumPurchaseComingSoon": {
+    "description": "Hinweis für noch nicht verbundenen Kauf-Flow"
+  },
+  "premiumUpgradeTitle": "Upgrade auf Premium",
+  "@premiumUpgradeTitle": {
+    "description": "Titel für Premium-Upgrade-Karte im Profil"
+  },
+  "premiumUpgradeDescription": "Schalte den Sightings-Tab und weitere Premium-Vorteile frei.",
+  "@premiumUpgradeDescription": {
+    "description": "Beschreibung für Premium-Upgrade im Profil"
+  },
+  "premiumActiveTitle": "Premium aktiv",
+  "@premiumActiveTitle": {
+    "description": "Titel für aktives Premium im Profil"
+  },
+  "premiumActiveDescription": "Dein Konto hat bereits Zugriff auf Premium-Funktionen.",
+  "@premiumActiveDescription": {
+    "description": "Beschreibung für aktives Premium im Profil"
+  },
+  "unlockPremium": "Premium freischalten",
+  "@unlockPremium": {
+    "description": "Button zum Freischalten von Premium"
+  },
+  "managePremium": "Premium verwalten",
+  "@managePremium": {
+    "description": "Button zum Verwalten von Premium"
+  },
+  "premiumStoreUnavailable": "Der Store ist aktuell nicht verfügbar.",
+  "@premiumStoreUnavailable": {
+    "description": "Hinweis wenn der Store nicht verfügbar ist"
+  },
+  "premiumProductsUnavailable": "Aktuell konnten keine Premium-Produkte geladen werden.",
+  "@premiumProductsUnavailable": {
+    "description": "Hinweis wenn keine Premium-Produkte geladen werden konnten"
+  },
+  "premiumPurchaseError": "Beim Kauf ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+  "@premiumPurchaseError": {
+    "description": "Hinweis wenn ein Fehler beim Kauf aufgetreten ist"      
+  },
+  "premiumRestoreSuccess": "Käufe erfolgreich wiederhergestellt.",
+  "@premiumRestoreSuccess": {
+    "description": "Hinweis wenn Käufe erfolgreich wiederhergestellt wurden"
+  }, 
+  "premiumRestoreError": "Beim Wiederherstellen der Käufe ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+  "@premiumRestoreError": {
+    "description": "Hinweis wenn ein Fehler beim Wiederherstellen der Käufe aufgetreten ist"      
+  },
+  "premiumPurchasePending": "Dein Kauf wird verarbeitet. Premium wird nach erfolgreicher Verifikation freigeschaltet.",
+  "@premiumPurchasePending": {
+    "description": "Hinweis bei ausstehender Verifikation eines Kaufs"
+  },
+  "premiumExpiredDescription": "Dein Premium-Zugang ist abgelaufen. Du kannst jederzeit erneut Premium freischalten.",
+  "@premiumExpiredDescription": {
+    "description": "Hinweis für abgelaufenes Premium"
+  },
+  "premiumVerificationQueued": "Dein Kauf wurde übermittelt und wird jetzt verifiziert.",
+  "@premiumVerificationQueued": {
+    "description": "Hinweis nach dem Übermitteln eines Kauf-Requests"
+  }
 }

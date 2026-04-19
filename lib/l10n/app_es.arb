@@ -874,5 +874,9 @@
     "premiumExpiredDescription": "Tu acceso premium ha expirado. Puedes desbloquear Premium nuevamente en cualquier momento.",
     "@premiumExpiredDescription": {
         "description": "Mensaje cuando la suscripción premium ha expirado"
+    },
+    "premiumVerificationQueued": "Tu compra fue enviada y ahora está siendo verificada.",
+    "@premiumVerificationQueued": {
+        "description": "Mensaje después de que se envíe la solicitud de verificación de compra"
     }
 }

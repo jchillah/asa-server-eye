@@ -644,4 +644,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get premiumExpiredDescription => '您的 premium 访问已过期。您随时可以再次解锁 Premium。';
+
+  @override
+  String get premiumVerificationQueued => '您的购买已提交，目前正在验证中。';
 }

@@ -778,5 +778,9 @@
     "premiumExpiredDescription": "您的 premium 访问已过期。您随时可以再次解锁 Premium。",
     "@premiumExpiredDescription": {
         "description": "当 premium 访问过期时显示的消息"
+    },
+    "premiumVerificationQueued": "您的购买已提交，目前正在验证中。",
+    "@premiumVerificationQueued": {
+        "description": "购买验证请求提交后显示的消息"
     }
 }

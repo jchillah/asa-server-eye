@@ -644,4 +644,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get premiumExpiredDescription => 'Votre accès premium a expiré. Vous pouvez débloquer Premium à nouveau à tout moment.';
+
+  @override
+  String get premiumVerificationQueued => 'Votre achat a été soumis et est maintenant en cours de vérification.';
 }
