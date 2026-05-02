@@ -11,6 +11,18 @@ abstract final class AuthNavigation {
   }
 
   static void close(BuildContext context) {
-    Navigator.of(context).pop();
+    if (Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  static void returnToAuthRoot(BuildContext context) {
+    final navigator = Navigator.of(context);
+
+    if (!navigator.canPop()) {
+      return;
+    }
+
+    navigator.popUntil((route) => route.isFirst);
   }
 }
