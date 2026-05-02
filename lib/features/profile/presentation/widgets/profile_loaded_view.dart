@@ -91,6 +91,11 @@ class _ProfileLoadedViewState extends ConsumerState<ProfileLoadedView> {
           deleteHint: context.l10n.deleteAccountHint,
           onSave: () => ProfileScreenActions.save(context: context, ref: ref),
           onSignOut: () async {
+            Navigator.of(
+              context,
+              rootNavigator: true,
+            ).popUntil((route) => route.isFirst);
+
             await ref.read(authRepositoryProvider).signOut();
           },
           onDelete: () =>
