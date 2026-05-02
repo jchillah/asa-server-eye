@@ -20,7 +20,10 @@ class PremiumScreen extends ConsumerWidget {
     final entitlementAsync = ref.watch(currentSubscriptionEntitlementProvider);
 
     ref.listen(subscriptionControllerProvider, (previous, next) {
-      final message = next.errorMessage ?? next.lastPurchaseMessage;
+      final message =
+          _mapErrorMessage(context, next.errorMessage) ??
+          _mapStatusMessage(context, next.lastMessageKey);
+
       if (message == null || message.isEmpty) {
         return;
       }
@@ -145,6 +148,41 @@ class PremiumScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  String? _mapStatusMessage(
+    BuildContext context,
+    SubscriptionMessageKey? key,
+  ) {
+    switch (key) {
+      case SubscriptionMessageKey.storeUnavailable:
+        return context.l10n.premiumStoreUnavailable;
+      case SubscriptionMessageKey.purchasePending:
+        return context.l10n.premiumPurchasePending;
+      case null:
+      case SubscriptionMessageKey.purchaseFailed:
+      case SubscriptionMessageKey.noAuthenticatedUserForVerification:
+      case SubscriptionMessageKey.missingPurchaseId:
+      case SubscriptionMessageKey.missingPurchaseToken:
+        return null;
+    }
+  }
+
+  String? _mapErrorMessage(BuildContext context, String? errorMessage) {
+    if (errorMessage == null || errorMessage.isEmpty) {
+      return null;
+    }
+
+    switch (errorMessage) {
+      case 'purchaseFailed':
+        return context.l10n.genericError;
+      case 'noAuthenticatedUserForVerification':
+      case 'missingPurchaseId':
+      case 'missingPurchaseToken':
+        return context.l10n.genericError;
+      default:
+        return errorMessage;
+    }
   }
 }
 
