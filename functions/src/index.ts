@@ -2,10 +2,14 @@ import { initializeApp } from "firebase-admin/app";
 import { FieldValue, Timestamp, getFirestore } from "firebase-admin/firestore";
 import * as logger from "firebase-functions/logger";
 import { onDocumentCreated } from "firebase-functions/v2/firestore";
+import { google } from "googleapis";
 
 initializeApp();
 
 const db = getFirestore();
+
+const REGION = "europe-west3";
+const PACKAGE_NAME = "com.jchillah.asaservereye";
 
 type VerificationRequestData = {
   userId: string;
@@ -22,12 +26,13 @@ type VerificationResult = {
   purchaseStatus: "active" | "expired" | "invalid" | "pending";
   expiresAt: Date | null;
   reason?: string | null;
+  storePayload?: Record<string, unknown> | null;
 };
 
 export const processSubscriptionVerificationRequest = onDocumentCreated(
   {
     document: "subscription_verification_requests/{requestId}",
-    region: "europe-west3",
+    region: REGION,
   },
   async (event) => {
     const snapshot = event.data;
@@ -69,15 +74,18 @@ export const processSubscriptionVerificationRequest = onDocumentCreated(
 
       const userSnap = await userRef.get();
       const userData = userSnap.data();
-      const currentAccessLevel =
-        typeof userData?.["sightingsAccessLevel"] === "string" ?
-          userData["sightingsAccessLevel"] :
-          "free";
 
-      const nextAccessLevel =
-        currentAccessLevel === "admin" ? "admin" :
-          verification.purchaseStatus === "active" ? "premium" :
-            "free";
+      let currentAccessLevel = "free";
+      if (typeof userData?.["sightingsAccessLevel"] === "string") {
+        currentAccessLevel = userData["sightingsAccessLevel"];
+      }
+
+      let nextAccessLevel = "free";
+      if (currentAccessLevel === "admin") {
+        nextAccessLevel = "admin";
+      } else if (verification.purchaseStatus === "active") {
+        nextAccessLevel = "premium";
+      }
 
       await entitlementRef.set(
         {
@@ -90,6 +98,9 @@ export const processSubscriptionVerificationRequest = onDocumentCreated(
             null,
           lastRequestId: requestId,
           purchaseId: data.purchaseId,
+          latestPurchaseToken: data.purchaseToken,
+          verificationReason: verification.reason ?? null,
+          storePayload: verification.storePayload ?? null,
           updatedAt: FieldValue.serverTimestamp(),
         },
         { merge: true },
@@ -135,24 +146,94 @@ export const processSubscriptionVerificationRequest = onDocumentCreated(
 );
 
 /**
- * Verifies a subscription purchase with the app store backend.
- * Replace this stub with real Google Play / Apple verification.
+ * Verifies a subscription purchase against the store backend.
  * @param {VerificationRequestData} request The verification request payload.
  * @return {Promise<VerificationResult>} The normalized verification result.
  */
 async function verifyPurchaseWithStore(
   request: VerificationRequestData,
 ): Promise<VerificationResult> {
-  logger.info("verifyPurchaseWithStore called.", {
-    userId: request.userId,
-    platform: request.platform,
-    productId: request.productId,
-    purchaseId: request.purchaseId,
+  if (request.platform !== "android") {
+    return {
+      purchaseStatus: "pending",
+      expiresAt: null,
+      reason: "ios_verification_not_implemented_yet",
+    };
+  }
+
+  const auth = new google.auth.GoogleAuth({
+    scopes: ["https://www.googleapis.com/auth/androidpublisher"],
   });
 
+  const androidpublisher = google.androidpublisher({
+    version: "v3",
+    auth,
+  });
+
+  const response = await androidpublisher.purchases.subscriptionsv2.get({
+    packageName: PACKAGE_NAME,
+    token: request.purchaseToken,
+  });
+
+  const purchase = response.data;
+  const subscriptionState = purchase.subscriptionState ?? "";
+  const lineItems = purchase.lineItems ?? [];
+
+  const matchingLineItem = lineItems.find(
+    (item) => item.productId === request.productId,
+  );
+
+  if (!matchingLineItem) {
+    return {
+      purchaseStatus: "invalid",
+      expiresAt: null,
+      reason: "product_id_mismatch",
+      storePayload: purchase as Record<string, unknown>,
+    };
+  }
+
+  const expiresAt = parseRfc3339Date(matchingLineItem.expiryTime);
+
+  if (
+    subscriptionState === "SUBSCRIPTION_STATE_ACTIVE" ||
+    subscriptionState === "SUBSCRIPTION_STATE_IN_GRACE_PERIOD" ||
+    subscriptionState === "SUBSCRIPTION_STATE_CANCELED"
+  ) {
+    return {
+      purchaseStatus: "active",
+      expiresAt,
+      reason: subscriptionState.toLowerCase(),
+      storePayload: purchase as Record<string, unknown>,
+    };
+  }
+
+  if (subscriptionState === "SUBSCRIPTION_STATE_PENDING") {
+    return {
+      purchaseStatus: "pending",
+      expiresAt,
+      reason: "awaiting_payment",
+      storePayload: purchase as Record<string, unknown>,
+    };
+  }
+
   return {
-    purchaseStatus: "pending",
-    expiresAt: null,
-    reason: "Store verification not implemented yet.",
+    purchaseStatus: "expired",
+    expiresAt,
+    reason: subscriptionState.toLowerCase() || "unknown_state",
+    storePayload: purchase as Record<string, unknown>,
   };
+}
+
+/**
+ * Parses an RFC3339 timestamp string into a Date.
+ * @param {string | null | undefined} value The timestamp string.
+ * @return {Date | null} The parsed date or null.
+ */
+function parseRfc3339Date(value?: string | null): Date | null {
+  if (!value) {
+    return null;
+  }
+
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
