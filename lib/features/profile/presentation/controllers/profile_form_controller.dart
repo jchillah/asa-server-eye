@@ -17,7 +17,7 @@ class ProfileFormController extends ChangeNotifier {
   final TextEditingController usernameController = TextEditingController();
 
   File? _selectedImageFile;
-  String? _hydratedProfileId;
+  String? _hydratedProfileSignature;
   bool _isSaving = false;
   bool _isDeleting = false;
 
@@ -26,10 +26,16 @@ class ProfileFormController extends ChangeNotifier {
   bool get isDeleting => _isDeleting;
 
   void hydrate(AppUserProfile profile) {
-    if (_hydratedProfileId == profile.id) return;
+    final signature =
+        '${profile.id}|${profile.username}|${profile.photoUrl ?? ''}|'
+        '${profile.favoriteIds.length}|${profile.sightingsAccessLevel}';
+
+    if (_hydratedProfileSignature == signature) {
+      return;
+    }
 
     usernameController.text = profile.username;
-    _hydratedProfileId = profile.id;
+    _hydratedProfileSignature = signature;
   }
 
   ImageProvider<Object>? resolveAvatarImage(String? profilePhotoUrl) {

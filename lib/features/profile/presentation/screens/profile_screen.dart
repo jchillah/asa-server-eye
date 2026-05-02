@@ -21,13 +21,17 @@ class ProfileScreen extends ConsumerWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (viewModel.hasError || !viewModel.hasProfile) {
+          if (viewModel.hasError) {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(24),
                 child: Text(context.l10n.profileLoadError),
               ),
             );
+          }
+
+          if (!viewModel.hasProfile) {
+            return const Center(child: CircularProgressIndicator());
           }
 
           return ProfileLoadedView(

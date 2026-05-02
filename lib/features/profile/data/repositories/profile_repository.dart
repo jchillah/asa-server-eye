@@ -32,11 +32,43 @@ class ProfileRepository {
     return _userDoc(user.uid).snapshots().map((doc) {
       final data = doc.data();
       if (data == null) {
-        return null;
+        return _buildFallbackProfile(user);
       }
 
       return AppUserProfile.fromMap(doc.id, data);
     });
+  }
+
+  AppUserProfile _buildFallbackProfile(User user) {
+    final resolvedEmail = (user.email ?? '').trim().toLowerCase();
+    final resolvedUsername = (user.displayName ?? '').trim().isNotEmpty
+        ? user.displayName!.trim()
+        : _usernameFromEmail(resolvedEmail);
+
+    return AppUserProfile(
+      id: user.uid,
+      username: resolvedUsername,
+      usernameLower: resolvedUsername.toLowerCase(),
+      email: resolvedEmail,
+      photoUrl: user.photoURL,
+      favoriteIds: const <String>[],
+      sightingsAccessLevel: 'free',
+      createdAt: null,
+    );
+  }
+
+  String _usernameFromEmail(String email) {
+    final atIndex = email.indexOf('@');
+    if (atIndex <= 0) {
+      return 'Player';
+    }
+
+    final candidate = email.substring(0, atIndex).trim();
+    if (candidate.isEmpty) {
+      return 'Player';
+    }
+
+    return candidate;
   }
 
   Future<String> uploadProfileImage(File file) async {
@@ -54,6 +86,9 @@ class ProfileRepository {
   }) async {
     final user = _currentUser;
     final normalizedUsername = username.trim();
+    final normalizedEmail = currentProfile.email.trim().isNotEmpty
+        ? currentProfile.email.trim().toLowerCase()
+        : (user.email ?? '').trim().toLowerCase();
     final resolvedPhotoUrl = newPhotoUrl ?? currentProfile.photoUrl;
 
     await user.updateDisplayName(normalizedUsername);
@@ -62,12 +97,16 @@ class ProfileRepository {
       await user.updatePhotoURL(resolvedPhotoUrl);
     }
 
-    await _userDoc(user.uid).update({
+    await _userDoc(user.uid).set({
       'username': normalizedUsername,
       'usernameLower': normalizedUsername.toLowerCase(),
+      'email': normalizedEmail,
       'photoUrl': resolvedPhotoUrl,
+      'favoriteIds': currentProfile.favoriteIds,
+      'sightingsAccessLevel': currentProfile.sightingsAccessLevel,
+      'createdAt': currentProfile.createdAt ?? FieldValue.serverTimestamp(),
       'updatedAt': FieldValue.serverTimestamp(),
-    });
+    }, SetOptions(merge: true));
   }
 
   Future<void> deleteAccount({
