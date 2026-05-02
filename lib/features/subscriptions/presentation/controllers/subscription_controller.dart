@@ -31,18 +31,27 @@ final subscriptionControllerProvider =
       );
     });
 
+enum SubscriptionMessageKey {
+  storeUnavailable,
+  purchasePending,
+  purchaseFailed,
+  noAuthenticatedUserForVerification,
+  missingPurchaseId,
+  missingPurchaseToken,
+}
+
 class SubscriptionState {
   const SubscriptionState({
     this.status = SubscriptionStatus.initial,
     this.products = const [],
     this.errorMessage,
-    this.lastPurchaseMessage,
+    this.lastMessageKey,
   });
 
   final SubscriptionStatus status;
   final List<StoreSubscriptionProduct> products;
   final String? errorMessage;
-  final String? lastPurchaseMessage;
+  final SubscriptionMessageKey? lastMessageKey;
 
   bool get isLoading =>
       status == SubscriptionStatus.loading ||
@@ -53,7 +62,7 @@ class SubscriptionState {
     SubscriptionStatus? status,
     List<StoreSubscriptionProduct>? products,
     String? errorMessage,
-    String? lastPurchaseMessage,
+    SubscriptionMessageKey? lastMessageKey,
     bool clearErrorMessage = false,
     bool clearLastPurchaseMessage = false,
   }) {
@@ -63,9 +72,9 @@ class SubscriptionState {
       errorMessage: clearErrorMessage
           ? null
           : errorMessage ?? this.errorMessage,
-      lastPurchaseMessage: clearLastPurchaseMessage
+      lastMessageKey: clearLastPurchaseMessage
           ? null
-          : lastPurchaseMessage ?? this.lastPurchaseMessage,
+          : lastMessageKey ?? this.lastMessageKey,
     );
   }
 }
@@ -100,7 +109,7 @@ class SubscriptionController extends StateNotifier<SubscriptionState> {
       if (!isAvailable) {
         state = state.copyWith(
           status: SubscriptionStatus.unavailable,
-          errorMessage: 'Store unavailable',
+          lastMessageKey: SubscriptionMessageKey.storeUnavailable,
         );
         return;
       }
@@ -182,7 +191,7 @@ class SubscriptionController extends StateNotifier<SubscriptionState> {
       case PurchaseStatus.pending:
         state = state.copyWith(
           status: SubscriptionStatus.purchasing,
-          lastPurchaseMessage: 'Purchase pending',
+          lastMessageKey: SubscriptionMessageKey.purchasePending,
         );
         break;
 
@@ -193,23 +202,23 @@ class SubscriptionController extends StateNotifier<SubscriptionState> {
 
         state = state.copyWith(
           status: SubscriptionStatus.completed,
-          lastPurchaseMessage: purchase.status == PurchaseStatus.restored
-              ? 'Purchase restored and sent for verification'
-              : 'Purchase sent for verification',
+          lastMessageKey: SubscriptionMessageKey.purchasePending,
         );
         break;
 
       case PurchaseStatus.canceled:
         state = state.copyWith(
           status: SubscriptionStatus.ready,
-          lastPurchaseMessage: 'Purchase canceled',
+          clearLastPurchaseMessage: true,
         );
         break;
 
       case PurchaseStatus.error:
         state = state.copyWith(
           status: SubscriptionStatus.error,
-          errorMessage: purchase.error?.message ?? 'Purchase failed',
+          errorMessage:
+              purchase.error?.message ??
+              SubscriptionMessageKey.purchaseFailed.name,
         );
         break;
     }
@@ -218,18 +227,20 @@ class SubscriptionController extends StateNotifier<SubscriptionState> {
   Future<void> _submitVerificationRequest(PurchaseDetails purchase) async {
     final userId = _currentUserId;
     if (userId == null) {
-      throw StateError('No authenticated user for purchase verification.');
+      throw StateError(
+        SubscriptionMessageKey.noAuthenticatedUserForVerification.name,
+      );
     }
 
     final purchaseId = purchase.purchaseID;
     final purchaseToken = purchase.verificationData.serverVerificationData;
 
     if (purchaseId == null || purchaseId.isEmpty) {
-      throw StateError('Missing purchase ID.');
+      throw StateError(SubscriptionMessageKey.missingPurchaseId.name);
     }
 
     if (purchaseToken.isEmpty) {
-      throw StateError('Missing purchase token.');
+      throw StateError(SubscriptionMessageKey.missingPurchaseToken.name);
     }
 
     await _verificationRepository.submitVerificationRequest(
