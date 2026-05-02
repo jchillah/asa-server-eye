@@ -69,6 +69,14 @@ abstract final class ProfileScreenActions {
         context,
         ProfileMessageMapper.mapDeleteResult(context, result),
       );
+      return;
+    }
+
+    if (result == ProfileDeleteResult.success) {
+      Navigator.of(
+        context,
+        rootNavigator: true,
+      ).popUntil((route) => route.isFirst);
     }
   }
 }
