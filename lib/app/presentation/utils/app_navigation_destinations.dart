@@ -5,7 +5,10 @@ import '../../../l10n/app_localizations.dart';
 import '../models/app_navigation_destination_item.dart';
 
 abstract final class AppNavigationDestinations {
-  static List<AppNavigationDestinationItem> fromL10n(AppLocalizations l10n) {
+  static List<AppNavigationDestinationItem> fromL10n(
+    AppLocalizations l10n, {
+    required bool includeSightings,
+  }) {
     return [
       AppNavigationDestinationItem(
         icon: Icons.dns_outlined,
@@ -17,11 +20,12 @@ abstract final class AppNavigationDestinations {
         selectedIcon: Icons.star_rounded,
         label: l10n.favoritesNavLabel,
       ),
-      AppNavigationDestinationItem(
-        icon: Icons.visibility_outlined,
-        selectedIcon: Icons.visibility,
-        label: l10n.sightingsNavLabel,
-      ),
+      if (includeSightings)
+        AppNavigationDestinationItem(
+          icon: Icons.visibility_outlined,
+          selectedIcon: Icons.visibility,
+          label: l10n.sightingsNavLabel,
+        ),
       AppNavigationDestinationItem(
         icon: Icons.settings_outlined,
         selectedIcon: Icons.settings,

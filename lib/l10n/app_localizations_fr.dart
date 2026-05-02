@@ -551,4 +551,100 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsNavLabel => 'Réglages';
+
+  @override
+  String get premiumTitle => 'Premium';
+
+  @override
+  String get premiumSettingsSubtitle => 'Découvrez les avantages de Premium et gérez votre abonnement.';
+
+  @override
+  String get premiumHeadline => 'Passez à Premium pour plus de fonctionnalités';
+
+  @override
+  String get premiumDescription => 'Premium offre des fonctionnalités exclusives pour améliorer votre expérience avec ASA Server Eye, notamment l\'accès à la section des observations de joueurs, la possibilité d\'enregistrer plus de favoris et des extras à venir pour les utilisateurs Premium.';
+
+  @override
+  String get premiumBenefitSightingsTitle => 'Observations de joueurs';
+
+  @override
+  String get premiumBenefitSightingsDescription => 'Accédez à la section exclusive des observations de joueurs pour signaler et consulter les activités suspectes en jeu.';
+
+  @override
+  String get premiumBenefitFavoritesTitle => 'Plus de favoris';
+
+  @override
+  String get premiumBenefitFavoritesDescription => 'Enregistrez significativement plus de serveurs dans vos favoris.';
+
+  @override
+  String get premiumBenefitAlertsTitle => 'Alertes et extras à venir';
+
+  @override
+  String get premiumBenefitAlertsDescription => 'Bénéficiez d\'alertes personnalisées et d\'extras exclusifs à venir pour les utilisateurs Premium.';
+
+  @override
+  String get premiumMonthlyPlan => 'Mensuel';
+
+  @override
+  String get premiumMonthlyPlanDescription => 'Idéal pour essayer les fonctionnalités Premium et profiter d\'une flexibilité maximale.';
+
+  @override
+  String get premiumYearlyPlan => 'Annuel';
+
+  @override
+  String get premiumYearlyPlanDescription => 'Meilleure valeur pour un usage à long terme';
+
+  @override
+  String get premiumStartMonthly => 'Commencer mensuel';
+
+  @override
+  String get premiumStartYearly => 'Commencer annuel';
+
+  @override
+  String get restorePurchases => 'Restaurer les achats';
+
+  @override
+  String get premiumPurchaseComingSoon => 'L\'achat de Premium arrive bientôt';
+
+  @override
+  String get premiumUpgradeTitle => 'Passez à Premium';
+
+  @override
+  String get premiumUpgradeDescription => 'Débloquez des fonctionnalités exclusives et améliorez votre expérience avec ASA Server Eye en passant à Premium.';
+
+  @override
+  String get premiumActiveTitle => 'Premium actif';
+
+  @override
+  String get premiumActiveDescription => 'Vous profitez actuellement des avantages de Premium. Merci pour votre soutien !';
+
+  @override
+  String get unlockPremium => 'Débloquer Premium';
+
+  @override
+  String get managePremium => 'Gérer Premium';
+
+  @override
+  String get premiumStoreUnavailable => 'Le magasin de Premium n\'est pas disponible pour le moment. Veuillez réessayer plus tard.';
+
+  @override
+  String get premiumProductsUnavailable => 'Les produits Premium n\'ont pas pu être chargés pour le moment. Veuillez réessayer plus tard.';
+
+  @override
+  String get premiumPurchaseError => 'Une erreur s\'est produite lors de l\'achat de Premium. Veuillez réessayer.';
+
+  @override
+  String get premiumRestoreSuccess => 'Les achats ont été restaurés avec succès.';
+
+  @override
+  String get premiumRestoreError => 'Une erreur s\'est produite lors de la restauration des achats. Veuillez réessayer.';
+
+  @override
+  String get premiumPurchasePending => 'Votre achat est en cours de traitement. Premium sera débloqué après vérification réussie.';
+
+  @override
+  String get premiumExpiredDescription => 'Votre accès premium a expiré. Vous pouvez débloquer Premium à nouveau à tout moment.';
+
+  @override
+  String get premiumVerificationQueued => 'Votre achat a été soumis et est maintenant en cours de vérification.';
 }

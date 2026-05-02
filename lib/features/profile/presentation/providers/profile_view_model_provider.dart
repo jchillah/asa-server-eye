@@ -6,27 +6,23 @@ import '../models/profile_view_model.dart';
 import 'profile_form_controller_provider.dart';
 import 'profile_providers.dart';
 
-final profileViewModelProvider = Provider<ProfileViewModel>((ref) {
+final profileViewModelProvider = Provider.autoDispose<ProfileViewModel>((ref) {
   final profileAsync = ref.watch(profileProvider);
   final formController = ref.watch(profileFormControllerProvider);
 
-  final profile = profileAsync.valueOrNull;
-
-  if (profile != null) {
-    ref.read(profileFormControllerProvider).hydrate(profile);
-  }
-
   return ProfileViewModel(
-    profile: profile,
+    profile: profileAsync.valueOrNull,
     isLoading: profileAsync.isLoading,
     hasError: profileAsync.hasError,
     isSaving: formController.isSaving,
     isDeleting: formController.isDeleting,
     usernameController: formController.usernameController,
-    avatarImage: formController.resolveAvatarImage(profile?.photoUrl),
+    avatarImage: formController.resolveAvatarImage(
+      profileAsync.valueOrNull?.photoUrl,
+    ),
   );
 });
 
-final profileViewProfileProvider = Provider<AppUserProfile?>((ref) {
+final profileViewProfileProvider = Provider.autoDispose<AppUserProfile?>((ref) {
   return ref.watch(profileViewModelProvider).profile;
 });

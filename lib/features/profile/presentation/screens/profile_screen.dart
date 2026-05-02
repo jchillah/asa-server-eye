@@ -1,5 +1,6 @@
 // features/profile/presentation/screens/profile_screen.dart
 import 'package:asa_server_eye/core/extensions/context_l10n.dart';
+import 'package:asa_server_eye/features/auth/presentation/providers/current_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +12,12 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentUser = ref.watch(currentUserProvider);
     final viewModel = ref.watch(profileViewModelProvider);
+
+    if (currentUser == null) {
+      return const Scaffold(body: SizedBox.shrink());
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.profile)),
@@ -21,13 +27,17 @@ class ProfileScreen extends ConsumerWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (viewModel.hasError || !viewModel.hasProfile) {
+          if (viewModel.hasError) {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(24),
                 child: Text(context.l10n.profileLoadError),
               ),
             );
+          }
+
+          if (!viewModel.hasProfile) {
+            return const Center(child: CircularProgressIndicator());
           }
 
           return ProfileLoadedView(

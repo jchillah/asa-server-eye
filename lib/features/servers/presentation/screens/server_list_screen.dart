@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
-import '../../../../core/widgets/ad_banner_widget.dart';
+import '../../../../core/presentation/widgets/ad_banner_widget.dart';
 import '../providers/filtered_servers_provider.dart';
 import '../providers/server_search_provider.dart';
 import '../utils/server_navigation.dart';

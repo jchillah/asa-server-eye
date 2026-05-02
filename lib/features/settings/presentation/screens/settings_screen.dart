@@ -6,6 +6,7 @@ import '../../../../core/extensions/context_l10n.dart';
 import '../../../../core/presentation/l10n/app_language.dart';
 import '../../../../core/presentation/l10n/locale_controller.dart';
 import '../../../profile/presentation/utils/profile_navigation.dart';
+import '../../../subscriptions/presentation/utils/premium_navigation.dart';
 import '../utils/settings_navigation.dart';
 import '../widgets/language_dialog.dart';
 import '../widgets/settings_section_header.dart';
@@ -41,6 +42,13 @@ class SettingsScreen extends ConsumerWidget {
       ),
       body: ListView(
         children: [
+          SettingsSectionHeader(title: context.l10n.premiumTitle),
+          SettingsTile(
+            icon: Icons.workspace_premium_outlined,
+            title: context.l10n.premiumTitle,
+            subtitle: context.l10n.premiumSettingsSubtitle,
+            onTap: () => PremiumNavigation.open(context),
+          ),
           SettingsSectionHeader(title: context.l10n.general),
           SettingsTile(
             icon: Icons.language,

@@ -9,15 +9,20 @@ class AppBottomNavigationBar extends StatelessWidget {
     super.key,
     required this.currentIndex,
     required this.onDestinationSelected,
+    required this.includeSightings,
   });
 
   final int currentIndex;
   final ValueChanged<int> onDestinationSelected;
+  final bool includeSightings;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final destinations = AppNavigationDestinations.fromL10n(l10n);
+    final destinations = AppNavigationDestinations.fromL10n(
+      l10n,
+      includeSightings: includeSightings,
+    );
 
     return NavigationBar(
       selectedIndex: currentIndex,

@@ -551,4 +551,100 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get settingsNavLabel => '设置';
+
+  @override
+  String get premiumTitle => 'Premium';
+
+  @override
+  String get premiumSettingsSubtitle => 'Unlock and manage premium';
+
+  @override
+  String get premiumHeadline => 'Unlock Premium';
+
+  @override
+  String get premiumDescription => 'With Premium, you get access to player sightings, more favorites, and future premium features.';
+
+  @override
+  String get premiumBenefitSightingsTitle => 'Player sightings';
+
+  @override
+  String get premiumBenefitSightingsDescription => 'Access sightings directly from the navigation and use premium access across the sightings area.';
+
+  @override
+  String get premiumBenefitFavoritesTitle => 'More favorites';
+
+  @override
+  String get premiumBenefitFavoritesDescription => 'Save significantly more servers to your favorites.';
+
+  @override
+  String get premiumBenefitAlertsTitle => 'Future extras';
+
+  @override
+  String get premiumBenefitAlertsDescription => 'Get ready for future premium features like enhanced tracking and alerts.';
+
+  @override
+  String get premiumMonthlyPlan => 'Monthly';
+
+  @override
+  String get premiumMonthlyPlanDescription => 'Flexible cancellation';
+
+  @override
+  String get premiumYearlyPlan => 'Yearly';
+
+  @override
+  String get premiumYearlyPlanDescription => 'Best value for long-term use';
+
+  @override
+  String get premiumStartMonthly => 'Start monthly';
+
+  @override
+  String get premiumStartYearly => 'Start yearly';
+
+  @override
+  String get restorePurchases => 'Restore purchases';
+
+  @override
+  String get premiumPurchaseComingSoon => 'The purchase flow will be connected next.';
+
+  @override
+  String get premiumUpgradeTitle => 'Upgrade to Premium';
+
+  @override
+  String get premiumUpgradeDescription => 'Unlock the sightings tab and additional premium benefits.';
+
+  @override
+  String get premiumActiveTitle => 'Premium active';
+
+  @override
+  String get premiumActiveDescription => 'Your account already has access to premium features.';
+
+  @override
+  String get unlockPremium => 'Unlock Premium';
+
+  @override
+  String get managePremium => 'Manage Premium';
+
+  @override
+  String get premiumStoreUnavailable => '当前无法连接到商店。';
+
+  @override
+  String get premiumProductsUnavailable => '当前无法加载 Premium 产品。';
+
+  @override
+  String get premiumPurchaseError => '购买过程中发生错误。请重试。';
+
+  @override
+  String get premiumRestoreSuccess => '购买恢复成功。';
+
+  @override
+  String get premiumRestoreError => '购买恢复过程中发生错误。请重试。';
+
+  @override
+  String get premiumPurchasePending => '购买正在处理中...';
+
+  @override
+  String get premiumExpiredDescription => '您的 premium 访问已过期。您随时可以再次解锁 Premium。';
+
+  @override
+  String get premiumVerificationQueued => '您的购买已提交，目前正在验证中。';
 }

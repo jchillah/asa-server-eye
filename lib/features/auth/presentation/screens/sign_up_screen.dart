@@ -88,7 +88,7 @@ class SignUpScreen extends ConsumerWidget {
                               context.l10n.accountCreated,
                             );
 
-                            AuthNavigation.close(context);
+                            AuthNavigation.returnToAuthRoot(context);
                           },
                         ),
                         const SizedBox(height: 8),
