@@ -8,8 +8,11 @@ initializeApp();
 
 const db = getFirestore();
 
-const REGION = "europe-west3";
-const PACKAGE_NAME = "com.jchillah.asaservereye";
+const DEFAULT_REGION = "europe-west3";
+const DEFAULT_PACKAGE_NAME = "com.jchillah.asaservereye";
+
+const REGION = process.env.FUNCTION_REGION || DEFAULT_REGION;
+const PACKAGE_NAME = process.env.PLAY_PACKAGE_NAME || DEFAULT_PACKAGE_NAME;
 
 type VerificationRequestData = {
   userId: string;
@@ -27,6 +30,15 @@ type VerificationResult = {
   expiresAt: Date | null;
   reason?: string | null;
   storePayload?: Record<string, unknown> | null;
+};
+
+type GoogleApiErrorLike = {
+  code?: number;
+  message?: string;
+  response?: {
+    status?: number;
+    data?: unknown;
+  };
 };
 
 export const processSubscriptionVerificationRequest = onDocumentCreated(
@@ -170,58 +182,104 @@ async function verifyPurchaseWithStore(
     auth,
   });
 
-  const response = await androidpublisher.purchases.subscriptionsv2.get({
-    packageName: PACKAGE_NAME,
-    token: request.purchaseToken,
-  });
+  try {
+    const response = await androidpublisher.purchases.subscriptionsv2.get({
+      packageName: PACKAGE_NAME,
+      token: request.purchaseToken,
+    });
 
-  const purchase = response.data;
-  const subscriptionState = purchase.subscriptionState ?? "";
-  const lineItems = purchase.lineItems ?? [];
+    const purchase = response.data;
 
-  const matchingLineItem = lineItems.find(
-    (item) => item.productId === request.productId,
-  );
+    if (!purchase) {
+      return {
+        purchaseStatus: "invalid",
+        expiresAt: null,
+        reason: "empty_purchase_response",
+      };
+    }
 
-  if (!matchingLineItem) {
+    const subscriptionState = purchase.subscriptionState ?? "";
+    const lineItems = purchase.lineItems ?? [];
+
+    const matchingLineItem = lineItems.find(
+      (item) => item.productId === request.productId,
+    );
+
+    if (!matchingLineItem) {
+      return {
+        purchaseStatus: "invalid",
+        expiresAt: null,
+        reason: "product_id_mismatch",
+        storePayload: purchase as Record<string, unknown>,
+      };
+    }
+
+    const expiresAt = parseRfc3339Date(matchingLineItem.expiryTime);
+
+    if (
+      subscriptionState === "SUBSCRIPTION_STATE_ACTIVE" ||
+      subscriptionState === "SUBSCRIPTION_STATE_IN_GRACE_PERIOD" ||
+      subscriptionState === "SUBSCRIPTION_STATE_CANCELED"
+    ) {
+      return {
+        purchaseStatus: "active",
+        expiresAt,
+        reason: subscriptionState.toLowerCase(),
+        storePayload: purchase as Record<string, unknown>,
+      };
+    }
+
+    if (subscriptionState === "SUBSCRIPTION_STATE_PENDING") {
+      return {
+        purchaseStatus: "pending",
+        expiresAt,
+        reason: "awaiting_payment",
+        storePayload: purchase as Record<string, unknown>,
+      };
+    }
+
     return {
-      purchaseStatus: "invalid",
-      expiresAt: null,
-      reason: "product_id_mismatch",
-      storePayload: purchase as Record<string, unknown>,
-    };
-  }
-
-  const expiresAt = parseRfc3339Date(matchingLineItem.expiryTime);
-
-  if (
-    subscriptionState === "SUBSCRIPTION_STATE_ACTIVE" ||
-    subscriptionState === "SUBSCRIPTION_STATE_IN_GRACE_PERIOD" ||
-    subscriptionState === "SUBSCRIPTION_STATE_CANCELED"
-  ) {
-    return {
-      purchaseStatus: "active",
+      purchaseStatus: "expired",
       expiresAt,
-      reason: subscriptionState.toLowerCase(),
+      reason: subscriptionState.toLowerCase() || "unknown_state",
       storePayload: purchase as Record<string, unknown>,
     };
-  }
+  } catch (error) {
+    const apiError = error as GoogleApiErrorLike;
+    const status = apiError.response?.status ?? apiError.code;
 
-  if (subscriptionState === "SUBSCRIPTION_STATE_PENDING") {
-    return {
-      purchaseStatus: "pending",
-      expiresAt,
-      reason: "awaiting_payment",
-      storePayload: purchase as Record<string, unknown>,
-    };
-  }
+    if (status === 400 || status === 404) {
+      return {
+        purchaseStatus: "invalid",
+        expiresAt: null,
+        reason: "invalid_purchase_token",
+      };
+    }
 
-  return {
-    purchaseStatus: "expired",
-    expiresAt,
-    reason: subscriptionState.toLowerCase() || "unknown_state",
-    storePayload: purchase as Record<string, unknown>,
-  };
+    if (status === 401 || status === 403) {
+      logger.error("Google Play verification permission error.", {
+        packageName: PACKAGE_NAME,
+        status,
+        message: apiError.message ?? null,
+        responseData: apiError.response?.data ?? null,
+      });
+
+      return {
+        purchaseStatus: "pending",
+        expiresAt: null,
+        reason: "play_api_access_denied",
+      };
+    }
+
+    logger.error("Unexpected Google Play verification error.", {
+      packageName: PACKAGE_NAME,
+      status: status ?? null,
+      message: apiError.message ?? null,
+      responseData: apiError.response?.data ?? null,
+    });
+
+    throw error;
+  }
 }
 
 /**
