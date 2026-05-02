@@ -10,20 +10,16 @@ final profileViewModelProvider = Provider<ProfileViewModel>((ref) {
   final profileAsync = ref.watch(profileProvider);
   final formController = ref.watch(profileFormControllerProvider);
 
-  final profile = profileAsync.valueOrNull;
-
-  if (profile != null) {
-    ref.read(profileFormControllerProvider).hydrate(profile);
-  }
-
   return ProfileViewModel(
-    profile: profile,
+    profile: profileAsync.valueOrNull,
     isLoading: profileAsync.isLoading,
     hasError: profileAsync.hasError,
     isSaving: formController.isSaving,
     isDeleting: formController.isDeleting,
     usernameController: formController.usernameController,
-    avatarImage: formController.resolveAvatarImage(profile?.photoUrl),
+    avatarImage: formController.resolveAvatarImage(
+      profileAsync.valueOrNull?.photoUrl,
+    ),
   );
 });
 
