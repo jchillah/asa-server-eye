@@ -54,26 +54,22 @@ class ServerSyncController extends StateNotifier<AsyncValue<ServerSyncState>> {
     }
 
     try {
-      final result = await _repository.fetchServers();
+      final snapshot = await _repository.fetchServers();
 
       if (!mounted) {
         return;
       }
 
-      state = AsyncValue.data(
-        ServerSyncState(
-          servers: result.servers,
-          lastUpdatedAt: result.lastUpdatedAt,
-          isFromCache: result.isFromCache,
-        ),
-      );
+      state = AsyncValue.data(ServerSyncState.fromSnapshot(snapshot));
     } catch (error, stackTrace) {
       if (!mounted) {
         return;
       }
 
       if (previous.hasValue) {
-        state = previous;
+        final previousState = previous.requireValue;
+
+        state = AsyncValue.data(previousState.copyWith(lastError: error));
       } else {
         state = AsyncValue.error(error, stackTrace);
       }

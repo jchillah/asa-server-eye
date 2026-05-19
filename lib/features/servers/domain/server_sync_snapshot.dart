@@ -1,8 +1,8 @@
-// features/servers/data/cached_servers_result.dart
-import '../domain/server.dart';
+// features/servers/domain/server_sync_snapshot.dart
+import 'server.dart';
 
-class CachedServersResult {
-  const CachedServersResult({
+class ServerSyncSnapshot {
+  const ServerSyncSnapshot({
     required this.servers,
     required this.isFromCache,
     this.lastUpdatedAt,
@@ -11,4 +11,6 @@ class CachedServersResult {
   final List<Server> servers;
   final DateTime? lastUpdatedAt;
   final bool isFromCache;
+
+  bool get hasServers => servers.isNotEmpty;
 }

@@ -1,16 +1,31 @@
 // features/servers/presentation/state/server_sync_state.dart
 import '../../domain/server.dart';
+import '../../domain/server_sync_snapshot.dart';
 
 class ServerSyncState {
-  const ServerSyncState({
-    required this.servers,
-    required this.isFromCache,
-    this.lastUpdatedAt,
-  });
+  const ServerSyncState({required this.snapshot, this.lastError});
 
-  final List<Server> servers;
-  final DateTime? lastUpdatedAt;
-  final bool isFromCache;
+  factory ServerSyncState.fromSnapshot(ServerSyncSnapshot snapshot) {
+    return ServerSyncState(snapshot: snapshot);
+  }
 
-  bool get hasServers => servers.isNotEmpty;
+  final ServerSyncSnapshot snapshot;
+  final Object? lastError;
+
+  List<Server> get servers => snapshot.servers;
+  DateTime? get lastUpdatedAt => snapshot.lastUpdatedAt;
+  bool get isFromCache => snapshot.isFromCache;
+  bool get hasServers => snapshot.hasServers;
+  bool get hasLastError => lastError != null;
+
+  ServerSyncState copyWith({
+    ServerSyncSnapshot? snapshot,
+    Object? lastError,
+    bool clearLastError = false,
+  }) {
+    return ServerSyncState(
+      snapshot: snapshot ?? this.snapshot,
+      lastError: clearLastError ? null : lastError ?? this.lastError,
+    );
+  }
 }

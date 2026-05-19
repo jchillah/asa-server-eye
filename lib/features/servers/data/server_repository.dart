@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 
 import '../../../core/utils/app_logger.dart';
 import '../domain/server.dart';
-import 'cached_servers_result.dart';
+import '../domain/server_sync_snapshot.dart';
 import 'server_cache_repository.dart';
 
 enum ServerRepositoryExceptionType { network, timeout, invalidFormat, unknown }
@@ -68,7 +68,7 @@ class ServerRepository {
         error.type == DioExceptionType.sendTimeout;
   }
 
-  Future<CachedServersResult> fetchServers() async {
+  Future<ServerSyncSnapshot> fetchServers() async {
     try {
       final servers = await _fetchServersFromNetwork();
       await _cacheRepository.saveServers(servers);
@@ -78,7 +78,7 @@ class ServerRepository {
 
       final lastUpdatedAt = _cacheRepository.getLastUpdatedAt();
 
-      return CachedServersResult(
+      return ServerSyncSnapshot(
         servers: servers,
         lastUpdatedAt: lastUpdatedAt,
         isFromCache: false,
@@ -93,27 +93,21 @@ class ServerRepository {
     }
   }
 
-  Future<CachedServersResult> _loadFromCacheOrThrow(
+  Future<ServerSyncSnapshot> _loadFromCacheOrThrow(
     ServerRepositoryException originalError,
   ) async {
     final cachedServers = await _cacheRepository.getCachedServers();
 
     if (cachedServers == null || cachedServers.isEmpty) {
-      AppLogger.warning(
-        'ServerRepository',
-        'No cached servers available.',
-      );
+      AppLogger.warning('ServerRepository', 'No cached servers available.');
       throw originalError;
     }
 
     final lastUpdatedAt = _cacheRepository.getLastUpdatedAt();
 
-    AppLogger.info(
-      'ServerRepository',
-      'Loaded servers from cache fallback.',
-    );
+    AppLogger.info('ServerRepository', 'Loaded servers from cache fallback.');
 
-    return CachedServersResult(
+    return ServerSyncSnapshot(
       servers: cachedServers,
       lastUpdatedAt: lastUpdatedAt,
       isFromCache: true,
