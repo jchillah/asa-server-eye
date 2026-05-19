@@ -1,6 +1,7 @@
 // features/servers/presentation/state/server_sync_state.dart
 import '../../domain/server.dart';
 import '../../domain/server_sync_snapshot.dart';
+import 'server_sync_error.dart';
 
 class ServerSyncState {
   const ServerSyncState({required this.snapshot, this.lastError});
@@ -10,7 +11,7 @@ class ServerSyncState {
   }
 
   final ServerSyncSnapshot snapshot;
-  final Object? lastError;
+  final ServerSyncError? lastError;
 
   List<Server> get servers => snapshot.servers;
   DateTime? get lastUpdatedAt => snapshot.lastUpdatedAt;
@@ -20,7 +21,7 @@ class ServerSyncState {
 
   ServerSyncState copyWith({
     ServerSyncSnapshot? snapshot,
-    Object? lastError,
+    ServerSyncError? lastError,
     bool clearLastError = false,
   }) {
     return ServerSyncState(

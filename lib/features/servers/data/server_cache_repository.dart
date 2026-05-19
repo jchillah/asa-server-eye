@@ -13,12 +13,25 @@ class ServerCacheRepository {
 
   static const _logTag = 'ServerCacheRepository';
 
-  static const _cacheNamespace = 'asa_server_eye.servers.v1';
+  /// Cache namespace strategy:
+  ///
+  /// Increase [_cacheSchemaVersion] whenever the cached server JSON shape changes
+  /// in a breaking way. This prevents new app versions from reading stale cache
+  /// entries written by older schemas.
+  static const _cacheSchemaVersion = 1;
+  static const _cacheNamespace = 'asa_server_eye.servers.v$_cacheSchemaVersion';
+
   static const _serversJsonKey = '$_cacheNamespace.cached_servers_json';
   static const _lastUpdatedAtKey =
       '$_cacheNamespace.cached_servers_last_updated_at';
 
-  Future<void> saveServers(List<Server> servers) async {
+  static const _tempServersJsonKey = '$_serversJsonKey.tmp';
+  static const _tempLastUpdatedAtKey = '$_lastUpdatedAtKey.tmp';
+
+  Future<void> saveServers(
+    List<Server> servers, {
+    required DateTime lastUpdatedAt,
+  }) async {
     try {
       final validServers = servers
           .where((server) => server.id.trim().isNotEmpty)
@@ -33,7 +46,27 @@ class ServerCacheRepository {
       }
 
       final encoded = jsonEncode(validServers.map(_encodeServer).toList());
-      final lastUpdatedAt = DateTime.now().toUtc();
+      final normalizedLastUpdatedAt = lastUpdatedAt.toUtc();
+
+      final didWriteTempServers = await _preferences.setString(
+        _tempServersJsonKey,
+        encoded,
+      );
+
+      final didWriteTempTimestamp = await _preferences.setString(
+        _tempLastUpdatedAtKey,
+        normalizedLastUpdatedAt.toIso8601String(),
+      );
+
+      if (!didWriteTempServers || !didWriteTempTimestamp) {
+        await _clearTempServersCache();
+
+        AppLogger.warning(
+          _logTag,
+          'SharedPreferences reported an unsuccessful temporary cache write.',
+        );
+        return;
+      }
 
       final didSaveServers = await _preferences.setString(
         _serversJsonKey,
@@ -42,19 +75,29 @@ class ServerCacheRepository {
 
       final didSaveTimestamp = await _preferences.setString(
         _lastUpdatedAtKey,
-        lastUpdatedAt.toIso8601String(),
+        normalizedLastUpdatedAt.toIso8601String(),
       );
 
+      await _clearTempServersCache();
+
       if (!didSaveServers || !didSaveTimestamp) {
+        await _clearServersCache();
+
         AppLogger.warning(
           _logTag,
-          'SharedPreferences reported an unsuccessful cache write.',
+          'SharedPreferences reported an unsuccessful cache commit. Cleared cache to avoid inconsistent state.',
         );
         return;
       }
 
-      AppLogger.info(_logTag, 'Saved ${validServers.length} servers to cache.');
+      AppLogger.info(
+        _logTag,
+        'Saved ${validServers.length} servers to cache '
+        '(lastUpdatedAt: $normalizedLastUpdatedAt).',
+      );
     } catch (error, stackTrace) {
+      await _clearTempServersCache();
+
       AppLogger.error(
         _logTag,
         'Failed to save servers to cache. Existing cache was left untouched.',
@@ -171,6 +214,12 @@ class ServerCacheRepository {
   Future<void> _clearServersCache() async {
     await _preferences.remove(_serversJsonKey);
     await _preferences.remove(_lastUpdatedAtKey);
+    await _clearTempServersCache();
+  }
+
+  Future<void> _clearTempServersCache() async {
+    await _preferences.remove(_tempServersJsonKey);
+    await _preferences.remove(_tempLastUpdatedAtKey);
   }
 
   static Map<String, dynamic> _encodeServer(Server server) {

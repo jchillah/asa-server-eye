@@ -71,12 +71,12 @@ class ServerRepository {
   Future<ServerSyncSnapshot> fetchServers() async {
     try {
       final servers = await _fetchServersFromNetwork();
-      await _cacheRepository.saveServers(servers);
+      final lastUpdatedAt = DateTime.now().toUtc();
+
+      await _cacheRepository.saveServers(servers, lastUpdatedAt: lastUpdatedAt);
 
       AppLogger.info('ServerRepository', 'Loaded servers from network.');
       AppLogger.info('ServerRepository', 'Saved servers to cache.');
-
-      final lastUpdatedAt = _cacheRepository.getLastUpdatedAt();
 
       return ServerSyncSnapshot(
         servers: servers,

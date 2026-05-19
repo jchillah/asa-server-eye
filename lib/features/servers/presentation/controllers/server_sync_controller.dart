@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/server_repository.dart';
+import '../state/server_sync_error.dart';
 import '../state/server_sync_state.dart';
 
 class ServerSyncController extends StateNotifier<AsyncValue<ServerSyncState>> {
@@ -69,7 +70,15 @@ class ServerSyncController extends StateNotifier<AsyncValue<ServerSyncState>> {
       if (previous.hasValue) {
         final previousState = previous.requireValue;
 
-        state = AsyncValue.data(previousState.copyWith(lastError: error));
+        state = AsyncValue.data(
+          previousState.copyWith(
+            lastError: ServerSyncError(
+              error: error,
+              stackTrace: stackTrace,
+              occurredAt: DateTime.now().toUtc(),
+            ),
+          ),
+        );
       } else {
         state = AsyncValue.error(error, stackTrace);
       }
