@@ -72,12 +72,11 @@ class ServerSyncController extends StateNotifier<AsyncValue<ServerSyncState>> {
         return;
       }
 
-      state = previous.hasValue
-          ? AsyncValue<ServerSyncState>.error(
-              error,
-              stackTrace,
-            ).copyWithPrevious(previous)
-          : AsyncValue.error(error, stackTrace);
+      if (previous.hasValue) {
+        state = previous;
+      } else {
+        state = AsyncValue.error(error, stackTrace);
+      }
     } finally {
       _isFetching = false;
     }

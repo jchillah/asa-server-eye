@@ -13,8 +13,10 @@ class ServerCacheRepository {
 
   static const _logTag = 'ServerCacheRepository';
 
-  static const _serversJsonKey = 'cached_servers_json';
-  static const _lastUpdatedAtKey = 'cached_servers_last_updated_at';
+  static const _cacheNamespace = 'asa_server_eye.servers.v1';
+  static const _serversJsonKey = '$_cacheNamespace.cached_servers_json';
+  static const _lastUpdatedAtKey =
+      '$_cacheNamespace.cached_servers_last_updated_at';
 
   Future<void> saveServers(List<Server> servers) async {
     try {
@@ -80,25 +82,32 @@ class ServerCacheRepository {
       }
 
       final servers = <Server>[];
+      var skippedItems = 0;
 
       for (final item in decoded) {
         if (item is! Map) {
-          await _clearCorruptedServersCache(
-            reason:
-                'Cached server data contains a non-map entry. Cleared corrupted cache.',
+          skippedItems++;
+
+          AppLogger.warning(
+            _logTag,
+            'Skipped cached server item because it is not a JSON object.',
           );
-          return null;
+
+          continue;
         }
 
         final json = Map<String, dynamic>.from(item);
         final server = _decodeServer(json);
 
         if (server == null) {
-          await _clearCorruptedServersCache(
-            reason:
-                'Cached server data contains an entry with an invalid or empty id. Cleared corrupted cache.',
+          skippedItems++;
+
+          AppLogger.warning(
+            _logTag,
+            'Skipped cached server item because id is missing or empty.',
           );
-          return null;
+
+          continue;
         }
 
         servers.add(server);
@@ -117,7 +126,7 @@ class ServerCacheRepository {
       AppLogger.info(
         _logTag,
         'Loaded ${servers.length} servers from cache '
-        '(lastUpdatedAt: $lastUpdatedAt).',
+        '(skippedItems: $skippedItems, lastUpdatedAt: $lastUpdatedAt).',
       );
 
       return servers;
