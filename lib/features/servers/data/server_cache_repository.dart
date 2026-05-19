@@ -98,7 +98,7 @@ class ServerCacheRepository {
   }
 
   Future<List<Server>?> getCachedServers() async {
-    final cache = _readCacheBlob();
+    final cache = await _readCacheBlob();
 
     if (cache == null) {
       return null;
@@ -123,8 +123,8 @@ class ServerCacheRepository {
     return servers;
   }
 
-  DateTime? getLastUpdatedAt() {
-    return _readCacheBlob()?.lastUpdatedAt;
+  Future<DateTime?> getLastUpdatedAt() async {
+    return (await _readCacheBlob())?.lastUpdatedAt;
   }
 
   Future<void> clear() async {
@@ -133,7 +133,7 @@ class ServerCacheRepository {
     AppLogger.info(_logTag, 'Cleared cached server data.');
   }
 
-  _DecodedServerCache? _readCacheBlob() {
+  Future<_DecodedServerCache?> _readCacheBlob() async {
     final encoded = _preferences.getString(_cacheBlobKey);
 
     if (encoded == null || encoded.isEmpty) {
@@ -144,7 +144,7 @@ class ServerCacheRepository {
       final decoded = jsonDecode(encoded);
 
       if (decoded is! Map) {
-        _scheduleCorruptedCacheClear(
+        await _clearCorruptedServersCache(
           reason: 'Cached server data is not a JSON object.',
         );
         return null;
@@ -154,7 +154,7 @@ class ServerCacheRepository {
 
       final schemaVersion = _readInt(json['schemaVersion']);
       if (schemaVersion != _cacheSchemaVersion) {
-        _scheduleCorruptedCacheClear(
+        await _clearCorruptedServersCache(
           reason:
               'Cached server schema version mismatch. Expected $_cacheSchemaVersion but got $schemaVersion.',
         );
@@ -164,7 +164,7 @@ class ServerCacheRepository {
       final lastUpdatedAt = _readDateTime(json['lastUpdatedAt']);
 
       if (lastUpdatedAt == null) {
-        _scheduleCorruptedCacheClear(
+        await _clearCorruptedServersCache(
           reason: 'Cached server data has no valid lastUpdatedAt timestamp.',
         );
         return null;
@@ -173,7 +173,7 @@ class ServerCacheRepository {
       final rawServers = json['servers'];
 
       if (rawServers is! List) {
-        _scheduleCorruptedCacheClear(
+        await _clearCorruptedServersCache(
           reason: 'Cached server data servers field is not a JSON array.',
         );
         return null;
@@ -217,7 +217,9 @@ class ServerCacheRepository {
         skippedItems: skippedItems,
       );
     } catch (error, stackTrace) {
-      _scheduleCorruptedCacheClear(reason: 'Failed to decode cached servers.');
+      await _clearCorruptedServersCache(
+        reason: 'Failed to decode cached servers.',
+      );
 
       AppLogger.error(
         _logTag,
@@ -228,14 +230,6 @@ class ServerCacheRepository {
 
       return null;
     }
-  }
-
-  void _scheduleCorruptedCacheClear({required String reason}) {
-    AppLogger.warning(_logTag, '$reason Clearing corrupted cache.');
-
-    Future<void>(() async {
-      await _clearServersCache();
-    });
   }
 
   Future<void> _clearCorruptedServersCache({required String reason}) async {

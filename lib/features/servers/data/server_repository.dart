@@ -111,7 +111,7 @@ class ServerRepository {
       throw originalError;
     }
 
-    final lastUpdatedAt = _cacheRepository.getLastUpdatedAt();
+    final lastUpdatedAt = await _cacheRepository.getLastUpdatedAt();
     final cacheAge = _calculateCacheAge(lastUpdatedAt);
     final isStale = cacheAge == null || cacheAge > _maxCacheAge;
 

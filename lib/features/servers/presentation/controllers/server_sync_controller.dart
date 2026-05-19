@@ -70,6 +70,10 @@ class ServerSyncController extends StateNotifier<AsyncValue<ServerSyncState>> {
       if (previous.hasValue) {
         final previousState = previous.requireValue;
 
+        // Deliberately keep stale-but-valid server data visible after transient
+        // refresh failures. Consumers that need to react to these failures
+        // should use serverSyncErrorProvider instead of relying only on
+        // AsyncValue.when(error: ...).
         state = AsyncValue.data(
           previousState.copyWith(
             lastError: ServerSyncError(
