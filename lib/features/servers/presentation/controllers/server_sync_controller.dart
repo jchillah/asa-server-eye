@@ -54,13 +54,13 @@ class ServerSyncController extends StateNotifier<AsyncValue<List<Server>>> {
     }
 
     try {
-      final servers = await _repository.fetchServers();
+      final result = await _repository.fetchServers();
 
       if (!mounted) {
         return;
       }
 
-      state = AsyncValue.data(servers);
+      state = AsyncValue.data(result.servers);
     } catch (error, stackTrace) {
       if (!mounted) {
         return;

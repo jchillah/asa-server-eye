@@ -5,6 +5,8 @@ import 'package:dio/dio.dart';
 
 import '../../../core/utils/app_logger.dart';
 import '../domain/server.dart';
+import 'cached_servers_result.dart';
+import 'server_cache_repository.dart';
 
 enum ServerRepositoryExceptionType { network, timeout, invalidFormat, unknown }
 
@@ -52,9 +54,10 @@ class ServerRepositoryException implements Exception {
 }
 
 class ServerRepository {
-  ServerRepository(this._dio);
+  ServerRepository(this._dio, this._cacheRepository);
 
   final Dio _dio;
+  final ServerCacheRepository _cacheRepository;
 
   static const _url =
       'https://cdn2.arkdedicated.com/servers/asa/officialserverlist.json';
@@ -65,7 +68,59 @@ class ServerRepository {
         error.type == DioExceptionType.sendTimeout;
   }
 
-  Future<List<Server>> fetchServers() async {
+  Future<CachedServersResult> fetchServers() async {
+    try {
+      final servers = await _fetchServersFromNetwork();
+      await _cacheRepository.saveServers(servers);
+
+      AppLogger.info('ServerRepository', 'Loaded servers from network.');
+      AppLogger.info('ServerRepository', 'Saved servers to cache.');
+
+      final lastUpdatedAt = await _cacheRepository.getLastUpdatedAt();
+
+      return CachedServersResult(
+        servers: servers,
+        lastUpdatedAt: lastUpdatedAt,
+        isFromCache: false,
+      );
+    } on ServerRepositoryException catch (error) {
+      if (error.type != ServerRepositoryExceptionType.network &&
+          error.type != ServerRepositoryExceptionType.timeout) {
+        rethrow;
+      }
+
+      return _loadFromCacheOrThrow(error);
+    }
+  }
+
+  Future<CachedServersResult> _loadFromCacheOrThrow(
+    ServerRepositoryException originalError,
+  ) async {
+    final cachedServers = await _cacheRepository.getCachedServers();
+
+    if (cachedServers == null || cachedServers.isEmpty) {
+      AppLogger.warning(
+        'ServerRepository',
+        'No cached servers available.',
+      );
+      throw originalError;
+    }
+
+    final lastUpdatedAt = await _cacheRepository.getLastUpdatedAt();
+
+    AppLogger.info(
+      'ServerRepository',
+      'Loaded servers from cache fallback.',
+    );
+
+    return CachedServersResult(
+      servers: cachedServers,
+      lastUpdatedAt: lastUpdatedAt,
+      isFromCache: true,
+    );
+  }
+
+  Future<List<Server>> _fetchServersFromNetwork() async {
     try {
       final response = await _dio.get<List<dynamic>>(_url);
       final Object? rawData = response.data;
