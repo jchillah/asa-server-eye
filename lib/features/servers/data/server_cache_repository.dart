@@ -11,23 +11,55 @@ class ServerCacheRepository {
 
   final SharedPreferences _preferences;
 
+  static const _logTag = 'ServerCacheRepository';
+
   static const _serversJsonKey = 'cached_servers_json';
   static const _lastUpdatedAtKey = 'cached_servers_last_updated_at';
 
   Future<void> saveServers(List<Server> servers) async {
-    final encoded = jsonEncode(servers.map(_encodeServer).toList());
-    final lastUpdatedAt = DateTime.now().toUtc();
+    try {
+      final validServers = servers
+          .where((server) => server.id.trim().isNotEmpty)
+          .toList(growable: false);
 
-    await _preferences.setString(_serversJsonKey, encoded);
-    await _preferences.setString(
-      _lastUpdatedAtKey,
-      lastUpdatedAt.toIso8601String(),
-    );
+      if (validServers.isEmpty) {
+        AppLogger.warning(
+          _logTag,
+          'Skipped saving server cache because no valid servers were provided.',
+        );
+        return;
+      }
 
-    AppLogger.info(
-      'ServerCacheRepository',
-      'Saved ${servers.length} servers to cache.',
-    );
+      final encoded = jsonEncode(validServers.map(_encodeServer).toList());
+      final lastUpdatedAt = DateTime.now().toUtc();
+
+      final didSaveServers = await _preferences.setString(
+        _serversJsonKey,
+        encoded,
+      );
+
+      final didSaveTimestamp = await _preferences.setString(
+        _lastUpdatedAtKey,
+        lastUpdatedAt.toIso8601String(),
+      );
+
+      if (!didSaveServers || !didSaveTimestamp) {
+        AppLogger.warning(
+          _logTag,
+          'SharedPreferences reported an unsuccessful cache write.',
+        );
+        return;
+      }
+
+      AppLogger.info(_logTag, 'Saved ${validServers.length} servers to cache.');
+    } catch (error, stackTrace) {
+      AppLogger.error(
+        _logTag,
+        'Failed to save servers to cache. Existing cache was left untouched.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
   }
 
   Future<List<Server>?> getCachedServers() async {
@@ -41,10 +73,8 @@ class ServerCacheRepository {
       final decoded = jsonDecode(encoded);
 
       if (decoded is! List) {
-        await _clearServersCache();
-        AppLogger.warning(
-          'ServerCacheRepository',
-          'Cached server data is not a JSON array. Cleared corrupted cache.',
+        await _clearCorruptedServersCache(
+          reason: 'Cached server data is not a JSON array.',
         );
         return null;
       }
@@ -52,33 +82,57 @@ class ServerCacheRepository {
       final servers = <Server>[];
 
       for (final item in decoded) {
-        if (item is! Map<String, dynamic>) {
-          continue;
+        if (item is! Map) {
+          await _clearCorruptedServersCache(
+            reason:
+                'Cached server data contains a non-map entry. Cleared corrupted cache.',
+          );
+          return null;
         }
 
-        servers.add(_decodeServer(item));
+        final json = Map<String, dynamic>.from(item);
+        final server = _decodeServer(json);
+
+        if (server == null) {
+          await _clearCorruptedServersCache(
+            reason:
+                'Cached server data contains an entry with an invalid or empty id. Cleared corrupted cache.',
+          );
+          return null;
+        }
+
+        servers.add(server);
       }
 
       if (servers.isEmpty) {
+        await _clearCorruptedServersCache(
+          reason:
+              'Cached server data did not contain any valid servers. Cleared corrupted cache.',
+        );
         return null;
       }
 
       final lastUpdatedAt = getLastUpdatedAt();
+
       AppLogger.info(
-        'ServerCacheRepository',
+        _logTag,
         'Loaded ${servers.length} servers from cache '
         '(lastUpdatedAt: $lastUpdatedAt).',
       );
 
       return servers;
     } catch (error, stackTrace) {
-      await _clearServersCache();
+      await _clearCorruptedServersCache(
+        reason: 'Failed to decode cached servers.',
+      );
+
       AppLogger.error(
-        'ServerCacheRepository',
+        _logTag,
         'Failed to decode cached servers. Cleared corrupted cache.',
         error: error,
         stackTrace: stackTrace,
       );
+
       return null;
     }
   }
@@ -96,7 +150,13 @@ class ServerCacheRepository {
   Future<void> clear() async {
     await _clearServersCache();
 
-    AppLogger.info('ServerCacheRepository', 'Cleared cached server data.');
+    AppLogger.info(_logTag, 'Cleared cached server data.');
+  }
+
+  Future<void> _clearCorruptedServersCache({required String reason}) async {
+    await _clearServersCache();
+
+    AppLogger.warning(_logTag, reason);
   }
 
   Future<void> _clearServersCache() async {
@@ -106,24 +166,40 @@ class ServerCacheRepository {
 
   static Map<String, dynamic> _encodeServer(Server server) {
     return {
-      'id': server.id,
-      'name': server.name,
-      'map': server.map,
+      'id': server.id.trim(),
+      'name': server.name.trim(),
+      'map': server.map.trim(),
       'players': server.players,
       'maxPlayers': server.maxPlayers,
       'official': server.official,
     };
   }
 
-  static Server _decodeServer(Map<String, dynamic> json) {
+  static Server? _decodeServer(Map<String, dynamic> json) {
+    final id = json['id']?.toString().trim() ?? '';
+
+    if (id.isEmpty) {
+      return null;
+    }
+
     return Server(
-      id: json['id']?.toString() ?? '',
-      name: json['name']?.toString() ?? 'Unknown Server',
-      map: json['map']?.toString() ?? 'Unknown Map',
+      id: id,
+      name: _readNonEmptyString(json['name'], fallback: 'Unknown Server'),
+      map: _readNonEmptyString(json['map'], fallback: 'Unknown Map'),
       players: _readInt(json['players']),
       maxPlayers: _readInt(json['maxPlayers']),
-      official: json['official'] == true,
+      official: _readBool(json['official']),
     );
+  }
+
+  static String _readNonEmptyString(Object? value, {required String fallback}) {
+    final normalized = value?.toString().trim();
+
+    if (normalized == null || normalized.isEmpty) {
+      return fallback;
+    }
+
+    return normalized;
   }
 
   static int _readInt(Object? value) {
@@ -136,9 +212,26 @@ class ServerCacheRepository {
     }
 
     if (value is String) {
-      return int.tryParse(value) ?? 0;
+      return int.tryParse(value.trim()) ?? 0;
     }
 
     return 0;
+  }
+
+  static bool _readBool(Object? value) {
+    if (value is bool) {
+      return value;
+    }
+
+    if (value is int) {
+      return value == 1;
+    }
+
+    if (value is String) {
+      final normalized = value.trim().toLowerCase();
+      return normalized == 'true' || normalized == '1';
+    }
+
+    return false;
   }
 }
