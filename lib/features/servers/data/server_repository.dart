@@ -76,7 +76,7 @@ class ServerRepository {
       AppLogger.info('ServerRepository', 'Loaded servers from network.');
       AppLogger.info('ServerRepository', 'Saved servers to cache.');
 
-      final lastUpdatedAt = await _cacheRepository.getLastUpdatedAt();
+      final lastUpdatedAt = _cacheRepository.getLastUpdatedAt();
 
       return CachedServersResult(
         servers: servers,
@@ -106,7 +106,7 @@ class ServerRepository {
       throw originalError;
     }
 
-    final lastUpdatedAt = await _cacheRepository.getLastUpdatedAt();
+    final lastUpdatedAt = _cacheRepository.getLastUpdatedAt();
 
     AppLogger.info(
       'ServerRepository',

@@ -7,22 +7,19 @@ import '../../../core/utils/app_logger.dart';
 import '../domain/server.dart';
 
 class ServerCacheRepository {
+  ServerCacheRepository(this._preferences);
+
+  final SharedPreferences _preferences;
+
   static const _serversJsonKey = 'cached_servers_json';
   static const _lastUpdatedAtKey = 'cached_servers_last_updated_at';
 
-  SharedPreferences? _preferences;
-
-  Future<SharedPreferences> get _prefs async {
-    return _preferences ??= await SharedPreferences.getInstance();
-  }
-
   Future<void> saveServers(List<Server> servers) async {
-    final prefs = await _prefs;
     final encoded = jsonEncode(servers.map(_encodeServer).toList());
     final lastUpdatedAt = DateTime.now().toUtc();
 
-    await prefs.setString(_serversJsonKey, encoded);
-    await prefs.setString(
+    await _preferences.setString(_serversJsonKey, encoded);
+    await _preferences.setString(
       _lastUpdatedAtKey,
       lastUpdatedAt.toIso8601String(),
     );
@@ -34,8 +31,7 @@ class ServerCacheRepository {
   }
 
   Future<List<Server>?> getCachedServers() async {
-    final prefs = await _prefs;
-    final encoded = prefs.getString(_serversJsonKey);
+    final encoded = _preferences.getString(_serversJsonKey);
 
     if (encoded == null || encoded.isEmpty) {
       return null;
@@ -45,9 +41,10 @@ class ServerCacheRepository {
       final decoded = jsonDecode(encoded);
 
       if (decoded is! List) {
+        await _clearServersCache();
         AppLogger.warning(
           'ServerCacheRepository',
-          'Cached server data is not a JSON array.',
+          'Cached server data is not a JSON array. Cleared corrupted cache.',
         );
         return null;
       }
@@ -62,11 +59,23 @@ class ServerCacheRepository {
         servers.add(_decodeServer(item));
       }
 
-      return servers.isEmpty ? null : servers;
+      if (servers.isEmpty) {
+        return null;
+      }
+
+      final lastUpdatedAt = getLastUpdatedAt();
+      AppLogger.info(
+        'ServerCacheRepository',
+        'Loaded ${servers.length} servers from cache '
+        '(lastUpdatedAt: $lastUpdatedAt).',
+      );
+
+      return servers;
     } catch (error, stackTrace) {
+      await _clearServersCache();
       AppLogger.error(
         'ServerCacheRepository',
-        'Failed to decode cached servers.',
+        'Failed to decode cached servers. Cleared corrupted cache.',
         error: error,
         stackTrace: stackTrace,
       );
@@ -74,9 +83,8 @@ class ServerCacheRepository {
     }
   }
 
-  Future<DateTime?> getLastUpdatedAt() async {
-    final prefs = await _prefs;
-    final value = prefs.getString(_lastUpdatedAtKey);
+  DateTime? getLastUpdatedAt() {
+    final value = _preferences.getString(_lastUpdatedAtKey);
 
     if (value == null || value.isEmpty) {
       return null;
@@ -86,11 +94,14 @@ class ServerCacheRepository {
   }
 
   Future<void> clear() async {
-    final prefs = await _prefs;
-    await prefs.remove(_serversJsonKey);
-    await prefs.remove(_lastUpdatedAtKey);
+    await _clearServersCache();
 
     AppLogger.info('ServerCacheRepository', 'Cleared cached server data.');
+  }
+
+  Future<void> _clearServersCache() async {
+    await _preferences.remove(_serversJsonKey);
+    await _preferences.remove(_lastUpdatedAtKey);
   }
 
   static Map<String, dynamic> _encodeServer(Server server) {
