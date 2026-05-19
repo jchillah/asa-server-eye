@@ -16,6 +16,8 @@ class ServerSyncState {
   List<Server> get servers => snapshot.servers;
   DateTime? get lastUpdatedAt => snapshot.lastUpdatedAt;
   bool get isFromCache => snapshot.isFromCache;
+  bool get isStale => snapshot.isStale;
+  Duration? get cacheAge => snapshot.cacheAge;
   bool get hasServers => snapshot.hasServers;
   bool get hasLastError => lastError != null;
 

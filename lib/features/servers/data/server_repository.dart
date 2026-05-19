@@ -62,6 +62,12 @@ class ServerRepository {
   static const _url =
       'https://cdn2.arkdedicated.com/servers/asa/officialserverlist.json';
 
+  /// Maximum age after which cached server data is considered stale.
+  ///
+  /// We still return stale cache data to keep the app useful offline, but the
+  /// UI can now detect this via [ServerSyncSnapshot.isStale].
+  static const _maxCacheAge = Duration(hours: 1);
+
   static bool _isTimeoutException(DioException error) {
     return error.type == DioExceptionType.connectionTimeout ||
         error.type == DioExceptionType.receiveTimeout ||
@@ -82,6 +88,8 @@ class ServerRepository {
         servers: servers,
         lastUpdatedAt: lastUpdatedAt,
         isFromCache: false,
+        isStale: false,
+        cacheAge: Duration.zero,
       );
     } on ServerRepositoryException catch (error) {
       if (error.type != ServerRepositoryExceptionType.network &&
@@ -104,14 +112,37 @@ class ServerRepository {
     }
 
     final lastUpdatedAt = _cacheRepository.getLastUpdatedAt();
+    final cacheAge = _calculateCacheAge(lastUpdatedAt);
+    final isStale = cacheAge == null || cacheAge > _maxCacheAge;
 
-    AppLogger.info('ServerRepository', 'Loaded servers from cache fallback.');
+    AppLogger.info(
+      'ServerRepository',
+      'Loaded servers from cache fallback '
+          '(cacheAge: ${cacheAge?.inMinutes} minutes, isStale: $isStale).',
+    );
 
     return ServerSyncSnapshot(
       servers: cachedServers,
       lastUpdatedAt: lastUpdatedAt,
       isFromCache: true,
+      isStale: isStale,
+      cacheAge: cacheAge,
     );
+  }
+
+  Duration? _calculateCacheAge(DateTime? lastUpdatedAt) {
+    if (lastUpdatedAt == null) {
+      return null;
+    }
+
+    final now = DateTime.now().toUtc();
+    final normalizedLastUpdatedAt = lastUpdatedAt.toUtc();
+
+    if (normalizedLastUpdatedAt.isAfter(now)) {
+      return Duration.zero;
+    }
+
+    return now.difference(normalizedLastUpdatedAt);
   }
 
   Future<List<Server>> _fetchServersFromNetwork() async {
