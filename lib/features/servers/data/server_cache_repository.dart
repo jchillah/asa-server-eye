@@ -18,15 +18,11 @@ class ServerCacheRepository {
   /// Increase [_cacheSchemaVersion] whenever the cached server JSON shape changes
   /// in a breaking way. This prevents new app versions from reading stale cache
   /// entries written by older schemas.
-  static const _cacheSchemaVersion = 1;
+  static const _cacheSchemaVersion = 2;
   static const _cacheNamespace = 'asa_server_eye.servers.v$_cacheSchemaVersion';
 
-  static const _serversJsonKey = '$_cacheNamespace.cached_servers_json';
-  static const _lastUpdatedAtKey =
-      '$_cacheNamespace.cached_servers_last_updated_at';
-
-  static const _tempServersJsonKey = '$_serversJsonKey.tmp';
-  static const _tempLastUpdatedAtKey = '$_lastUpdatedAtKey.tmp';
+  static const _cacheBlobKey = '$_cacheNamespace.cache_blob';
+  static const _tempCacheBlobKey = '$_cacheBlobKey.tmp';
 
   Future<void> saveServers(
     List<Server> servers, {
@@ -45,20 +41,22 @@ class ServerCacheRepository {
         return;
       }
 
-      final encoded = jsonEncode(validServers.map(_encodeServer).toList());
       final normalizedLastUpdatedAt = lastUpdatedAt.toUtc();
 
-      final didWriteTempServers = await _preferences.setString(
-        _tempServersJsonKey,
+      final cacheBlob = <String, dynamic>{
+        'schemaVersion': _cacheSchemaVersion,
+        'lastUpdatedAt': normalizedLastUpdatedAt.toIso8601String(),
+        'servers': validServers.map(_encodeServer).toList(),
+      };
+
+      final encoded = jsonEncode(cacheBlob);
+
+      final didWriteTempBlob = await _preferences.setString(
+        _tempCacheBlobKey,
         encoded,
       );
 
-      final didWriteTempTimestamp = await _preferences.setString(
-        _tempLastUpdatedAtKey,
-        normalizedLastUpdatedAt.toIso8601String(),
-      );
-
-      if (!didWriteTempServers || !didWriteTempTimestamp) {
+      if (!didWriteTempBlob) {
         await _clearTempServersCache();
 
         AppLogger.warning(
@@ -68,19 +66,11 @@ class ServerCacheRepository {
         return;
       }
 
-      final didSaveServers = await _preferences.setString(
-        _serversJsonKey,
-        encoded,
-      );
-
-      final didSaveTimestamp = await _preferences.setString(
-        _lastUpdatedAtKey,
-        normalizedLastUpdatedAt.toIso8601String(),
-      );
+      final didSaveBlob = await _preferences.setString(_cacheBlobKey, encoded);
 
       await _clearTempServersCache();
 
-      if (!didSaveServers || !didSaveTimestamp) {
+      if (!didSaveBlob) {
         await _clearServersCache();
 
         AppLogger.warning(
@@ -90,7 +80,7 @@ class ServerCacheRepository {
         return;
       }
 
-      AppLogger.info(
+      AppLogger.debug(
         _logTag,
         'Saved ${validServers.length} servers to cache '
         '(lastUpdatedAt: $normalizedLastUpdatedAt).',
@@ -108,7 +98,43 @@ class ServerCacheRepository {
   }
 
   Future<List<Server>?> getCachedServers() async {
-    final encoded = _preferences.getString(_serversJsonKey);
+    final cache = _readCacheBlob();
+
+    if (cache == null) {
+      return null;
+    }
+
+    final servers = cache.servers;
+
+    if (servers.isEmpty) {
+      await _clearCorruptedServersCache(
+        reason:
+            'Cached server data did not contain any valid servers. Cleared corrupted cache.',
+      );
+      return null;
+    }
+
+    AppLogger.debug(
+      _logTag,
+      'Loaded ${servers.length} servers from cache '
+      '(skippedItems: ${cache.skippedItems}, lastUpdatedAt: ${cache.lastUpdatedAt}).',
+    );
+
+    return servers;
+  }
+
+  DateTime? getLastUpdatedAt() {
+    return _readCacheBlob()?.lastUpdatedAt;
+  }
+
+  Future<void> clear() async {
+    await _clearServersCache();
+
+    AppLogger.info(_logTag, 'Cleared cached server data.');
+  }
+
+  _DecodedServerCache? _readCacheBlob() {
+    final encoded = _preferences.getString(_cacheBlobKey);
 
     if (encoded == null || encoded.isEmpty) {
       return null;
@@ -117,9 +143,38 @@ class ServerCacheRepository {
     try {
       final decoded = jsonDecode(encoded);
 
-      if (decoded is! List) {
-        await _clearCorruptedServersCache(
-          reason: 'Cached server data is not a JSON array.',
+      if (decoded is! Map) {
+        _scheduleCorruptedCacheClear(
+          reason: 'Cached server data is not a JSON object.',
+        );
+        return null;
+      }
+
+      final json = Map<String, dynamic>.from(decoded);
+
+      final schemaVersion = _readInt(json['schemaVersion']);
+      if (schemaVersion != _cacheSchemaVersion) {
+        _scheduleCorruptedCacheClear(
+          reason:
+              'Cached server schema version mismatch. Expected $_cacheSchemaVersion but got $schemaVersion.',
+        );
+        return null;
+      }
+
+      final lastUpdatedAt = _readDateTime(json['lastUpdatedAt']);
+
+      if (lastUpdatedAt == null) {
+        _scheduleCorruptedCacheClear(
+          reason: 'Cached server data has no valid lastUpdatedAt timestamp.',
+        );
+        return null;
+      }
+
+      final rawServers = json['servers'];
+
+      if (rawServers is! List) {
+        _scheduleCorruptedCacheClear(
+          reason: 'Cached server data servers field is not a JSON array.',
         );
         return null;
       }
@@ -127,7 +182,7 @@ class ServerCacheRepository {
       final servers = <Server>[];
       var skippedItems = 0;
 
-      for (final item in decoded) {
+      for (final item in rawServers) {
         if (item is! Map) {
           skippedItems++;
 
@@ -139,8 +194,8 @@ class ServerCacheRepository {
           continue;
         }
 
-        final json = Map<String, dynamic>.from(item);
-        final server = _decodeServer(json);
+        final serverJson = Map<String, dynamic>.from(item);
+        final server = _decodeServer(serverJson);
 
         if (server == null) {
           skippedItems++;
@@ -156,27 +211,13 @@ class ServerCacheRepository {
         servers.add(server);
       }
 
-      if (servers.isEmpty) {
-        await _clearCorruptedServersCache(
-          reason:
-              'Cached server data did not contain any valid servers. Cleared corrupted cache.',
-        );
-        return null;
-      }
-
-      final lastUpdatedAt = getLastUpdatedAt();
-
-      AppLogger.info(
-        _logTag,
-        'Loaded ${servers.length} servers from cache '
-        '(skippedItems: $skippedItems, lastUpdatedAt: $lastUpdatedAt).',
+      return _DecodedServerCache(
+        servers: servers,
+        lastUpdatedAt: lastUpdatedAt,
+        skippedItems: skippedItems,
       );
-
-      return servers;
     } catch (error, stackTrace) {
-      await _clearCorruptedServersCache(
-        reason: 'Failed to decode cached servers.',
-      );
+      _scheduleCorruptedCacheClear(reason: 'Failed to decode cached servers.');
 
       AppLogger.error(
         _logTag,
@@ -189,20 +230,12 @@ class ServerCacheRepository {
     }
   }
 
-  DateTime? getLastUpdatedAt() {
-    final value = _preferences.getString(_lastUpdatedAtKey);
+  void _scheduleCorruptedCacheClear({required String reason}) {
+    AppLogger.warning(_logTag, '$reason Clearing corrupted cache.');
 
-    if (value == null || value.isEmpty) {
-      return null;
-    }
-
-    return DateTime.tryParse(value);
-  }
-
-  Future<void> clear() async {
-    await _clearServersCache();
-
-    AppLogger.info(_logTag, 'Cleared cached server data.');
+    Future<void>(() async {
+      await _clearServersCache();
+    });
   }
 
   Future<void> _clearCorruptedServersCache({required String reason}) async {
@@ -212,14 +245,12 @@ class ServerCacheRepository {
   }
 
   Future<void> _clearServersCache() async {
-    await _preferences.remove(_serversJsonKey);
-    await _preferences.remove(_lastUpdatedAtKey);
+    await _preferences.remove(_cacheBlobKey);
     await _clearTempServersCache();
   }
 
   Future<void> _clearTempServersCache() async {
-    await _preferences.remove(_tempServersJsonKey);
-    await _preferences.remove(_tempLastUpdatedAtKey);
+    await _preferences.remove(_tempCacheBlobKey);
   }
 
   static Map<String, dynamic> _encodeServer(Server server) {
@@ -248,6 +279,14 @@ class ServerCacheRepository {
       maxPlayers: _readInt(json['maxPlayers']),
       official: _readBool(json['official']),
     );
+  }
+
+  static DateTime? _readDateTime(Object? value) {
+    if (value is! String || value.trim().isEmpty) {
+      return null;
+    }
+
+    return DateTime.tryParse(value.trim());
   }
 
   static String _readNonEmptyString(Object? value, {required String fallback}) {
@@ -292,4 +331,16 @@ class ServerCacheRepository {
 
     return false;
   }
+}
+
+class _DecodedServerCache {
+  const _DecodedServerCache({
+    required this.servers,
+    required this.lastUpdatedAt,
+    required this.skippedItems,
+  });
+
+  final List<Server> servers;
+  final DateTime lastUpdatedAt;
+  final int skippedItems;
 }

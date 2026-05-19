@@ -81,8 +81,8 @@ class ServerRepository {
 
       await _cacheRepository.saveServers(servers, lastUpdatedAt: lastUpdatedAt);
 
-      AppLogger.info('ServerRepository', 'Loaded servers from network.');
-      AppLogger.info('ServerRepository', 'Saved servers to cache.');
+      AppLogger.debug('ServerRepository', 'Loaded servers from network.');
+      AppLogger.debug('ServerRepository', 'Saved servers to cache.');
 
       return ServerSyncSnapshot(
         servers: servers,
@@ -115,7 +115,7 @@ class ServerRepository {
     final cacheAge = _calculateCacheAge(lastUpdatedAt);
     final isStale = cacheAge == null || cacheAge > _maxCacheAge;
 
-    AppLogger.info(
+    AppLogger.debug(
       'ServerRepository',
       'Loaded servers from cache fallback '
           '(cacheAge: ${cacheAge?.inMinutes} minutes, isStale: $isStale).',
@@ -182,7 +182,7 @@ class ServerRepository {
         servers.add(server);
       }
 
-      AppLogger.info(
+      AppLogger.debug(
         'ServerRepository',
         'Loaded ${servers.length} servers successfully.',
       );
