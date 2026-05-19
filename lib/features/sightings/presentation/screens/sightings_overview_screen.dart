@@ -3,7 +3,8 @@ import 'package:asa_server_eye/core/extensions/context_l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../servers/presentation/providers/servers_provider.dart';
+import '../../../servers/presentation/providers/servers_provider.dart'
+    show serverListProvider;
 import '../providers/sightings_providers.dart';
 import '../widgets/player_sighting_list_item.dart';
 import 'server_sightings_screen.dart';
@@ -14,7 +15,7 @@ class SightingsOverviewScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sightingsAsync = ref.watch(sightingsOverviewProvider);
-    final serversAsync = ref.watch(serversProvider);
+    final serversAsync = ref.watch(serverListProvider);
     final theme = Theme.of(context);
 
     final serverNameById = {

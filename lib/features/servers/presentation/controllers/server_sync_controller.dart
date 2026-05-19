@@ -4,9 +4,9 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/server_repository.dart';
-import '../../domain/server.dart';
+import '../state/server_sync_state.dart';
 
-class ServerSyncController extends StateNotifier<AsyncValue<List<Server>>> {
+class ServerSyncController extends StateNotifier<AsyncValue<ServerSyncState>> {
   ServerSyncController(
     this._repository, {
     Duration refreshInterval = const Duration(seconds: 10),
@@ -60,14 +60,20 @@ class ServerSyncController extends StateNotifier<AsyncValue<List<Server>>> {
         return;
       }
 
-      state = AsyncValue.data(result.servers);
+      state = AsyncValue.data(
+        ServerSyncState(
+          servers: result.servers,
+          lastUpdatedAt: result.lastUpdatedAt,
+          isFromCache: result.isFromCache,
+        ),
+      );
     } catch (error, stackTrace) {
       if (!mounted) {
         return;
       }
 
       state = previous.hasValue
-          ? AsyncValue<List<Server>>.error(
+          ? AsyncValue<ServerSyncState>.error(
               error,
               stackTrace,
             ).copyWithPrevious(previous)

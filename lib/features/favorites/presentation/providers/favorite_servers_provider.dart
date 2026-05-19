@@ -1,5 +1,6 @@
 // features/favorites/presentation/providers/favorite_servers_provider.dart
-import 'package:asa_server_eye/features/servers/presentation/providers/servers_provider.dart';
+import 'package:asa_server_eye/features/servers/presentation/providers/servers_provider.dart'
+    show serverListProvider;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../servers/domain/server.dart';
@@ -9,7 +10,7 @@ final favoriteServersProvider = Provider.autoDispose<AsyncValue<List<Server>>>((
   ref,
 ) {
   final favoriteIdsAsync = ref.watch(favoriteIdsProvider);
-  final serversAsync = ref.watch(serversProvider);
+  final serversAsync = ref.watch(serverListProvider);
 
   if (favoriteIdsAsync.isLoading || serversAsync.isLoading) {
     return const AsyncValue.loading();
