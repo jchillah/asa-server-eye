@@ -40,7 +40,7 @@ jobs:
         run: flutter pub get
 
       - name: Build release AAB
-        run: flutter build appbundle --release --build-number=${{ github.run_number }}
+        run: flutter build appbundle --release --build-number=$(date +%s)
 
       - name: Write Google Play service account
         run: |
