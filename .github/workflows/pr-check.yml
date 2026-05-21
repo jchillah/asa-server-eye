@@ -1,0 +1,44 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  flutter-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Flutter analyze
+        run: flutter analyze
+
+      - name: Flutter test
+        run: flutter test
+
+      - name: Build release AAB
+        run: flutter build appbundle --release --build-number=${{ github.run_number }}
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: build/app/outputs/bundle/release/app-release.aab

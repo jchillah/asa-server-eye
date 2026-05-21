@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "880548422681",
+    "project_id": "asa-server-eye",
+    "storage_bucket": "asa-server-eye.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880548422681:android:5a9e1853b9edf4201ef688",
+        "android_client_info": {
+          "package_name": "com.jchillah.asaservereye"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8ACkdDis8Y0r1BZ4d0LKsj48_7S1FpWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
