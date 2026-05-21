@@ -4,9 +4,10 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/server_repository.dart';
-import '../../domain/server.dart';
+import '../state/server_sync_error.dart';
+import '../state/server_sync_state.dart';
 
-class ServerSyncController extends StateNotifier<AsyncValue<List<Server>>> {
+class ServerSyncController extends StateNotifier<AsyncValue<ServerSyncState>> {
   ServerSyncController(
     this._repository, {
     Duration refreshInterval = const Duration(seconds: 10),
@@ -54,24 +55,37 @@ class ServerSyncController extends StateNotifier<AsyncValue<List<Server>>> {
     }
 
     try {
-      final servers = await _repository.fetchServers();
+      final snapshot = await _repository.fetchServers();
 
       if (!mounted) {
         return;
       }
 
-      state = AsyncValue.data(servers);
+      state = AsyncValue.data(ServerSyncState.fromSnapshot(snapshot));
     } catch (error, stackTrace) {
       if (!mounted) {
         return;
       }
 
-      state = previous.hasValue
-          ? AsyncValue<List<Server>>.error(
-              error,
-              stackTrace,
-            ).copyWithPrevious(previous)
-          : AsyncValue.error(error, stackTrace);
+      if (previous.hasValue) {
+        final previousState = previous.requireValue;
+
+        // Deliberately keep stale-but-valid server data visible after transient
+        // refresh failures. Consumers that need to react to these failures
+        // should use serverSyncErrorProvider instead of relying only on
+        // AsyncValue.when(error: ...).
+        state = AsyncValue.data(
+          previousState.copyWith(
+            lastError: ServerSyncError(
+              error: error,
+              stackTrace: stackTrace,
+              occurredAt: DateTime.now().toUtc(),
+            ),
+          ),
+        );
+      } else {
+        state = AsyncValue.error(error, stackTrace);
+      }
     } finally {
       _isFetching = false;
     }

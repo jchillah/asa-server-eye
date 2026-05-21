@@ -5,6 +5,8 @@ import 'package:dio/dio.dart';
 
 import '../../../core/utils/app_logger.dart';
 import '../domain/server.dart';
+import '../domain/server_sync_snapshot.dart';
+import 'server_cache_repository.dart';
 
 enum ServerRepositoryExceptionType { network, timeout, invalidFormat, unknown }
 
@@ -52,12 +54,19 @@ class ServerRepositoryException implements Exception {
 }
 
 class ServerRepository {
-  ServerRepository(this._dio);
+  ServerRepository(this._dio, this._cacheRepository);
 
   final Dio _dio;
+  final ServerCacheRepository _cacheRepository;
 
   static const _url =
       'https://cdn2.arkdedicated.com/servers/asa/officialserverlist.json';
+
+  /// Maximum age after which cached server data is considered stale.
+  ///
+  /// We still return stale cache data to keep the app useful offline, but the
+  /// UI can now detect this via [ServerSyncSnapshot.isStale].
+  static const _maxCacheAge = Duration(hours: 1);
 
   static bool _isTimeoutException(DioException error) {
     return error.type == DioExceptionType.connectionTimeout ||
@@ -65,7 +74,78 @@ class ServerRepository {
         error.type == DioExceptionType.sendTimeout;
   }
 
-  Future<List<Server>> fetchServers() async {
+  Future<ServerSyncSnapshot> fetchServers() async {
+    try {
+      final servers = await _fetchServersFromNetwork();
+      final lastUpdatedAt = DateTime.now().toUtc();
+
+      await _cacheRepository.saveServers(servers, lastUpdatedAt: lastUpdatedAt);
+
+      AppLogger.debug('ServerRepository', 'Loaded servers from network.');
+      AppLogger.debug('ServerRepository', 'Saved servers to cache.');
+
+      return ServerSyncSnapshot(
+        servers: servers,
+        lastUpdatedAt: lastUpdatedAt,
+        isFromCache: false,
+        isStale: false,
+        cacheAge: Duration.zero,
+      );
+    } on ServerRepositoryException catch (error) {
+      if (error.type != ServerRepositoryExceptionType.network &&
+          error.type != ServerRepositoryExceptionType.timeout) {
+        rethrow;
+      }
+
+      return _loadFromCacheOrThrow(error);
+    }
+  }
+
+  Future<ServerSyncSnapshot> _loadFromCacheOrThrow(
+    ServerRepositoryException originalError,
+  ) async {
+    final cachedServers = await _cacheRepository.getCachedServers();
+
+    if (cachedServers == null || cachedServers.isEmpty) {
+      AppLogger.warning('ServerRepository', 'No cached servers available.');
+      throw originalError;
+    }
+
+    final lastUpdatedAt = await _cacheRepository.getLastUpdatedAt();
+    final cacheAge = _calculateCacheAge(lastUpdatedAt);
+    final isStale = cacheAge == null || cacheAge > _maxCacheAge;
+
+    AppLogger.debug(
+      'ServerRepository',
+      'Loaded servers from cache fallback '
+          '(cacheAge: ${cacheAge?.inMinutes} minutes, isStale: $isStale).',
+    );
+
+    return ServerSyncSnapshot(
+      servers: cachedServers,
+      lastUpdatedAt: lastUpdatedAt,
+      isFromCache: true,
+      isStale: isStale,
+      cacheAge: cacheAge,
+    );
+  }
+
+  Duration? _calculateCacheAge(DateTime? lastUpdatedAt) {
+    if (lastUpdatedAt == null) {
+      return null;
+    }
+
+    final now = DateTime.now().toUtc();
+    final normalizedLastUpdatedAt = lastUpdatedAt.toUtc();
+
+    if (normalizedLastUpdatedAt.isAfter(now)) {
+      return Duration.zero;
+    }
+
+    return now.difference(normalizedLastUpdatedAt);
+  }
+
+  Future<List<Server>> _fetchServersFromNetwork() async {
     try {
       final response = await _dio.get<List<dynamic>>(_url);
       final Object? rawData = response.data;
@@ -102,7 +182,7 @@ class ServerRepository {
         servers.add(server);
       }
 
-      AppLogger.info(
+      AppLogger.debug(
         'ServerRepository',
         'Loaded ${servers.length} servers successfully.',
       );

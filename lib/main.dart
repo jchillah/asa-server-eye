@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/app.dart';
 import 'core/ads/admob_ids.dart';
+import 'core/storage/shared_preferences_provider.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -21,5 +23,14 @@ Future<void> main() async {
     await MobileAds.instance.initialize();
   }
 
-  runApp(const ProviderScope(child: AsaServerEyeApp()));
+  final sharedPreferences = await SharedPreferences.getInstance();
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+      ],
+      child: const AsaServerEyeApp(),
+    ),
+  );
 }

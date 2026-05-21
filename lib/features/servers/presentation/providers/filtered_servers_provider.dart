@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/server.dart';
 import '../utils/server_filters.dart';
 import 'server_search_provider.dart';
-import 'servers_provider.dart';
+import 'servers_provider.dart' show serverListProvider;
 
 final filteredServersProvider = Provider.autoDispose<AsyncValue<List<Server>>>((
   ref,
@@ -15,7 +15,7 @@ final filteredServersProvider = Provider.autoDispose<AsyncValue<List<Server>>>((
     }),
   );
 
-  final serversAsync = ref.watch(serversProvider);
+  final serversAsync = ref.watch(serverListProvider);
 
   return serversAsync.whenData(
     (servers) => ServerFilters.byQuery(servers: servers, query: query),
