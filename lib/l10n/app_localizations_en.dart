@@ -673,4 +673,88 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get serverSyncUnavailable => 'Sync status is currently unavailable';
+
+  @override
+  String get alertSettingsTitle => 'Alert Rules(Notifications)';
+
+  @override
+  String get manageAlertRules => 'Manage alert rules';
+
+  @override
+  String get unlockAlertsWithPremium => 'Unlock alerts with Premium';
+
+  @override
+  String get addAlertRule => 'Add Alert Rule';
+
+  @override
+  String get editAlertRule => 'Edit Alert Rule';
+
+  @override
+  String get noAlertRulesYet => 'For this server, no alert rules exist yet.';
+
+  @override
+  String get alertRulesLoadError => 'Alert rules could not be loaded.';
+
+  @override
+  String get alertRulesRequiresLogin => 'You must be logged in to manage alert rules.';
+
+  @override
+  String get alertRuleType => 'Alert-Type';
+
+  @override
+  String get alertRuleThreshold => 'Threshold';
+
+  @override
+  String get alertRuleThresholdHint => 'Enter player count or population percentage depending on the alert type.';
+
+  @override
+  String get alertRuleThresholdRequired => 'Please enter a threshold value.';
+
+  @override
+  String get alertRuleThresholdInvalid => 'Please enter a valid number.';
+
+  @override
+  String get alertRuleEnabled => 'Rule enabled';
+
+  @override
+  String get saveAlertRule => 'Save Alert Rule';
+
+  @override
+  String get updateAlertRule => 'Update Alert Rule';
+
+  @override
+  String get deleteAlertRule => 'Delete Alert Rule';
+
+  @override
+  String get deleteAlertRuleQuestion => 'Do you want to delete this alert rule?';
+
+  @override
+  String get alertRuleSaved => 'Alert rule saved.';
+
+  @override
+  String get alertRuleUpdated => 'Alert rule updated.';
+
+  @override
+  String get alertRuleDeleted => 'Alert rule deleted.';
+
+  @override
+  String get alertRuleMutationError => 'Alert rule could not be saved. Please try again.';
+
+  @override
+  String get alertTypePopulationIncreased => 'Population increased';
+
+  @override
+  String get alertTypePopulationDecreased => 'Population decreased';
+
+  @override
+  String get alertTypeCrossedAboveThreshold => 'Threshold crossed above';
+
+  @override
+  String get alertTypeCrossedBelowThreshold => 'Threshold crossed below';
+
+  @override
+  String get alertTypeServerOnline => 'Server online';
+
+  @override
+  String get alertTypeServerOffline => 'Server offline';
 }

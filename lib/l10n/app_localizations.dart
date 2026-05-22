@@ -1384,6 +1384,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sync status is currently unavailable'**
   String get serverSyncUnavailable;
+
+  /// Title of the screen for alert rules
+  ///
+  /// In en, this message translates to:
+  /// **'Alert Rules(Notifications)'**
+  String get alertSettingsTitle;
+
+  /// Button label to open the alert settings screen
+  ///
+  /// In en, this message translates to:
+  /// **'Manage alert rules'**
+  String get manageAlertRules;
+
+  /// Upsell button label to open the premium screen for alerts
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock alerts with Premium'**
+  String get unlockAlertsWithPremium;
+
+  /// Button to add a new alert rule
+  ///
+  /// In en, this message translates to:
+  /// **'Add Alert Rule'**
+  String get addAlertRule;
+
+  /// Title for editing an alert rule
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Alert Rule'**
+  String get editAlertRule;
+
+  /// Empty state when a server has no alert rules
+  ///
+  /// In en, this message translates to:
+  /// **'For this server, no alert rules exist yet.'**
+  String get noAlertRulesYet;
+
+  /// Error when loading alert rules fails
+  ///
+  /// In en, this message translates to:
+  /// **'Alert rules could not be loaded.'**
+  String get alertRulesLoadError;
+
+  /// Shown when the user is not logged in but tries to access alert rules
+  ///
+  /// In en, this message translates to:
+  /// **'You must be logged in to manage alert rules.'**
+  String get alertRulesRequiresLogin;
+
+  /// Label for alert type
+  ///
+  /// In en, this message translates to:
+  /// **'Alert-Type'**
+  String get alertRuleType;
+
+  /// Label for threshold field
+  ///
+  /// In en, this message translates to:
+  /// **'Threshold'**
+  String get alertRuleThreshold;
+
+  /// Hint text for threshold field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter player count or population percentage depending on the alert type.'**
+  String get alertRuleThresholdHint;
+
+  /// Validation when threshold is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a threshold value.'**
+  String get alertRuleThresholdRequired;
+
+  /// Validation when threshold is invalid
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid number.'**
+  String get alertRuleThresholdInvalid;
+
+  /// Switch text for enabled rule
+  ///
+  /// In en, this message translates to:
+  /// **'Rule enabled'**
+  String get alertRuleEnabled;
+
+  /// Button text for saving a new alert rule
+  ///
+  /// In en, this message translates to:
+  /// **'Save Alert Rule'**
+  String get saveAlertRule;
+
+  /// Button text for updating an existing alert rule
+  ///
+  /// In en, this message translates to:
+  /// **'Update Alert Rule'**
+  String get updateAlertRule;
+
+  /// Dialog title for deleting an alert rule
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Alert Rule'**
+  String get deleteAlertRule;
+
+  /// Confirmation question before deleting an alert rule
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to delete this alert rule?'**
+  String get deleteAlertRuleQuestion;
+
+  /// Snackbar after saving a new alert rule
+  ///
+  /// In en, this message translates to:
+  /// **'Alert rule saved.'**
+  String get alertRuleSaved;
+
+  /// Snackbar after updating an alert rule
+  ///
+  /// In en, this message translates to:
+  /// **'Alert rule updated.'**
+  String get alertRuleUpdated;
+
+  /// Snackbar after deleting an alert rule
+  ///
+  /// In en, this message translates to:
+  /// **'Alert rule deleted.'**
+  String get alertRuleDeleted;
+
+  /// Error message when an alert rule mutation fails
+  ///
+  /// In en, this message translates to:
+  /// **'Alert rule could not be saved. Please try again.'**
+  String get alertRuleMutationError;
+
+  /// Label for alert type indicating that the population increased by a certain threshold
+  ///
+  /// In en, this message translates to:
+  /// **'Population increased'**
+  String get alertTypePopulationIncreased;
+
+  /// Label for alert type indicating that the population decreased by a certain threshold
+  ///
+  /// In en, this message translates to:
+  /// **'Population decreased'**
+  String get alertTypePopulationDecreased;
+
+  /// Label for alert type indicating that the value crossed above the threshold
+  ///
+  /// In en, this message translates to:
+  /// **'Threshold crossed above'**
+  String get alertTypeCrossedAboveThreshold;
+
+  /// Label for alert type indicating that the value crossed below the threshold
+  ///
+  /// In en, this message translates to:
+  /// **'Threshold crossed below'**
+  String get alertTypeCrossedBelowThreshold;
+
+  /// Label for alert type indicating that the server is online
+  ///
+  /// In en, this message translates to:
+  /// **'Server online'**
+  String get alertTypeServerOnline;
+
+  /// Label for alert type indicating that the server is offline
+  ///
+  /// In en, this message translates to:
+  /// **'Server offline'**
+  String get alertTypeServerOffline;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

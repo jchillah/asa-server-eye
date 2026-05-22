@@ -923,6 +923,14 @@
   "@alertSettingsTitle": {
     "description": "Title of the screen for alert rules"
   },
+  "manageAlertRules": "Manage alert rules",
+  "@manageAlertRules": {
+    "description": "Button label to open the alert settings screen"
+  },
+  "unlockAlertsWithPremium": "Unlock alerts with Premium",
+  "@unlockAlertsWithPremium": {
+    "description": "Upsell button label to open the premium screen for alerts"
+  },
   "addAlertRule": "Add Alert Rule",
   "@addAlertRule": {
     "description": "Button to add a new alert rule"

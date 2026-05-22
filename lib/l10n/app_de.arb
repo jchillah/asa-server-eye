@@ -923,6 +923,14 @@
   "@alertSettingsTitle": {
     "description": "Titel des Screens für Alert-Regeln"
   },
+  "manageAlertRules": "Alert-Regeln verwalten",
+  "@manageAlertRules": {
+    "description": "Buttontext zum Öffnen des Screens für Alert-Regeln"
+  },
+  "unlockAlertsWithPremium": "Alerts mit Premium freischalten",
+  "@unlockAlertsWithPremium": {
+    "description": "Upsell-Buttontext zum Öffnen des Premium-Screens für Alerts"
+  },
   "addAlertRule": "Alert-Regel hinzufügen",
   "@addAlertRule": {
     "description": "Buttontext zum Hinzufügen einer Alert-Regel"
