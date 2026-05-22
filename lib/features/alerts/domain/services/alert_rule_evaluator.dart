@@ -17,7 +17,7 @@ class AlertRuleEvaluator {
     required List<Server> currentServers,
     required DateTime now,
   }) {
-    if (rules.isEmpty || previousServers.isEmpty && currentServers.isEmpty) {
+    if (rules.isEmpty || (previousServers.isEmpty && currentServers.isEmpty)) {
       return const [];
     }
 

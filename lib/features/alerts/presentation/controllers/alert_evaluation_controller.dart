@@ -1,4 +1,5 @@
 // features/alerts/presentation/controllers/alert_evaluation_controller.dart
+import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,7 +40,7 @@ class AlertEvaluationController extends StateNotifier<AlertTriggerEvent?> {
   final AlertRuleEvaluator _evaluator;
 
   List<Server>? _previousServers;
-  bool _isPersistingTriggers = false;
+  final Set<String> _pendingTriggerPersistenceRuleIds = <String>{};
 
   Future<void> evaluateServerRefresh({
     required List<AlertRule> rules,
@@ -48,7 +49,7 @@ class AlertEvaluationController extends StateNotifier<AlertTriggerEvent?> {
     final previousServers = _previousServers;
     _previousServers = currentServers;
 
-    if (previousServers == null || rules.isEmpty || _isPersistingTriggers) {
+    if (previousServers == null || rules.isEmpty) {
       return;
     }
 
@@ -60,29 +61,44 @@ class AlertEvaluationController extends StateNotifier<AlertTriggerEvent?> {
       now: now,
     );
 
-    if (events.isEmpty) {
+    final newEvents = events
+        .where(
+          (event) =>
+              !_pendingTriggerPersistenceRuleIds.contains(event.rule.id),
+        )
+        .toList();
+
+    if (newEvents.isEmpty) {
       return;
     }
 
-    state = events.first;
+    state = newEvents.first;
 
-    _isPersistingTriggers = true;
-    try {
-      for (final event in events) {
-        await _repository.markRuleTriggered(
-          userId: event.rule.userId,
-          ruleId: event.rule.id,
-        );
-      }
-    } catch (error, stackTrace) {
-      developer.log(
-        'Failed to mark alert rules as triggered.',
-        name: 'AlertEvaluationController',
-        error: error,
-        stackTrace: stackTrace,
-      );
-    } finally {
-      _isPersistingTriggers = false;
+    for (final event in newEvents) {
+      _persistTriggerInBackground(event);
     }
+  }
+
+  void _persistTriggerInBackground(AlertTriggerEvent event) {
+    final ruleId = event.rule.id;
+    _pendingTriggerPersistenceRuleIds.add(ruleId);
+
+    unawaited(
+      _repository
+          .markRuleTriggered(
+            userId: event.rule.userId,
+            ruleId: ruleId,
+          )
+          .catchError((Object error, StackTrace stackTrace) {
+        developer.log(
+          'Failed to mark alert rule as triggered.',
+          name: 'AlertEvaluationController',
+          error: error,
+          stackTrace: stackTrace,
+        );
+      }).whenComplete(() {
+        _pendingTriggerPersistenceRuleIds.remove(ruleId);
+      }),
+    );
   }
 }
