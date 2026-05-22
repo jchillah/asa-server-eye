@@ -3,6 +3,8 @@
     <!-- REQUIRED FOR ADS + FIREBASE -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- REQUIRED FOR ANDROID 13+ NOTIFICATIONS -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <!-- REQUIRED FOR ANDROID 13+ ADS -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 
