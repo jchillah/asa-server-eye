@@ -31,16 +31,60 @@ class AlertRuleDto {
 
   factory AlertRuleDto.fromFirestore(Map<String, dynamic> json) {
     return AlertRuleDto(
-      userId: json['userId'] as String? ?? '',
-      serverId: json['serverId'] as String? ?? '',
-      serverName: json['serverName'] as String? ?? '',
-      mapName: json['mapName'] as String? ?? '',
-      ruleType: json['ruleType'] as String? ?? '',
-      isEnabled: json['isEnabled'] as bool? ?? true,
-      threshold: json['threshold'] as int?,
-      createdAt: json['createdAt'] as Timestamp?,
-      updatedAt: json['updatedAt'] as Timestamp?,
-      lastTriggeredAt: json['lastTriggeredAt'] as Timestamp?,
+      userId: _requireNonEmptyString(json, 'userId'),
+      serverId: _requireNonEmptyString(json, 'serverId'),
+      serverName: _requireNonEmptyString(json, 'serverName'),
+      mapName: _requireNonEmptyString(json, 'mapName'),
+      ruleType: _requireNonEmptyString(json, 'ruleType'),
+      isEnabled: _requireBool(json, 'isEnabled'),
+      threshold: _parseThreshold(json['threshold']),
+      createdAt: _readTimestamp(json, 'createdAt'),
+      updatedAt: _readTimestamp(json, 'updatedAt'),
+      lastTriggeredAt: _readTimestamp(json, 'lastTriggeredAt'),
+    );
+  }
+
+  static String _requireNonEmptyString(Map<String, dynamic> json, String key) {
+    final value = json[key];
+    if (value is! String || value.trim().isEmpty) {
+      throw StateError('AlertRuleDto.fromFirestore: invalid or missing "$key"');
+    }
+    return value;
+  }
+
+  static bool _requireBool(Map<String, dynamic> json, String key) {
+    final value = json[key];
+    if (value is! bool) {
+      throw StateError('AlertRuleDto.fromFirestore: invalid or missing "$key"');
+    }
+    return value;
+  }
+
+  static int? _parseThreshold(Object? value) {
+    if (value == null) {
+      return null;
+    }
+    if (value is int) {
+      return value;
+    }
+    if (value is num) {
+      return value.toInt();
+    }
+    throw StateError(
+      'AlertRuleDto.fromFirestore: invalid "threshold" value: $value',
+    );
+  }
+
+  static Timestamp? _readTimestamp(Map<String, dynamic> json, String key) {
+    final value = json[key];
+    if (value == null) {
+      return null;
+    }
+    if (value is Timestamp) {
+      return value;
+    }
+    throw StateError(
+      'AlertRuleDto.fromFirestore: invalid "$key" value: $value',
     );
   }
 
@@ -60,18 +104,23 @@ class AlertRuleDto {
   }
 
   AlertRule toDomain(String id) {
+    final parsedRuleType = AlertRuleTypeX.tryFromFirestore(ruleType);
+    if (parsedRuleType == null) {
+      throw StateError('AlertRuleDto.toDomain: unknown ruleType "$ruleType"');
+    }
+
     return AlertRule(
       id: id,
       userId: userId,
       serverId: serverId,
       serverName: serverName,
       mapName: mapName,
-      ruleType: AlertRuleTypeX.fromFirestore(ruleType),
+      ruleType: parsedRuleType,
       isEnabled: isEnabled,
       threshold: threshold,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      lastTriggeredAt: lastTriggeredAt,
+      createdAt: createdAt?.toDate(),
+      updatedAt: updatedAt?.toDate(),
+      lastTriggeredAt: lastTriggeredAt?.toDate(),
     );
   }
 
@@ -84,9 +133,15 @@ class AlertRuleDto {
       ruleType: rule.ruleType.firestoreValue,
       isEnabled: rule.isEnabled,
       threshold: rule.threshold,
-      createdAt: rule.createdAt,
-      updatedAt: rule.updatedAt,
-      lastTriggeredAt: rule.lastTriggeredAt,
+      createdAt: rule.createdAt == null
+          ? null
+          : Timestamp.fromDate(rule.createdAt!),
+      updatedAt: rule.updatedAt == null
+          ? null
+          : Timestamp.fromDate(rule.updatedAt!),
+      lastTriggeredAt: rule.lastTriggeredAt == null
+          ? null
+          : Timestamp.fromDate(rule.lastTriggeredAt!),
     );
   }
 }

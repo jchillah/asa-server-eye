@@ -26,7 +26,7 @@ extension AlertRuleTypeX on AlertRuleType {
     }
   }
 
-  static AlertRuleType fromFirestore(String value) {
+  static AlertRuleType? tryFromFirestore(String? value) {
     switch (value) {
       case 'population_increased':
         return AlertRuleType.populationIncreased;
@@ -41,7 +41,7 @@ extension AlertRuleTypeX on AlertRuleType {
       case 'server_offline':
         return AlertRuleType.serverOffline;
       default:
-        throw ArgumentError('Unknown AlertRuleType value: $value');
+        return null;
     }
   }
 }

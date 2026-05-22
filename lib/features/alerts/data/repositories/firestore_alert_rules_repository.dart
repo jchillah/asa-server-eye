@@ -1,4 +1,6 @@
 // features/alerts/data/repositories/firestore_alert_rules_repository.dart
+import 'dart:developer' as developer;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/entities/alert_rule.dart';
@@ -14,19 +16,31 @@ class FirestoreAlertRulesRepository implements AlertRulesRepository {
     return _firestore.collection('users').doc(userId).collection('alert_rules');
   }
 
+  List<AlertRule> _mapRules(QuerySnapshot<Map<String, dynamic>> snapshot) {
+    final rules = <AlertRule>[];
+
+    for (final doc in snapshot.docs) {
+      try {
+        final rule = AlertRuleDto.fromFirestore(doc.data()).toDomain(doc.id);
+        rules.add(rule);
+      } catch (error, stackTrace) {
+        developer.log(
+          'Skipping invalid alert rule document: ${doc.id}',
+          name: 'FirestoreAlertRulesRepository',
+          error: error,
+          stackTrace: stackTrace,
+        );
+      }
+    }
+
+    return rules;
+  }
+
   @override
   Stream<List<AlertRule>> watchRules(String userId) {
-    return _rulesCollection(userId)
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map(
-          (snapshot) => snapshot.docs
-              .map(
-                (doc) =>
-                    AlertRuleDto.fromFirestore(doc.data()).toDomain(doc.id),
-              )
-              .toList(),
-        );
+    return _rulesCollection(
+      userId,
+    ).orderBy('createdAt', descending: true).snapshots().map(_mapRules);
   }
 
   @override
@@ -38,14 +52,7 @@ class FirestoreAlertRulesRepository implements AlertRulesRepository {
         .where('serverId', isEqualTo: serverId)
         .orderBy('createdAt', descending: true)
         .snapshots()
-        .map(
-          (snapshot) => snapshot.docs
-              .map(
-                (doc) =>
-                    AlertRuleDto.fromFirestore(doc.data()).toDomain(doc.id),
-              )
-              .toList(),
-        );
+        .map(_mapRules);
   }
 
   @override

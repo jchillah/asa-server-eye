@@ -1,6 +1,4 @@
 // features/alerts/domain/entities/alert_rule.dart
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'alert_rule_type.dart';
 
 class AlertRule {
@@ -18,6 +16,8 @@ class AlertRule {
     this.lastTriggeredAt,
   });
 
+  static const Object _unset = Object();
+
   final String id;
   final String userId;
   final String serverId;
@@ -26,9 +26,9 @@ class AlertRule {
   final AlertRuleType ruleType;
   final bool isEnabled;
   final int? threshold;
-  final Timestamp? createdAt;
-  final Timestamp? updatedAt;
-  final Timestamp? lastTriggeredAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final DateTime? lastTriggeredAt;
 
   AlertRule copyWith({
     String? id,
@@ -38,10 +38,10 @@ class AlertRule {
     String? mapName,
     AlertRuleType? ruleType,
     bool? isEnabled,
-    int? threshold,
-    Timestamp? createdAt,
-    Timestamp? updatedAt,
-    Timestamp? lastTriggeredAt,
+    Object? threshold = _unset,
+    Object? createdAt = _unset,
+    Object? updatedAt = _unset,
+    Object? lastTriggeredAt = _unset,
   }) {
     return AlertRule(
       id: id ?? this.id,
@@ -51,10 +51,18 @@ class AlertRule {
       mapName: mapName ?? this.mapName,
       ruleType: ruleType ?? this.ruleType,
       isEnabled: isEnabled ?? this.isEnabled,
-      threshold: threshold ?? this.threshold,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      lastTriggeredAt: lastTriggeredAt ?? this.lastTriggeredAt,
+      threshold: identical(threshold, _unset)
+          ? this.threshold
+          : threshold as int?,
+      createdAt: identical(createdAt, _unset)
+          ? this.createdAt
+          : createdAt as DateTime?,
+      updatedAt: identical(updatedAt, _unset)
+          ? this.updatedAt
+          : updatedAt as DateTime?,
+      lastTriggeredAt: identical(lastTriggeredAt, _unset)
+          ? this.lastTriggeredAt
+          : lastTriggeredAt as DateTime?,
     );
   }
 
