@@ -12,6 +12,11 @@ import '../providers/fcm_token_repository_provider.dart';
 final fcmTokenRegistrationControllerProvider =
     Provider.autoDispose<FcmTokenRegistrationController>((ref) {
       final controller = FcmTokenRegistrationController(ref);
+
+      ref.listen<AsyncValue<User?>>(authStateProvider, (previous, next) {
+        unawaited(controller.handleAuthChange(next.valueOrNull));
+      });
+
       unawaited(controller.start());
       ref.onDispose(controller.dispose);
       return controller;
@@ -48,8 +53,7 @@ class FcmTokenRegistrationController {
         return;
       }
 
-      _listenToAuthChanges();
-      await _registerCurrentTokenForUser(_ref.read(authStateProvider).valueOrNull);
+      await handleAuthChange(_ref.read(authStateProvider).valueOrNull);
       _listenToTokenRefresh();
     } catch (error, stackTrace) {
       developer.log(
@@ -59,12 +63,6 @@ class FcmTokenRegistrationController {
         stackTrace: stackTrace,
       );
     }
-  }
-
-  void _listenToAuthChanges() {
-    _ref.listen<AsyncValue<User?>>(authStateProvider, (previous, next) {
-      unawaited(_handleAuthChange(next.valueOrNull));
-    });
   }
 
   void _listenToTokenRefresh() {
@@ -101,7 +99,7 @@ class FcmTokenRegistrationController {
         settings.authorizationStatus == AuthorizationStatus.provisional;
   }
 
-  Future<void> _handleAuthChange(User? user) async {
+  Future<void> handleAuthChange(User? user) async {
     if (!_hasNotificationPermission) {
       return;
     }
