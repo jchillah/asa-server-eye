@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/extensions/context_l10n.dart';
 import '../../domain/entities/alert_rule.dart';
 import '../../domain/entities/alert_rule_type.dart';
+import '../extensions/alert_rule_type_l10n.dart';
 
 class AlertRuleFormSheet extends StatefulWidget {
   const AlertRuleFormSheet({
@@ -14,11 +15,13 @@ class AlertRuleFormSheet extends StatefulWidget {
     required this.mapName,
     this.existingRule,
   });
+
   final String userId;
   final String serverId;
   final String serverName;
   final String mapName;
   final AlertRule? existingRule;
+
   @override
   State<AlertRuleFormSheet> createState() => _AlertRuleFormSheetState();
 }
@@ -28,10 +31,13 @@ class _AlertRuleFormSheetState extends State<AlertRuleFormSheet> {
   late final TextEditingController _thresholdController;
   late AlertRuleType _selectedType;
   late bool _isEnabled;
+
   bool get _requiresThreshold =>
       _selectedType == AlertRuleType.crossedAboveThreshold ||
       _selectedType == AlertRuleType.crossedBelowThreshold;
+
   bool get _isEditing => widget.existingRule != null;
+
   @override
   void initState() {
     super.initState();
@@ -52,6 +58,7 @@ class _AlertRuleFormSheetState extends State<AlertRuleFormSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -81,7 +88,7 @@ class _AlertRuleFormSheetState extends State<AlertRuleFormSheet> {
                   items: AlertRuleType.values.map((type) {
                     return DropdownMenuItem(
                       value: type,
-                      child: Text(_ruleTypeLabel(context, type)),
+                      child: Text(type.localizedLabel(context)),
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -162,11 +169,13 @@ class _AlertRuleFormSheetState extends State<AlertRuleFormSheet> {
     if (!_formKey.currentState!.validate()) {
       return;
     }
+
     final threshold = _requiresThreshold
         ? int.parse(_thresholdController.text.trim())
         : null;
     final existingRule = widget.existingRule;
     final now = DateTime.now();
+
     final rule = AlertRule(
       id: existingRule?.id ?? '',
       userId: widget.userId,
@@ -180,23 +189,7 @@ class _AlertRuleFormSheetState extends State<AlertRuleFormSheet> {
       updatedAt: existingRule?.updatedAt ?? now,
       lastTriggeredAt: existingRule?.lastTriggeredAt,
     );
-    Navigator.of(context).pop(rule);
-  }
 
-  String _ruleTypeLabel(BuildContext context, AlertRuleType type) {
-    switch (type) {
-      case AlertRuleType.populationIncreased:
-        return context.l10n.alertTypePopulationIncreased;
-      case AlertRuleType.populationDecreased:
-        return context.l10n.alertTypePopulationDecreased;
-      case AlertRuleType.crossedAboveThreshold:
-        return context.l10n.alertTypeCrossedAboveThreshold;
-      case AlertRuleType.crossedBelowThreshold:
-        return context.l10n.alertTypeCrossedBelowThreshold;
-      case AlertRuleType.serverOnline:
-        return context.l10n.alertTypeServerOnline;
-      case AlertRuleType.serverOffline:
-        return context.l10n.alertTypeServerOffline;
-    }
+    Navigator.of(context).pop(rule);
   }
 }
