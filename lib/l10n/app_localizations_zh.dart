@@ -673,4 +673,88 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get serverSyncUnavailable => '当前无法获取同步状态';
+
+  @override
+  String get alertSettingsTitle => '提醒规则';
+
+  @override
+  String get manageAlertRules => '管理提醒规则';
+
+  @override
+  String get unlockAlertsWithPremium => '通过 Premium 解锁提醒';
+
+  @override
+  String get addAlertRule => '添加提醒规则';
+
+  @override
+  String get editAlertRule => '编辑提醒规则';
+
+  @override
+  String get noAlertRulesYet => '该服务器暂时还没有提醒规则。';
+
+  @override
+  String get alertRulesLoadError => '无法加载提醒规则。';
+
+  @override
+  String get alertRulesRequiresLogin => '你必须先登录才能管理提醒规则。';
+
+  @override
+  String get alertRuleType => '提醒类型';
+
+  @override
+  String get alertRuleThreshold => '阈值';
+
+  @override
+  String get alertRuleThresholdHint => '请输入玩家数量';
+
+  @override
+  String get alertRuleThresholdRequired => '请输入阈值。';
+
+  @override
+  String get alertRuleThresholdInvalid => '请输入有效数字。';
+
+  @override
+  String get alertRuleEnabled => '规则已启用';
+
+  @override
+  String get saveAlertRule => '保存提醒规则';
+
+  @override
+  String get updateAlertRule => '更新提醒规则';
+
+  @override
+  String get deleteAlertRule => '删除提醒规则';
+
+  @override
+  String get deleteAlertRuleQuestion => '你想删除这条提醒规则吗？';
+
+  @override
+  String get alertRuleSaved => '提醒规则已保存。';
+
+  @override
+  String get alertRuleUpdated => '提醒规则已更新。';
+
+  @override
+  String get alertRuleDeleted => '提醒规则已删除。';
+
+  @override
+  String get alertRuleMutationError => '无法保存提醒规则。请重试。';
+
+  @override
+  String get alertTypePopulationIncreased => '人数增加';
+
+  @override
+  String get alertTypePopulationDecreased => '人数减少';
+
+  @override
+  String get alertTypeCrossedAboveThreshold => '超过阈值';
+
+  @override
+  String get alertTypeCrossedBelowThreshold => '低于阈值';
+
+  @override
+  String get alertTypeServerOnline => '服务器上线';
+
+  @override
+  String get alertTypeServerOffline => '服务器离线';
 }

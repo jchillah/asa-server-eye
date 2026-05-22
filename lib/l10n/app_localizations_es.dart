@@ -673,4 +673,88 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get serverSyncUnavailable => 'El estado de sincronización no está disponible en este momento';
+
+  @override
+  String get alertSettingsTitle => 'Reglas de alerta';
+
+  @override
+  String get manageAlertRules => 'Gestionar reglas de alerta';
+
+  @override
+  String get unlockAlertsWithPremium => 'Desbloquear alertas con Premium';
+
+  @override
+  String get addAlertRule => 'Añadir regla de alerta';
+
+  @override
+  String get editAlertRule => 'Editar regla de alerta';
+
+  @override
+  String get noAlertRulesYet => 'Todavía no hay reglas de alerta para este servidor.';
+
+  @override
+  String get alertRulesLoadError => 'No se pudieron cargar las reglas de alerta.';
+
+  @override
+  String get alertRulesRequiresLogin => 'Debes iniciar sesión para gestionar las reglas de alerta.';
+
+  @override
+  String get alertRuleType => 'Tipo de alerta';
+
+  @override
+  String get alertRuleThreshold => 'Umbral';
+
+  @override
+  String get alertRuleThresholdHint => 'Introduce una cantidad de jugadores';
+
+  @override
+  String get alertRuleThresholdRequired => 'Introduce un umbral.';
+
+  @override
+  String get alertRuleThresholdInvalid => 'Introduce un número válido.';
+
+  @override
+  String get alertRuleEnabled => 'Regla activada';
+
+  @override
+  String get saveAlertRule => 'Guardar regla de alerta';
+
+  @override
+  String get updateAlertRule => 'Actualizar regla de alerta';
+
+  @override
+  String get deleteAlertRule => 'Eliminar regla de alerta';
+
+  @override
+  String get deleteAlertRuleQuestion => '¿Quieres eliminar esta regla de alerta?';
+
+  @override
+  String get alertRuleSaved => 'Regla de alerta guardada.';
+
+  @override
+  String get alertRuleUpdated => 'Regla de alerta actualizada.';
+
+  @override
+  String get alertRuleDeleted => 'Regla de alerta eliminada.';
+
+  @override
+  String get alertRuleMutationError => 'No se pudo guardar la regla de alerta. Inténtalo de nuevo.';
+
+  @override
+  String get alertTypePopulationIncreased => 'La población aumentó';
+
+  @override
+  String get alertTypePopulationDecreased => 'La población disminuyó';
+
+  @override
+  String get alertTypeCrossedAboveThreshold => 'Superó el umbral';
+
+  @override
+  String get alertTypeCrossedBelowThreshold => 'Cayó por debajo del umbral';
+
+  @override
+  String get alertTypeServerOnline => 'Servidor en línea';
+
+  @override
+  String get alertTypeServerOffline => 'Servidor fuera de línea';
 }

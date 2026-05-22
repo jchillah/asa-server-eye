@@ -918,5 +918,117 @@
     "serverSyncUnavailable": "L’état de synchronisation est actuellement indisponible",
     "@serverSyncUnavailable": {
     "description": "Shown when sync status could not be loaded"
+    },
+    "alertSettingsTitle": "Règles d’alerte",
+    "@alertSettingsTitle": {
+        "description": "Titre de l’écran des règles d’alerte"
+    },
+    "manageAlertRules": "Gérer les règles d’alerte",
+    "@manageAlertRules": {
+        "description": "Texte du bouton pour ouvrir l’écran des règles d’alerte"
+    },
+    "unlockAlertsWithPremium": "Débloquer les alertes avec Premium",
+    "@unlockAlertsWithPremium": {
+        "description": "Texte du bouton d’upsell pour ouvrir l’écran Premium des alertes"
+    },
+    "addAlertRule": "Ajouter une règle d’alerte",
+    "@addAlertRule": {
+        "description": "Texte du bouton pour ajouter une nouvelle règle d’alerte"
+    },
+    "editAlertRule": "Modifier la règle d’alerte",
+    "@editAlertRule": {
+        "description": "Titre pour modifier une règle d’alerte"
+    },
+    "noAlertRulesYet": "Aucune règle d’alerte pour ce serveur pour le moment.",
+    "@noAlertRulesYet": {
+        "description": "État vide lorsqu’un serveur n’a pas encore de règle d’alerte"
+    },
+    "alertRulesLoadError": "Les règles d’alerte n’ont pas pu être chargées.",
+    "@alertRulesLoadError": {
+        "description": "Erreur lors du chargement des règles d’alerte"
+    },
+    "alertRulesRequiresLogin": "Vous devez être connecté pour gérer les règles d’alerte.",
+    "@alertRulesRequiresLogin": {
+        "description": "Affiché lorsque l’utilisateur n’est pas connecté"
+    },
+    "alertRuleType": "Type d’alerte",
+    "@alertRuleType": {
+        "description": "Libellé du type d’alerte"
+    },
+    "alertRuleThreshold": "Seuil",
+    "@alertRuleThreshold": {
+        "description": "Libellé du champ de seuil"
+    },
+    "alertRuleThresholdHint": "Saisissez un nombre de joueurs",
+    "@alertRuleThresholdHint": {
+        "description": "Texte d’aide pour le champ de seuil"
+        },
+    "alertRuleThresholdRequired": "Veuillez saisir un seuil.",
+    "@alertRuleThresholdRequired": {
+        "description": "Validation lorsque le seuil est requis mais manquant"
+    },
+    "alertRuleThresholdInvalid": "Veuillez saisir un nombre valide.",
+    "@alertRuleThresholdInvalid": {
+        "description": "Validation lorsque le seuil est invalide"
+    },
+    "alertRuleEnabled": "Règle activée",
+    "@alertRuleEnabled": {
+        "description": "Libellé de l’interrupteur pour une règle activée"
+    },
+    "saveAlertRule": "Enregistrer la règle d’alerte",
+    "@saveAlertRule": {
+        "description": "Texte du bouton pour enregistrer une nouvelle règle d’alerte"
+    },
+    "updateAlertRule": "Mettre à jour la règle d’alerte",
+    "@updateAlertRule": {
+        "description": "Texte du bouton pour mettre à jour une règle d’alerte existante"
+    },
+    "deleteAlertRule": "Supprimer la règle d’alerte",
+    "@deleteAlertRule": {
+        "description": "Titre de la boîte de dialogue pour supprimer une règle d’alerte"
+    },
+    "deleteAlertRuleQuestion": "Voulez-vous supprimer cette règle d’alerte ?",
+    "@deleteAlertRuleQuestion": {
+        "description": "Message de confirmation avant la suppression d’une règle d’alerte"
+    },
+    "alertRuleSaved": "Règle d’alerte enregistrée.",
+    "@alertRuleSaved": {
+        "description": "Snackbar après l’enregistrement d’une règle d’alerte"
+    },
+    "alertRuleUpdated": "Règle d’alerte mise à jour.",
+    "@alertRuleUpdated": {
+        "description": "Snackbar après la mise à jour d’une règle d’alerte"
+    },
+    "alertRuleDeleted": "Règle d’alerte supprimée.",
+    "@alertRuleDeleted": {
+        "description": "Snackbar après la suppression d’une règle d’alerte"
+        },
+    "alertRuleMutationError": "La règle d’alerte n’a pas pu être enregistrée. Veuillez réessayer.",
+    "@alertRuleMutationError": {
+        "description": "Erreur affichée lorsqu’une modification de règle d’alerte échoue"
+    },
+    "alertTypePopulationIncreased": "Population en hausse",
+    "@alertTypePopulationIncreased": {
+        "description": "Libellé du type d’alerte"
+    },
+    "alertTypePopulationDecreased": "Population en baisse",
+    "@alertTypePopulationDecreased": {
+        "description": "Libellé du type d’alerte"
+    },
+    "alertTypeCrossedAboveThreshold": "Seuil dépassé vers le haut",
+    "@alertTypeCrossedAboveThreshold": {
+        "description": "Libellé du type d’alerte"
+    },
+    "alertTypeCrossedBelowThreshold": "Seuil franchi vers le bas",
+    "@alertTypeCrossedBelowThreshold": {
+        "description": "Libellé du type d’alerte"
+    },
+    "alertTypeServerOnline": "Serveur en ligne",
+    "@alertTypeServerOnline": {
+        "description": "Libellé du type d’alerte"
+    },
+    "alertTypeServerOffline": "Serveur hors ligne",
+    "@alertTypeServerOffline": {
+        "description": "Libellé du type d’alerte"
     }
 }

@@ -673,4 +673,88 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get serverSyncUnavailable => 'Synchronisationsstatus derzeit nicht verfügbar';
+
+  @override
+  String get alertSettingsTitle => 'Alert-Regeln (Benachrichtigungen)';
+
+  @override
+  String get manageAlertRules => 'Alert-Regeln verwalten';
+
+  @override
+  String get unlockAlertsWithPremium => 'Alerts mit Premium freischalten';
+
+  @override
+  String get addAlertRule => 'Alert-Regel hinzufügen';
+
+  @override
+  String get editAlertRule => 'Alert-Regel bearbeiten';
+
+  @override
+  String get noAlertRulesYet => 'Für diesen Server gibt es noch keine Alert-Regeln.';
+
+  @override
+  String get alertRulesLoadError => 'Alert-Regeln konnten nicht geladen werden.';
+
+  @override
+  String get alertRulesRequiresLogin => 'Du musst angemeldet sein, um Alert-Regeln zu verwalten.';
+
+  @override
+  String get alertRuleType => 'Alert-Typ';
+
+  @override
+  String get alertRuleThreshold => 'Schwellenwert';
+
+  @override
+  String get alertRuleThresholdHint => 'Spieleranzahl eingeben';
+
+  @override
+  String get alertRuleThresholdRequired => 'Bitte einen Schwellenwert eingeben.';
+
+  @override
+  String get alertRuleThresholdInvalid => 'Bitte eine gültige Zahl eingeben.';
+
+  @override
+  String get alertRuleEnabled => 'Regel aktiviert';
+
+  @override
+  String get saveAlertRule => 'Alert-Regel speichern';
+
+  @override
+  String get updateAlertRule => 'Alert-Regel aktualisieren';
+
+  @override
+  String get deleteAlertRule => 'Alert-Regel löschen';
+
+  @override
+  String get deleteAlertRuleQuestion => 'Möchtest du diese Alert-Regel löschen?';
+
+  @override
+  String get alertRuleSaved => 'Alert-Regel gespeichert.';
+
+  @override
+  String get alertRuleUpdated => 'Alert-Regel aktualisiert.';
+
+  @override
+  String get alertRuleDeleted => 'Alert-Regel gelöscht.';
+
+  @override
+  String get alertRuleMutationError => 'Alert-Regel konnte nicht gespeichert werden. Bitte versuche es erneut.';
+
+  @override
+  String get alertTypePopulationIncreased => 'Population gestiegen';
+
+  @override
+  String get alertTypePopulationDecreased => 'Population gesunken';
+
+  @override
+  String get alertTypeCrossedAboveThreshold => 'Schwellenwert überschritten';
+
+  @override
+  String get alertTypeCrossedBelowThreshold => 'Unter Schwellenwert gefallen';
+
+  @override
+  String get alertTypeServerOnline => 'Server online';
+
+  @override
+  String get alertTypeServerOffline => 'Server offline';
 }

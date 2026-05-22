@@ -918,5 +918,117 @@
   "serverSyncUnavailable": "Synchronisationsstatus derzeit nicht verfügbar",
   "@serverSyncUnavailable": {
     "description": "Shown when sync status could not be loaded"
+  },
+  "alertSettingsTitle": "Alert-Regeln (Benachrichtigungen)",
+  "@alertSettingsTitle": {
+    "description": "Titel des Screens für Alert-Regeln"
+  },
+  "manageAlertRules": "Alert-Regeln verwalten",
+  "@manageAlertRules": {
+    "description": "Buttontext zum Öffnen des Screens für Alert-Regeln"
+  },
+  "unlockAlertsWithPremium": "Alerts mit Premium freischalten",
+  "@unlockAlertsWithPremium": {
+    "description": "Upsell-Buttontext zum Öffnen des Premium-Screens für Alerts"
+  },
+  "addAlertRule": "Alert-Regel hinzufügen",
+  "@addAlertRule": {
+    "description": "Buttontext zum Hinzufügen einer Alert-Regel"
+  },
+  "editAlertRule": "Alert-Regel bearbeiten",
+  "@editAlertRule": {
+    "description": "Titel zum Bearbeiten einer Alert-Regel"
+  },
+  "noAlertRulesYet": "Für diesen Server gibt es noch keine Alert-Regeln.",
+  "@noAlertRulesYet": {
+    "description": "Leerzustand wenn ein Server noch keine Alert-Regeln hat"
+  },
+  "alertRulesLoadError": "Alert-Regeln konnten nicht geladen werden.",
+  "@alertRulesLoadError": {
+    "description": "Fehler beim Laden von Alert-Regeln"
+  },
+  "alertRulesRequiresLogin": "Du musst angemeldet sein, um Alert-Regeln zu verwalten.",
+  "@alertRulesRequiresLogin": {
+    "description": "Wird angezeigt, wenn der Nutzer nicht angemeldet ist"
+  },
+  "alertRuleType": "Alert-Typ",
+  "@alertRuleType": {
+    "description": "Beschriftung für Alert-Typ"
+  },
+  "alertRuleThreshold": "Schwellenwert",
+  "@alertRuleThreshold": {
+    "description": "Beschriftung für Schwellenwert"
+  },
+  "alertRuleThresholdHint": "Spieleranzahl eingeben",
+  "@alertRuleThresholdHint": {
+    "description": "Hinweistext für Schwellenwert"
+  },
+  "alertRuleThresholdRequired": "Bitte einen Schwellenwert eingeben.",
+  "@alertRuleThresholdRequired": {
+    "description": "Validierung wenn Schwellenwert fehlt"
+  },
+  "alertRuleThresholdInvalid": "Bitte eine gültige Zahl eingeben.",
+  "@alertRuleThresholdInvalid": {
+    "description": "Validierung wenn Schwellenwert ungültig ist"
+  },
+  "alertRuleEnabled": "Regel aktiviert",
+  "@alertRuleEnabled": {
+    "description": "Schaltertext für aktivierte Regel"
+  },
+  "saveAlertRule": "Alert-Regel speichern",
+  "@saveAlertRule": {
+    "description": "Buttontext zum Speichern einer neuen Alert-Regel"
+  },
+  "updateAlertRule": "Alert-Regel aktualisieren",
+  "@updateAlertRule": {
+    "description": "Buttontext zum Aktualisieren einer bestehenden Alert-Regel"
+  },
+  "deleteAlertRule": "Alert-Regel löschen",
+  "@deleteAlertRule": {
+    "description": "Dialogtitel zum Löschen einer Alert-Regel"
+  },
+  "deleteAlertRuleQuestion": "Möchtest du diese Alert-Regel löschen?",
+  "@deleteAlertRuleQuestion": {
+    "description": "Bestätigungsfrage vor dem Löschen einer Alert-Regel"
+  },
+  "alertRuleSaved": "Alert-Regel gespeichert.",
+  "@alertRuleSaved": {
+    "description": "Snackbar nach dem Speichern einer Alert-Regel"
+  },
+  "alertRuleUpdated": "Alert-Regel aktualisiert.",
+  "@alertRuleUpdated": {
+    "description": "Snackbar nach dem Aktualisieren einer Alert-Regel"
+  },
+  "alertRuleDeleted": "Alert-Regel gelöscht.",
+  "@alertRuleDeleted": {
+    "description": "Snackbar nach dem Löschen einer Alert-Regel"
+  },
+  "alertRuleMutationError": "Alert-Regel konnte nicht gespeichert werden. Bitte versuche es erneut.",
+  "@alertRuleMutationError": {
+    "description": "Fehlermeldung wenn eine Alert-Regel-Mutation fehlschlägt"
+  },
+  "alertTypePopulationIncreased": "Population gestiegen",
+  "@alertTypePopulationIncreased": {
+    "description": "Bezeichnung für Alert-Typ"
+  },
+  "alertTypePopulationDecreased": "Population gesunken",
+  "@alertTypePopulationDecreased": {
+    "description": "Bezeichnung für Alert-Typ"
+  },
+  "alertTypeCrossedAboveThreshold": "Schwellenwert überschritten",
+  "@alertTypeCrossedAboveThreshold": {
+    "description": "Bezeichnung für Alert-Typ"
+  },
+  "alertTypeCrossedBelowThreshold": "Unter Schwellenwert gefallen",
+  "@alertTypeCrossedBelowThreshold": {
+    "description": "Bezeichnung für Alert-Typ"
+  },
+  "alertTypeServerOnline": "Server online",
+  "@alertTypeServerOnline": {
+    "description": "Bezeichnung für Alert-Typ"
+  },
+  "alertTypeServerOffline": "Server offline",
+  "@alertTypeServerOffline": {
+    "description": "Bezeichnung für Alert-Typ"
   }
 }

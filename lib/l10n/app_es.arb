@@ -918,5 +918,117 @@
     "serverSyncUnavailable": "El estado de sincronización no está disponible en este momento",
     "@serverSyncUnavailable": {
         "description": "Shown when sync status could not be loaded"
+    },
+    "alertSettingsTitle": "Reglas de alerta",
+    "@alertSettingsTitle": {
+        "description": "Título de la pantalla de reglas de alerta"
+    },
+    "manageAlertRules": "Gestionar reglas de alerta",
+    "@manageAlertRules": {
+        "description": "Texto del botón para abrir la pantalla de reglas de alerta"
+    },
+    "unlockAlertsWithPremium": "Desbloquear alertas con Premium",
+    "@unlockAlertsWithPremium": {
+        "description": "Texto del botón de upsell para abrir la pantalla Premium de alertas"
+    },
+    "addAlertRule": "Añadir regla de alerta",
+    "@addAlertRule": {
+        "description": "Texto del botón para añadir una nueva regla de alerta"
+    },
+    "editAlertRule": "Editar regla de alerta",
+    "@editAlertRule": {
+        "description": "Título para editar una regla de alerta"
+    },
+    "noAlertRulesYet": "Todavía no hay reglas de alerta para este servidor.",
+    "@noAlertRulesYet": {
+        "description": "Estado vacío cuando un servidor aún no tiene reglas de alerta"
+    },
+    "alertRulesLoadError": "No se pudieron cargar las reglas de alerta.",
+    "@alertRulesLoadError": {
+        "description": "Error al cargar las reglas de alerta"
+    },
+    "alertRulesRequiresLogin": "Debes iniciar sesión para gestionar las reglas de alerta.",
+    "@alertRulesRequiresLogin": {
+        "description": "Se muestra cuando el usuario no ha iniciado sesión"
+    },
+    "alertRuleType": "Tipo de alerta",
+    "@alertRuleType": {
+        "description": "Etiqueta para el tipo de alerta"
+    },
+    "alertRuleThreshold": "Umbral",
+    "@alertRuleThreshold": {
+        "description": "Etiqueta para el campo de umbral"
+    },
+    "alertRuleThresholdHint": "Introduce una cantidad de jugadores",
+    "@alertRuleThresholdHint": {
+        "description": "Texto de ayuda para el campo de umbral"
+    },
+    "alertRuleThresholdRequired": "Introduce un umbral.",
+    "@alertRuleThresholdRequired": {
+        "description": "Validación cuando falta el umbral"
+    },
+    "alertRuleThresholdInvalid": "Introduce un número válido.",
+    "@alertRuleThresholdInvalid": {
+        "description": "Validación cuando el umbral no es válido"
+    },
+    "alertRuleEnabled": "Regla activada",
+    "@alertRuleEnabled": {
+        "description": "Etiqueta del interruptor para una regla activada"
+    },
+    "saveAlertRule": "Guardar regla de alerta",
+    "@saveAlertRule": {
+        "description": "Texto del botón para guardar una nueva regla de alerta"
+    },
+    "updateAlertRule": "Actualizar regla de alerta",
+    "@updateAlertRule": {
+        "description": "Texto del botón para actualizar una regla de alerta existente"
+    },
+    "deleteAlertRule": "Eliminar regla de alerta",
+    "@deleteAlertRule": {
+        "description": "Título del diálogo para eliminar una regla de alerta"
+    },
+    "deleteAlertRuleQuestion": "¿Quieres eliminar esta regla de alerta?",
+    "@deleteAlertRuleQuestion": {
+        "description": "Mensaje de confirmación antes de eliminar una regla de alerta"
+    },
+    "alertRuleSaved": "Regla de alerta guardada.",
+    "@alertRuleSaved": {
+        "description": "Snackbar después de guardar una regla de alerta"
+    },
+    "alertRuleUpdated": "Regla de alerta actualizada.",
+    "@alertRuleUpdated": {
+        "description": "Snackbar después de actualizar una regla de alerta"
+    },
+    "alertRuleDeleted": "Regla de alerta eliminada.",
+    "@alertRuleDeleted": {
+        "description": "Snackbar después de eliminar una regla de alerta"
+    },
+    "alertRuleMutationError": "No se pudo guardar la regla de alerta. Inténtalo de nuevo.",
+    "@alertRuleMutationError": {
+        "description": "Error mostrado cuando falla una mutación de regla de alerta"
+    },
+    "alertTypePopulationIncreased": "La población aumentó",
+    "@alertTypePopulationIncreased": {
+        "description": "Etiqueta del tipo de alerta"
+    },
+    "alertTypePopulationDecreased": "La población disminuyó",
+    "@alertTypePopulationDecreased": {
+        "description": "Etiqueta del tipo de alerta"
+    },
+    "alertTypeCrossedAboveThreshold": "Superó el umbral",
+    "@alertTypeCrossedAboveThreshold": {
+        "description": "Etiqueta del tipo de alerta"
+    },
+    "alertTypeCrossedBelowThreshold": "Cayó por debajo del umbral",
+    "@alertTypeCrossedBelowThreshold": {
+        "description": "Etiqueta del tipo de alerta"
+    },
+    "alertTypeServerOnline": "Servidor en línea",
+    "@alertTypeServerOnline": {
+        "description": "Etiqueta del tipo de alerta"
+    },
+    "alertTypeServerOffline": "Servidor fuera de línea",
+    "@alertTypeServerOffline": {
+        "description": "Etiqueta del tipo de alerta"
     }
 }

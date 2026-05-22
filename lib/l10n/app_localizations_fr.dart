@@ -673,4 +673,88 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get serverSyncUnavailable => 'L’état de synchronisation est actuellement indisponible';
+
+  @override
+  String get alertSettingsTitle => 'Règles d’alerte';
+
+  @override
+  String get manageAlertRules => 'Gérer les règles d’alerte';
+
+  @override
+  String get unlockAlertsWithPremium => 'Débloquer les alertes avec Premium';
+
+  @override
+  String get addAlertRule => 'Ajouter une règle d’alerte';
+
+  @override
+  String get editAlertRule => 'Modifier la règle d’alerte';
+
+  @override
+  String get noAlertRulesYet => 'Aucune règle d’alerte pour ce serveur pour le moment.';
+
+  @override
+  String get alertRulesLoadError => 'Les règles d’alerte n’ont pas pu être chargées.';
+
+  @override
+  String get alertRulesRequiresLogin => 'Vous devez être connecté pour gérer les règles d’alerte.';
+
+  @override
+  String get alertRuleType => 'Type d’alerte';
+
+  @override
+  String get alertRuleThreshold => 'Seuil';
+
+  @override
+  String get alertRuleThresholdHint => 'Saisissez un nombre de joueurs';
+
+  @override
+  String get alertRuleThresholdRequired => 'Veuillez saisir un seuil.';
+
+  @override
+  String get alertRuleThresholdInvalid => 'Veuillez saisir un nombre valide.';
+
+  @override
+  String get alertRuleEnabled => 'Règle activée';
+
+  @override
+  String get saveAlertRule => 'Enregistrer la règle d’alerte';
+
+  @override
+  String get updateAlertRule => 'Mettre à jour la règle d’alerte';
+
+  @override
+  String get deleteAlertRule => 'Supprimer la règle d’alerte';
+
+  @override
+  String get deleteAlertRuleQuestion => 'Voulez-vous supprimer cette règle d’alerte ?';
+
+  @override
+  String get alertRuleSaved => 'Règle d’alerte enregistrée.';
+
+  @override
+  String get alertRuleUpdated => 'Règle d’alerte mise à jour.';
+
+  @override
+  String get alertRuleDeleted => 'Règle d’alerte supprimée.';
+
+  @override
+  String get alertRuleMutationError => 'La règle d’alerte n’a pas pu être enregistrée. Veuillez réessayer.';
+
+  @override
+  String get alertTypePopulationIncreased => 'Population en hausse';
+
+  @override
+  String get alertTypePopulationDecreased => 'Population en baisse';
+
+  @override
+  String get alertTypeCrossedAboveThreshold => 'Seuil dépassé vers le haut';
+
+  @override
+  String get alertTypeCrossedBelowThreshold => 'Seuil franchi vers le bas';
+
+  @override
+  String get alertTypeServerOnline => 'Serveur en ligne';
+
+  @override
+  String get alertTypeServerOffline => 'Serveur hors ligne';
 }

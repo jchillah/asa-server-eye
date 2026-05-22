@@ -918,5 +918,117 @@
     "serverSyncUnavailable": "当前无法获取同步状态",
     "@serverSyncUnavailable": {
         "description": "当无法加载同步状态时显示"
+    },
+    "alertSettingsTitle": "提醒规则",
+    "@alertSettingsTitle": {
+        "description": "提醒规则页面标题"
+    },
+    "manageAlertRules": "管理提醒规则",
+    "@manageAlertRules": {
+        "description": "打开提醒规则页面的按钮文本"
+    },
+    "unlockAlertsWithPremium": "通过 Premium 解锁提醒",
+    "@unlockAlertsWithPremium": {
+        "description": "打开 Premium 页面以解锁提醒功能的引导按钮文本"
+    },
+    "addAlertRule": "添加提醒规则",
+    "@addAlertRule": {
+        "description": "添加新提醒规则的按钮文本"
+    },
+    "editAlertRule": "编辑提醒规则",
+    "@editAlertRule": {
+        "description": "编辑提醒规则的标题"
+    },
+    "noAlertRulesYet": "该服务器暂时还没有提醒规则。",
+    "@noAlertRulesYet": {
+        "description": "当服务器还没有提醒规则时的空状态"
+    },
+    "alertRulesLoadError": "无法加载提醒规则。",
+    "@alertRulesLoadError": {
+        "description": "加载提醒规则失败时的错误"
+    },
+    "alertRulesRequiresLogin": "你必须先登录才能管理提醒规则。",
+    "@alertRulesRequiresLogin": {
+        "description": "当用户未登录时显示"
+    },
+    "alertRuleType": "提醒类型",
+    "@alertRuleType": {
+        "description": "提醒类型标签"
+    },
+    "alertRuleThreshold": "阈值",
+    "@alertRuleThreshold": {
+        "description": "阈值字段标签"
+    },
+    "alertRuleThresholdHint": "请输入玩家数量",
+    "@alertRuleThresholdHint": {
+        "description": "阈值字段提示文本"
+    },
+    "alertRuleThresholdRequired": "请输入阈值。",
+    "@alertRuleThresholdRequired": {
+        "description": "当必须填写阈值但缺失时的验证提示"
+    },
+    "alertRuleThresholdInvalid": "请输入有效数字。",
+    "@alertRuleThresholdInvalid": {
+        "description": "当阈值无效时的验证提示"
+    },
+    "alertRuleEnabled": "规则已启用",
+    "@alertRuleEnabled": {
+        "description": "已启用提醒规则的开关标签"
+    },
+    "saveAlertRule": "保存提醒规则",
+    "@saveAlertRule": {
+        "description": "保存新提醒规则的按钮文本"
+    },
+    "updateAlertRule": "更新提醒规则",
+    "@updateAlertRule": {
+        "description": "更新现有提醒规则的按钮文本"
+    },
+    "deleteAlertRule": "删除提醒规则",
+    "@deleteAlertRule": {
+        "description": "删除提醒规则对话框标题"
+    },
+    "deleteAlertRuleQuestion": "你想删除这条提醒规则吗？",
+    "@deleteAlertRuleQuestion": {
+        "description": "删除提醒规则前的确认消息"
+    },
+    "alertRuleSaved": "提醒规则已保存。",
+    "@alertRuleSaved": {
+        "description": "保存提醒规则后的提示"
+    },
+    "alertRuleUpdated": "提醒规则已更新。",
+    "@alertRuleUpdated": {
+        "description": "更新提醒规则后的提示"
+    },
+    "alertRuleDeleted": "提醒规则已删除。",
+    "@alertRuleDeleted": {
+        "description": "删除提醒规则后的提示"
+    },
+    "alertRuleMutationError": "无法保存提醒规则。请重试。",
+    "@alertRuleMutationError": {
+        "description": "修改提醒规则失败时显示的错误"
+    },
+    "alertTypePopulationIncreased": "人数增加",
+    "@alertTypePopulationIncreased": {
+        "description": "提醒类型标签"
+    },
+    "alertTypePopulationDecreased": "人数减少",
+    "@alertTypePopulationDecreased": {
+        "description": "提醒类型标签"
+    },
+    "alertTypeCrossedAboveThreshold": "超过阈值",
+    "@alertTypeCrossedAboveThreshold": {
+        "description": "提醒类型标签"
+    },
+    "alertTypeCrossedBelowThreshold": "低于阈值",
+    "@alertTypeCrossedBelowThreshold": {
+        "description": "提醒类型标签"
+    },
+    "alertTypeServerOnline": "服务器上线",
+    "@alertTypeServerOnline": {
+        "description": "提醒类型标签"
+    },
+    "alertTypeServerOffline": "服务器离线",
+    "@alertTypeServerOffline": {
+        "description": "提醒类型标签"
     }
 }

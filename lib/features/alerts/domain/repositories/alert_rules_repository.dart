@@ -15,6 +15,11 @@ abstract class AlertRulesRepository {
 
   Future<void> deleteRule({required String userId, required String ruleId});
 
+  Future<void> deleteRulesForServer({
+    required String userId,
+    required String serverId,
+  });
+
   Future<void> setRuleEnabled({
     required String userId,
     required String ruleId,

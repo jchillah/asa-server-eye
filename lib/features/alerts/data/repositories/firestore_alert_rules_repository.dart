@@ -33,14 +33,32 @@ class FirestoreAlertRulesRepository implements AlertRulesRepository {
       }
     }
 
+    rules.sort(_compareByNewest);
     return rules;
+  }
+
+  int _compareByNewest(AlertRule first, AlertRule second) {
+    final firstCreatedAt = first.createdAt;
+    final secondCreatedAt = second.createdAt;
+
+    if (firstCreatedAt == null && secondCreatedAt == null) {
+      return second.id.compareTo(first.id);
+    }
+
+    if (firstCreatedAt == null) {
+      return 1;
+    }
+
+    if (secondCreatedAt == null) {
+      return -1;
+    }
+
+    return secondCreatedAt.compareTo(firstCreatedAt);
   }
 
   @override
   Stream<List<AlertRule>> watchRules(String userId) {
-    return _rulesCollection(
-      userId,
-    ).orderBy('createdAt', descending: true).snapshots().map(_mapRules);
+    return _rulesCollection(userId).snapshots().map(_mapRules);
   }
 
   @override
@@ -48,11 +66,9 @@ class FirestoreAlertRulesRepository implements AlertRulesRepository {
     required String userId,
     required String serverId,
   }) {
-    return _rulesCollection(userId)
-        .where('serverId', isEqualTo: serverId)
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map(_mapRules);
+    return _rulesCollection(
+      userId,
+    ).where('serverId', isEqualTo: serverId).snapshots().map(_mapRules);
   }
 
   @override
@@ -85,6 +101,27 @@ class FirestoreAlertRulesRepository implements AlertRulesRepository {
     required String ruleId,
   }) async {
     await _rulesCollection(userId).doc(ruleId).delete();
+  }
+
+  @override
+  Future<void> deleteRulesForServer({
+    required String userId,
+    required String serverId,
+  }) async {
+    final snapshot = await _rulesCollection(
+      userId,
+    ).where('serverId', isEqualTo: serverId).get();
+
+    if (snapshot.docs.isEmpty) {
+      return;
+    }
+
+    final batch = _firestore.batch();
+    for (final doc in snapshot.docs) {
+      batch.delete(doc.reference);
+    }
+
+    await batch.commit();
   }
 
   @override
