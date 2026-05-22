@@ -647,4 +647,27 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get premiumVerificationQueued => '您的购买已提交，目前正在验证中。';
+
+  @override
+  String serverSyncLastUpdated(String value) {
+    return '最后更新：$value';
+  }
+
+  @override
+  String get serverSyncSourceLive => '来源：实时数据';
+
+  @override
+  String get serverSyncSourceCache => '来源：缓存';
+
+  @override
+  String get serverSyncCacheBanner => '当前显示的是缓存的服务器数据';
+
+  @override
+  String get serverSyncCacheStale => '缓存数据可能已过期';
+
+  @override
+  String get serverSyncUnknownUpdateTime => '最后更新：未知';
+
+  @override
+  String get serverSyncUnknownSource => '来源：未知';
 }

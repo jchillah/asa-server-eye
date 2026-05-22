@@ -647,4 +647,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get premiumVerificationQueued => 'Your purchase was submitted and is now being verified.';
+
+  @override
+  String serverSyncLastUpdated(String value) {
+    return 'Last updated: $value';
+  }
+
+  @override
+  String get serverSyncSourceLive => 'Source: Live data';
+
+  @override
+  String get serverSyncSourceCache => 'Source: Cache';
+
+  @override
+  String get serverSyncCacheBanner => 'Showing cached server data';
+
+  @override
+  String get serverSyncCacheStale => 'Cache may be outdated';
+
+  @override
+  String get serverSyncUnknownUpdateTime => 'Last updated: Unknown';
+
+  @override
+  String get serverSyncUnknownSource => 'Source: Unknown';
 }

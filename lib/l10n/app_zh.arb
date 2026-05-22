@@ -782,5 +782,38 @@
     "premiumVerificationQueued": "您的购买已提交，目前正在验证中。",
     "@premiumVerificationQueued": {
         "description": "购买验证请求提交后显示的消息"
+    },
+    "serverSyncLastUpdated": "最后更新：{value}",
+    "@serverSyncLastUpdated": {
+        "description": "显示服务器列表最后更新时间的标签",
+        "placeholders": {
+            "value": {
+            "type": "String"
+        }
+    }
+    },
+    "serverSyncSourceLive": "来源：实时数据",
+    "@serverSyncSourceLive": {
+    "description": "显示服务器数据来自实时网络的标签"
+    },
+    "serverSyncSourceCache": "来源：缓存",
+    "@serverSyncSourceCache": {
+    "description": "显示服务器数据来自缓存的标签"
+    },
+    "serverSyncCacheBanner": "当前显示的是缓存的服务器数据",
+    "@serverSyncCacheBanner": {
+    "description": "当显示缓存服务器数据时的横幅文本"
+    },
+    "serverSyncCacheStale": "缓存数据可能已过期",
+    "@serverSyncCacheStale": {
+        "description": "当缓存数据可能已过期时的提示"
+    },
+    "serverSyncUnknownUpdateTime": "最后更新：未知",
+    "@serverSyncUnknownUpdateTime": {
+        "description": "当没有可用更新时间时的回退标签"
+    },
+    "serverSyncUnknownSource": "来源：未知",
+    "@serverSyncUnknownSource": {
+    "description": "当服务器数据来源未知时的回退标签"
     }
 }
