@@ -2,10 +2,7 @@
 import 'package:flutter/material.dart';
 
 class AlertsMessageBody extends StatelessWidget {
-  const AlertsMessageBody({
-    super.key,
-    required this.message,
-  });
+  const AlertsMessageBody({super.key, required this.message});
 
   final String message;
 

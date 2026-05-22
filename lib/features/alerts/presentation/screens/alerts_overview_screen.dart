@@ -27,10 +27,8 @@ class AlertsOverviewScreen extends ConsumerWidget {
       next,
     ) {
       next.whenOrNull(
-        error: (_, _) => _showSnackBar(
-          context,
-          context.l10n.alertRuleMutationError,
-        ),
+        error: (_, _) =>
+            _showSnackBar(context, context.l10n.alertRuleMutationError),
       );
     });
 
@@ -158,11 +156,9 @@ class AlertsOverviewScreen extends ConsumerWidget {
     required AlertRule rule,
     required bool isEnabled,
   }) async {
-    await ref.read(alertRuleMutationControllerProvider.notifier).setRuleEnabled(
-          userId: userId,
-          ruleId: rule.id,
-          isEnabled: isEnabled,
-        );
+    await ref
+        .read(alertRuleMutationControllerProvider.notifier)
+        .setRuleEnabled(userId: userId, ruleId: rule.id, isEnabled: isEnabled);
     if (!context.mounted) return;
 
     _showMutationSuccessSnackBar(
