@@ -88,6 +88,27 @@ class FirestoreAlertRulesRepository implements AlertRulesRepository {
   }
 
   @override
+  Future<void> deleteRulesForServer({
+    required String userId,
+    required String serverId,
+  }) async {
+    final snapshot = await _rulesCollection(
+      userId,
+    ).where('serverId', isEqualTo: serverId).get();
+
+    if (snapshot.docs.isEmpty) {
+      return;
+    }
+
+    final batch = _firestore.batch();
+    for (final doc in snapshot.docs) {
+      batch.delete(doc.reference);
+    }
+
+    await batch.commit();
+  }
+
+  @override
   Future<void> setRuleEnabled({
     required String userId,
     required String ruleId,
