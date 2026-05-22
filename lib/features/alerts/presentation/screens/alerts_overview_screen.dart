@@ -9,6 +9,7 @@ import '../extensions/alert_settings_l10n.dart';
 import '../providers/alert_rules_providers.dart';
 import '../widgets/alert_rule_form_sheet.dart';
 import '../widgets/alert_rule_list_tile.dart';
+import '../widgets/alerts_message_body.dart';
 
 class AlertsOverviewScreen extends ConsumerWidget {
   const AlertsOverviewScreen({super.key});
@@ -26,41 +27,24 @@ class AlertsOverviewScreen extends ConsumerWidget {
       next,
     ) {
       next.whenOrNull(
-        error: (_, _) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(context.l10n.alertRuleMutationError)),
-          );
-        },
+        error: (_, _) => _showSnackBar(
+          context,
+          context.l10n.alertRuleMutationError,
+        ),
       );
     });
 
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.alertsOverviewTitle)),
       body: userId == null
-          ? Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Text(
-                  context.l10n.alertRulesRequiresLogin,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyLarge,
-                ),
-              ),
-            )
+          ? AlertsMessageBody(message: context.l10n.alertRulesRequiresLogin)
           : AbsorbPointer(
               absorbing: isMutating,
               child: rulesAsync.when(
                 data: (rules) {
                   if (rules.isEmpty) {
-                    return Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Text(
-                          context.l10n.noUserAlertRulesYet,
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyLarge,
-                        ),
-                      ),
+                    return AlertsMessageBody(
+                      message: context.l10n.noUserAlertRulesYet,
                     );
                   }
 
@@ -112,31 +96,13 @@ class AlertsOverviewScreen extends ConsumerWidget {
                                 userId: userId,
                                 rule: rule,
                               ),
-                              onEnabledChanged: (value) async {
-                                await ref
-                                    .read(
-                                      alertRuleMutationControllerProvider
-                                          .notifier,
-                                    )
-                                    .setRuleEnabled(
-                                      userId: userId,
-                                      ruleId: rule.id,
-                                      isEnabled: value,
-                                    );
-                                if (!context.mounted) return;
-                                final state = ref.read(
-                                  alertRuleMutationControllerProvider,
-                                );
-                                if (!state.hasError) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        context.l10n.alertRuleUpdated,
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
+                              onEnabledChanged: (value) => _setRuleEnabled(
+                                context: context,
+                                ref: ref,
+                                userId: userId,
+                                rule: rule,
+                                isEnabled: value,
+                              ),
                             ),
                           ],
                         ),
@@ -145,15 +111,8 @@ class AlertsOverviewScreen extends ConsumerWidget {
                   );
                 },
                 loading: () => const Center(child: CircularProgressIndicator()),
-                error: (_, _) => Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Text(
-                      context.l10n.alertRulesLoadError,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.bodyLarge,
-                    ),
-                  ),
+                error: (_, _) => AlertsMessageBody(
+                  message: context.l10n.alertRulesLoadError,
                 ),
               ),
             ),
@@ -185,12 +144,32 @@ class AlertsOverviewScreen extends ConsumerWidget {
         .updateRule(updatedRule);
     if (!context.mounted) return;
 
-    final state = ref.read(alertRuleMutationControllerProvider);
-    if (!state.hasError) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.l10n.alertRuleUpdated)));
-    }
+    _showMutationSuccessSnackBar(
+      context: context,
+      ref: ref,
+      message: context.l10n.alertRuleUpdated,
+    );
+  }
+
+  Future<void> _setRuleEnabled({
+    required BuildContext context,
+    required WidgetRef ref,
+    required String userId,
+    required AlertRule rule,
+    required bool isEnabled,
+  }) async {
+    await ref.read(alertRuleMutationControllerProvider.notifier).setRuleEnabled(
+          userId: userId,
+          ruleId: rule.id,
+          isEnabled: isEnabled,
+        );
+    if (!context.mounted) return;
+
+    _showMutationSuccessSnackBar(
+      context: context,
+      ref: ref,
+      message: context.l10n.alertRuleUpdated,
+    );
   }
 
   Future<bool> _confirmDelete({
@@ -226,13 +205,29 @@ class AlertsOverviewScreen extends ConsumerWidget {
         .deleteRule(userId: userId, ruleId: rule.id);
     if (!context.mounted) return false;
 
+    return _showMutationSuccessSnackBar(
+      context: context,
+      ref: ref,
+      message: context.l10n.alertRuleDeleted,
+    );
+  }
+
+  bool _showMutationSuccessSnackBar({
+    required BuildContext context,
+    required WidgetRef ref,
+    required String message,
+  }) {
     final state = ref.read(alertRuleMutationControllerProvider);
     if (state.hasError) return false;
 
+    _showSnackBar(context, message);
+    return true;
+  }
+
+  void _showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text(context.l10n.alertRuleDeleted)));
-    return true;
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 }
 
