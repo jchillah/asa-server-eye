@@ -40,9 +40,24 @@ class FcmTokenRegistrationController {
     }
 
     _isStarted = true;
+    _listenToTokenRefresh();
 
     try {
       await _configureForegroundPresentation();
+      await retryPermissionAndRegister();
+    } catch (error, stackTrace) {
+      _isStarted = false;
+      developer.log(
+        'Failed to start FCM token registration.',
+        name: 'FcmTokenRegistrationController',
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+  }
+
+  Future<void> retryPermissionAndRegister() async {
+    try {
       _hasNotificationPermission = await _requestPermission();
 
       if (!_hasNotificationPermission) {
@@ -57,7 +72,7 @@ class FcmTokenRegistrationController {
       _listenToTokenRefresh();
     } catch (error, stackTrace) {
       developer.log(
-        'Failed to start FCM token registration.',
+        'Failed to retry FCM token registration.',
         name: 'FcmTokenRegistrationController',
         error: error,
         stackTrace: stackTrace,
@@ -66,6 +81,10 @@ class FcmTokenRegistrationController {
   }
 
   void _listenToTokenRefresh() {
+    if (_tokenRefreshSubscription != null) {
+      return;
+    }
+
     _tokenRefreshSubscription = _messaging.onTokenRefresh.listen(
       (token) => _registerTokenForCurrentUser(token),
       onError: (Object error, StackTrace stackTrace) {
@@ -101,7 +120,11 @@ class FcmTokenRegistrationController {
 
   Future<void> handleAuthChange(User? user) async {
     if (!_hasNotificationPermission) {
-      return;
+      _hasNotificationPermission = await _requestPermission();
+
+      if (!_hasNotificationPermission) {
+        return;
+      }
     }
 
     final previousUserId = _registeredUserId;
@@ -131,6 +154,10 @@ class FcmTokenRegistrationController {
       return;
     }
 
+    if (_registeredUserId == user.uid && _registeredToken == token) {
+      return;
+    }
+
     await _saveToken(userId: user.uid, token: token);
   }
 
@@ -144,11 +171,12 @@ class FcmTokenRegistrationController {
       return;
     }
 
+    if (_registeredUserId == user.uid && _registeredToken == token) {
+      return;
+    }
+
     if (_registeredUserId == user.uid && _registeredToken != null) {
-      await _removeRegisteredToken(
-        userId: user.uid,
-        token: _registeredToken!,
-      );
+      await _removeRegisteredToken(userId: user.uid, token: _registeredToken!);
     }
 
     await _saveToken(userId: user.uid, token: token);
