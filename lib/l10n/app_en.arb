@@ -918,5 +918,109 @@
   "serverSyncUnavailable": "Sync status is currently unavailable",
   "@serverSyncUnavailable": {
     "description": "Shown when sync status could not be loaded"
+  },
+  "alertSettingsTitle": "Alert Rules(Notifications)",
+  "@alertSettingsTitle": {
+    "description": "Title of the screen for alert rules"
+  },
+  "addAlertRule": "Add Alert Rule",
+  "@addAlertRule": {
+    "description": "Button to add a new alert rule"
+  },
+  "editAlertRule": "Edit Alert Rule",
+  "@editAlertRule": {
+    "description": "Title for editing an alert rule"
+  },
+  "noAlertRulesYet": "For this server, no alert rules exist yet.",
+  "@noAlertRulesYet": {
+    "description": "Empty state when a server has no alert rules"
+  },
+  "alertRulesLoadError": "Alert rules could not be loaded.",
+  "@alertRulesLoadError": {
+    "description": "Error when loading alert rules fails"
+  },
+  "alertRulesRequiresLogin": "You must be logged in to manage alert rules.",
+  "@alertRulesRequiresLogin": {
+    "description": "Shown when the user is not logged in but tries to access alert rules"
+  },
+  "alertRuleType": "Alert-Type",
+  "@alertRuleType": {
+    "description": "Label for alert type"
+  },
+  "alertRuleThreshold": "Threshold",
+  "@alertRuleThreshold": {
+    "description": "Label for threshold field"
+  },
+  "alertRuleThresholdHint": "Enter player count or population percentage depending on the alert type.",
+  "@alertRuleThresholdHint": {
+    "description": "Hint text for threshold field"
+  },
+  "alertRuleThresholdRequired": "Please enter a threshold value.",
+  "@alertRuleThresholdRequired": {
+    "description": "Validation when threshold is missing"
+  },
+  "alertRuleThresholdInvalid": "Please enter a valid number.",
+  "@alertRuleThresholdInvalid": {
+    "description": "Validation when threshold is invalid"
+  },
+  "alertRuleEnabled": "Rule enabled",
+  "@alertRuleEnabled": {
+    "description": "Switch text for enabled rule"
+  },
+  "saveAlertRule": "Save Alert Rule",
+  "@saveAlertRule": {
+    "description": "Button text for saving a new alert rule"
+  },
+  "updateAlertRule": "Update Alert Rule",
+  "@updateAlertRule": {
+    "description": "Button text for updating an existing alert rule"
+  },
+  "deleteAlertRule": "Delete Alert Rule",
+  "@deleteAlertRule": {
+    "description": "Dialog title for deleting an alert rule"
+  },
+  "deleteAlertRuleQuestion": "Do you want to delete this alert rule?",
+  "@deleteAlertRuleQuestion": {
+    "description": "Confirmation question before deleting an alert rule"
+  },
+  "alertRuleSaved": "Alert rule saved.",
+  "@alertRuleSaved": {
+    "description": "Snackbar after saving a new alert rule"
+  },
+  "alertRuleUpdated": "Alert rule updated.",
+  "@alertRuleUpdated": {
+    "description": "Snackbar after updating an alert rule"
+  },
+  "alertRuleDeleted": "Alert rule deleted.",
+  "@alertRuleDeleted": {
+    "description": "Snackbar after deleting an alert rule"
+  },
+  "alertRuleMutationError": "Alert rule could not be saved. Please try again.",
+  "@alertRuleMutationError": {
+    "description": "Error message when an alert rule mutation fails"
+  },
+  "alertTypePopulationIncreased": "Population increased",
+  "@alertTypePopulationIncreased": {
+    "description": "Label for alert type indicating that the population increased by a certain threshold"
+  },
+  "alertTypePopulationDecreased": "Population decreased",
+  "@alertTypePopulationDecreased": {
+    "description": "Label for alert type indicating that the population decreased by a certain threshold"
+  },
+  "alertTypeCrossedAboveThreshold": "Threshold crossed above",
+  "@alertTypeCrossedAboveThreshold": {
+    "description": "Label for alert type indicating that the value crossed above the threshold"
+  },
+  "alertTypeCrossedBelowThreshold": "Threshold crossed below",
+  "@alertTypeCrossedBelowThreshold": {
+    "description": "Label for alert type indicating that the value crossed below the threshold"
+  },
+  "alertTypeServerOnline": "Server online",
+  "@alertTypeServerOnline": {
+    "description": "Label for alert type indicating that the server is online"
+  },
+  "alertTypeServerOffline": "Server offline",
+  "@alertTypeServerOffline": {
+    "description": "Label for alert type indicating that the server is offline"
   }
 } 
