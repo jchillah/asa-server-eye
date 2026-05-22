@@ -87,7 +87,10 @@ class AlertsOverviewScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 4, bottom: 6),
+                              padding: const EdgeInsets.only(
+                                left: 4,
+                                bottom: 6,
+                              ),
                               child: Text(
                                 '${rule.serverName} • ${rule.mapName}',
                                 style: theme.textTheme.bodySmall?.copyWith(
