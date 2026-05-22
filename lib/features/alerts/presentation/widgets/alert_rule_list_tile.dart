@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
 import '../../domain/entities/alert_rule.dart';
-import '../../domain/entities/alert_rule_type.dart';
+import '../extensions/alert_rule_type_l10n.dart';
 
 class AlertRuleListTile extends StatelessWidget {
   const AlertRuleListTile({
@@ -13,13 +13,16 @@ class AlertRuleListTile extends StatelessWidget {
     required this.onDelete,
     required this.onEnabledChanged,
   });
+
   final AlertRule rule;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
   final ValueChanged<bool> onEnabledChanged;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -30,7 +33,7 @@ class AlertRuleListTile extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    _ruleTypeLabel(context, rule.ruleType),
+                    rule.ruleType.localizedLabel(context),
                     style: theme.textTheme.titleMedium,
                   ),
                 ),
@@ -67,22 +70,5 @@ class AlertRuleListTile extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _ruleTypeLabel(BuildContext context, AlertRuleType type) {
-    switch (type) {
-      case AlertRuleType.populationIncreased:
-        return context.l10n.alertTypePopulationIncreased;
-      case AlertRuleType.populationDecreased:
-        return context.l10n.alertTypePopulationDecreased;
-      case AlertRuleType.crossedAboveThreshold:
-        return context.l10n.alertTypeCrossedAboveThreshold;
-      case AlertRuleType.crossedBelowThreshold:
-        return context.l10n.alertTypeCrossedBelowThreshold;
-      case AlertRuleType.serverOnline:
-        return context.l10n.alertTypeServerOnline;
-      case AlertRuleType.serverOffline:
-        return context.l10n.alertTypeServerOffline;
-    }
   }
 }
