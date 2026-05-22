@@ -22,12 +22,22 @@ class FcmTokenRepository {
       return;
     }
 
-    await _tokensCollection(userId).doc(_tokenDocumentId(normalizedToken)).set({
+    final docRef = _tokensCollection(
+      userId,
+    ).doc(_tokenDocumentId(normalizedToken));
+    final snapshot = await docRef.get();
+
+    final data = <String, dynamic>{
       'token': normalizedToken,
       'platform': defaultTargetPlatform.name,
       'updatedAt': FieldValue.serverTimestamp(),
-      'createdAt': FieldValue.serverTimestamp(),
-    }, SetOptions(merge: true));
+    };
+
+    if (!snapshot.exists) {
+      data['createdAt'] = FieldValue.serverTimestamp();
+    }
+
+    await docRef.set(data, SetOptions(merge: true));
   }
 
   Future<void> removeToken({
