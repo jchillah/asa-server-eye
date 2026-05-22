@@ -69,7 +69,6 @@ class FcmTokenRegistrationController {
       }
 
       await handleAuthChange(_ref.read(authStateProvider).valueOrNull);
-      _listenToTokenRefresh();
     } catch (error, stackTrace) {
       developer.log(
         'Failed to retry FCM token registration.',
@@ -120,11 +119,7 @@ class FcmTokenRegistrationController {
 
   Future<void> handleAuthChange(User? user) async {
     if (!_hasNotificationPermission) {
-      _hasNotificationPermission = await _requestPermission();
-
-      if (!_hasNotificationPermission) {
-        return;
-      }
+      return;
     }
 
     final previousUserId = _registeredUserId;
