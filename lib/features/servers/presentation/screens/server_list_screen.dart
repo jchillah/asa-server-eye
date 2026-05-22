@@ -6,10 +6,12 @@ import '../../../../core/extensions/context_l10n.dart';
 import '../../../../core/presentation/widgets/ad_banner_widget.dart';
 import '../providers/filtered_servers_provider.dart';
 import '../providers/server_search_provider.dart';
+import '../providers/servers_provider.dart';
 import '../utils/server_navigation.dart';
 import '../utils/server_refresh_action.dart';
 import '../widgets/server_list_item.dart';
 import '../widgets/server_search_section.dart';
+import '../widgets/server_sync_status_card.dart';
 
 class ServerListScreen extends ConsumerWidget {
   const ServerListScreen({super.key});
@@ -18,6 +20,7 @@ class ServerListScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final searchController = ref.watch(serverSearchProvider);
     final filteredServersAsync = ref.watch(filteredServersProvider);
+    final syncStateAsync = ref.watch(serverSyncStateProvider);
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -26,14 +29,24 @@ class ServerListScreen extends ConsumerWidget {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-            child: ServerSearchSection(
-              title: context.l10n.servers,
-              subtitle: context.l10n.searchServersOrMaps,
-              hintText: context.l10n.searchServersOrMaps,
-              controller: searchController.textController,
-              query: searchController.query,
-              onChanged: searchController.updateQuery,
-              onClear: searchController.clear,
+            child: Column(
+              children: [
+                ServerSearchSection(
+                  title: context.l10n.servers,
+                  subtitle: context.l10n.searchServersOrMaps,
+                  hintText: context.l10n.searchServersOrMaps,
+                  controller: searchController.textController,
+                  query: searchController.query,
+                  onChanged: searchController.updateQuery,
+                  onClear: searchController.clear,
+                ),
+                const SizedBox(height: 8),
+                syncStateAsync.whenOrNull(
+                      data: (syncState) =>
+                          ServerSyncStatusCard(syncState: syncState),
+                    ) ??
+                    const SizedBox.shrink(),
+              ],
             ),
           ),
           Expanded(

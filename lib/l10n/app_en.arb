@@ -878,5 +878,38 @@
   "premiumVerificationQueued": "Your purchase was submitted and is now being verified.",
   "@premiumVerificationQueued": {
     "description": "Message after purchase verification request was submitted"
+  },
+  "serverSyncLastUpdated": "Last updated: {value}",
+  "@serverSyncLastUpdated": {
+    "description": "Label showing when the server list was last updated",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "serverSyncSourceLive": "Source: Live data",
+  "@serverSyncSourceLive": {
+    "description": "Label showing that server data comes from the network"
+  },
+  "serverSyncSourceCache": "Source: Cache",
+  "@serverSyncSourceCache": {
+    "description": "Label showing that server data comes from cache"
+  },
+  "serverSyncCacheBanner": "Showing cached server data",
+  "@serverSyncCacheBanner": {
+    "description": "Banner text when cached server data is displayed"
+  },
+  "serverSyncCacheStale": "Cache may be outdated",
+  "@serverSyncCacheStale": {
+    "description": "Hint when cached data is stale"
+  },
+  "serverSyncUnknownUpdateTime": "Last updated: Unknown",
+  "@serverSyncUnknownUpdateTime": {
+    "description": "Fallback label when no update time is available"
+  },
+  "serverSyncUnknownSource": "Source: Unknown",
+  "@serverSyncUnknownSource": {
+    "description": "Fallback label when server data source is unknown"
   }
 } 
