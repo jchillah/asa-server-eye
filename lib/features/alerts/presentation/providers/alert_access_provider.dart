@@ -27,8 +27,7 @@ final alertAccessProvider = Provider.autoDispose<AlertAccessState>((ref) {
     profileAccessLevel,
   );
 
-  final hasActiveSubscription =
-      entitlementAsync.valueOrNull?.isActive ?? false;
+  final hasActiveSubscription = entitlementAsync.valueOrNull?.isActive ?? false;
 
   return AlertAccessState(
     isResolved: profileAsync.hasValue && entitlementAsync.hasValue,
@@ -36,7 +35,4 @@ final alertAccessProvider = Provider.autoDispose<AlertAccessState>((ref) {
   );
 });
 
-const _alertEnabledProfileLevels = {
-  'premium',
-  'admin',
-};
+const _alertEnabledProfileLevels = {'premium', 'admin'};
