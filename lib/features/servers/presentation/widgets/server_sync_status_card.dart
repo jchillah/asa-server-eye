@@ -86,7 +86,7 @@ class ServerSyncStatusCard extends StatelessWidget {
     final date = localizations.formatShortDate(localTime);
     final time = localizations.formatTimeOfDay(
       TimeOfDay.fromDateTime(localTime),
-      alwaysUse24HourFormat: true,
+      alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
     );
 
     return context.l10n.serverSyncLastUpdated('$date, $time');

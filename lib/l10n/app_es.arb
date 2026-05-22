@@ -907,9 +907,5 @@
   "serverSyncUnknownUpdateTime": "Última actualización: Desconocida",
   "@serverSyncUnknownUpdateTime": {
     "description": "Etiqueta para la última vez que se sincronizó con el servidor cuando no se conoce el tiempo de actualización"
-  },
-  "serverSyncUnknownSource": "Fuente: Desconocida",
-  "@serverSyncUnknownSource": {
-    "description": "Etiqueta de repli cuando la source de los datos del servidor no está disponible"
   }
 }

@@ -654,10 +654,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get serverSyncSourceLive => 'Quelle: Réseau';
+  String get serverSyncSourceLive => 'Source: Réseau';
 
   @override
-  String get serverSyncSourceCache => 'Quelle: Cache';
+  String get serverSyncSourceCache => 'Source: Cache';
 
   @override
   String get serverSyncCacheBanner => 'Les données du serveur en cache sont affichées';

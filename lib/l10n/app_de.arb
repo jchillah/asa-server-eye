@@ -907,9 +907,5 @@
   "serverSyncUnknownUpdateTime": "Zuletzt aktualisiert: Unbekannt",
   "@serverSyncUnknownUpdateTime": {
     "description": "Fallback label when no update time is available"
-  },
-  "serverSyncUnknownSource": "Quelle: Unbekannt",
-  "@serverSyncUnknownSource": {
-    "description": "Fallback label when server data source is unknown"
   }
 }

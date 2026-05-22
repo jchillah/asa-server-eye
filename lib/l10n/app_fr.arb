@@ -888,11 +888,11 @@
       }
     }
   },
-  "serverSyncSourceLive": "Quelle: Réseau",
+  "serverSyncSourceLive": "Source: Réseau",
   "@serverSyncSourceLive": {
     "description": "Libellé indiquant que les données du serveur proviennent du réseau"
   },
-  "serverSyncSourceCache": "Quelle: Cache",
+  "serverSyncSourceCache": "Source: Cache",
   "@serverSyncSourceCache": {
     "description": "Libellé indiquant que les données du serveur proviennent de la cache"
   },
@@ -907,9 +907,5 @@
   "serverSyncUnknownUpdateTime": "Dernière mise à jour: Inconnue",
   "@serverSyncUnknownUpdateTime": {
     "description": "Libellé de repli lorsque l'heure de mise à jour n'est pas disponible"
-  },
-  "serverSyncUnknownSource": "Quelle: Inconnue",
-  "@serverSyncUnknownSource": {
-    "description": "Libellé de repli lorsque la source des données du serveur n'est pas disponible"
   }
 }

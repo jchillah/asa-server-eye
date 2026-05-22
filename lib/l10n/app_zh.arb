@@ -811,9 +811,5 @@
     "serverSyncUnknownUpdateTime": "最后更新：未知",
     "@serverSyncUnknownUpdateTime": {
         "description": "当没有可用更新时间时的回退标签"
-    },
-    "serverSyncUnknownSource": "来源：未知",
-    "@serverSyncUnknownSource": {
-    "description": "当服务器数据来源未知时的回退标签"
     }
 }
