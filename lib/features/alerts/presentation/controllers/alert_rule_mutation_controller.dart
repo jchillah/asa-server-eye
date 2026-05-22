@@ -39,6 +39,19 @@ class AlertRuleMutationController extends AutoDisposeAsyncNotifier<void> {
     });
   }
 
+  Future<void> deleteRulesForServer({
+    required String userId,
+    required String serverId,
+  }) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      await ref.read(alertRulesRepositoryProvider).deleteRulesForServer(
+        userId: userId,
+        serverId: serverId,
+      );
+    });
+  }
+
   Future<void> setRuleEnabled({
     required String userId,
     required String ruleId,
