@@ -1,15 +1,15 @@
 // features/servers/presentation/screens/server_detail_screen.dart
-import 'package:asa_server_eye/features/profile/presentation/providers/profile_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
+import '../../../alerts/presentation/providers/alert_access_provider.dart';
 import '../../../alerts/presentation/screens/alert_settings_screen.dart';
 import '../../../favorites/presentation/utils/favorite_actions.dart';
 import '../../../sightings/presentation/screens/report_player_sighting_screen.dart';
 import '../../../sightings/presentation/screens/server_sightings_screen.dart';
-import '../../../subscriptions/presentation/providers/subscription_entitlement_providers.dart';
 import '../../../subscriptions/presentation/screens/premium_screen.dart';
+import '../../domain/server.dart';
 import '../providers/is_favorite_provider.dart';
 import '../providers/server_by_id_provider.dart';
 import '../widgets/server_detail_header_card.dart';
@@ -24,18 +24,7 @@ class ServerDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final serverAsync = ref.watch(serverByIdProvider(serverId));
     final isFavoriteAsync = ref.watch(isFavoriteServerProvider(serverId));
-    final entitlementAsync = ref.watch(currentSubscriptionEntitlementProvider);
-    final profileAsync = ref.watch(profileProvider);
-
-    final accessLevel =
-        profileAsync.valueOrNull?.sightingsAccessLevel ?? 'free';
-    final isAdmin = accessLevel == 'admin';
-    final isProfilePremium = accessLevel == 'premium';
-    final isPremiumEntitled = entitlementAsync.valueOrNull?.isActive ?? false;
-
-    final hasAlertAccess = isAdmin || isProfilePremium || isPremiumEntitled;
-    final isAccessStateResolved =
-        profileAsync.hasValue && entitlementAsync.hasValue;
+    final alertAccess = ref.watch(alertAccessProvider);
 
     final serverForActions = serverAsync.valueOrNull;
 
@@ -43,8 +32,8 @@ class ServerDetailScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(context.l10n.serverDetails),
         actions: [
-          if (isAccessStateResolved &&
-              hasAlertAccess &&
+          if (alertAccess.isResolved &&
+              alertAccess.canManageAlerts &&
               serverForActions != null)
             IconButton(
               tooltip: context.l10n.manageAlertRules,
@@ -88,8 +77,7 @@ class ServerDetailScreen extends ConsumerWidget {
                 ref: ref,
                 server: server,
                 isFavorite: isFavorite,
-                showPremiumAlertUpsell:
-                    isAccessStateResolved && !hasAlertAccess,
+                showPremiumAlertUpsell: alertAccess.shouldShowPremiumUpsell,
               );
             },
           );
@@ -101,7 +89,7 @@ class ServerDetailScreen extends ConsumerWidget {
   Widget _buildDetailList({
     required BuildContext context,
     required WidgetRef ref,
-    required dynamic server,
+    required Server server,
     required bool isFavorite,
     required bool showPremiumAlertUpsell,
   }) {
