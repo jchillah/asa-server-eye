@@ -9,6 +9,7 @@ import '../../features/alerts/presentation/extensions/alert_rule_type_l10n.dart'
 import '../../features/alerts/presentation/providers/alert_rules_providers.dart';
 import '../../features/alerts/presentation/screens/alerts_overview_screen.dart';
 import '../../features/favorites/presentation/screens/favorites_screen.dart';
+import '../../features/notifications/presentation/controllers/fcm_token_registration_controller.dart';
 import '../../features/servers/presentation/providers/servers_provider.dart';
 import '../../features/servers/presentation/screens/server_list_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
@@ -23,6 +24,8 @@ class AppShell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(fcmTokenRegistrationControllerProvider);
+
     final currentIndex = ref.watch(appShellIndexProvider);
     final accessLevelAsync = ref.watch(sightingsAccessLevelProvider);
 
@@ -34,7 +37,9 @@ class AppShell extends ConsumerWidget {
         return;
       }
 
-      ref.read(alertEvaluationControllerProvider.notifier).evaluateServerRefresh(
+      ref
+          .read(alertEvaluationControllerProvider.notifier)
+          .evaluateServerRefresh(
             rules: rules,
             currentServers: syncState.servers,
           );
