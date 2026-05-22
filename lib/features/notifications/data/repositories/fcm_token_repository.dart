@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart' show sha256;
 import 'package:flutter/foundation.dart';
 
 class FcmTokenRepository {
@@ -27,7 +28,7 @@ class FcmTokenRepository {
     ).doc(_tokenDocumentId(normalizedToken));
     final updateData = <String, dynamic>{
       'token': normalizedToken,
-      'platform': defaultTargetPlatform.name,
+      'platform': _stablePlatformId,
       'updatedAt': FieldValue.serverTimestamp(),
     };
 
@@ -59,7 +60,24 @@ class FcmTokenRepository {
     ).doc(_tokenDocumentId(normalizedToken)).delete();
   }
 
+  String get _stablePlatformId {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return 'android';
+      case TargetPlatform.iOS:
+        return 'ios';
+      case TargetPlatform.macOS:
+        return 'macos';
+      case TargetPlatform.windows:
+        return 'windows';
+      case TargetPlatform.linux:
+        return 'linux';
+      case TargetPlatform.fuchsia:
+        return 'fuchsia';
+    }
+  }
+
   String _tokenDocumentId(String token) {
-    return base64UrlEncode(utf8.encode(token));
+    return sha256.convert(utf8.encode(token)).toString();
   }
 }
