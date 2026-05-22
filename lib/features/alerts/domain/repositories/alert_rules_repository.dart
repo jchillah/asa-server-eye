@@ -20,6 +20,11 @@ abstract class AlertRulesRepository {
     required String serverId,
   });
 
+  Future<void> markRuleTriggered({
+    required String userId,
+    required String ruleId,
+  });
+
   Future<void> setRuleEnabled({
     required String userId,
     required String ruleId,

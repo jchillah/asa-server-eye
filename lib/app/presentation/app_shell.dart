@@ -3,8 +3,13 @@ import 'package:asa_server_eye/core/extensions/context_l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/alerts/domain/entities/alert_trigger_event.dart';
+import '../../features/alerts/presentation/controllers/alert_evaluation_controller.dart';
+import '../../features/alerts/presentation/extensions/alert_rule_type_l10n.dart';
+import '../../features/alerts/presentation/providers/alert_rules_providers.dart';
 import '../../features/alerts/presentation/screens/alerts_overview_screen.dart';
 import '../../features/favorites/presentation/screens/favorites_screen.dart';
+import '../../features/servers/presentation/providers/servers_provider.dart';
 import '../../features/servers/presentation/screens/server_list_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../../features/sightings/domain/sightings_access_level.dart';
@@ -20,6 +25,33 @@ class AppShell extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(appShellIndexProvider);
     final accessLevelAsync = ref.watch(sightingsAccessLevelProvider);
+
+    ref.listen(serverSyncStateProvider, (previous, next) {
+      final syncState = next.valueOrNull;
+      final rules = ref.read(userAlertRulesProvider).valueOrNull;
+
+      if (syncState == null || rules == null) {
+        return;
+      }
+
+      ref.read(alertEvaluationControllerProvider.notifier).evaluateServerRefresh(
+            rules: rules,
+            currentServers: syncState.servers,
+          );
+    });
+
+    ref.listen<AlertTriggerEvent?>(alertEvaluationControllerProvider, (
+      previous,
+      next,
+    ) {
+      if (next == null || next == previous || !context.mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(_alertEventMessage(context, next))),
+      );
+    });
 
     return accessLevelAsync.when(
       loading: () =>
@@ -89,5 +121,16 @@ class AppShell extends ConsumerWidget {
         );
       },
     );
+  }
+
+  String _alertEventMessage(BuildContext context, AlertTriggerEvent event) {
+    final previousPlayers = event.previousPlayers;
+    final currentPlayers = event.currentPlayers;
+    final populationChange = previousPlayers == null || currentPlayers == null
+        ? ''
+        : ' ($previousPlayers → $currentPlayers)';
+
+    return '${event.rule.ruleType.localizedLabel(context)}: '
+        '${event.serverName} • ${event.mapName}$populationChange';
   }
 }

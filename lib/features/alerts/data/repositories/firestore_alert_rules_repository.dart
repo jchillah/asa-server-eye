@@ -125,6 +125,17 @@ class FirestoreAlertRulesRepository implements AlertRulesRepository {
   }
 
   @override
+  Future<void> markRuleTriggered({
+    required String userId,
+    required String ruleId,
+  }) async {
+    await _rulesCollection(userId).doc(ruleId).update({
+      'lastTriggeredAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+  }
+
+  @override
   Future<void> setRuleEnabled({
     required String userId,
     required String ruleId,
