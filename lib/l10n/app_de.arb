@@ -919,7 +919,7 @@
   "@serverSyncUnavailable": {
     "description": "Shown when sync status could not be loaded"
   },
-  "alertSettingsTitle": "Alert-Regeln(Benachrichtigungen)",
+  "alertSettingsTitle": "Alert-Regeln (Benachrichtigungen)",
   "@alertSettingsTitle": {
     "description": "Titel des Screens für Alert-Regeln"
   },

@@ -1388,7 +1388,7 @@ abstract class AppLocalizations {
   /// Title of the screen for alert rules
   ///
   /// In en, this message translates to:
-  /// **'Alert Rules(Notifications)'**
+  /// **'Alert Rules (Notifications)'**
   String get alertSettingsTitle;
 
   /// Button label to open the alert settings screen

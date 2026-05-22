@@ -675,7 +675,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get serverSyncUnavailable => 'Sync status is currently unavailable';
 
   @override
-  String get alertSettingsTitle => 'Alert Rules(Notifications)';
+  String get alertSettingsTitle => 'Alert Rules (Notifications)';
 
   @override
   String get manageAlertRules => 'Manage alert rules';
