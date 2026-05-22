@@ -1,4 +1,5 @@
 // features/servers/presentation/screens/server_list_screen.dart
+import 'package:asa_server_eye/features/servers/presentation/widgets/server_sync_status_placeholder_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,11 +42,14 @@ class ServerListScreen extends ConsumerWidget {
                   onClear: searchController.clear,
                 ),
                 const SizedBox(height: 8),
-                syncStateAsync.whenOrNull(
-                      data: (syncState) =>
-                          ServerSyncStatusCard(syncState: syncState),
-                    ) ??
-                    const SizedBox.shrink(),
+                syncStateAsync.when(
+                  data: (syncState) =>
+                      ServerSyncStatusCard(syncState: syncState),
+                  loading: () =>
+                      const ServerSyncStatusPlaceholderCard.loading(),
+                  error: (_, _) =>
+                      const ServerSyncStatusPlaceholderCard.error(),
+                ),
               ],
             ),
           ),

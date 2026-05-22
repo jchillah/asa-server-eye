@@ -556,73 +556,73 @@ class AppLocalizationsZh extends AppLocalizations {
   String get premiumTitle => 'Premium';
 
   @override
-  String get premiumSettingsSubtitle => 'Unlock and manage premium';
+  String get premiumSettingsSubtitle => '解锁并管理 Premium';
 
   @override
-  String get premiumHeadline => 'Unlock Premium';
+  String get premiumHeadline => '解锁 Premium';
 
   @override
-  String get premiumDescription => 'With Premium, you get access to player sightings, more favorites, and future premium features.';
+  String get premiumDescription => '通过 Premium，你可以访问玩家目击记录、保存更多收藏，并使用未来的高级功能。';
 
   @override
-  String get premiumBenefitSightingsTitle => 'Player sightings';
+  String get premiumBenefitSightingsTitle => '玩家目击记录';
 
   @override
-  String get premiumBenefitSightingsDescription => 'Access sightings directly from the navigation and use premium access across the sightings area.';
+  String get premiumBenefitSightingsDescription => '可直接通过导航访问目击记录，并在整个目击记录区域使用 Premium 权限。';
 
   @override
-  String get premiumBenefitFavoritesTitle => 'More favorites';
+  String get premiumBenefitFavoritesTitle => '更多收藏';
 
   @override
-  String get premiumBenefitFavoritesDescription => 'Save significantly more servers to your favorites.';
+  String get premiumBenefitFavoritesDescription => '可在收藏中保存更多服务器。';
 
   @override
-  String get premiumBenefitAlertsTitle => 'Future extras';
+  String get premiumBenefitAlertsTitle => '未来扩展功能';
 
   @override
-  String get premiumBenefitAlertsDescription => 'Get ready for future premium features like enhanced tracking and alerts.';
+  String get premiumBenefitAlertsDescription => '为即将推出的 Premium 功能做好准备，例如增强监控和提醒。';
 
   @override
-  String get premiumMonthlyPlan => 'Monthly';
+  String get premiumMonthlyPlan => '月度';
 
   @override
-  String get premiumMonthlyPlanDescription => 'Flexible cancellation';
+  String get premiumMonthlyPlanDescription => '可灵活取消';
 
   @override
-  String get premiumYearlyPlan => 'Yearly';
+  String get premiumYearlyPlan => '年度';
 
   @override
-  String get premiumYearlyPlanDescription => 'Best value for long-term use';
+  String get premiumYearlyPlanDescription => '长期使用最划算';
 
   @override
-  String get premiumStartMonthly => 'Start monthly';
+  String get premiumStartMonthly => '开始月度订阅';
 
   @override
-  String get premiumStartYearly => 'Start yearly';
+  String get premiumStartYearly => '开始年度订阅';
 
   @override
-  String get restorePurchases => 'Restore purchases';
+  String get restorePurchases => '恢复购买';
 
   @override
-  String get premiumPurchaseComingSoon => 'The purchase flow will be connected next.';
+  String get premiumPurchaseComingSoon => '购买流程即将接入。';
 
   @override
-  String get premiumUpgradeTitle => 'Upgrade to Premium';
+  String get premiumUpgradeTitle => '升级到 Premium';
 
   @override
-  String get premiumUpgradeDescription => 'Unlock the sightings tab and additional premium benefits.';
+  String get premiumUpgradeDescription => '解锁目击记录标签页和更多 Premium 权益。';
 
   @override
-  String get premiumActiveTitle => 'Premium active';
+  String get premiumActiveTitle => 'Premium 已激活';
 
   @override
-  String get premiumActiveDescription => 'Your account already has access to premium features.';
+  String get premiumActiveDescription => '你的账户已可使用 Premium 功能。';
 
   @override
-  String get unlockPremium => 'Unlock Premium';
+  String get unlockPremium => '解锁 Premium';
 
   @override
-  String get managePremium => 'Manage Premium';
+  String get managePremium => '管理 Premium';
 
   @override
   String get premiumStoreUnavailable => '当前无法连接到商店。';
@@ -649,11 +649,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get premiumVerificationQueued => '您的购买已提交，目前正在验证中。';
 
   @override
-  String serverSyncLastUpdated(String value) {
-    return '最后更新：$value';
-  }
-
-  @override
   String get serverSyncSourceLive => '来源：实时数据';
 
   @override
@@ -667,4 +662,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get serverSyncUnknownUpdateTime => '最后更新：未知';
+
+  @override
+  String serverSyncLastUpdated(String date, String time) {
+    return '最后更新：$date $time';
+  }
+
+  @override
+  String get serverSyncLoading => '正在加载同步状态…';
+
+  @override
+  String get serverSyncUnavailable => '当前无法获取同步状态';
 }

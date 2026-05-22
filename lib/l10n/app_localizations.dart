@@ -1337,12 +1337,6 @@ abstract class AppLocalizations {
   /// **'Your purchase was submitted and is now being verified.'**
   String get premiumVerificationQueued;
 
-  /// Label showing when the server list was last updated
-  ///
-  /// In en, this message translates to:
-  /// **'Last updated: {value}'**
-  String serverSyncLastUpdated(String value);
-
   /// Label showing that server data comes from the network
   ///
   /// In en, this message translates to:
@@ -1372,6 +1366,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last updated: Unknown'**
   String get serverSyncUnknownUpdateTime;
+
+  /// Label showing when the server list was last updated
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: {date}, {time}'**
+  String serverSyncLastUpdated(String date, String time);
+
+  /// Shown while the sync status is still loading
+  ///
+  /// In en, this message translates to:
+  /// **'Sync status is loading…'**
+  String get serverSyncLoading;
+
+  /// Shown when sync status could not be loaded
+  ///
+  /// In en, this message translates to:
+  /// **'Sync status is currently unavailable'**
+  String get serverSyncUnavailable;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

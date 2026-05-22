@@ -649,11 +649,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get premiumVerificationQueued => 'Dein Kauf wurde übermittelt und wird jetzt verifiziert.';
 
   @override
-  String serverSyncLastUpdated(String value) {
-    return 'Zuletzt aktualisiert: $value';
-  }
-
-  @override
   String get serverSyncSourceLive => 'Quelle: Live-Daten';
 
   @override
@@ -667,4 +662,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get serverSyncUnknownUpdateTime => 'Zuletzt aktualisiert: Unbekannt';
+
+  @override
+  String serverSyncLastUpdated(String date, String time) {
+    return 'Zuletzt aktualisiert: $date, $time';
+  }
+
+  @override
+  String get serverSyncLoading => 'Synchronisationsstatus wird geladen …';
+
+  @override
+  String get serverSyncUnavailable => 'Synchronisationsstatus derzeit nicht verfügbar';
 }

@@ -879,15 +879,6 @@
   "@premiumVerificationQueued": {
     "description": "Message after purchase verification request was submitted"
   },
-  "serverSyncLastUpdated": "Last updated: {value}",
-  "@serverSyncLastUpdated": {
-    "description": "Label showing when the server list was last updated",
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "serverSyncSourceLive": "Source: Live data",
   "@serverSyncSourceLive": {
     "description": "Label showing that server data comes from the network"
@@ -907,5 +898,25 @@
   "serverSyncUnknownUpdateTime": "Last updated: Unknown",
   "@serverSyncUnknownUpdateTime": {
     "description": "Fallback label when no update time is available"
+  },
+  "serverSyncLastUpdated": "Last updated: {date}, {time}",
+  "@serverSyncLastUpdated": {
+    "description": "Label showing when the server list was last updated",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "serverSyncLoading": "Sync status is loading…",
+  "@serverSyncLoading": {
+    "description": "Shown while the sync status is still loading"
+  },
+  "serverSyncUnavailable": "Sync status is currently unavailable",
+  "@serverSyncUnavailable": {
+    "description": "Shown when sync status could not be loaded"
   }
 } 
