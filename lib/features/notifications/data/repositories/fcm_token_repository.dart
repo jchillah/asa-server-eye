@@ -25,19 +25,24 @@ class FcmTokenRepository {
     final docRef = _tokensCollection(
       userId,
     ).doc(_tokenDocumentId(normalizedToken));
-    final snapshot = await docRef.get();
-
-    final data = <String, dynamic>{
+    final updateData = <String, dynamic>{
       'token': normalizedToken,
       'platform': defaultTargetPlatform.name,
       'updatedAt': FieldValue.serverTimestamp(),
     };
 
-    if (!snapshot.exists) {
-      data['createdAt'] = FieldValue.serverTimestamp();
-    }
+    try {
+      await docRef.update(updateData);
+    } on FirebaseException catch (error) {
+      if (error.code != 'not-found') {
+        rethrow;
+      }
 
-    await docRef.set(data, SetOptions(merge: true));
+      await docRef.set({
+        ...updateData,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+    }
   }
 
   Future<void> removeToken({
