@@ -1,12 +1,14 @@
 // app/presentation/utils/app_navigation_destinations.dart
 import 'package:flutter/material.dart';
 
+import '../../../features/alerts/presentation/extensions/alert_settings_l10n.dart';
 import '../../../l10n/app_localizations.dart';
 import '../models/app_navigation_destination_item.dart';
 
 abstract final class AppNavigationDestinations {
   static List<AppNavigationDestinationItem> fromL10n(
     AppLocalizations l10n, {
+    required bool includeAlerts,
     required bool includeSightings,
   }) {
     return [
@@ -20,6 +22,12 @@ abstract final class AppNavigationDestinations {
         selectedIcon: Icons.star_rounded,
         label: l10n.favoritesNavLabel,
       ),
+      if (includeAlerts)
+        AppNavigationDestinationItem(
+          icon: Icons.notifications_none_rounded,
+          selectedIcon: Icons.notifications_rounded,
+          label: l10n.alertsNavLabel,
+        ),
       if (includeSightings)
         AppNavigationDestinationItem(
           icon: Icons.visibility_outlined,

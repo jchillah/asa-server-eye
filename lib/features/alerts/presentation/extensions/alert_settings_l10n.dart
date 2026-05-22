@@ -4,6 +4,54 @@ import '../../../../l10n/app_localizations.dart';
 extension AlertSettingsL10n on AppLocalizations {
   String get _languageCode => localeName.split('_').first;
 
+  String get alertsNavLabel {
+    switch (_languageCode) {
+      case 'de':
+        return 'Alerts';
+      case 'es':
+        return 'Alertas';
+      case 'fr':
+        return 'Alertes';
+      case 'zh':
+        return '提醒';
+      case 'en':
+      default:
+        return 'Alerts';
+    }
+  }
+
+  String get alertsOverviewTitle {
+    switch (_languageCode) {
+      case 'de':
+        return 'Meine Alerts';
+      case 'es':
+        return 'Mis alertas';
+      case 'fr':
+        return 'Mes alertes';
+      case 'zh':
+        return '我的提醒';
+      case 'en':
+      default:
+        return 'My Alerts';
+    }
+  }
+
+  String get noUserAlertRulesYet {
+    switch (_languageCode) {
+      case 'de':
+        return 'Du hast noch keine Alert-Regeln erstellt.';
+      case 'es':
+        return 'Aún no has creado reglas de alerta.';
+      case 'fr':
+        return 'Vous n’avez pas encore créé de règles d’alerte.';
+      case 'zh':
+        return '你还没有创建提醒规则。';
+      case 'en':
+      default:
+        return 'You have not created any alert rules yet.';
+    }
+  }
+
   String get deleteAllAlertRules {
     switch (_languageCode) {
       case 'de':

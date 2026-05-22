@@ -3,6 +3,7 @@ import 'package:asa_server_eye/core/extensions/context_l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/alerts/presentation/screens/alerts_overview_screen.dart';
 import '../../features/favorites/presentation/screens/favorites_screen.dart';
 import '../../features/servers/presentation/screens/server_list_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
@@ -53,13 +54,16 @@ class AppShell extends ConsumerWidget {
         ),
       ),
       data: (accessLevel) {
-        final includeSightings =
+        final hasPremiumAccess =
             accessLevel == SightingsAccessLevel.premium ||
             accessLevel == SightingsAccessLevel.admin;
+        final includeAlerts = hasPremiumAccess;
+        final includeSightings = hasPremiumAccess;
 
         final screens = <Widget>[
           const ServerListScreen(),
           const FavoritesScreen(),
+          if (includeAlerts) const AlertsOverviewScreen(),
           if (includeSightings) const SightingsOverviewScreen(),
           const SettingsScreen(),
         ];
@@ -76,6 +80,7 @@ class AppShell extends ConsumerWidget {
           body: IndexedStack(index: safeIndex, children: screens),
           bottomNavigationBar: AppBottomNavigationBar(
             currentIndex: safeIndex,
+            includeAlerts: includeAlerts,
             includeSightings: includeSightings,
             onDestinationSelected: ref
                 .read(appShellIndexProvider.notifier)

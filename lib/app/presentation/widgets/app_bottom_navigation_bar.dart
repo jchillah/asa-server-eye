@@ -9,11 +9,13 @@ class AppBottomNavigationBar extends StatelessWidget {
     super.key,
     required this.currentIndex,
     required this.onDestinationSelected,
+    required this.includeAlerts,
     required this.includeSightings,
   });
 
   final int currentIndex;
   final ValueChanged<int> onDestinationSelected;
+  final bool includeAlerts;
   final bool includeSightings;
 
   @override
@@ -21,6 +23,7 @@ class AppBottomNavigationBar extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final destinations = AppNavigationDestinations.fromL10n(
       l10n,
+      includeAlerts: includeAlerts,
       includeSightings: includeSightings,
     );
 
