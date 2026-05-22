@@ -37,7 +37,9 @@ class AppShell extends ConsumerWidget {
         return;
       }
 
-      ref.read(alertEvaluationControllerProvider.notifier).evaluateServerRefresh(
+      ref
+          .read(alertEvaluationControllerProvider.notifier)
+          .evaluateServerRefresh(
             rules: rules,
             currentServers: syncState.servers,
           );

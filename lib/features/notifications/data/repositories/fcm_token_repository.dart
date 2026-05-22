@@ -39,7 +39,9 @@ class FcmTokenRepository {
       return;
     }
 
-    await _tokensCollection(userId).doc(_tokenDocumentId(normalizedToken)).delete();
+    await _tokensCollection(
+      userId,
+    ).doc(_tokenDocumentId(normalizedToken)).delete();
   }
 
   String _tokenDocumentId(String token) {

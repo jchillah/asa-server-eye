@@ -10,11 +10,11 @@ import '../providers/fcm_token_repository_provider.dart';
 
 final fcmTokenRegistrationControllerProvider =
     Provider.autoDispose<FcmTokenRegistrationController>((ref) {
-  final controller = FcmTokenRegistrationController(ref);
-  controller.start();
-  ref.onDispose(controller.dispose);
-  return controller;
-});
+      final controller = FcmTokenRegistrationController(ref);
+      controller.start();
+      ref.onDispose(controller.dispose);
+      return controller;
+    });
 
 class FcmTokenRegistrationController {
   FcmTokenRegistrationController(this._ref);
@@ -82,10 +82,9 @@ class FcmTokenRegistrationController {
     }
 
     try {
-      await _ref.read(fcmTokenRepositoryProvider).saveToken(
-            userId: user.uid,
-            token: token,
-          );
+      await _ref
+          .read(fcmTokenRepositoryProvider)
+          .saveToken(userId: user.uid, token: token);
     } catch (error, stackTrace) {
       developer.log(
         'Failed to save FCM token.',
