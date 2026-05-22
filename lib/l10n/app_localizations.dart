@@ -1336,6 +1336,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your purchase was submitted and is now being verified.'**
   String get premiumVerificationQueued;
+
+  /// Label showing when the server list was last updated
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: {value}'**
+  String serverSyncLastUpdated(String value);
+
+  /// Label showing that server data comes from the network
+  ///
+  /// In en, this message translates to:
+  /// **'Source: Live data'**
+  String get serverSyncSourceLive;
+
+  /// Label showing that server data comes from cache
+  ///
+  /// In en, this message translates to:
+  /// **'Source: Cache'**
+  String get serverSyncSourceCache;
+
+  /// Banner text when cached server data is displayed
+  ///
+  /// In en, this message translates to:
+  /// **'Showing cached server data'**
+  String get serverSyncCacheBanner;
+
+  /// Hint when cached data is stale
+  ///
+  /// In en, this message translates to:
+  /// **'Cache may be outdated'**
+  String get serverSyncCacheStale;
+
+  /// Fallback label when no update time is available
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: Unknown'**
+  String get serverSyncUnknownUpdateTime;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

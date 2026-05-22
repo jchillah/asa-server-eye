@@ -878,5 +878,34 @@
     "premiumVerificationQueued": "Tu compra fue enviada y ahora está siendo verificada.",
     "@premiumVerificationQueued": {
         "description": "Mensaje después de que se envíe la solicitud de verificación de compra"
+    },
+    "serverSyncLastUpdated": "Última actualización: {value}",
+  "@serverSyncLastUpdated": {
+    "description": "Etiqueta para la última vez que se sincronizó con el servidor",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
     }
+  },
+  "serverSyncSourceLive": "Fuente: Datos en vivo",
+  "@serverSyncSourceLive": {
+    "description": "Etiqueta para indicar que los datos del servidor provienen de la red"
+  },
+  "serverSyncSourceCache": "Fuente: Caché",
+  "@serverSyncSourceCache": {
+    "description": "Etiqueta para indicar que los datos del servidor provienen de la caché"
+  },
+  "serverSyncCacheBanner": "Se están mostrando datos de servidor en caché",
+  "@serverSyncCacheBanner": {
+    "description": "Texto del banner cuando se muestran datos de servidor en caché"
+  },
+  "serverSyncCacheStale": "Los datos en caché podrían estar desactualizados",
+  "@serverSyncCacheStale": {
+    "description": "Sugerencia cuando los datos en caché están desactualizados"
+  },
+  "serverSyncUnknownUpdateTime": "Última actualización: Desconocida",
+  "@serverSyncUnknownUpdateTime": {
+    "description": "Etiqueta para la última vez que se sincronizó con el servidor cuando no se conoce el tiempo de actualización"
+  }
 }
