@@ -165,6 +165,83 @@ service cloud.firestore {
       allow delete: if isSignedIn() && request.auth.uid == uid;
     }
 
+    // -------- USER ALERT RULES --------
+    match /users/{uid}/alert_rules/{ruleId} {
+
+      allow read: if isSignedIn() && request.auth.uid == uid;
+
+      allow create: if isSignedIn()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly([
+          'userId',
+          'serverId',
+          'serverName',
+          'mapName',
+          'ruleType',
+          'isEnabled',
+          'threshold',
+          'createdAt',
+          'updatedAt',
+          'lastTriggeredAt'
+        ])
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.serverId is string
+        && request.resource.data.serverId.size() > 0
+        && request.resource.data.serverName is string
+        && request.resource.data.serverName.size() > 0
+        && request.resource.data.mapName is string
+        && request.resource.data.mapName.size() > 0
+        && request.resource.data.ruleType in [
+          'population_increased',
+          'population_decreased',
+          'crossed_above_threshold',
+          'crossed_below_threshold',
+          'server_online',
+          'server_offline'
+        ]
+        && request.resource.data.isEnabled is bool
+        && (request.resource.data.threshold == null || request.resource.data.threshold is int)
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.lastTriggeredAt == null;
+
+      allow update: if isSignedIn()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly([
+          'userId',
+          'serverId',
+          'serverName',
+          'mapName',
+          'ruleType',
+          'isEnabled',
+          'threshold',
+          'createdAt',
+          'updatedAt',
+          'lastTriggeredAt'
+        ])
+        && request.resource.data.userId == resource.data.userId
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.serverId == resource.data.serverId
+        && request.resource.data.serverName is string
+        && request.resource.data.serverName.size() > 0
+        && request.resource.data.mapName is string
+        && request.resource.data.mapName.size() > 0
+        && request.resource.data.ruleType in [
+          'population_increased',
+          'population_decreased',
+          'crossed_above_threshold',
+          'crossed_below_threshold',
+          'server_online',
+          'server_offline'
+        ]
+        && request.resource.data.isEnabled is bool
+        && (request.resource.data.threshold == null || request.resource.data.threshold is int)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time;
+
+      allow delete: if isSignedIn() && request.auth.uid == uid;
+    }
+
     // -------- PLAYER SIGHTINGS --------
     match /player_sightings/{sightingId} {
 
