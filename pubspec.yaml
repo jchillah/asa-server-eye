@@ -21,6 +21,7 @@ dependencies:
 
   dio: ^5.9.2
   equatable: ^2.0.8
+  crypto: ^3.0.7
 
   # Pinned for current compatibility work:
   # newer shared_preferences variants still trigger upstream KGP warnings,
