@@ -667,7 +667,4 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get serverSyncUnknownUpdateTime => 'Zuletzt aktualisiert: Unbekannt';
-
-  @override
-  String get serverSyncUnknownSource => 'Quelle: Unbekannt';
 }

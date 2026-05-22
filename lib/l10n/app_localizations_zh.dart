@@ -667,7 +667,4 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get serverSyncUnknownUpdateTime => '最后更新：未知';
-
-  @override
-  String get serverSyncUnknownSource => '来源：未知';
 }

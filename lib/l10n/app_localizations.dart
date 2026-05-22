@@ -1372,12 +1372,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last updated: Unknown'**
   String get serverSyncUnknownUpdateTime;
-
-  /// Fallback label when server data source is unknown
-  ///
-  /// In en, this message translates to:
-  /// **'Source: Unknown'**
-  String get serverSyncUnknownSource;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
