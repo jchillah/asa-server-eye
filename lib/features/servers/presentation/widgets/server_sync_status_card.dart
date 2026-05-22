@@ -89,6 +89,6 @@ class ServerSyncStatusCard extends StatelessWidget {
       alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
     );
 
-    return context.l10n.serverSyncLastUpdated('$date, $time');
+    return context.l10n.serverSyncLastUpdated(date, time);
   }
 }

@@ -751,6 +751,102 @@
     "@settingsNavLabel": {
         "description": "底部导航中设置标签的简短文本"
     },
+    "premiumTitle": "Premium",
+    "@premiumTitle": {
+        "description": "Premium 区域标题"
+    },
+    "premiumSettingsSubtitle": "解锁并管理 Premium",
+    "@premiumSettingsSubtitle": {
+      "description": "设置中 Premium 条目的副标题"
+    },
+    "premiumHeadline": "解锁 Premium",
+    "@premiumHeadline": {
+      "description": "Premium 页面主标题"
+    },
+    "premiumDescription": "通过 Premium，你可以访问玩家目击记录、保存更多收藏，并使用未来的高级功能。",
+    "@premiumDescription": {
+      "description": "Premium 功能说明"
+    },
+    "premiumBenefitSightingsTitle": "玩家目击记录",
+    "@premiumBenefitSightingsTitle": {
+      "description": "目击记录权益标题"
+    },
+    "premiumBenefitSightingsDescription": "可直接通过导航访问目击记录，并在整个目击记录区域使用 Premium 权限。",
+    "@premiumBenefitSightingsDescription": {
+      "description": "目击记录权益说明"
+    },
+    "premiumBenefitFavoritesTitle": "更多收藏",
+    "@premiumBenefitFavoritesTitle": {
+      "description": "收藏权益标题"
+    },
+    "premiumBenefitFavoritesDescription": "可在收藏中保存更多服务器。",
+    "@premiumBenefitFavoritesDescription": {
+      "description": "收藏权益说明"
+    },
+    "premiumBenefitAlertsTitle": "未来扩展功能",
+    "@premiumBenefitAlertsTitle": {
+      "description": "未来 Premium 权益标题"
+    },
+    "premiumBenefitAlertsDescription": "为即将推出的 Premium 功能做好准备，例如增强监控和提醒。",
+    "@premiumBenefitAlertsDescription": {
+      "description": "未来 Premium 权益说明"
+    },
+    "premiumMonthlyPlan": "月度",
+    "@premiumMonthlyPlan": {
+      "description": "月度方案"
+    },
+    "premiumMonthlyPlanDescription": "可灵活取消",
+    "@premiumMonthlyPlanDescription": {
+      "description": "月度方案说明"
+    },
+    "premiumYearlyPlan": "年度",
+    "@premiumYearlyPlan": {
+      "description": "年度方案"
+    },
+    "premiumYearlyPlanDescription": "长期使用最划算",
+    "@premiumYearlyPlanDescription": {
+      "description": "年度方案说明"
+    },
+    "premiumStartMonthly": "开始月度订阅",
+    "@premiumStartMonthly": {
+      "description": "月度购买按钮"
+    },
+    "premiumStartYearly": "开始年度订阅",
+    "@premiumStartYearly": {
+      "description": "年度购买按钮"
+    },
+    "restorePurchases": "恢复购买",
+    "@restorePurchases": {
+      "description": "恢复购买按钮"
+    },
+    "premiumPurchaseComingSoon": "购买流程即将接入。",
+    "@premiumPurchaseComingSoon": {
+      "description": "购买流程尚未接入时的提示"
+    },
+    "premiumUpgradeTitle": "升级到 Premium",
+    "@premiumUpgradeTitle": {
+      "description": "个人资料中的 Premium 升级卡片标题"
+    },
+    "premiumUpgradeDescription": "解锁目击记录标签页和更多 Premium 权益。",
+    "@premiumUpgradeDescription": {
+      "description": "个人资料中的 Premium 升级说明"
+    },
+    "premiumActiveTitle": "Premium 已激活",
+    "@premiumActiveTitle": {
+      "description": "Premium 已激活状态标题"
+    },
+    "premiumActiveDescription": "你的账户已可使用 Premium 功能。",
+    "@premiumActiveDescription": {
+      "description": "Premium 已激活状态说明"
+    },
+    "unlockPremium": "解锁 Premium",
+    "@unlockPremium": {
+      "description": "解锁 Premium 按钮"
+    },
+    "managePremium": "管理 Premium",
+    "@managePremium": {
+      "description": "管理 Premium 按钮"
+    },
     "premiumStoreUnavailable": "当前无法连接到商店。",
     "@premiumStoreUnavailable": {
         "description": "当无法连接到商店时显示的错误消息"
@@ -783,15 +879,6 @@
     "@premiumVerificationQueued": {
         "description": "购买验证请求提交后显示的消息"
     },
-    "serverSyncLastUpdated": "最后更新：{value}",
-    "@serverSyncLastUpdated": {
-        "description": "显示服务器列表最后更新时间的标签",
-        "placeholders": {
-            "value": {
-            "type": "String"
-        }
-    }
-    },
     "serverSyncSourceLive": "来源：实时数据",
     "@serverSyncSourceLive": {
     "description": "显示服务器数据来自实时网络的标签"
@@ -811,5 +898,25 @@
     "serverSyncUnknownUpdateTime": "最后更新：未知",
     "@serverSyncUnknownUpdateTime": {
         "description": "当没有可用更新时间时的回退标签"
+    },
+    "serverSyncLastUpdated": "最后更新：{date} {time}",
+    "@serverSyncLastUpdated": {
+        "description": "显示服务器数据最后更新时间的标签",
+        "placeholders": {
+            "date": {
+            "type": "String"
+            },
+            "time": {
+            "type": "String"
+            }
+        }
+    },
+    "serverSyncLoading": "正在加载同步状态…",
+    "@serverSyncLoading": {
+        "description": "正在加载同步状态时显示的标签"
+    },
+    "serverSyncUnavailable": "当前无法获取同步状态",
+    "@serverSyncUnavailable": {
+        "description": "当无法加载同步状态时显示"
     }
 }
