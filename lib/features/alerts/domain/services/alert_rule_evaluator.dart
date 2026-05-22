@@ -51,9 +51,7 @@ class AlertRuleEvaluator {
   }
 
   Map<String, Server> _serversById(List<Server> servers) {
-    return {
-      for (final server in servers) server.id: server,
-    };
+    return {for (final server in servers) server.id: server};
   }
 
   bool _isWithinCooldown(AlertRule rule, DateTime now) {

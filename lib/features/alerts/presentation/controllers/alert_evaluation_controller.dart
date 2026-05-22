@@ -14,26 +14,27 @@ final alertRuleEvaluatorProvider = Provider<AlertRuleEvaluator>((ref) {
   return const AlertRuleEvaluator();
 });
 
-final alertEvaluationControllerProvider = StateNotifierProvider.autoDispose<
-  AlertEvaluationController,
-  AlertTriggerEvent?
->((ref) {
-  final repository = ref.watch(alertRulesRepositoryProvider);
-  final evaluator = ref.watch(alertRuleEvaluatorProvider);
+final alertEvaluationControllerProvider =
+    StateNotifierProvider.autoDispose<
+      AlertEvaluationController,
+      AlertTriggerEvent?
+    >((ref) {
+      final repository = ref.watch(alertRulesRepositoryProvider);
+      final evaluator = ref.watch(alertRuleEvaluatorProvider);
 
-  return AlertEvaluationController(
-    repository: repository,
-    evaluator: evaluator,
-  );
-});
+      return AlertEvaluationController(
+        repository: repository,
+        evaluator: evaluator,
+      );
+    });
 
 class AlertEvaluationController extends StateNotifier<AlertTriggerEvent?> {
   AlertEvaluationController({
     required AlertRulesRepository repository,
     required AlertRuleEvaluator evaluator,
-  })  : _repository = repository,
-        _evaluator = evaluator,
-        super(null);
+  }) : _repository = repository,
+       _evaluator = evaluator,
+       super(null);
 
   final AlertRulesRepository _repository;
   final AlertRuleEvaluator _evaluator;
