@@ -1,7 +1,15 @@
+import { createHash } from "crypto";
+
 import { initializeApp } from "firebase-admin/app";
-import { FieldValue, Timestamp, getFirestore } from "firebase-admin/firestore";
+import {
+  FieldValue,
+  Timestamp,
+  getFirestore,
+} from "firebase-admin/firestore";
+import { getMessaging } from "firebase-admin/messaging";
 import * as logger from "firebase-functions/logger";
 import { onDocumentCreated } from "firebase-functions/v2/firestore";
+import { onSchedule } from "firebase-functions/v2/scheduler";
 import { google } from "googleapis";
 
 initializeApp();
@@ -10,9 +18,19 @@ const db = getFirestore();
 
 const DEFAULT_REGION = "europe-west3";
 const DEFAULT_PACKAGE_NAME = "com.jchillah.asaservereye";
+const OFFICIAL_SERVER_LIST_URL =
+  "https://cdn2.arkdedicated.com/servers/asa/officialserverlist.json";
+const SERVER_ALERT_SNAPSHOTS_COLLECTION = "server_alert_snapshots";
+const DEFAULT_ALERT_COOLDOWN_MINUTES = 5;
+const FIRESTORE_BATCH_LIMIT = 400;
+const FCM_MULTICAST_LIMIT = 500;
 
 const REGION = process.env.FUNCTION_REGION || DEFAULT_REGION;
 const PACKAGE_NAME = process.env.PLAY_PACKAGE_NAME || DEFAULT_PACKAGE_NAME;
+const ALERT_COOLDOWN_MINUTES = Number(
+  process.env.ALERT_COOLDOWN_MINUTES || DEFAULT_ALERT_COOLDOWN_MINUTES,
+);
+const ALERT_COOLDOWN_MS = ALERT_COOLDOWN_MINUTES * 60 * 1000;
 
 type VerificationRequestData = {
   userId: string;
@@ -40,6 +58,95 @@ type GoogleApiErrorLike = {
     data?: unknown;
   };
 };
+
+type AlertRuleType =
+  | "population_increased"
+  | "population_decreased"
+  | "crossed_above_threshold"
+  | "crossed_below_threshold"
+  | "server_online"
+  | "server_offline";
+
+type ServerSnapshot = {
+  id: string;
+  name: string;
+  mapName: string;
+  players: number;
+  maxPlayers: number;
+  official: boolean;
+  exists: boolean;
+};
+
+type AlertRule = {
+  id: string;
+  ref: FirebaseFirestore.DocumentReference;
+  userId: string;
+  serverId: string;
+  serverName: string;
+  mapName: string;
+  ruleType: AlertRuleType;
+  isEnabled: boolean;
+  threshold: number | null;
+  lastTriggeredAt: Timestamp | null;
+};
+
+type AlertTrigger = {
+  rule: AlertRule;
+  previousPlayers: number | null;
+  currentPlayers: number | null;
+};
+
+type FcmTokenRecord = {
+  token: string;
+  ref: FirebaseFirestore.DocumentReference;
+};
+
+export const evaluateAlertRulesAndSendNotifications = onSchedule(
+  {
+    schedule: "every 5 minutes",
+    region: REGION,
+    timeZone: "Europe/Berlin",
+    maxInstances: 1,
+  },
+  async () => {
+    const now = new Date();
+    const currentServers = await fetchOfficialServerList();
+    const activeRules = await fetchActiveAlertRules();
+
+    if (activeRules.length === 0) {
+      logger.info("No active alert rules found.");
+      return;
+    }
+
+    const serverIds = uniqueValues(activeRules.map((rule) => rule.serverId));
+    const previousSnapshots = await fetchPreviousServerSnapshots(serverIds);
+    const triggers = evaluateAlertTriggers({
+      rules: activeRules,
+      currentServers,
+      previousSnapshots,
+      now,
+    });
+
+    await persistServerSnapshots(serverIds, currentServers);
+
+    if (triggers.length === 0) {
+      logger.info("No alert rules triggered.", {
+        activeRules: activeRules.length,
+        trackedServers: serverIds.length,
+      });
+      return;
+    }
+
+    await sendAlertNotifications(triggers);
+    await markTriggeredRules(triggers);
+
+    logger.info("Alert rule evaluation finished.", {
+      activeRules: activeRules.length,
+      triggeredRules: triggers.length,
+      trackedServers: serverIds.length,
+    });
+  },
+);
 
 export const processSubscriptionVerificationRequest = onDocumentCreated(
   {
@@ -156,6 +263,355 @@ export const processSubscriptionVerificationRequest = onDocumentCreated(
     }
   },
 );
+
+/**
+ * Downloads and normalizes the official ARK ASA server list.
+ * @return {Promise<Map<string, ServerSnapshot>>} Servers keyed by stable id.
+ */
+async function fetchOfficialServerList(): Promise<Map<string, ServerSnapshot>> {
+  const response = await fetch(OFFICIAL_SERVER_LIST_URL);
+
+  if (!response.ok) {
+    throw new Error(`ASA server list request failed: ${response.status}`);
+  }
+
+  const rawData = await response.json() as unknown;
+  if (!Array.isArray(rawData)) {
+    throw new Error("ASA server list response was not an array.");
+  }
+
+  const servers = new Map<string, ServerSnapshot>();
+  for (const item of rawData) {
+    if (!isRecord(item)) {
+      continue;
+    }
+
+    const server = parseServerSnapshot(item);
+    if (server.id.length === 0) {
+      continue;
+    }
+
+    servers.set(server.id, server);
+  }
+
+  return servers;
+}
+
+/**
+ * Loads enabled alert rules from all user alert rule subcollections.
+ * @return {Promise<AlertRule[]>} Enabled alert rules.
+ */
+async function fetchActiveAlertRules(): Promise<AlertRule[]> {
+  const snapshot = await db
+    .collectionGroup("alert_rules")
+    .where("isEnabled", "==", true)
+    .get();
+
+  const rules: AlertRule[] = [];
+  for (const doc of snapshot.docs) {
+    const rule = parseAlertRule(doc);
+    if (rule) {
+      rules.push(rule);
+    }
+  }
+
+  return rules;
+}
+
+/**
+ * Loads the previous known server snapshots for all tracked server ids.
+ * @param {string[]} serverIds Stable server ids.
+ * @return {Promise<Map<string, ServerSnapshot>>} Previous snapshots.
+ */
+async function fetchPreviousServerSnapshots(
+  serverIds: string[],
+): Promise<Map<string, ServerSnapshot>> {
+  const result = new Map<string, ServerSnapshot>();
+
+  for (const chunk of chunkArray(serverIds, FIRESTORE_BATCH_LIMIT)) {
+    const refs = chunk.map((serverId) => serverSnapshotRef(serverId));
+    const snapshots = await db.getAll(...refs);
+
+    for (const snapshot of snapshots) {
+      const data = snapshot.data();
+      if (!data) {
+        continue;
+      }
+
+      const server = parseStoredServerSnapshot(data);
+      if (server) {
+        result.set(server.id, server);
+      }
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Evaluates all active alert rules against previous and current server state.
+ * @param {object} input Evaluation input.
+ * @return {AlertTrigger[]} Triggered alert events.
+ */
+function evaluateAlertTriggers(input: {
+  rules: AlertRule[];
+  currentServers: Map<string, ServerSnapshot>;
+  previousSnapshots: Map<string, ServerSnapshot>;
+  now: Date;
+}): AlertTrigger[] {
+  const triggers: AlertTrigger[] = [];
+
+  for (const rule of input.rules) {
+    if (isWithinCooldown(rule, input.now)) {
+      continue;
+    }
+
+    const previous = input.previousSnapshots.get(rule.serverId) ?? null;
+    const current = input.currentServers.get(rule.serverId) ?? null;
+
+    if (!shouldTriggerRule(rule, previous, current)) {
+      continue;
+    }
+
+    triggers.push({
+      rule,
+      previousPlayers: previous?.players ?? null,
+      currentPlayers: current?.players ?? null,
+    });
+  }
+
+  return triggers;
+}
+
+/**
+ * Persists current snapshots for all servers that have alert rules.
+ * @param {string[]} serverIds Stable server ids.
+ * @param {Map<string, ServerSnapshot>} currentServers Current server state.
+ */
+async function persistServerSnapshots(
+  serverIds: string[],
+  currentServers: Map<string, ServerSnapshot>,
+): Promise<void> {
+  const writes: Array<(batch: FirebaseFirestore.WriteBatch) => void> = [];
+
+  for (const serverId of serverIds) {
+    const server = currentServers.get(serverId);
+    const ref = serverSnapshotRef(serverId);
+
+    if (server) {
+      writes.push((batch) => batch.set(ref, {
+        ...server,
+        updatedAt: FieldValue.serverTimestamp(),
+      }));
+    } else {
+      writes.push((batch) => batch.set(ref, {
+        id: serverId,
+        exists: false,
+        updatedAt: FieldValue.serverTimestamp(),
+      }, { merge: true }));
+    }
+  }
+
+  await commitBatchedWrites(writes);
+}
+
+/**
+ * Sends FCM notifications for all triggered rules.
+ * @param {AlertTrigger[]} triggers Triggered alert events.
+ */
+async function sendAlertNotifications(triggers: AlertTrigger[]): Promise<void> {
+  const tokenCache = new Map<string, FcmTokenRecord[]>();
+
+  for (const trigger of triggers) {
+    const userId = trigger.rule.userId;
+    const hasAccess = await hasAlertAccess(userId);
+    if (!hasAccess) {
+      logger.info("Skipping alert for user without access.", { userId });
+      continue;
+    }
+
+    const tokens = await getCachedUserTokens(userId, tokenCache);
+    if (tokens.length === 0) {
+      logger.info("Skipping alert because user has no FCM tokens.", { userId });
+      continue;
+    }
+
+    await sendNotificationToTokens(trigger, tokens);
+  }
+}
+
+/**
+ * Marks all triggered rules with a server-side lastTriggeredAt timestamp.
+ * @param {AlertTrigger[]} triggers Triggered alert events.
+ */
+async function markTriggeredRules(triggers: AlertTrigger[]): Promise<void> {
+  const writes = triggers.map((trigger) => {
+    return (batch: FirebaseFirestore.WriteBatch) => batch.update(
+      trigger.rule.ref,
+      {
+        lastTriggeredAt: FieldValue.serverTimestamp(),
+        updatedAt: FieldValue.serverTimestamp(),
+      },
+    );
+  });
+
+  await commitBatchedWrites(writes);
+}
+
+/**
+ * Sends one notification to a user's available tokens.
+ * @param {AlertTrigger} trigger Triggered alert event.
+ * @param {FcmTokenRecord[]} tokenRecords User token records.
+ */
+async function sendNotificationToTokens(
+  trigger: AlertTrigger,
+  tokenRecords: FcmTokenRecord[],
+): Promise<void> {
+  const tokens = tokenRecords.map((record) => record.token);
+  const invalidTokenRefs: FirebaseFirestore.DocumentReference[] = [];
+
+  for (const chunk of chunkArray(tokens, FCM_MULTICAST_LIMIT)) {
+    const response = await getMessaging().sendEachForMulticast({
+      tokens: chunk,
+      notification: {
+        title: "ASA Server Eye Alert",
+        body: buildAlertBody(trigger),
+      },
+      data: {
+        type: "server_alert",
+        ruleId: trigger.rule.id,
+        serverId: trigger.rule.serverId,
+        ruleType: trigger.rule.ruleType,
+        previousPlayers: String(trigger.previousPlayers ?? ""),
+        currentPlayers: String(trigger.currentPlayers ?? ""),
+      },
+      android: {
+        priority: "high",
+      },
+      apns: {
+        payload: {
+          aps: {
+            sound: "default",
+          },
+        },
+      },
+    });
+
+    response.responses.forEach((sendResponse, index) => {
+      if (sendResponse.success) {
+        return;
+      }
+
+      const errorCode = sendResponse.error?.code ?? "";
+      if (isInvalidFcmTokenError(errorCode)) {
+        const globalIndex = tokens.indexOf(chunk[index]);
+        const tokenRecord = tokenRecords[globalIndex];
+        if (tokenRecord) {
+          invalidTokenRefs.push(tokenRecord.ref);
+        }
+      }
+    });
+
+    logger.info("Alert notification send result.", {
+      userId: trigger.rule.userId,
+      ruleId: trigger.rule.id,
+      successCount: response.successCount,
+      failureCount: response.failureCount,
+    });
+  }
+
+  if (invalidTokenRefs.length > 0) {
+    await removeInvalidTokens(invalidTokenRefs);
+  }
+}
+
+/**
+ * Fetches and caches FCM tokens for a user.
+ * @param {string} userId User id.
+ * @param {Map<string, FcmTokenRecord[]>} cache User token cache.
+ * @return {Promise<FcmTokenRecord[]>} Token records.
+ */
+async function getCachedUserTokens(
+  userId: string,
+  cache: Map<string, FcmTokenRecord[]>,
+): Promise<FcmTokenRecord[]> {
+  const cached = cache.get(userId);
+  if (cached) {
+    return cached;
+  }
+
+  const snapshot = await db
+    .collection("users")
+    .doc(userId)
+    .collection("fcm_tokens")
+    .get();
+
+  const tokens = snapshot.docs
+    .map((doc) => {
+      const token = readString(doc.data(), ["token"]);
+      return token ? { token, ref: doc.ref } : null;
+    })
+    .filter((record): record is FcmTokenRecord => record !== null);
+
+  cache.set(userId, tokens);
+  return tokens;
+}
+
+/**
+ * Checks if the user is still allowed to receive alert push notifications.
+ * @param {string} userId User id.
+ * @return {Promise<boolean>} Whether alert access is allowed.
+ */
+async function hasAlertAccess(userId: string): Promise<boolean> {
+  const userSnapshot = await db.collection("users").doc(userId).get();
+  const accessLevel = readString(userSnapshot.data() ?? {}, [
+    "sightingsAccessLevel",
+  ]);
+
+  return accessLevel === "premium" || accessLevel === "admin";
+}
+
+/**
+ * Removes FCM tokens that Firebase reports as invalid.
+ * @param {FirebaseFirestore.DocumentReference[]} refs Token document refs.
+ */
+async function removeInvalidTokens(
+  refs: FirebaseFirestore.DocumentReference[],
+): Promise<void> {
+  const uniqueRefs = uniqueValues(refs.map((ref) => ref.path)).map((path) => {
+    return db.doc(path);
+  });
+
+  await commitBatchedWrites(
+    uniqueRefs.map((ref) => (batch) => batch.delete(ref)),
+  );
+}
+
+/**
+ * Commits Firestore writes in safe chunks below the 500 operation limit.
+ * @param {Array<Function>} writes Write callbacks.
+ */
+async function commitBatchedWrites(
+  writes: Array<(batch: FirebaseFirestore.WriteBatch) => void>,
+): Promise<void> {
+  let batch = db.batch();
+  let operationCount = 0;
+
+  for (const write of writes) {
+    write(batch);
+    operationCount += 1;
+
+    if (operationCount >= FIRESTORE_BATCH_LIMIT) {
+      await batch.commit();
+      batch = db.batch();
+      operationCount = 0;
+    }
+  }
+
+  if (operationCount > 0) {
+    await batch.commit();
+  }
+}
 
 /**
  * Verifies a subscription purchase against the store backend.
@@ -294,4 +750,387 @@ function parseRfc3339Date(value?: string | null): Date | null {
 
   const parsed = new Date(value);
   return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+/**
+ * Parses a raw ASA server list item into the backend snapshot format.
+ * @param {Record<string, unknown>} json Raw server JSON.
+ * @return {ServerSnapshot} Normalized server snapshot.
+ */
+function parseServerSnapshot(json: Record<string, unknown>): ServerSnapshot {
+  const name = readString(json, ["Name"], "Unknown Server");
+  const mapName = readString(json, ["MapName"], "Unknown Map");
+  const sessionId = readString(json, [
+    "SessionID",
+    "SessionId",
+    "SessionID64",
+  ]);
+  const ip = readString(json, ["IP", "Ip"]);
+  const port = readString(json, ["Port"]);
+  const fallbackId = buildFallbackServerId(name, mapName, ip, port);
+
+  return {
+    id: sessionId.length > 0 ? sessionId : fallbackId,
+    name,
+    mapName,
+    players: readInt(json, ["NumPlayers"]),
+    maxPlayers: readInt(json, ["MaxPlayers"]),
+    official: readBool(json, ["IsOfficial", "Official"]),
+    exists: true,
+  };
+}
+
+/**
+ * Parses a stored server snapshot document.
+ * @param {FirebaseFirestore.DocumentData} data Firestore document data.
+ * @return {ServerSnapshot | null} Parsed snapshot or null.
+ */
+function parseStoredServerSnapshot(
+  data: FirebaseFirestore.DocumentData,
+): ServerSnapshot | null {
+  const id = readString(data, ["id"]);
+  if (!id) {
+    return null;
+  }
+
+  return {
+    id,
+    name: readString(data, ["name"], "Unknown Server"),
+    mapName: readString(data, ["mapName"], "Unknown Map"),
+    players: readInt(data, ["players"]),
+    maxPlayers: readInt(data, ["maxPlayers"]),
+    official: readBool(data, ["official"]),
+    exists: readBool(data, ["exists"]),
+  };
+}
+
+/**
+ * Parses an alert rule document.
+ * @param {FirebaseFirestore.QueryDocumentSnapshot} doc Alert rule document.
+ * @return {AlertRule | null} Parsed alert rule or null if invalid.
+ */
+function parseAlertRule(
+  doc: FirebaseFirestore.QueryDocumentSnapshot,
+): AlertRule | null {
+  const data = doc.data();
+  const ruleType = readString(data, ["ruleType"]);
+
+  if (!isAlertRuleType(ruleType)) {
+    logger.warn("Skipping alert rule with invalid type.", {
+      ruleId: doc.id,
+      ruleType,
+    });
+    return null;
+  }
+
+  const userId = readString(data, ["userId"]);
+  const serverId = readString(data, ["serverId"]);
+
+  if (!userId || !serverId) {
+    logger.warn("Skipping alert rule with missing userId/serverId.", {
+      ruleId: doc.id,
+    });
+    return null;
+  }
+
+  return {
+    id: doc.id,
+    ref: doc.ref,
+    userId,
+    serverId,
+    serverName: readString(data, ["serverName"], "Unknown Server"),
+    mapName: readString(data, ["mapName"], "Unknown Map"),
+    ruleType,
+    isEnabled: readBool(data, ["isEnabled"]),
+    threshold: readNullableInt(data["threshold"]),
+    lastTriggeredAt: data["lastTriggeredAt"] instanceof Timestamp ?
+      data["lastTriggeredAt"] :
+      null,
+  };
+}
+
+/**
+ * Checks whether the rule type is supported by the backend evaluator.
+ * @param {string} value Raw rule type.
+ * @return {value is AlertRuleType} True for known alert rule types.
+ */
+function isAlertRuleType(value: string): value is AlertRuleType {
+  return value === "population_increased" ||
+    value === "population_decreased" ||
+    value === "crossed_above_threshold" ||
+    value === "crossed_below_threshold" ||
+    value === "server_online" ||
+    value === "server_offline";
+}
+
+/**
+ * Decides whether a rule should trigger for the current refresh.
+ * @param {AlertRule} rule Alert rule.
+ * @param {ServerSnapshot | null} previous Previous server state.
+ * @param {ServerSnapshot | null} current Current server state.
+ * @return {boolean} True when the rule should trigger.
+ */
+function shouldTriggerRule(
+  rule: AlertRule,
+  previous: ServerSnapshot | null,
+  current: ServerSnapshot | null,
+): boolean {
+  switch (rule.ruleType) {
+  case "population_increased":
+    return previous?.exists === true &&
+      current?.exists === true &&
+      current.players > previous.players;
+  case "population_decreased":
+    return previous?.exists === true &&
+      current?.exists === true &&
+      current.players < previous.players;
+  case "crossed_above_threshold":
+    return rule.threshold !== null &&
+      previous?.exists === true &&
+      current?.exists === true &&
+      previous.players <= rule.threshold &&
+      current.players > rule.threshold;
+  case "crossed_below_threshold":
+    return rule.threshold !== null &&
+      previous?.exists === true &&
+      current?.exists === true &&
+      previous.players >= rule.threshold &&
+      current.players < rule.threshold;
+  case "server_online":
+    return previous?.exists === false && current?.exists === true;
+  case "server_offline":
+    return previous?.exists === true && current === null;
+  }
+}
+
+/**
+ * Checks whether a rule was triggered within the cooldown window.
+ * @param {AlertRule} rule Alert rule.
+ * @param {Date} now Current time.
+ * @return {boolean} True if the rule is still in cooldown.
+ */
+function isWithinCooldown(rule: AlertRule, now: Date): boolean {
+  const lastTriggeredAt = rule.lastTriggeredAt;
+  if (!lastTriggeredAt) {
+    return false;
+  }
+
+  return now.getTime() - lastTriggeredAt.toDate().getTime() <
+    ALERT_COOLDOWN_MS;
+}
+
+/**
+ * Builds the user-visible FCM body text.
+ * @param {AlertTrigger} trigger Triggered alert event.
+ * @return {string} Notification body text.
+ */
+function buildAlertBody(trigger: AlertTrigger): string {
+  const change = trigger.previousPlayers === null ||
+    trigger.currentPlayers === null ?
+    "" :
+    ` (${trigger.previousPlayers} → ${trigger.currentPlayers})`;
+
+  return `${alertRuleLabel(trigger.rule.ruleType)}: ` +
+    `${trigger.rule.serverName} • ${trigger.rule.mapName}${change}`;
+}
+
+/**
+ * Maps alert rule types to compact notification labels.
+ * @param {AlertRuleType} ruleType Alert rule type.
+ * @return {string} Label for notifications.
+ */
+function alertRuleLabel(ruleType: AlertRuleType): string {
+  switch (ruleType) {
+  case "population_increased":
+    return "Population increased";
+  case "population_decreased":
+    return "Population decreased";
+  case "crossed_above_threshold":
+    return "Population crossed above threshold";
+  case "crossed_below_threshold":
+    return "Population crossed below threshold";
+  case "server_online":
+    return "Server online";
+  case "server_offline":
+    return "Server offline";
+  }
+}
+
+/**
+ * Returns a deterministic Firestore document ref for a server snapshot.
+ * @param {string} serverId Stable server id.
+ * @return {FirebaseFirestore.DocumentReference} Snapshot document ref.
+ */
+function serverSnapshotRef(
+  serverId: string,
+): FirebaseFirestore.DocumentReference {
+  return db
+    .collection(SERVER_ALERT_SNAPSHOTS_COLLECTION)
+    .doc(hashValue(serverId));
+}
+
+/**
+ * Builds the same fallback id shape used by the Flutter client.
+ * @param {string} name Server name.
+ * @param {string} mapName Map name.
+ * @param {string} ip Server IP.
+ * @param {string} port Server port.
+ * @return {string} Fallback stable server id.
+ */
+function buildFallbackServerId(
+  name: string,
+  mapName: string,
+  ip: string,
+  port: string,
+): string {
+  const endpoint = [ip, port].filter((value) => value.length > 0).join(":");
+
+  return [name.trim(), mapName.trim(), endpoint.trim()]
+    .filter((value) => value.length > 0)
+    .join("|");
+}
+
+/**
+ * Builds a deterministic SHA-256 id for arbitrary path-unsafe values.
+ * @param {string} value Raw value.
+ * @return {string} SHA-256 hex digest.
+ */
+function hashValue(value: string): string {
+  return createHash("sha256").update(value).digest("hex");
+}
+
+/**
+ * Reads a string from one of several possible keys.
+ * @param {Record<string, unknown>} data Source data.
+ * @param {string[]} keys Candidate keys.
+ * @param {string} fallback Fallback value.
+ * @return {string} Normalized string value.
+ */
+function readString(
+  data: Record<string, unknown>,
+  keys: string[],
+  fallback = "",
+): string {
+  for (const key of keys) {
+    const value = data[key];
+    if (value === null || value === undefined) {
+      continue;
+    }
+
+    const normalized = String(value).trim();
+    if (normalized.length > 0) {
+      return normalized;
+    }
+  }
+
+  return fallback;
+}
+
+/**
+ * Reads an integer from one of several possible keys.
+ * @param {Record<string, unknown>} data Source data.
+ * @param {string[]} keys Candidate keys.
+ * @return {number} Parsed integer or zero.
+ */
+function readInt(data: Record<string, unknown>, keys: string[]): number {
+  for (const key of keys) {
+    const parsed = readNullableInt(data[key]);
+    if (parsed !== null) {
+      return parsed;
+    }
+  }
+
+  return 0;
+}
+
+/**
+ * Reads a nullable integer from unknown input.
+ * @param {unknown} value Raw value.
+ * @return {number | null} Parsed integer or null.
+ */
+function readNullableInt(value: unknown): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return Math.trunc(value);
+  }
+
+  if (typeof value === "string") {
+    const parsed = Number.parseInt(value.trim(), 10);
+    return Number.isNaN(parsed) ? null : parsed;
+  }
+
+  return null;
+}
+
+/**
+ * Reads a boolean from one of several possible keys.
+ * @param {Record<string, unknown>} data Source data.
+ * @param {string[]} keys Candidate keys.
+ * @return {boolean} Parsed boolean or false.
+ */
+function readBool(data: Record<string, unknown>, keys: string[]): boolean {
+  for (const key of keys) {
+    const value = data[key];
+
+    if (typeof value === "boolean") {
+      return value;
+    }
+
+    if (typeof value === "number") {
+      return value === 1;
+    }
+
+    if (typeof value === "string") {
+      const normalized = value.trim().toLowerCase();
+      if (normalized === "true" || normalized === "1") {
+        return true;
+      }
+      if (normalized === "false" || normalized === "0") {
+        return false;
+      }
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Checks whether a value is a JSON-like object.
+ * @param {unknown} value Raw value.
+ * @return {value is Record<string, unknown>} True when object-like.
+ */
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+/**
+ * Returns unique values while preserving insertion order.
+ * @param {T[]} values Input values.
+ * @return {T[]} Unique values.
+ */
+function uniqueValues<T>(values: T[]): T[] {
+  return Array.from(new Set(values));
+}
+
+/**
+ * Splits an array into fixed-size chunks.
+ * @param {T[]} values Input values.
+ * @param {number} size Max chunk size.
+ * @return {T[][]} Chunked values.
+ */
+function chunkArray<T>(values: T[], size: number): T[][] {
+  const chunks: T[][] = [];
+  for (let index = 0; index < values.length; index += size) {
+    chunks.push(values.slice(index, index + size));
+  }
+  return chunks;
+}
+
+/**
+ * Checks whether an FCM error means that the token should be removed.
+ * @param {string} code Firebase Admin error code.
+ * @return {boolean} True when token is invalid.
+ */
+function isInvalidFcmTokenError(code: string): boolean {
+  return code === "messaging/registration-token-not-registered" ||
+    code === "messaging/invalid-registration-token";
 }
