@@ -37,13 +37,23 @@ class MainActivity : FlutterActivity() {
                     val body = call.argument<String>(ARG_BODY)
                         ?: DEFAULT_ALERT_BODY
                     val serverId = call.argument<String>(ARG_SERVER_ID)
+                    val ruleType = call.argument<String>(ARG_RULE_TYPE)
+                    val alertId = call.argument<String>(ARG_ALERT_ID)
 
                     if (serverId.isNullOrBlank()) {
                         result.success(statusResult(STATUS_MISSING_SERVER_ID))
                         return@setMethodCallHandler
                     }
 
-                    result.success(showAlertNotification(title, body, serverId))
+                    result.success(
+                        showAlertNotification(
+                            title = title,
+                            body = body,
+                            serverId = serverId,
+                            ruleType = ruleType,
+                            alertId = alertId,
+                        ),
+                    )
                 }
                 else -> result.notImplemented()
             }
@@ -71,16 +81,26 @@ class MainActivity : FlutterActivity() {
         title: String,
         body: String,
         serverId: String,
+        ruleType: String?,
+        alertId: String?,
     ): Map<String, String> {
         if (!hasNotificationPermission()) {
             return statusResult(STATUS_PERMISSION_DENIED)
         }
 
+        val stableAlertId = alertId?.takeIf { it.isNotBlank() }
+            ?: "${serverId}-${System.currentTimeMillis()}"
         val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
             ?: Intent(this, MainActivity::class.java)
+        launchIntent.putExtra(EXTRA_SERVER_ID, serverId)
+        launchIntent.putExtra(EXTRA_RULE_TYPE, ruleType)
+        launchIntent.putExtra(EXTRA_ALERT_ID, stableAlertId)
+        launchIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
+        val notificationId = stableAlertId.hashCode() and Int.MAX_VALUE
         val pendingIntent = PendingIntent.getActivity(
             this,
-            0,
+            notificationId,
             launchIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
@@ -95,9 +115,12 @@ class MainActivity : FlutterActivity() {
             .setContentIntent(pendingIntent)
             .build()
 
-        val notificationId = serverId.hashCode() and Int.MAX_VALUE
-        NotificationManagerCompat.from(this).notify(notificationId, notification)
-        return statusResult(STATUS_SHOWN)
+        return try {
+            NotificationManagerCompat.from(this).notify(notificationId, notification)
+            statusResult(STATUS_SHOWN)
+        } catch (_: SecurityException) {
+            statusResult(STATUS_PERMISSION_DENIED)
+        }
     }
 
     private fun hasNotificationPermission(): Boolean {
@@ -124,11 +147,17 @@ class MainActivity : FlutterActivity() {
         private const val ARG_TITLE = "title"
         private const val ARG_BODY = "body"
         private const val ARG_SERVER_ID = "serverId"
+        private const val ARG_RULE_TYPE = "ruleType"
+        private const val ARG_ALERT_ID = "alertId"
 
         private const val RESULT_STATUS = "status"
         private const val STATUS_SHOWN = "shown"
         private const val STATUS_PERMISSION_DENIED = "permission_denied"
         private const val STATUS_MISSING_SERVER_ID = "missing_server_id"
+
+        private const val EXTRA_SERVER_ID = "asa_server_eye.extra.SERVER_ID"
+        private const val EXTRA_RULE_TYPE = "asa_server_eye.extra.RULE_TYPE"
+        private const val EXTRA_ALERT_ID = "asa_server_eye.extra.ALERT_ID"
 
         private const val ALERT_CHANNEL_ID = "asa_server_eye_alerts"
         private const val ALERT_CHANNEL_NAME = "ASA Server Eye Alerts"
