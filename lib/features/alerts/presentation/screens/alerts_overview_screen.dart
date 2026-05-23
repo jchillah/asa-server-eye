@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/extensions/context_l10n.dart';
+import '../../domain/entities/alert_event.dart';
 import '../../domain/entities/alert_rule.dart';
+import '../controllers/alert_event_mutation_controller.dart';
 import '../controllers/alert_rule_mutation_controller.dart';
 import '../extensions/alert_settings_l10n.dart';
+import '../providers/alert_events_providers.dart';
 import '../providers/alert_rules_providers.dart';
+import '../widgets/alert_event_list_tile.dart';
 import '../widgets/alert_rule_form_sheet.dart';
 import '../widgets/alert_rule_list_tile.dart';
 import '../widgets/alerts_message_body.dart';
@@ -17,10 +21,9 @@ class AlertsOverviewScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userId = ref.watch(currentUserIdProvider);
-    final rulesAsync = ref.watch(userAlertRulesProvider);
-    final mutationState = ref.watch(alertRuleMutationControllerProvider);
-    final isMutating = mutationState.isLoading;
-    final theme = Theme.of(context);
+    final ruleMutationState = ref.watch(alertRuleMutationControllerProvider);
+    final eventMutationState = ref.watch(alertEventMutationControllerProvider);
+    final isMutating = ruleMutationState.isLoading || eventMutationState.isLoading;
 
     ref.listen<AsyncValue<void>>(alertRuleMutationControllerProvider, (
       previous,
@@ -32,95 +35,131 @@ class AlertsOverviewScreen extends ConsumerWidget {
       );
     });
 
-    return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.alertsOverviewTitle)),
-      body: userId == null
-          ? AlertsMessageBody(message: context.l10n.alertRulesRequiresLogin)
-          : AbsorbPointer(
-              absorbing: isMutating,
-              child: rulesAsync.when(
-                data: (rules) {
-                  if (rules.isEmpty) {
-                    return AlertsMessageBody(
-                      message: context.l10n.noUserAlertRulesYet,
-                    );
-                  }
+    ref.listen<AsyncValue<void>>(alertEventMutationControllerProvider, (
+      previous,
+      next,
+    ) {
+      next.whenOrNull(
+        error: (_, _) =>
+            _showSnackBar(context, context.l10n.alertRuleMutationError),
+      );
+    });
 
-                  return ListView.separated(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: rules.length,
-                    separatorBuilder: (_, _) => const SizedBox(height: 12),
-                    itemBuilder: (context, index) {
-                      final rule = rules[index];
-
-                      return Dismissible(
-                        key: ValueKey(rule.id),
-                        direction: DismissDirection.endToStart,
-                        background: _DeleteRuleSwipeBackground(
-                          label: context.l10n.delete,
-                        ),
-                        confirmDismiss: (_) => _confirmDelete(
-                          context: context,
-                          ref: ref,
-                          userId: userId,
-                          rule: rule,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 4,
-                                bottom: 6,
-                              ),
-                              child: Text(
-                                '${rule.serverName} • ${rule.mapName}',
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: theme.colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ),
-                            AlertRuleListTile(
-                              rule: rule,
-                              onEdit: () => _openEditSheet(
-                                context: context,
-                                ref: ref,
-                                userId: userId,
-                                rule: rule,
-                              ),
-                              onDelete: () => _confirmDelete(
-                                context: context,
-                                ref: ref,
-                                userId: userId,
-                                rule: rule,
-                              ),
-                              onEnabledChanged: (value) => _setRuleEnabled(
-                                context: context,
-                                ref: ref,
-                                userId: userId,
-                                rule: rule,
-                                isEnabled: value,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (_, _) => AlertsMessageBody(
-                  message: context.l10n.alertRulesLoadError,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(context.l10n.alertsOverviewTitle),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: context.l10n.alertRulesTabLabel),
+              Tab(text: context.l10n.alertHistoryTabLabel),
+            ],
+          ),
+        ),
+        body: userId == null
+            ? AlertsMessageBody(message: context.l10n.alertRulesRequiresLogin)
+            : AbsorbPointer(
+                absorbing: isMutating,
+                child: TabBarView(
+                  children: [
+                    _AlertRulesTab(userId: userId),
+                    _AlertHistoryTab(userId: userId),
+                  ],
                 ),
               ),
-            ),
+      ),
+    );
+  }
+
+  void _showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+}
+
+class _AlertRulesTab extends ConsumerWidget {
+  const _AlertRulesTab({required this.userId});
+
+  final String userId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final rulesAsync = ref.watch(userAlertRulesProvider);
+    final theme = Theme.of(context);
+
+    return rulesAsync.when(
+      data: (rules) {
+        if (rules.isEmpty) {
+          return AlertsMessageBody(
+            message: context.l10n.noUserAlertRulesYet,
+          );
+        }
+
+        return ListView.separated(
+          padding: const EdgeInsets.all(16),
+          itemCount: rules.length,
+          separatorBuilder: (_, _) => const SizedBox(height: 12),
+          itemBuilder: (context, index) {
+            final rule = rules[index];
+
+            return Dismissible(
+              key: ValueKey('rule-${rule.id}'),
+              direction: DismissDirection.endToStart,
+              background: _DeleteSwipeBackground(label: context.l10n.delete),
+              confirmDismiss: (_) => _confirmDelete(
+                context: context,
+                ref: ref,
+                rule: rule,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4, bottom: 6),
+                    child: Text(
+                      '${rule.serverName} • ${rule.mapName}',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ),
+                  AlertRuleListTile(
+                    rule: rule,
+                    onEdit: () => _openEditSheet(
+                      context: context,
+                      ref: ref,
+                      rule: rule,
+                    ),
+                    onDelete: () => _confirmDelete(
+                      context: context,
+                      ref: ref,
+                      rule: rule,
+                    ),
+                    onEnabledChanged: (value) => _setRuleEnabled(
+                      context: context,
+                      ref: ref,
+                      rule: rule,
+                      isEnabled: value,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (_, _) => AlertsMessageBody(
+        message: context.l10n.alertRulesLoadError,
+      ),
     );
   }
 
   Future<void> _openEditSheet({
     required BuildContext context,
     required WidgetRef ref,
-    required String userId,
     required AlertRule rule,
   }) async {
     final updatedRule = await showModalBottomSheet<AlertRule>(
@@ -142,18 +181,14 @@ class AlertsOverviewScreen extends ConsumerWidget {
         .updateRule(updatedRule);
     if (!context.mounted) return;
 
-    if (_mutationWasSuccessful(ref)) {
-      _showMutationSuccessSnackBar(
-        context: context,
-        message: context.l10n.alertRuleUpdated,
-      );
+    if (_ruleMutationWasSuccessful(ref)) {
+      _showSnackBar(context, context.l10n.alertRuleUpdated);
     }
   }
 
   Future<void> _setRuleEnabled({
     required BuildContext context,
     required WidgetRef ref,
-    required String userId,
     required AlertRule rule,
     required bool isEnabled,
   }) async {
@@ -162,18 +197,14 @@ class AlertsOverviewScreen extends ConsumerWidget {
         .setRuleEnabled(userId: userId, ruleId: rule.id, isEnabled: isEnabled);
     if (!context.mounted) return;
 
-    if (_mutationWasSuccessful(ref)) {
-      _showMutationSuccessSnackBar(
-        context: context,
-        message: context.l10n.alertRuleUpdated,
-      );
+    if (_ruleMutationWasSuccessful(ref)) {
+      _showSnackBar(context, context.l10n.alertRuleUpdated);
     }
   }
 
   Future<bool> _confirmDelete({
     required BuildContext context,
     required WidgetRef ref,
-    required String userId,
     required AlertRule rule,
   }) async {
     final shouldDelete = await showDialog<bool>(
@@ -203,24 +234,14 @@ class AlertsOverviewScreen extends ConsumerWidget {
         .deleteRule(userId: userId, ruleId: rule.id);
     if (!context.mounted) return false;
 
-    if (!_mutationWasSuccessful(ref)) return false;
+    if (!_ruleMutationWasSuccessful(ref)) return false;
 
-    _showMutationSuccessSnackBar(
-      context: context,
-      message: context.l10n.alertRuleDeleted,
-    );
+    _showSnackBar(context, context.l10n.alertRuleDeleted);
     return true;
   }
 
-  bool _mutationWasSuccessful(WidgetRef ref) {
+  bool _ruleMutationWasSuccessful(WidgetRef ref) {
     return !ref.read(alertRuleMutationControllerProvider).hasError;
-  }
-
-  void _showMutationSuccessSnackBar({
-    required BuildContext context,
-    required String message,
-  }) {
-    _showSnackBar(context, message);
   }
 
   void _showSnackBar(BuildContext context, String message) {
@@ -230,8 +251,128 @@ class AlertsOverviewScreen extends ConsumerWidget {
   }
 }
 
-class _DeleteRuleSwipeBackground extends StatelessWidget {
-  const _DeleteRuleSwipeBackground({required this.label});
+class _AlertHistoryTab extends ConsumerWidget {
+  const _AlertHistoryTab({required this.userId});
+
+  final String userId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final eventsAsync = ref.watch(userAlertEventsProvider);
+
+    return eventsAsync.when(
+      data: (events) {
+        if (events.isEmpty) {
+          return AlertsMessageBody(message: context.l10n.noAlertEventsYet);
+        }
+
+        return ListView.separated(
+          padding: const EdgeInsets.all(16),
+          itemCount: events.length,
+          separatorBuilder: (_, _) => const SizedBox(height: 12),
+          itemBuilder: (context, index) {
+            final event = events[index];
+
+            return Dismissible(
+              key: ValueKey('event-${event.id}'),
+              direction: DismissDirection.endToStart,
+              background: _DeleteSwipeBackground(label: context.l10n.delete),
+              confirmDismiss: (_) => _deleteEvent(
+                context: context,
+                ref: ref,
+                event: event,
+              ),
+              child: AlertEventListTile(
+                event: event,
+                onDelete: () => _deleteEvent(
+                  context: context,
+                  ref: ref,
+                  event: event,
+                ),
+                onDeleteServerHistory: () => _deleteServerHistory(
+                  context: context,
+                  ref: ref,
+                  event: event,
+                ),
+              ),
+            );
+          },
+        );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (_, _) => AlertsMessageBody(
+        message: context.l10n.alertEventsLoadError,
+      ),
+    );
+  }
+
+  Future<bool> _deleteEvent({
+    required BuildContext context,
+    required WidgetRef ref,
+    required AlertEvent event,
+  }) async {
+    await ref.read(alertEventMutationControllerProvider.notifier).deleteEvent(
+          userId: userId,
+          eventId: event.id,
+        );
+    if (!context.mounted) return false;
+
+    if (!_eventMutationWasSuccessful(ref)) return false;
+
+    _showSnackBar(context, context.l10n.alertEventDeleted);
+    return true;
+  }
+
+  Future<void> _deleteServerHistory({
+    required BuildContext context,
+    required WidgetRef ref,
+    required AlertEvent event,
+  }) async {
+    final shouldDelete = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(context.l10n.deleteServerAlertEvents),
+          content: Text(context.l10n.deleteServerAlertEventsQuestion),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(context.l10n.cancel),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(context.l10n.delete),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (shouldDelete != true || !context.mounted) return;
+
+    await ref
+        .read(alertEventMutationControllerProvider.notifier)
+        .deleteEventsForServer(userId: userId, serverId: event.serverId);
+    if (!context.mounted) return;
+
+    if (_eventMutationWasSuccessful(ref)) {
+      _showSnackBar(context, context.l10n.serverAlertEventsDeleted);
+    }
+  }
+
+  bool _eventMutationWasSuccessful(WidgetRef ref) {
+    return !ref.read(alertEventMutationControllerProvider).hasError;
+  }
+
+  void _showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+}
+
+class _DeleteSwipeBackground extends StatelessWidget {
+  const _DeleteSwipeBackground({required this.label});
 
   final String label;
 
