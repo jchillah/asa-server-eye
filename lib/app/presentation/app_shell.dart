@@ -2,7 +2,6 @@
 import 'dart:async';
 
 import 'package:asa_server_eye/core/extensions/context_l10n.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -63,9 +62,9 @@ class AppShell extends ConsumerWidget {
 
       final message = _alertEventMessage(context, next);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
 
       unawaited(
         _showLocalAlertNotification(
