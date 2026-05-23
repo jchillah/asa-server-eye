@@ -31,7 +31,9 @@ export const evaluateAlertRulesAndSendNotifications = onSchedule(
     const currentServers = await fetchOfficialServerList();
 
     if (currentServers === null) {
-      logger.warn("Skipping alert evaluation because server data is unavailable.");
+      logger.warn(
+        "Skipping alert evaluation because server data is unavailable.",
+      );
       return;
     }
 
