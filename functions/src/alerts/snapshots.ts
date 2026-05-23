@@ -1,0 +1,135 @@
+import { FieldValue } from "firebase-admin/firestore";
+
+import {
+  FIRESTORE_GETALL_CHUNK_SIZE,
+  SERVER_ALERT_SNAPSHOTS_COLLECTION,
+} from "../config";
+import { db } from "../firebase";
+import { chunkArray } from "../utils/arrays";
+import { runBatchedWrites } from "../utils/firestore-batch";
+import { hashValue } from "../utils/hash";
+import { parseStoredServerSnapshot } from "./server-parsing";
+import { ServerSnapshot, SnapshotWrite } from "./types";
+
+type SnapshotWriteEntry = {
+  ref: FirebaseFirestore.DocumentReference;
+  write: SnapshotWrite;
+};
+
+/**
+ * Returns a deterministic Firestore document ref for a server snapshot.
+ * @param {string} serverId Stable server id.
+ * @return {FirebaseFirestore.DocumentReference} Snapshot document ref.
+ */
+export function serverSnapshotRef(
+  serverId: string,
+): FirebaseFirestore.DocumentReference {
+  return db
+    .collection(SERVER_ALERT_SNAPSHOTS_COLLECTION)
+    .doc(hashValue(serverId));
+}
+
+/**
+ * Loads the previous known server snapshots for all tracked server ids.
+ * @param {string[]} serverIds Stable server ids.
+ * @return {Promise<Map<string, ServerSnapshot>>} Previous snapshots.
+ */
+export async function fetchPreviousServerSnapshots(
+  serverIds: string[],
+): Promise<Map<string, ServerSnapshot>> {
+  const result = new Map<string, ServerSnapshot>();
+
+  for (const chunk of chunkArray(serverIds, FIRESTORE_GETALL_CHUNK_SIZE)) {
+    const refs = chunk.map((serverId) => serverSnapshotRef(serverId));
+    const snapshots = await db.getAll(...refs);
+
+    for (const snapshot of snapshots) {
+      const data = snapshot.data();
+      if (!data) {
+        continue;
+      }
+
+      const server = parseStoredServerSnapshot(data);
+      if (server) {
+        result.set(server.id, server);
+      }
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Persists changed snapshots for all servers that have alert rules.
+ * @param {string[]} serverIds Stable server ids.
+ * @param {Map<string, ServerSnapshot>} currentServers Current server state.
+ * @param {Map<string, ServerSnapshot>} previousSnapshots Previous server state.
+ */
+export async function persistServerSnapshots(
+  serverIds: string[],
+  currentServers: Map<string, ServerSnapshot>,
+  previousSnapshots: Map<string, ServerSnapshot>,
+): Promise<void> {
+  const entries = serverIds.flatMap((serverId): SnapshotWriteEntry[] => {
+    const server = currentServers.get(serverId);
+    const previous = previousSnapshots.get(serverId) ?? null;
+
+    if (server && snapshotsAreEqual(previous, server)) {
+      return [];
+    }
+
+    if (!server && previous?.exists === false) {
+      return [];
+    }
+
+    const ref = serverSnapshotRef(serverId);
+    const write: SnapshotWrite = server ?
+      {
+        data: {
+          ...server,
+          updatedAt: FieldValue.serverTimestamp(),
+        },
+        merge: false,
+      } :
+      {
+        data: {
+          id: serverId,
+          exists: false,
+          updatedAt: FieldValue.serverTimestamp(),
+        },
+        merge: true,
+      };
+
+    return [{ ref, write }];
+  });
+
+  if (entries.length === 0) {
+    return;
+  }
+
+  await runBatchedWrites(
+    entries,
+    (batch, { ref, write }: SnapshotWriteEntry) => {
+      if (write.merge) {
+        batch.set(ref, write.data, { merge: true });
+        return;
+      }
+
+      batch.set(ref, write.data);
+    },
+  );
+}
+
+function snapshotsAreEqual(
+  previous: ServerSnapshot | null,
+  current: ServerSnapshot,
+): boolean {
+  return previous !== null &&
+    previous.exists === current.exists &&
+    previous.id === current.id &&
+    previous.name === current.name &&
+    previous.mapName === current.mapName &&
+    previous.players === current.players &&
+    previous.maxPlayers === current.maxPlayers &&
+    previous.official === current.official;
+}
