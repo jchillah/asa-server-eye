@@ -53,13 +53,11 @@ export async function sendAlertNotifications(
 
         const aggregatedInvalidTokenRefs:
           FirebaseFirestore.DocumentReference[] = [];
-        const seenInvalidTokenPaths = new Set<string>();
 
         await sendAggregatedNotificationsToTokens(
           userTriggers,
           tokens,
           aggregatedInvalidTokenRefs,
-          seenInvalidTokenPaths,
         );
 
         if (aggregatedInvalidTokenRefs.length > 0) {
@@ -91,13 +89,11 @@ function groupTriggersByUser(
  * @param {FcmTokenRecord[]} tokenRecords User token records.
  * @param {FirebaseFirestore.DocumentReference[]} aggregatedInvalidTokenRefs
  *   Shared invalid-token accumulator for this user.
- * @param {Set<string>} seenInvalidTokenPaths Paths already queued for removal.
  */
 async function sendAggregatedNotificationsToTokens(
   triggers: AlertTrigger[],
   tokenRecords: FcmTokenRecord[],
   aggregatedInvalidTokenRefs: FirebaseFirestore.DocumentReference[],
-  seenInvalidTokenPaths: Set<string>,
 ): Promise<void> {
   if (triggers.length === 0) {
     return;
@@ -118,7 +114,6 @@ async function sendAggregatedNotificationsToTokens(
         body,
         chunk,
         aggregatedInvalidTokenRefs,
-        seenInvalidTokenPaths,
       )),
     );
   }
@@ -132,7 +127,6 @@ async function sendAggregatedNotificationsToTokens(
  * @param {FcmTokenRecord[]} chunk Token records for this multicast.
  * @param {FirebaseFirestore.DocumentReference[]} aggregatedInvalidTokenRefs
  *   Shared invalid-token accumulator.
- * @param {Set<string>} seenInvalidTokenPaths Paths already queued for removal.
  */
 async function sendMulticastChunk(
   triggers: AlertTrigger[],
@@ -140,7 +134,6 @@ async function sendMulticastChunk(
   body: string,
   chunk: FcmTokenRecord[],
   aggregatedInvalidTokenRefs: FirebaseFirestore.DocumentReference[],
-  seenInvalidTokenPaths: Set<string>,
 ): Promise<void> {
   const response = await getMessaging().sendEachForMulticast({
     tokens: chunk.map((record) => record.token),
@@ -178,11 +171,7 @@ async function sendMulticastChunk(
     if (isInvalidFcmTokenError(errorCode)) {
       const tokenRecord = chunk[index];
       if (tokenRecord) {
-        addInvalidTokenRef(
-          aggregatedInvalidTokenRefs,
-          tokenRecord.ref,
-          seenInvalidTokenPaths,
-        );
+        aggregatedInvalidTokenRefs.push(tokenRecord.ref);
       }
     }
   });
@@ -253,25 +242,6 @@ async function hasAlertAccess(userId: string): Promise<boolean> {
   ]);
 
   return isAlertAccessLevel(accessLevel);
-}
-
-/**
- * Queues an invalid FCM token ref once per path.
- * @param {FirebaseFirestore.DocumentReference[]} aggregated Ref accumulator.
- * @param {FirebaseFirestore.DocumentReference} ref Token document ref.
- * @param {Set<string>} seenInvalidTokenPaths Paths already queued.
- */
-function addInvalidTokenRef(
-  aggregated: FirebaseFirestore.DocumentReference[],
-  ref: FirebaseFirestore.DocumentReference,
-  seenInvalidTokenPaths: Set<string>,
-): void {
-  if (seenInvalidTokenPaths.has(ref.path)) {
-    return;
-  }
-
-  seenInvalidTokenPaths.add(ref.path);
-  aggregated.push(ref);
 }
 
 /**
