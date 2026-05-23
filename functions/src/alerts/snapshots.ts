@@ -60,16 +60,28 @@ export async function fetchPreviousServerSnapshots(
 }
 
 /**
- * Persists current snapshots for all servers that have alert rules.
+ * Persists changed snapshots for all servers that have alert rules.
  * @param {string[]} serverIds Stable server ids.
  * @param {Map<string, ServerSnapshot>} currentServers Current server state.
+ * @param {Map<string, ServerSnapshot>} previousSnapshots Previous server state.
  */
 export async function persistServerSnapshots(
   serverIds: string[],
   currentServers: Map<string, ServerSnapshot>,
+  previousSnapshots: Map<string, ServerSnapshot>,
 ): Promise<void> {
-  const entries = serverIds.map((serverId) => {
+  const entries = serverIds.flatMap((serverId): SnapshotWriteEntry[] => {
     const server = currentServers.get(serverId);
+    const previous = previousSnapshots.get(serverId) ?? null;
+
+    if (server && snapshotsAreEqual(previous, server)) {
+      return [];
+    }
+
+    if (!server && previous?.exists === false) {
+      return [];
+    }
+
     const ref = serverSnapshotRef(serverId);
     const write: SnapshotWrite = server ?
       {
@@ -88,8 +100,12 @@ export async function persistServerSnapshots(
         merge: true,
       };
 
-    return { ref, write };
+    return [{ ref, write }];
   });
+
+  if (entries.length === 0) {
+    return;
+  }
 
   await runBatchedWrites(
     entries,
@@ -102,4 +118,18 @@ export async function persistServerSnapshots(
       batch.set(ref, write.data);
     },
   );
+}
+
+function snapshotsAreEqual(
+  previous: ServerSnapshot | null,
+  current: ServerSnapshot,
+): boolean {
+  return previous !== null &&
+    previous.exists === current.exists &&
+    previous.id === current.id &&
+    previous.name === current.name &&
+    previous.mapName === current.mapName &&
+    previous.players === current.players &&
+    previous.maxPlayers === current.maxPlayers &&
+    previous.official === current.official;
 }
