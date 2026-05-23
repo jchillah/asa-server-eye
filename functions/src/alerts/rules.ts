@@ -2,6 +2,7 @@ import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import * as logger from "firebase-functions/logger";
 
 import { ALERT_RULES_QUERY_LIMIT } from "../config";
+import { ALERT_RULE_FIELD, COLLECTION, USER_FIELD } from "../constants/firestore";
 import { db } from "../firebase";
 import {
   readBool,
@@ -25,8 +26,8 @@ export async function fetchActiveAlertRules(): Promise<AlertRule[]> {
 
   while (hasMorePages) {
     let query: FirebaseFirestore.Query = db
-      .collectionGroup("alert_rules")
-      .where("isEnabled", "==", true)
+      .collectionGroup(COLLECTION.ALERT_RULES)
+      .where(ALERT_RULE_FIELD.IS_ENABLED, "==", true)
       .limit(ALERT_RULES_QUERY_LIMIT);
 
     if (lastDocument) {
@@ -75,7 +76,7 @@ export function parseAlertRule(
   doc: FirebaseFirestore.QueryDocumentSnapshot,
 ): AlertRule | null {
   const data = doc.data();
-  const ruleType = readString(data, ["ruleType"]);
+  const ruleType = readString(data, [ALERT_RULE_FIELD.RULE_TYPE]);
 
   if (!isAlertRuleType(ruleType)) {
     logger.warn("Skipping alert rule with invalid type.", {
@@ -85,8 +86,8 @@ export function parseAlertRule(
     return null;
   }
 
-  const userId = readString(data, ["userId"]);
-  const serverId = readString(data, ["serverId"]);
+  const userId = readString(data, [ALERT_RULE_FIELD.USER_ID]);
+  const serverId = readString(data, [ALERT_RULE_FIELD.SERVER_ID]);
 
   if (!userId || !serverId) {
     logger.warn("Skipping alert rule with missing userId/serverId.", {
@@ -100,13 +101,17 @@ export function parseAlertRule(
     ref: doc.ref,
     userId,
     serverId,
-    serverName: readString(data, ["serverName"], "Unknown Server"),
-    mapName: readString(data, ["mapName"], "Unknown Map"),
+    serverName: readString(
+      data,
+      [ALERT_RULE_FIELD.SERVER_NAME],
+      "Unknown Server",
+    ),
+    mapName: readString(data, [ALERT_RULE_FIELD.MAP_NAME], "Unknown Map"),
     ruleType,
-    isEnabled: readBool(data, ["isEnabled"]),
-    threshold: readNullableInt(data["threshold"]),
-    lastTriggeredAt: data["lastTriggeredAt"] instanceof Timestamp ?
-      data["lastTriggeredAt"] :
+    isEnabled: readBool(data, [ALERT_RULE_FIELD.IS_ENABLED]),
+    threshold: readNullableInt(data[ALERT_RULE_FIELD.THRESHOLD]),
+    lastTriggeredAt: data[ALERT_RULE_FIELD.LAST_TRIGGERED_AT] instanceof Timestamp ?
+      data[ALERT_RULE_FIELD.LAST_TRIGGERED_AT] :
       null,
   };
 }
@@ -157,8 +162,8 @@ export async function markTriggeredRules(
     triggers.map((trigger) => trigger.rule.ref),
     (batch, ref) => {
       batch.update(ref, {
-        lastTriggeredAt: FieldValue.serverTimestamp(),
-        updatedAt: FieldValue.serverTimestamp(),
+        [ALERT_RULE_FIELD.LAST_TRIGGERED_AT]: FieldValue.serverTimestamp(),
+        [USER_FIELD.UPDATED_AT]: FieldValue.serverTimestamp(),
       });
     },
   );
