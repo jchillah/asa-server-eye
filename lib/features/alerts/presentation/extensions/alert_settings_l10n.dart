@@ -36,6 +36,38 @@ extension AlertSettingsL10n on AppLocalizations {
     }
   }
 
+  String get alertRulesTabLabel {
+    switch (_languageCode) {
+      case 'de':
+        return 'Regeln';
+      case 'es':
+        return 'Reglas';
+      case 'fr':
+        return 'Règles';
+      case 'zh':
+        return '规则';
+      case 'en':
+      default:
+        return 'Rules';
+    }
+  }
+
+  String get alertHistoryTabLabel {
+    switch (_languageCode) {
+      case 'de':
+        return 'History';
+      case 'es':
+        return 'Historial';
+      case 'fr':
+        return 'Historique';
+      case 'zh':
+        return '历史';
+      case 'en':
+      default:
+        return 'History';
+    }
+  }
+
   String get noUserAlertRulesYet {
     switch (_languageCode) {
       case 'de':
@@ -49,6 +81,102 @@ extension AlertSettingsL10n on AppLocalizations {
       case 'en':
       default:
         return 'You have not created any alert rules yet.';
+    }
+  }
+
+  String get noAlertEventsYet {
+    switch (_languageCode) {
+      case 'de':
+        return 'Noch keine Alert-Benachrichtigungen vorhanden.';
+      case 'es':
+        return 'Aún no hay notificaciones de alerta.';
+      case 'fr':
+        return 'Aucune notification d’alerte pour le moment.';
+      case 'zh':
+        return '还没有提醒通知。';
+      case 'en':
+      default:
+        return 'No alert notifications yet.';
+    }
+  }
+
+  String get alertEventsLoadError {
+    switch (_languageCode) {
+      case 'de':
+        return 'Alert-Benachrichtigungen konnten nicht geladen werden.';
+      case 'es':
+        return 'No se pudieron cargar las notificaciones de alerta.';
+      case 'fr':
+        return 'Impossible de charger les notifications d’alerte.';
+      case 'zh':
+        return '无法加载提醒通知。';
+      case 'en':
+      default:
+        return 'Alert notifications could not be loaded.';
+    }
+  }
+
+  String get alertEventDeleted {
+    switch (_languageCode) {
+      case 'de':
+        return 'Alert-Benachrichtigung gelöscht.';
+      case 'es':
+        return 'Notificación de alerta eliminada.';
+      case 'fr':
+        return 'Notification d’alerte supprimée.';
+      case 'zh':
+        return '提醒通知已删除。';
+      case 'en':
+      default:
+        return 'Alert notification deleted.';
+    }
+  }
+
+  String get deleteServerAlertEvents {
+    switch (_languageCode) {
+      case 'de':
+        return 'Server-History löschen';
+      case 'es':
+        return 'Eliminar historial del servidor';
+      case 'fr':
+        return 'Supprimer l’historique du serveur';
+      case 'zh':
+        return '删除服务器历史';
+      case 'en':
+      default:
+        return 'Delete server history';
+    }
+  }
+
+  String get deleteServerAlertEventsQuestion {
+    switch (_languageCode) {
+      case 'de':
+        return 'Möchtest du alle Alert-Benachrichtigungen für diesen Server löschen?';
+      case 'es':
+        return '¿Quieres eliminar todas las notificaciones de alerta de este servidor?';
+      case 'fr':
+        return 'Voulez-vous supprimer toutes les notifications d’alerte pour ce serveur ?';
+      case 'zh':
+        return '要删除此服务器的所有提醒通知吗？';
+      case 'en':
+      default:
+        return 'Do you want to delete all alert notifications for this server?';
+    }
+  }
+
+  String get serverAlertEventsDeleted {
+    switch (_languageCode) {
+      case 'de':
+        return 'Server-History gelöscht.';
+      case 'es':
+        return 'Historial del servidor eliminado.';
+      case 'fr':
+        return 'Historique du serveur supprimé.';
+      case 'zh':
+        return '服务器历史已删除。';
+      case 'en':
+      default:
+        return 'Server history deleted.';
     }
   }
 
