@@ -5,6 +5,7 @@ import 'package:asa_server_eye/core/extensions/context_l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/alerts/domain/entities/alert_rule_type.dart';
 import '../../features/alerts/domain/entities/alert_trigger_event.dart';
 import '../../features/alerts/presentation/controllers/alert_evaluation_controller.dart';
 import '../../features/alerts/presentation/extensions/alert_rule_type_l10n.dart';
