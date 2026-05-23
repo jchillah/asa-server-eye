@@ -1,13 +1,13 @@
-import { getMessaging } from "firebase-admin/messaging";
 import * as logger from "firebase-functions/logger";
 
 import { isAlertAccessLevel } from "../constants/access-levels";
+import { COLLECTION, USER_FIELD } from "../constants/firestore";
 import {
   FCM_MULTICAST_CHUNK_CONCURRENCY,
   FCM_MULTICAST_LIMIT,
   NOTIFICATION_USER_CONCURRENCY,
 } from "../config";
-import { db } from "../firebase";
+import { db, messaging } from "../firebase";
 import { chunkArray } from "../utils/arrays";
 import { removeInvalidTokens } from "../utils/firestore-batch";
 import { readString } from "../utils/parsing";
@@ -135,7 +135,7 @@ async function sendMulticastChunk(
   chunk: FcmTokenRecord[],
   aggregatedInvalidTokenRefs: FirebaseFirestore.DocumentReference[],
 ): Promise<void> {
-  const response = await getMessaging().sendEachForMulticast({
+  const response = await messaging.sendEachForMulticast({
     tokens: chunk.map((record) => record.token),
     notification: {
       title: "ASA Server Eye Alert",
@@ -200,9 +200,9 @@ async function getCachedUserTokens(
   }
 
   const snapshot = await db
-    .collection("users")
+    .collection(COLLECTION.USERS)
     .doc(userId)
-    .collection("fcm_tokens")
+    .collection(COLLECTION.FCM_TOKENS)
     .get();
 
   const tokens = snapshot.docs
@@ -236,9 +236,9 @@ async function getCachedAlertAccess(
  * @return {Promise<boolean>} Whether alert access is allowed.
  */
 async function hasAlertAccess(userId: string): Promise<boolean> {
-  const userSnapshot = await db.collection("users").doc(userId).get();
+  const userSnapshot = await db.collection(COLLECTION.USERS).doc(userId).get();
   const accessLevel = readString(userSnapshot.data() ?? {}, [
-    "sightingsAccessLevel",
+    USER_FIELD.SIGHTINGS_ACCESS_LEVEL,
   ]);
 
   return isAlertAccessLevel(accessLevel);
