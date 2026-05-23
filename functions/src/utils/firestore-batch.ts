@@ -4,15 +4,12 @@ import { uniqueValues } from "./arrays";
 
 /**
  * Commits Firestore writes in batches of FIRESTORE_WRITE_BATCH_LIMIT.
- * @param {FirebaseFirestore.DocumentReference[]} refs Document refs to write.
+ * @param {T[]} items Items to write.
  * @param {Function} write Callback that enqueues one write on the batch.
  */
-export async function runBatchedWrites(
-  refs: FirebaseFirestore.DocumentReference[],
-  write: (
-    batch: FirebaseFirestore.WriteBatch,
-    ref: FirebaseFirestore.DocumentReference,
-  ) => void,
+export async function runBatchedWrites<T>(
+  items: T[],
+  write: (batch: FirebaseFirestore.WriteBatch, item: T) => void,
 ): Promise<void> {
   let batch = db.batch();
   let operationCount = 0;
@@ -24,8 +21,8 @@ export async function runBatchedWrites(
     operationCount = 0;
   };
 
-  for (const ref of refs) {
-    write(batch, ref);
+  for (const item of items) {
+    write(batch, item);
     operationCount += 1;
 
     if (operationCount >= FIRESTORE_WRITE_BATCH_LIMIT) {
