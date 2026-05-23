@@ -2,7 +2,11 @@ import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import * as logger from "firebase-functions/logger";
 
 import { ALERT_RULES_QUERY_LIMIT } from "../config";
-import { ALERT_RULE_FIELD, COLLECTION, USER_FIELD } from "../constants/firestore";
+import {
+  ALERT_RULE_FIELD,
+  COLLECTION,
+  USER_FIELD,
+} from "../constants/firestore";
 import { db } from "../firebase";
 import {
   readBool,
@@ -96,6 +100,8 @@ export function parseAlertRule(
     return null;
   }
 
+  const lastTriggeredAt = data[ALERT_RULE_FIELD.LAST_TRIGGERED_AT];
+
   return {
     id: doc.id,
     ref: doc.ref,
@@ -110,8 +116,8 @@ export function parseAlertRule(
     ruleType,
     isEnabled: readBool(data, [ALERT_RULE_FIELD.IS_ENABLED]),
     threshold: readNullableInt(data[ALERT_RULE_FIELD.THRESHOLD]),
-    lastTriggeredAt: data[ALERT_RULE_FIELD.LAST_TRIGGERED_AT] instanceof Timestamp ?
-      data[ALERT_RULE_FIELD.LAST_TRIGGERED_AT] :
+    lastTriggeredAt: lastTriggeredAt instanceof Timestamp ?
+      lastTriggeredAt :
       null,
   };
 }
