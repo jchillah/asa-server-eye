@@ -1,8 +1,12 @@
 // app/presentation/app_shell.dart
+import 'dart:async';
+
 import 'package:asa_server_eye/core/extensions/context_l10n.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../features/alerts/domain/entities/alert_rule_type.dart';
 import '../../features/alerts/domain/entities/alert_trigger_event.dart';
 import '../../features/alerts/presentation/controllers/alert_evaluation_controller.dart';
 import '../../features/alerts/presentation/extensions/alert_rule_type_l10n.dart';
@@ -10,6 +14,7 @@ import '../../features/alerts/presentation/providers/alert_rules_providers.dart'
 import '../../features/alerts/presentation/screens/alerts_overview_screen.dart';
 import '../../features/favorites/presentation/screens/favorites_screen.dart';
 import '../../features/notifications/presentation/controllers/fcm_token_registration_controller.dart';
+import '../../features/notifications/presentation/services/local_alert_notification_service.dart';
 import '../../features/servers/presentation/providers/servers_provider.dart';
 import '../../features/servers/presentation/screens/server_list_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
@@ -28,6 +33,9 @@ class AppShell extends ConsumerWidget {
 
     final currentIndex = ref.watch(appShellIndexProvider);
     final accessLevelAsync = ref.watch(sightingsAccessLevelProvider);
+    final localNotificationService = ref.watch(
+      localAlertNotificationServiceProvider,
+    );
 
     ref.listen(serverSyncStateProvider, (previous, next) {
       final syncState = next.valueOrNull;
@@ -53,8 +61,19 @@ class AppShell extends ConsumerWidget {
         return;
       }
 
+      final message = _alertEventMessage(context, next);
+
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(_alertEventMessage(context, next))),
+        SnackBar(content: Text(message)),
+      );
+
+      unawaited(
+        _showLocalAlertNotification(
+          service: localNotificationService,
+          event: next,
+          message: message,
+          title: next.rule.ruleType.localizedLabel(context),
+        ),
       );
     });
 
@@ -128,6 +147,30 @@ class AppShell extends ConsumerWidget {
     );
   }
 
+  Future<void> _showLocalAlertNotification({
+    required LocalAlertNotificationService service,
+    required AlertTriggerEvent event,
+    required String message,
+    required String title,
+  }) async {
+    final result = await service.showAlertNotification(
+      title: title,
+      body: message,
+      serverId: event.rule.serverId,
+      ruleType: event.rule.ruleType.firestoreValue,
+      alertId: _alertId(event),
+    );
+
+    if (result == LocalAlertNotificationResult.shown) {
+      return;
+    }
+
+    debugPrint(
+      'Local alert notification not shown: $result '
+      'for rule ${event.rule.id} on server ${event.rule.serverId}',
+    );
+  }
+
   String _alertEventMessage(BuildContext context, AlertTriggerEvent event) {
     final previousPlayers = event.previousPlayers;
     final currentPlayers = event.currentPlayers;
@@ -137,5 +180,9 @@ class AppShell extends ConsumerWidget {
 
     return '${event.rule.ruleType.localizedLabel(context)}: '
         '${event.serverName} • ${event.mapName}$populationChange';
+  }
+
+  String _alertId(AlertTriggerEvent event) {
+    return '${event.rule.id}-${DateTime.now().microsecondsSinceEpoch}';
   }
 }
