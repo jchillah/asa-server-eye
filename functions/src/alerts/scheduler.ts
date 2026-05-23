@@ -7,6 +7,7 @@ import {
   REGION,
 } from "../config";
 import { uniqueValues } from "../utils/arrays";
+import { persistAlertEvents } from "./events";
 import { sendAlertNotifications } from "./notifications";
 import {
   evaluateAlertTriggers,
@@ -63,6 +64,7 @@ export const evaluateAlertRulesAndSendNotifications = onSchedule(
       return;
     }
 
+    await persistAlertEvents(triggers);
     await sendAlertNotifications(triggers);
     await markTriggeredRules(triggers);
 
