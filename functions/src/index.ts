@@ -22,8 +22,11 @@ const OFFICIAL_SERVER_LIST_URL =
   "https://cdn2.arkdedicated.com/servers/asa/officialserverlist.json";
 const SERVER_ALERT_SNAPSHOTS_COLLECTION = "server_alert_snapshots";
 const DEFAULT_ALERT_COOLDOWN_MINUTES = 5;
-const FIRESTORE_BATCH_LIMIT = 400;
+const FIRESTORE_WRITE_BATCH_LIMIT = 400;
+const FIRESTORE_GETALL_LIMIT = 400;
 const FCM_MULTICAST_LIMIT = 500;
+const ALERT_RULES_QUERY_LIMIT = 5000;
+const NOTIFICATION_USER_CONCURRENCY = 10;
 
 const REGION = process.env.FUNCTION_REGION || DEFAULT_REGION;
 const PACKAGE_NAME = process.env.PLAY_PACKAGE_NAME || DEFAULT_PACKAGE_NAME;
@@ -303,7 +306,14 @@ async function fetchActiveAlertRules(): Promise<AlertRule[]> {
   const snapshot = await db
     .collectionGroup("alert_rules")
     .where("isEnabled", "==", true)
+    .limit(ALERT_RULES_QUERY_LIMIT)
     .get();
+
+  if (snapshot.size >= ALERT_RULES_QUERY_LIMIT) {
+    logger.warn("Alert rule query reached the configured limit.", {
+      limit: ALERT_RULES_QUERY_LIMIT,
+    });
+  }
 
   const rules: AlertRule[] = [];
   for (const doc of snapshot.docs) {
@@ -326,7 +336,7 @@ async function fetchPreviousServerSnapshots(
 ): Promise<Map<string, ServerSnapshot>> {
   const result = new Map<string, ServerSnapshot>();
 
-  for (const chunk of chunkArray(serverIds, FIRESTORE_BATCH_LIMIT)) {
+  for (const chunk of chunkArray(serverIds, FIRESTORE_GETALL_LIMIT)) {
     const refs = chunk.map((serverId) => serverSnapshotRef(serverId));
     const snapshots = await db.getAll(...refs);
 
@@ -390,27 +400,45 @@ async function persistServerSnapshots(
   serverIds: string[],
   currentServers: Map<string, ServerSnapshot>,
 ): Promise<void> {
-  const writes: Array<(batch: FirebaseFirestore.WriteBatch) => void> = [];
+  let batch = db.batch();
+  let operationCount = 0;
+
+  const commitIfNeeded = async () => {
+    if (operationCount >= FIRESTORE_WRITE_BATCH_LIMIT) {
+      await batch.commit();
+      batch = db.batch();
+      operationCount = 0;
+    }
+  };
 
   for (const serverId of serverIds) {
     const server = currentServers.get(serverId);
     const ref = serverSnapshotRef(serverId);
 
     if (server) {
-      writes.push((batch) => batch.set(ref, {
+      batch.set(ref, {
         ...server,
         updatedAt: FieldValue.serverTimestamp(),
-      }));
+      });
     } else {
-      writes.push((batch) => batch.set(ref, {
-        id: serverId,
-        exists: false,
-        updatedAt: FieldValue.serverTimestamp(),
-      }, { merge: true }));
+      batch.set(
+        ref,
+        {
+          id: serverId,
+          exists: false,
+          updatedAt: FieldValue.serverTimestamp(),
+        },
+        { merge: true },
+      );
     }
+
+    operationCount += 1;
+    await commitIfNeeded();
   }
 
-  await commitBatchedWrites(writes);
+  if (operationCount > 0) {
+    await batch.commit();
+  }
 }
 
 /**
@@ -420,23 +448,55 @@ async function persistServerSnapshots(
 async function sendAlertNotifications(triggers: AlertTrigger[]): Promise<void> {
   const tokenCache = new Map<string, FcmTokenRecord[]>();
   const accessCache = new Map<string, boolean>();
+  const triggersByUser = groupTriggersByUser(triggers);
+  const userIds = Array.from(triggersByUser.keys());
+
+  for (
+    const userIdChunk of chunkArray(userIds, NOTIFICATION_USER_CONCURRENCY)
+  ) {
+    await Promise.all(
+      userIdChunk.map(async (userId) => {
+        const userTriggers = triggersByUser.get(userId) ?? [];
+        const hasAccess = await getCachedAlertAccess(userId, accessCache);
+
+        if (!hasAccess) {
+          logger.info("Skipping alerts for user without access.", {
+            userId,
+            triggerCount: userTriggers.length,
+          });
+          return;
+        }
+
+        const tokens = await getCachedUserTokens(userId, tokenCache);
+        if (tokens.length === 0) {
+          logger.info("Skipping alerts because user has no FCM tokens.", {
+            userId,
+            triggerCount: userTriggers.length,
+          });
+          return;
+        }
+
+        for (const trigger of userTriggers) {
+          await sendNotificationToTokens(trigger, tokens);
+        }
+      }),
+    );
+  }
+}
+
+function groupTriggersByUser(
+  triggers: AlertTrigger[],
+): Map<string, AlertTrigger[]> {
+  const grouped = new Map<string, AlertTrigger[]>();
 
   for (const trigger of triggers) {
     const userId = trigger.rule.userId;
-    const hasAccess = await getCachedAlertAccess(userId, accessCache);
-    if (!hasAccess) {
-      logger.info("Skipping alert for user without access.", { userId });
-      continue;
-    }
-
-    const tokens = await getCachedUserTokens(userId, tokenCache);
-    if (tokens.length === 0) {
-      logger.info("Skipping alert because user has no FCM tokens.", { userId });
-      continue;
-    }
-
-    await sendNotificationToTokens(trigger, tokens);
+    const userTriggers = grouped.get(userId) ?? [];
+    userTriggers.push(trigger);
+    grouped.set(userId, userTriggers);
   }
+
+  return grouped;
 }
 
 /**
@@ -444,17 +504,30 @@ async function sendAlertNotifications(triggers: AlertTrigger[]): Promise<void> {
  * @param {AlertTrigger[]} triggers Triggered alert events.
  */
 async function markTriggeredRules(triggers: AlertTrigger[]): Promise<void> {
-  const writes = triggers.map((trigger) => {
-    return (batch: FirebaseFirestore.WriteBatch) => batch.update(
-      trigger.rule.ref,
-      {
-        lastTriggeredAt: FieldValue.serverTimestamp(),
-        updatedAt: FieldValue.serverTimestamp(),
-      },
-    );
-  });
+  let batch = db.batch();
+  let operationCount = 0;
 
-  await commitBatchedWrites(writes);
+  const commitIfNeeded = async () => {
+    if (operationCount >= FIRESTORE_WRITE_BATCH_LIMIT) {
+      await batch.commit();
+      batch = db.batch();
+      operationCount = 0;
+    }
+  };
+
+  for (const trigger of triggers) {
+    batch.update(trigger.rule.ref, {
+      lastTriggeredAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
+    });
+
+    operationCount += 1;
+    await commitIfNeeded();
+  }
+
+  if (operationCount > 0) {
+    await batch.commit();
+  }
 }
 
 /**
@@ -593,30 +666,21 @@ async function removeInvalidTokens(
     return db.doc(path);
   });
 
-  await commitBatchedWrites(
-    uniqueRefs.map((ref) => (batch) => batch.delete(ref)),
-  );
-}
-
-/**
- * Commits Firestore writes in safe chunks below the 500 operation limit.
- * @param {Array<Function>} writes Write callbacks.
- */
-async function commitBatchedWrites(
-  writes: Array<(batch: FirebaseFirestore.WriteBatch) => void>,
-): Promise<void> {
   let batch = db.batch();
   let operationCount = 0;
 
-  for (const write of writes) {
-    write(batch);
-    operationCount += 1;
-
-    if (operationCount >= FIRESTORE_BATCH_LIMIT) {
+  const commitIfNeeded = async () => {
+    if (operationCount >= FIRESTORE_WRITE_BATCH_LIMIT) {
       await batch.commit();
       batch = db.batch();
       operationCount = 0;
     }
+  };
+
+  for (const ref of uniqueRefs) {
+    batch.delete(ref);
+    operationCount += 1;
+    await commitIfNeeded();
   }
 
   if (operationCount > 0) {
