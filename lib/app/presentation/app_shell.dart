@@ -31,6 +31,9 @@ class AppShell extends ConsumerWidget {
 
     final currentIndex = ref.watch(appShellIndexProvider);
     final accessLevelAsync = ref.watch(sightingsAccessLevelProvider);
+    final localNotificationService = ref.watch(
+      localAlertNotificationServiceProvider,
+    );
 
     ref.listen(serverSyncStateProvider, (previous, next) {
       final syncState = next.valueOrNull;
@@ -63,7 +66,7 @@ class AppShell extends ConsumerWidget {
       );
 
       unawaited(
-        LocalAlertNotificationService().showAlertNotification(
+        localNotificationService.showAlertNotification(
           title: next.rule.ruleType.localizedLabel(context),
           body: message,
           serverId: next.rule.serverId,
