@@ -12,7 +12,14 @@ class LocalAlertNotificationService {
   const LocalAlertNotificationService();
 
   static const String channelName = 'asa_server_eye/local_notifications';
+
   static const String _methodShowAlertNotification = 'showAlertNotification';
+
+  static const String _argTitle = 'title';
+  static const String _argBody = 'body';
+  static const String _argServerId = 'serverId';
+  static const String _argRuleType = 'ruleType';
+  static const String _argAlertId = 'alertId';
 
   static const String _statusKey = 'status';
   static const String _statusShown = 'shown';
@@ -25,6 +32,8 @@ class LocalAlertNotificationService {
     required String title,
     required String body,
     required String serverId,
+    required String ruleType,
+    required String alertId,
   }) async {
     if (serverId.trim().isEmpty) {
       return LocalAlertNotificationResult.missingServerId;
@@ -34,9 +43,11 @@ class LocalAlertNotificationService {
       final result = await _channel.invokeMapMethod<String, String>(
         _methodShowAlertNotification,
         {
-          'title': title,
-          'body': body,
-          'serverId': serverId,
+          _argTitle: title,
+          _argBody: body,
+          _argServerId: serverId,
+          _argRuleType: ruleType,
+          _argAlertId: alertId,
         },
       );
 
