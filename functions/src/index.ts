@@ -646,6 +646,7 @@ async function getCachedAlertAccess(
  * @param {string} userId User id.
  * @return {Promise<boolean>} Whether alert access is allowed.
  */
+
 async function hasAlertAccess(userId: string): Promise<boolean> {
   const userSnapshot = await db.collection("users").doc(userId).get();
   const accessLevel = readString(userSnapshot.data() ?? {}, [
