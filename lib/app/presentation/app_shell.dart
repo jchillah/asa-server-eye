@@ -70,6 +70,8 @@ class AppShell extends ConsumerWidget {
           title: next.rule.ruleType.localizedLabel(context),
           body: message,
           serverId: next.rule.serverId,
+          ruleType: next.rule.ruleType.firestoreValue,
+          alertId: _alertId(next),
         ),
       );
     });
@@ -153,5 +155,9 @@ class AppShell extends ConsumerWidget {
 
     return '${event.rule.ruleType.localizedLabel(context)}: '
         '${event.serverName} • ${event.mapName}$populationChange';
+  }
+
+  String _alertId(AlertTriggerEvent event) {
+    return '${event.rule.id}-${DateTime.now().microsecondsSinceEpoch}';
   }
 }
