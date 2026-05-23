@@ -2,8 +2,9 @@ import * as logger from "firebase-functions/logger";
 
 export const DEFAULT_REGION = "europe-west3";
 export const DEFAULT_PACKAGE_NAME = "com.jchillah.asaservereye";
-export const OFFICIAL_SERVER_LIST_URL =
+export const DEFAULT_OFFICIAL_SERVER_LIST_URL =
   "https://cdn2.arkdedicated.com/servers/asa/officialserverlist.json";
+export const OFFICIAL_SERVER_LIST_URL = readOfficialServerListUrl();
 export const SERVER_ALERT_SNAPSHOTS_COLLECTION = "server_alert_snapshots";
 export const DEFAULT_ALERT_COOLDOWN_MINUTES = 5;
 export const FIRESTORE_WRITE_BATCH_LIMIT = 400;
@@ -15,6 +16,17 @@ export const NOTIFICATION_USER_CONCURRENCY = 10;
 export const REGION = process.env.FUNCTION_REGION || DEFAULT_REGION;
 export const PACKAGE_NAME =
   process.env.PLAY_PACKAGE_NAME || DEFAULT_PACKAGE_NAME;
+
+function readOfficialServerListUrl(): string {
+  const fromEnv = process.env.ASA_SERVER_LIST_URL?.trim() ||
+    process.env.OFFICIAL_SERVER_LIST_URL?.trim();
+
+  if (fromEnv && fromEnv.length > 0) {
+    return fromEnv;
+  }
+
+  return DEFAULT_OFFICIAL_SERVER_LIST_URL;
+}
 
 function readAlertCooldownMinutes(): number {
   const rawValue = process.env.ALERT_COOLDOWN_MINUTES;

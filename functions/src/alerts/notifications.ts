@@ -104,6 +104,8 @@ async function sendAggregatedNotificationsToTokens(
   const primaryTrigger = triggers[0];
   const body = buildAggregatedAlertBody(triggers);
 
+  // Send token chunks sequentially to stay within FCM rate limits and avoid
+  // burst failures when a user has many registered devices.
   for (const chunk of chunkArray(tokenRecords, FCM_MULTICAST_LIMIT)) {
     const response = await getMessaging().sendEachForMulticast({
       tokens: chunk.map((record) => record.token),

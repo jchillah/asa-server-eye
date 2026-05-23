@@ -16,24 +16,28 @@ export async function runBatchedWrites(
 ): Promise<void> {
   let batch = db.batch();
   let operationCount = 0;
+  const pendingCommits: Promise<FirebaseFirestore.WriteResult[]>[] = [];
 
-  const commitIfNeeded = async () => {
-    if (operationCount >= FIRESTORE_WRITE_BATCH_LIMIT) {
-      await batch.commit();
-      batch = db.batch();
-      operationCount = 0;
-    }
+  const enqueueCommit = () => {
+    pendingCommits.push(batch.commit());
+    batch = db.batch();
+    operationCount = 0;
   };
 
   for (const ref of refs) {
     write(batch, ref);
     operationCount += 1;
-    await commitIfNeeded();
+
+    if (operationCount >= FIRESTORE_WRITE_BATCH_LIMIT) {
+      enqueueCommit();
+    }
   }
 
   if (operationCount > 0) {
-    await batch.commit();
+    pendingCommits.push(batch.commit());
   }
+
+  await Promise.all(pendingCommits);
 }
 
 /**
