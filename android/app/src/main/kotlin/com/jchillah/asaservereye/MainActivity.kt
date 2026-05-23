@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -16,12 +15,8 @@ import androidx.core.view.WindowCompat
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
-import kotlin.math.abs
 
 class MainActivity : FlutterActivity() {
-    private val notificationChannel = "asa_server_eye/local_notifications"
-    private val alertChannelId = "asa_server_eye_alerts"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -33,15 +28,22 @@ class MainActivity : FlutterActivity() {
 
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
-            notificationChannel,
+            LOCAL_NOTIFICATIONS_CHANNEL,
         ).setMethodCallHandler { call, result ->
             when (call.method) {
-                "showAlertNotification" -> {
-                    val title = call.argument<String>("title") ?: "ASA Server Eye Alert"
-                    val body = call.argument<String>("body") ?: "Server activity changed."
-                    val serverId = call.argument<String>("serverId") ?: body
-                    val shown = showAlertNotification(title, body, serverId)
-                    result.success(shown)
+                METHOD_SHOW_ALERT_NOTIFICATION -> {
+                    val title = call.argument<String>(ARG_TITLE)
+                        ?: DEFAULT_ALERT_TITLE
+                    val body = call.argument<String>(ARG_BODY)
+                        ?: DEFAULT_ALERT_BODY
+                    val serverId = call.argument<String>(ARG_SERVER_ID)
+
+                    if (serverId.isNullOrBlank()) {
+                        result.success(statusResult(STATUS_MISSING_SERVER_ID))
+                        return@setMethodCallHandler
+                    }
+
+                    result.success(showAlertNotification(title, body, serverId))
                 }
                 else -> result.notImplemented()
             }
@@ -54,11 +56,11 @@ class MainActivity : FlutterActivity() {
         }
 
         val channel = NotificationChannel(
-            alertChannelId,
-            "ASA Server Eye Alerts",
+            ALERT_CHANNEL_ID,
+            ALERT_CHANNEL_NAME,
             NotificationManager.IMPORTANCE_HIGH,
         ).apply {
-            description = "Server population and activity alerts"
+            description = ALERT_CHANNEL_DESCRIPTION
         }
 
         val manager = getSystemService(NotificationManager::class.java)
@@ -69,9 +71,9 @@ class MainActivity : FlutterActivity() {
         title: String,
         body: String,
         serverId: String,
-    ): Boolean {
+    ): Map<String, String> {
         if (!hasNotificationPermission()) {
-            return false
+            return statusResult(STATUS_PERMISSION_DENIED)
         }
 
         val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
@@ -83,7 +85,7 @@ class MainActivity : FlutterActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
 
-        val notification = NotificationCompat.Builder(this, alertChannelId)
+        val notification = NotificationCompat.Builder(this, ALERT_CHANNEL_ID)
             .setSmallIcon(applicationInfo.icon)
             .setContentTitle(title)
             .setContentText(body)
@@ -93,9 +95,9 @@ class MainActivity : FlutterActivity() {
             .setContentIntent(pendingIntent)
             .build()
 
-        val notificationId = abs(serverId.hashCode())
+        val notificationId = serverId.hashCode() and Int.MAX_VALUE
         NotificationManagerCompat.from(this).notify(notificationId, notification)
-        return true
+        return statusResult(STATUS_SHOWN)
     }
 
     private fun hasNotificationPermission(): Boolean {
@@ -107,5 +109,33 @@ class MainActivity : FlutterActivity() {
             this,
             Manifest.permission.POST_NOTIFICATIONS,
         ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun statusResult(status: String): Map<String, String> {
+        return mapOf(RESULT_STATUS to status)
+    }
+
+    companion object {
+        private const val LOCAL_NOTIFICATIONS_CHANNEL =
+            "asa_server_eye/local_notifications"
+        private const val METHOD_SHOW_ALERT_NOTIFICATION =
+            "showAlertNotification"
+
+        private const val ARG_TITLE = "title"
+        private const val ARG_BODY = "body"
+        private const val ARG_SERVER_ID = "serverId"
+
+        private const val RESULT_STATUS = "status"
+        private const val STATUS_SHOWN = "shown"
+        private const val STATUS_PERMISSION_DENIED = "permission_denied"
+        private const val STATUS_MISSING_SERVER_ID = "missing_server_id"
+
+        private const val ALERT_CHANNEL_ID = "asa_server_eye_alerts"
+        private const val ALERT_CHANNEL_NAME = "ASA Server Eye Alerts"
+        private const val ALERT_CHANNEL_DESCRIPTION =
+            "Server population and activity alerts"
+
+        private const val DEFAULT_ALERT_TITLE = "ASA Server Eye Alert"
+        private const val DEFAULT_ALERT_BODY = "Server activity changed."
     }
 }
