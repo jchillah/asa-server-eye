@@ -1,0 +1,53 @@
+import { FIRESTORE_WRITE_BATCH_LIMIT } from "../config";
+import { db } from "../firebase";
+import { uniqueValues } from "./arrays";
+
+/**
+ * Commits Firestore writes in batches of FIRESTORE_WRITE_BATCH_LIMIT.
+ * @param {FirebaseFirestore.DocumentReference[]} refs Document refs to write.
+ * @param {Function} write Callback that enqueues one write on the batch.
+ */
+export async function runBatchedWrites(
+  refs: FirebaseFirestore.DocumentReference[],
+  write: (
+    batch: FirebaseFirestore.WriteBatch,
+    ref: FirebaseFirestore.DocumentReference,
+  ) => void,
+): Promise<void> {
+  let batch = db.batch();
+  let operationCount = 0;
+
+  const commitIfNeeded = async () => {
+    if (operationCount >= FIRESTORE_WRITE_BATCH_LIMIT) {
+      await batch.commit();
+      batch = db.batch();
+      operationCount = 0;
+    }
+  };
+
+  for (const ref of refs) {
+    write(batch, ref);
+    operationCount += 1;
+    await commitIfNeeded();
+  }
+
+  if (operationCount > 0) {
+    await batch.commit();
+  }
+}
+
+/**
+ * Removes FCM tokens that Firebase reports as invalid.
+ * @param {FirebaseFirestore.DocumentReference[]} refs Token document refs.
+ */
+export async function removeInvalidTokens(
+  refs: FirebaseFirestore.DocumentReference[],
+): Promise<void> {
+  const uniqueRefs = uniqueValues(refs.map((ref) => ref.path)).map((path) => {
+    return db.doc(path);
+  });
+
+  await runBatchedWrites(uniqueRefs, (batch, ref) => {
+    batch.delete(ref);
+  });
+}
