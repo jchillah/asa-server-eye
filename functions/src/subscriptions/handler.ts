@@ -2,6 +2,7 @@ import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import * as logger from "firebase-functions/logger";
 import { onDocumentCreated } from "firebase-functions/v2/firestore";
 
+import { ACCESS_LEVEL } from "../constants/access-levels";
 import { REGION } from "../config";
 import { db } from "../firebase";
 import { VerificationRequestData } from "./types";
@@ -53,16 +54,16 @@ export const processSubscriptionVerificationRequest = onDocumentCreated(
       const userSnap = await userRef.get();
       const userData = userSnap.data();
 
-      let currentAccessLevel = "free";
+      let currentAccessLevel: string = ACCESS_LEVEL.FREE;
       if (typeof userData?.["sightingsAccessLevel"] === "string") {
         currentAccessLevel = userData["sightingsAccessLevel"];
       }
 
-      let nextAccessLevel = "free";
-      if (currentAccessLevel === "admin") {
-        nextAccessLevel = "admin";
+      let nextAccessLevel: string = ACCESS_LEVEL.FREE;
+      if (currentAccessLevel === ACCESS_LEVEL.ADMIN) {
+        nextAccessLevel = ACCESS_LEVEL.ADMIN;
       } else if (verification.purchaseStatus === "active") {
-        nextAccessLevel = "premium";
+        nextAccessLevel = ACCESS_LEVEL.PREMIUM;
       }
 
       await entitlementRef.set(

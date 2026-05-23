@@ -1,7 +1,9 @@
 import { getMessaging } from "firebase-admin/messaging";
 import * as logger from "firebase-functions/logger";
 
+import { isAlertAccessLevel } from "../constants/access-levels";
 import {
+  FCM_MULTICAST_CHUNK_CONCURRENCY,
   FCM_MULTICAST_LIMIT,
   NOTIFICATION_USER_CONCURRENCY,
 } from "../config";
@@ -103,62 +105,94 @@ async function sendAggregatedNotificationsToTokens(
 
   const primaryTrigger = triggers[0];
   const body = buildAggregatedAlertBody(triggers);
+  const tokenChunks = chunkArray(tokenRecords, FCM_MULTICAST_LIMIT);
 
-  // Send token chunks sequentially to stay within FCM rate limits and avoid
-  // burst failures when a user has many registered devices.
-  for (const chunk of chunkArray(tokenRecords, FCM_MULTICAST_LIMIT)) {
-    const response = await getMessaging().sendEachForMulticast({
-      tokens: chunk.map((record) => record.token),
-      notification: {
-        title: "ASA Server Eye Alert",
+  for (const parallelChunks of chunkArray(
+    tokenChunks,
+    FCM_MULTICAST_CHUNK_CONCURRENCY,
+  )) {
+    await Promise.all(
+      parallelChunks.map((chunk) => sendMulticastChunk(
+        triggers,
+        primaryTrigger,
         body,
-      },
-      data: {
-        type: triggers.length > 1 ? "server_alert_batch" : "server_alert",
-        triggerCount: String(triggers.length),
-        ruleId: primaryTrigger.rule.id,
-        serverId: primaryTrigger.rule.serverId,
-        ruleType: primaryTrigger.rule.ruleType,
-        previousPlayers: String(primaryTrigger.previousPlayers ?? ""),
-        currentPlayers: String(primaryTrigger.currentPlayers ?? ""),
-      },
-      android: {
-        priority: "high",
-      },
-      apns: {
-        payload: {
-          aps: {
-            sound: "default",
-          },
+        chunk,
+        aggregatedInvalidTokenRefs,
+        seenInvalidTokenPaths,
+      )),
+    );
+  }
+}
+
+/**
+ * Sends one FCM multicast batch for a token chunk.
+ * @param {AlertTrigger[]} triggers All triggers for the user.
+ * @param {AlertTrigger} primaryTrigger First trigger used in payload metadata.
+ * @param {string} body Notification body text.
+ * @param {FcmTokenRecord[]} chunk Token records for this multicast.
+ * @param {FirebaseFirestore.DocumentReference[]} aggregatedInvalidTokenRefs
+ *   Shared invalid-token accumulator.
+ * @param {Set<string>} seenInvalidTokenPaths Paths already queued for removal.
+ */
+async function sendMulticastChunk(
+  triggers: AlertTrigger[],
+  primaryTrigger: AlertTrigger,
+  body: string,
+  chunk: FcmTokenRecord[],
+  aggregatedInvalidTokenRefs: FirebaseFirestore.DocumentReference[],
+  seenInvalidTokenPaths: Set<string>,
+): Promise<void> {
+  const response = await getMessaging().sendEachForMulticast({
+    tokens: chunk.map((record) => record.token),
+    notification: {
+      title: "ASA Server Eye Alert",
+      body,
+    },
+    data: {
+      type: triggers.length > 1 ? "server_alert_batch" : "server_alert",
+      triggerCount: String(triggers.length),
+      ruleId: primaryTrigger.rule.id,
+      serverId: primaryTrigger.rule.serverId,
+      ruleType: primaryTrigger.rule.ruleType,
+      previousPlayers: String(primaryTrigger.previousPlayers ?? ""),
+      currentPlayers: String(primaryTrigger.currentPlayers ?? ""),
+    },
+    android: {
+      priority: "high",
+    },
+    apns: {
+      payload: {
+        aps: {
+          sound: "default",
         },
       },
-    });
+    },
+  });
 
-    response.responses.forEach((sendResponse, index) => {
-      if (sendResponse.success) {
-        return;
+  response.responses.forEach((sendResponse, index) => {
+    if (sendResponse.success) {
+      return;
+    }
+
+    const errorCode = sendResponse.error?.code ?? "";
+    if (isInvalidFcmTokenError(errorCode)) {
+      const tokenRecord = chunk[index];
+      if (tokenRecord) {
+        addInvalidTokenRef(
+          aggregatedInvalidTokenRefs,
+          tokenRecord.ref,
+          seenInvalidTokenPaths,
+        );
       }
+    }
+  });
 
-      const errorCode = sendResponse.error?.code ?? "";
-      if (isInvalidFcmTokenError(errorCode)) {
-        const tokenRecord = chunk[index];
-        if (tokenRecord) {
-          addInvalidTokenRef(
-            aggregatedInvalidTokenRefs,
-            tokenRecord.ref,
-            seenInvalidTokenPaths,
-          );
-        }
-      }
-    });
-
-    logger.info("Alert notification send result.", {
-      userId: primaryTrigger.rule.userId,
-      triggerCount: triggers.length,
-      successCount: response.successCount,
-      failureCount: response.failureCount,
-    });
-  }
+  logger.info("Alert notification send result.", {
+    userId: primaryTrigger.rule.userId,
+    triggerCount: triggers.length,
+    successCount: response.successCount,
+    failureCount: response.failureCount,
+  });
 }
 
 /**
@@ -218,7 +252,7 @@ async function hasAlertAccess(userId: string): Promise<boolean> {
     "sightingsAccessLevel",
   ]);
 
-  return accessLevel === "premium" || accessLevel === "admin";
+  return isAlertAccessLevel(accessLevel);
 }
 
 /**

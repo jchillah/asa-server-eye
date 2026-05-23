@@ -1,11 +1,13 @@
+import { AlertRuleType } from "../constants/alert-rule-types";
 import { ALERT_COOLDOWN_MS } from "../config";
 import {
   AlertRule,
-  AlertRuleType,
   AlertTrigger,
   RuleEvaluator,
   ServerSnapshot,
 } from "./types";
+
+export { isAlertRuleType } from "../constants/alert-rule-types";
 
 export const RULE_EVALUATORS: Record<AlertRuleType, RuleEvaluator> = {
   population_increased: (_rule, previous, current) =>
@@ -44,19 +46,6 @@ export const RULE_LABELS: Record<AlertRuleType, string> = {
   server_online: "Server online",
   server_offline: "Server offline",
 };
-
-/**
- * Checks whether the rule type is supported by the backend evaluator.
- * @param {string} value Raw rule type.
- * @return {value is AlertRuleType} True for known alert rule types.
- */
-export function isAlertRuleType(value: string): value is AlertRuleType {
-  return (
-    typeof value === "string" &&
-    value.length > 0 &&
-    Object.prototype.hasOwnProperty.call(RULE_EVALUATORS, value)
-  );
-}
 
 /**
  * Decides whether a rule should trigger for the current refresh.

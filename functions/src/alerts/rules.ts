@@ -9,11 +9,8 @@ import {
   readString,
 } from "../utils/parsing";
 import { runBatchedWrites } from "../utils/firestore-batch";
-import {
-  isAlertRuleType,
-  isWithinCooldown,
-  shouldTriggerRule,
-} from "./rule-evaluators";
+import { isAlertRuleType } from "../constants/alert-rule-types";
+import { isWithinCooldown, shouldTriggerRule } from "./rule-evaluators";
 import { AlertRule, AlertTrigger, ServerSnapshot } from "./types";
 
 /**

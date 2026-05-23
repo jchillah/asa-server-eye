@@ -1,12 +1,8 @@
 import { Timestamp } from "firebase-admin/firestore";
 
-export type AlertRuleType =
-  | "population_increased"
-  | "population_decreased"
-  | "crossed_above_threshold"
-  | "crossed_below_threshold"
-  | "server_online"
-  | "server_offline";
+import { AlertRuleType } from "../constants/alert-rule-types";
+
+export type { AlertRuleType };
 
 export type ServerSnapshot = {
   id: string;

@@ -1,7 +1,11 @@
 import * as logger from "firebase-functions/logger";
 import { onSchedule } from "firebase-functions/v2/scheduler";
 
-import { REGION } from "../config";
+import {
+  ALERT_SCHEDULE,
+  ALERT_SCHEDULE_TIMEZONE,
+  REGION,
+} from "../config";
 import { uniqueValues } from "../utils/arrays";
 import { sendAlertNotifications } from "./notifications";
 import {
@@ -17,9 +21,9 @@ import {
 
 export const evaluateAlertRulesAndSendNotifications = onSchedule(
   {
-    schedule: "every 5 minutes",
+    schedule: ALERT_SCHEDULE,
     region: REGION,
-    timeZone: "Europe/Berlin",
+    timeZone: ALERT_SCHEDULE_TIMEZONE,
     maxInstances: 1,
   },
   async () => {

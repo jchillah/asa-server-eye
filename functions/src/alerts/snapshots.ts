@@ -1,7 +1,7 @@
 import { FieldValue } from "firebase-admin/firestore";
 
 import {
-  FIRESTORE_GETALL_LIMIT,
+  FIRESTORE_GETALL_CHUNK_SIZE,
   SERVER_ALERT_SNAPSHOTS_COLLECTION,
 } from "../config";
 import { db } from "../firebase";
@@ -34,7 +34,7 @@ export async function fetchPreviousServerSnapshots(
 ): Promise<Map<string, ServerSnapshot>> {
   const result = new Map<string, ServerSnapshot>();
 
-  for (const chunk of chunkArray(serverIds, FIRESTORE_GETALL_LIMIT)) {
+  for (const chunk of chunkArray(serverIds, FIRESTORE_GETALL_CHUNK_SIZE)) {
     const refs = chunk.map((serverId) => serverSnapshotRef(serverId));
     const snapshots = await db.getAll(...refs);
 
