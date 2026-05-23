@@ -455,7 +455,7 @@ service cloud.firestore {
         && request.resource.data.userId == request.auth.uid
         && request.resource.data.platform in ['android', 'ios']
         && request.resource.data.productId is string
-        && request.resource.data.size() > 0
+        && request.resource.data.productId.size() > 0
         && request.resource.data.purchaseId is string
         && request.resource.data.purchaseId.size() > 0
         && request.resource.data.purchaseToken is string
