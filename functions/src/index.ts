@@ -27,9 +27,7 @@ const FCM_MULTICAST_LIMIT = 500;
 
 const REGION = process.env.FUNCTION_REGION || DEFAULT_REGION;
 const PACKAGE_NAME = process.env.PLAY_PACKAGE_NAME || DEFAULT_PACKAGE_NAME;
-const ALERT_COOLDOWN_MINUTES = Number(
-  process.env.ALERT_COOLDOWN_MINUTES || DEFAULT_ALERT_COOLDOWN_MINUTES,
-);
+const ALERT_COOLDOWN_MINUTES = readAlertCooldownMinutes();
 const ALERT_COOLDOWN_MS = ALERT_COOLDOWN_MINUTES * 60 * 1000;
 
 type VerificationRequestData = {
@@ -421,10 +419,11 @@ async function persistServerSnapshots(
  */
 async function sendAlertNotifications(triggers: AlertTrigger[]): Promise<void> {
   const tokenCache = new Map<string, FcmTokenRecord[]>();
+  const accessCache = new Map<string, boolean>();
 
   for (const trigger of triggers) {
     const userId = trigger.rule.userId;
-    const hasAccess = await hasAlertAccess(userId);
+    const hasAccess = await getCachedAlertAccess(userId, accessCache);
     if (!hasAccess) {
       logger.info("Skipping alert for user without access.", { userId });
       continue;
@@ -467,12 +466,11 @@ async function sendNotificationToTokens(
   trigger: AlertTrigger,
   tokenRecords: FcmTokenRecord[],
 ): Promise<void> {
-  const tokens = tokenRecords.map((record) => record.token);
   const invalidTokenRefs: FirebaseFirestore.DocumentReference[] = [];
 
-  for (const chunk of chunkArray(tokens, FCM_MULTICAST_LIMIT)) {
+  for (const chunk of chunkArray(tokenRecords, FCM_MULTICAST_LIMIT)) {
     const response = await getMessaging().sendEachForMulticast({
-      tokens: chunk,
+      tokens: chunk.map((record) => record.token),
       notification: {
         title: "ASA Server Eye Alert",
         body: buildAlertBody(trigger),
@@ -504,8 +502,7 @@ async function sendNotificationToTokens(
 
       const errorCode = sendResponse.error?.code ?? "";
       if (isInvalidFcmTokenError(errorCode)) {
-        const globalIndex = tokens.indexOf(chunk[index]);
-        const tokenRecord = tokenRecords[globalIndex];
+        const tokenRecord = chunk[index];
         if (tokenRecord) {
           invalidTokenRefs.push(tokenRecord.ref);
         }
@@ -555,6 +552,20 @@ async function getCachedUserTokens(
 
   cache.set(userId, tokens);
   return tokens;
+}
+
+async function getCachedAlertAccess(
+  userId: string,
+  cache: Map<string, boolean>,
+): Promise<boolean> {
+  const cached = cache.get(userId);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  const hasAccess = await hasAlertAccess(userId);
+  cache.set(userId, hasAccess);
+  return hasAccess;
 }
 
 /**
@@ -997,6 +1008,25 @@ function buildFallbackServerId(
  */
 function hashValue(value: string): string {
   return createHash("sha256").update(value).digest("hex");
+}
+
+function readAlertCooldownMinutes(): number {
+  const rawValue = process.env.ALERT_COOLDOWN_MINUTES;
+  if (!rawValue) {
+    return DEFAULT_ALERT_COOLDOWN_MINUTES;
+  }
+
+  const parsed = Number(rawValue);
+  if (Number.isFinite(parsed) && parsed > 0) {
+    return parsed;
+  }
+
+  logger.warn("Invalid ALERT_COOLDOWN_MINUTES. Falling back to default.", {
+    rawValue,
+    defaultMinutes: DEFAULT_ALERT_COOLDOWN_MINUTES,
+  });
+
+  return DEFAULT_ALERT_COOLDOWN_MINUTES;
 }
 
 /**
