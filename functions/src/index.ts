@@ -102,6 +102,55 @@ type FcmTokenRecord = {
   ref: FirebaseFirestore.DocumentReference;
 };
 
+type RuleEvaluator = (
+  rule: AlertRule,
+  previous: ServerSnapshot | null,
+  current: ServerSnapshot | null,
+) => boolean;
+
+type SnapshotWrite = {
+  data: FirebaseFirestore.DocumentData;
+  merge: boolean;
+};
+
+const RULE_EVALUATORS: Record<AlertRuleType, RuleEvaluator> = {
+  population_increased: (_rule, previous, current) =>
+    previous?.exists === true &&
+    current?.exists === true &&
+    current.players > previous.players,
+  population_decreased: (_rule, previous, current) =>
+    previous?.exists === true &&
+    current?.exists === true &&
+    current.players < previous.players,
+  crossed_above_threshold: (rule, previous, current) =>
+    rule.threshold !== null &&
+    previous?.exists === true &&
+    current?.exists === true &&
+    previous.players <= rule.threshold &&
+    current.players > rule.threshold,
+  crossed_below_threshold: (rule, previous, current) =>
+    rule.threshold !== null &&
+    previous?.exists === true &&
+    current?.exists === true &&
+    previous.players >= rule.threshold &&
+    current.players < rule.threshold,
+  server_online: (_rule, previous, current) => {
+    const wasOffline = previous == null || previous.exists === false;
+    return wasOffline && current?.exists === true;
+  },
+  server_offline: (_rule, previous, current) =>
+    previous?.exists === true && current === null,
+};
+
+const RULE_LABELS: Record<AlertRuleType, string> = {
+  population_increased: "Population increased",
+  population_decreased: "Population decreased",
+  crossed_above_threshold: "Population crossed above threshold",
+  crossed_below_threshold: "Population crossed below threshold",
+  server_online: "Server online",
+  server_offline: "Server offline",
+};
+
 export const evaluateAlertRulesAndSendNotifications = onSchedule(
   {
     schedule: "every 5 minutes",
@@ -303,24 +352,49 @@ async function fetchOfficialServerList(): Promise<Map<string, ServerSnapshot>> {
  * @return {Promise<AlertRule[]>} Enabled alert rules.
  */
 async function fetchActiveAlertRules(): Promise<AlertRule[]> {
-  const snapshot = await db
-    .collectionGroup("alert_rules")
-    .where("isEnabled", "==", true)
-    .limit(ALERT_RULES_QUERY_LIMIT)
-    .get();
+  const rules: AlertRule[] = [];
+  let lastDocument: FirebaseFirestore.QueryDocumentSnapshot | undefined;
+  let pageCount = 0;
+  let hasMorePages = true;
 
-  if (snapshot.size >= ALERT_RULES_QUERY_LIMIT) {
-    logger.warn("Alert rule query reached the configured limit.", {
-      limit: ALERT_RULES_QUERY_LIMIT,
+  while (hasMorePages) {
+    let query: FirebaseFirestore.Query = db
+      .collectionGroup("alert_rules")
+      .where("isEnabled", "==", true)
+      .limit(ALERT_RULES_QUERY_LIMIT);
+
+    if (lastDocument) {
+      query = query.startAfter(lastDocument);
+    }
+
+    const snapshot = await query.get();
+    pageCount += 1;
+
+    for (const doc of snapshot.docs) {
+      const rule = parseAlertRule(doc);
+      if (rule) {
+        rules.push(rule);
+      }
+    }
+
+    hasMorePages = snapshot.size >= ALERT_RULES_QUERY_LIMIT;
+    if (!hasMorePages) {
+      continue;
+    }
+
+    lastDocument = snapshot.docs[snapshot.docs.length - 1];
+    logger.info("Fetched alert rule page; loading next page.", {
+      page: pageCount,
+      pageSize: snapshot.size,
+      loadedSoFar: rules.length,
     });
   }
 
-  const rules: AlertRule[] = [];
-  for (const doc of snapshot.docs) {
-    const rule = parseAlertRule(doc);
-    if (rule) {
-      rules.push(rule);
-    }
+  if (pageCount > 1) {
+    logger.info("Finished paginated alert rule fetch.", {
+      pages: pageCount,
+      totalRules: rules.length,
+    });
   }
 
   return rules;
@@ -400,45 +474,48 @@ async function persistServerSnapshots(
   serverIds: string[],
   currentServers: Map<string, ServerSnapshot>,
 ): Promise<void> {
-  let batch = db.batch();
-  let operationCount = 0;
-
-  const commitIfNeeded = async () => {
-    if (operationCount >= FIRESTORE_WRITE_BATCH_LIMIT) {
-      await batch.commit();
-      batch = db.batch();
-      operationCount = 0;
-    }
-  };
+  const refs: FirebaseFirestore.DocumentReference[] = [];
+  const writes = new Map<string, SnapshotWrite>();
 
   for (const serverId of serverIds) {
     const server = currentServers.get(serverId);
     const ref = serverSnapshotRef(serverId);
 
-    if (server) {
-      batch.set(ref, {
-        ...server,
-        updatedAt: FieldValue.serverTimestamp(),
-      });
-    } else {
-      batch.set(
-        ref,
+    refs.push(ref);
+    writes.set(
+      ref.path,
+      server ?
         {
-          id: serverId,
-          exists: false,
-          updatedAt: FieldValue.serverTimestamp(),
+          data: {
+            ...server,
+            updatedAt: FieldValue.serverTimestamp(),
+          },
+          merge: false,
+        } :
+        {
+          data: {
+            id: serverId,
+            exists: false,
+            updatedAt: FieldValue.serverTimestamp(),
+          },
+          merge: true,
         },
-        { merge: true },
-      );
+    );
+  }
+
+  await runBatchedWrites(refs, (batch, ref) => {
+    const write = writes.get(ref.path);
+    if (!write) {
+      return;
     }
 
-    operationCount += 1;
-    await commitIfNeeded();
-  }
+    if (write.merge) {
+      batch.set(ref, write.data, { merge: true });
+      return;
+    }
 
-  if (operationCount > 0) {
-    await batch.commit();
-  }
+    batch.set(ref, write.data);
+  });
 }
 
 /**
@@ -476,8 +553,19 @@ async function sendAlertNotifications(triggers: AlertTrigger[]): Promise<void> {
           return;
         }
 
-        for (const trigger of userTriggers) {
-          await sendNotificationToTokens(trigger, tokens);
+        const aggregatedInvalidTokenRefs:
+          FirebaseFirestore.DocumentReference[] = [];
+        const seenInvalidTokenPaths = new Set<string>();
+
+        await sendAggregatedNotificationsToTokens(
+          userTriggers,
+          tokens,
+          aggregatedInvalidTokenRefs,
+          seenInvalidTokenPaths,
+        );
+
+        if (aggregatedInvalidTokenRefs.length > 0) {
+          await removeInvalidTokens(aggregatedInvalidTokenRefs);
         }
       }),
     );
@@ -504,57 +592,53 @@ function groupTriggersByUser(
  * @param {AlertTrigger[]} triggers Triggered alert events.
  */
 async function markTriggeredRules(triggers: AlertTrigger[]): Promise<void> {
-  let batch = db.batch();
-  let operationCount = 0;
-
-  const commitIfNeeded = async () => {
-    if (operationCount >= FIRESTORE_WRITE_BATCH_LIMIT) {
-      await batch.commit();
-      batch = db.batch();
-      operationCount = 0;
-    }
-  };
-
-  for (const trigger of triggers) {
-    batch.update(trigger.rule.ref, {
-      lastTriggeredAt: FieldValue.serverTimestamp(),
-      updatedAt: FieldValue.serverTimestamp(),
-    });
-
-    operationCount += 1;
-    await commitIfNeeded();
-  }
-
-  if (operationCount > 0) {
-    await batch.commit();
-  }
+  await runBatchedWrites(
+    triggers.map((trigger) => trigger.rule.ref),
+    (batch, ref) => {
+      batch.update(ref, {
+        lastTriggeredAt: FieldValue.serverTimestamp(),
+        updatedAt: FieldValue.serverTimestamp(),
+      });
+    },
+  );
 }
 
 /**
- * Sends one notification to a user's available tokens.
- * @param {AlertTrigger} trigger Triggered alert event.
+ * Sends one aggregated notification per user for all triggered rules.
+ * @param {AlertTrigger[]} triggers Triggered alert events for one user.
  * @param {FcmTokenRecord[]} tokenRecords User token records.
+ * @param {FirebaseFirestore.DocumentReference[]} aggregatedInvalidTokenRefs
+ *   Shared invalid-token accumulator for this user.
+ * @param {Set<string>} seenInvalidTokenPaths Paths already queued for removal.
  */
-async function sendNotificationToTokens(
-  trigger: AlertTrigger,
+async function sendAggregatedNotificationsToTokens(
+  triggers: AlertTrigger[],
   tokenRecords: FcmTokenRecord[],
+  aggregatedInvalidTokenRefs: FirebaseFirestore.DocumentReference[],
+  seenInvalidTokenPaths: Set<string>,
 ): Promise<void> {
-  const invalidTokenRefs: FirebaseFirestore.DocumentReference[] = [];
+  if (triggers.length === 0) {
+    return;
+  }
+
+  const primaryTrigger = triggers[0];
+  const body = buildAggregatedAlertBody(triggers);
 
   for (const chunk of chunkArray(tokenRecords, FCM_MULTICAST_LIMIT)) {
     const response = await getMessaging().sendEachForMulticast({
       tokens: chunk.map((record) => record.token),
       notification: {
         title: "ASA Server Eye Alert",
-        body: buildAlertBody(trigger),
+        body,
       },
       data: {
-        type: "server_alert",
-        ruleId: trigger.rule.id,
-        serverId: trigger.rule.serverId,
-        ruleType: trigger.rule.ruleType,
-        previousPlayers: String(trigger.previousPlayers ?? ""),
-        currentPlayers: String(trigger.currentPlayers ?? ""),
+        type: triggers.length > 1 ? "server_alert_batch" : "server_alert",
+        triggerCount: String(triggers.length),
+        ruleId: primaryTrigger.rule.id,
+        serverId: primaryTrigger.rule.serverId,
+        ruleType: primaryTrigger.rule.ruleType,
+        previousPlayers: String(primaryTrigger.previousPlayers ?? ""),
+        currentPlayers: String(primaryTrigger.currentPlayers ?? ""),
       },
       android: {
         priority: "high",
@@ -577,21 +661,21 @@ async function sendNotificationToTokens(
       if (isInvalidFcmTokenError(errorCode)) {
         const tokenRecord = chunk[index];
         if (tokenRecord) {
-          invalidTokenRefs.push(tokenRecord.ref);
+          addInvalidTokenRef(
+            aggregatedInvalidTokenRefs,
+            tokenRecord.ref,
+            seenInvalidTokenPaths,
+          );
         }
       }
     });
 
     logger.info("Alert notification send result.", {
-      userId: trigger.rule.userId,
-      ruleId: trigger.rule.id,
+      userId: primaryTrigger.rule.userId,
+      triggerCount: triggers.length,
       successCount: response.successCount,
       failureCount: response.failureCount,
     });
-  }
-
-  if (invalidTokenRefs.length > 0) {
-    await removeInvalidTokens(invalidTokenRefs);
   }
 }
 
@@ -667,6 +751,23 @@ async function removeInvalidTokens(
     return db.doc(path);
   });
 
+  await runBatchedWrites(uniqueRefs, (batch, ref) => {
+    batch.delete(ref);
+  });
+}
+
+/**
+ * Commits Firestore writes in batches of FIRESTORE_WRITE_BATCH_LIMIT.
+ * @param {FirebaseFirestore.DocumentReference[]} refs Document refs to write.
+ * @param {Function} write Callback that enqueues one write on the batch.
+ */
+async function runBatchedWrites(
+  refs: FirebaseFirestore.DocumentReference[],
+  write: (
+    batch: FirebaseFirestore.WriteBatch,
+    ref: FirebaseFirestore.DocumentReference,
+  ) => void,
+): Promise<void> {
   let batch = db.batch();
   let operationCount = 0;
 
@@ -678,8 +779,8 @@ async function removeInvalidTokens(
     }
   };
 
-  for (const ref of uniqueRefs) {
-    batch.delete(ref);
+  for (const ref of refs) {
+    write(batch, ref);
     operationCount += 1;
     await commitIfNeeded();
   }
@@ -687,6 +788,25 @@ async function removeInvalidTokens(
   if (operationCount > 0) {
     await batch.commit();
   }
+}
+
+/**
+ * Queues an invalid FCM token ref once per path.
+ * @param {FirebaseFirestore.DocumentReference[]} aggregated Ref accumulator.
+ * @param {FirebaseFirestore.DocumentReference} ref Token document ref.
+ * @param {Set<string>} seenInvalidTokenPaths Paths already queued.
+ */
+function addInvalidTokenRef(
+  aggregated: FirebaseFirestore.DocumentReference[],
+  ref: FirebaseFirestore.DocumentReference,
+  seenInvalidTokenPaths: Set<string>,
+): void {
+  if (seenInvalidTokenPaths.has(ref.path)) {
+    return;
+  }
+
+  seenInvalidTokenPaths.add(ref.path);
+  aggregated.push(ref);
 }
 
 /**
@@ -931,12 +1051,7 @@ function parseAlertRule(
  * @return {value is AlertRuleType} True for known alert rule types.
  */
 function isAlertRuleType(value: string): value is AlertRuleType {
-  return value === "population_increased" ||
-    value === "population_decreased" ||
-    value === "crossed_above_threshold" ||
-    value === "crossed_below_threshold" ||
-    value === "server_online" ||
-    value === "server_offline";
+  return (value as AlertRuleType) in RULE_EVALUATORS;
 }
 
 /**
@@ -951,32 +1066,7 @@ function shouldTriggerRule(
   previous: ServerSnapshot | null,
   current: ServerSnapshot | null,
 ): boolean {
-  switch (rule.ruleType) {
-  case "population_increased":
-    return previous?.exists === true &&
-      current?.exists === true &&
-      current.players > previous.players;
-  case "population_decreased":
-    return previous?.exists === true &&
-      current?.exists === true &&
-      current.players < previous.players;
-  case "crossed_above_threshold":
-    return rule.threshold !== null &&
-      previous?.exists === true &&
-      current?.exists === true &&
-      previous.players <= rule.threshold &&
-      current.players > rule.threshold;
-  case "crossed_below_threshold":
-    return rule.threshold !== null &&
-      previous?.exists === true &&
-      current?.exists === true &&
-      previous.players >= rule.threshold &&
-      current.players < rule.threshold;
-  case "server_online":
-    return previous?.exists === false && current?.exists === true;
-  case "server_offline":
-    return previous?.exists === true && current === null;
-  }
+  return RULE_EVALUATORS[rule.ruleType](rule, previous, current);
 }
 
 /**
@@ -1001,13 +1091,36 @@ function isWithinCooldown(rule: AlertRule, now: Date): boolean {
  * @return {string} Notification body text.
  */
 function buildAlertBody(trigger: AlertTrigger): string {
-  const change = trigger.previousPlayers === null ||
-    trigger.currentPlayers === null ?
-    "" :
-    ` (${trigger.previousPlayers} → ${trigger.currentPlayers})`;
+  let change = "";
+
+  if (trigger.previousPlayers != null && trigger.currentPlayers != null) {
+    change = ` (${trigger.previousPlayers} → ${trigger.currentPlayers})`;
+  } else if (trigger.currentPlayers != null) {
+    change = ` (${trigger.currentPlayers})`;
+  }
 
   return `${alertRuleLabel(trigger.rule.ruleType)}: ` +
     `${trigger.rule.serverName} • ${trigger.rule.mapName}${change}`;
+}
+
+/**
+ * Builds a notification body for one or more triggers for the same user.
+ * @param {AlertTrigger[]} triggers Triggered alert events.
+ * @return {string} Notification body text.
+ */
+function buildAggregatedAlertBody(triggers: AlertTrigger[]): string {
+  if (triggers.length === 1) {
+    return buildAlertBody(triggers[0]);
+  }
+
+  const lines = triggers.slice(0, 3).map((trigger) => {
+    const label = alertRuleLabel(trigger.rule.ruleType);
+    return `${trigger.rule.serverName}: ${label}`;
+  });
+  const remaining = triggers.length - lines.length;
+  const suffix = remaining > 0 ? ` (+${remaining} more)` : "";
+
+  return `${triggers.length} alerts: ${lines.join("; ")}${suffix}`;
 }
 
 /**
@@ -1016,20 +1129,7 @@ function buildAlertBody(trigger: AlertTrigger): string {
  * @return {string} Label for notifications.
  */
 function alertRuleLabel(ruleType: AlertRuleType): string {
-  switch (ruleType) {
-  case "population_increased":
-    return "Population increased";
-  case "population_decreased":
-    return "Population decreased";
-  case "crossed_above_threshold":
-    return "Population crossed above threshold";
-  case "crossed_below_threshold":
-    return "Population crossed below threshold";
-  case "server_online":
-    return "Server online";
-  case "server_offline":
-    return "Server offline";
-  }
+  return RULE_LABELS[ruleType];
 }
 
 /**
