@@ -142,11 +142,12 @@ class AlertsOverviewScreen extends ConsumerWidget {
         .updateRule(updatedRule);
     if (!context.mounted) return;
 
-    _showMutationSuccessSnackBar(
-      context: context,
-      ref: ref,
-      message: context.l10n.alertRuleUpdated,
-    );
+    if (_mutationWasSuccessful(ref)) {
+      _showMutationSuccessSnackBar(
+        context: context,
+        message: context.l10n.alertRuleUpdated,
+      );
+    }
   }
 
   Future<void> _setRuleEnabled({
@@ -161,11 +162,12 @@ class AlertsOverviewScreen extends ConsumerWidget {
         .setRuleEnabled(userId: userId, ruleId: rule.id, isEnabled: isEnabled);
     if (!context.mounted) return;
 
-    _showMutationSuccessSnackBar(
-      context: context,
-      ref: ref,
-      message: context.l10n.alertRuleUpdated,
-    );
+    if (_mutationWasSuccessful(ref)) {
+      _showMutationSuccessSnackBar(
+        context: context,
+        message: context.l10n.alertRuleUpdated,
+      );
+    }
   }
 
   Future<bool> _confirmDelete({
@@ -201,23 +203,24 @@ class AlertsOverviewScreen extends ConsumerWidget {
         .deleteRule(userId: userId, ruleId: rule.id);
     if (!context.mounted) return false;
 
-    return _showMutationSuccessSnackBar(
+    if (!_mutationWasSuccessful(ref)) return false;
+
+    _showMutationSuccessSnackBar(
       context: context,
-      ref: ref,
       message: context.l10n.alertRuleDeleted,
     );
+    return true;
   }
 
-  bool _showMutationSuccessSnackBar({
+  bool _mutationWasSuccessful(WidgetRef ref) {
+    return !ref.read(alertRuleMutationControllerProvider).hasError;
+  }
+
+  void _showMutationSuccessSnackBar({
     required BuildContext context,
-    required WidgetRef ref,
     required String message,
   }) {
-    final state = ref.read(alertRuleMutationControllerProvider);
-    if (state.hasError) return false;
-
     _showSnackBar(context, message);
-    return true;
   }
 
   void _showSnackBar(BuildContext context, String message) {
