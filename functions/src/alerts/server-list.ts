@@ -10,7 +10,7 @@ import { ServerSnapshot } from "./types";
 
 /**
  * Downloads and normalizes the official ARK ASA server list.
- * @return {Promise<Map<string, ServerSnapshot> | null>} Servers keyed by stable id.
+ * @return {Promise<Map<string, ServerSnapshot> | null>} Server map or null.
  */
 export async function fetchOfficialServerList(): Promise<Map<
   string,
