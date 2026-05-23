@@ -29,6 +29,12 @@ export const evaluateAlertRulesAndSendNotifications = onSchedule(
   async () => {
     const now = new Date();
     const currentServers = await fetchOfficialServerList();
+
+    if (currentServers === null) {
+      logger.warn("Skipping alert evaluation because server data is unavailable.");
+      return;
+    }
+
     const activeRules = await fetchActiveAlertRules();
 
     if (activeRules.length === 0) {
@@ -45,7 +51,7 @@ export const evaluateAlertRulesAndSendNotifications = onSchedule(
       now,
     });
 
-    await persistServerSnapshots(serverIds, currentServers);
+    await persistServerSnapshots(serverIds, currentServers, previousSnapshots);
 
     if (triggers.length === 0) {
       logger.info("No alert rules triggered.", {
