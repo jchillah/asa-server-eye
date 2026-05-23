@@ -11,6 +11,11 @@ import { hashValue } from "../utils/hash";
 import { parseStoredServerSnapshot } from "./server-parsing";
 import { ServerSnapshot, SnapshotWrite } from "./types";
 
+type SnapshotWriteEntry = {
+  ref: FirebaseFirestore.DocumentReference;
+  write: SnapshotWrite;
+};
+
 /**
  * Returns a deterministic Firestore document ref for a server snapshot.
  * @param {string} serverId Stable server id.
@@ -63,46 +68,38 @@ export async function persistServerSnapshots(
   serverIds: string[],
   currentServers: Map<string, ServerSnapshot>,
 ): Promise<void> {
-  const refs: FirebaseFirestore.DocumentReference[] = [];
-  const writes = new Map<string, SnapshotWrite>();
-
-  for (const serverId of serverIds) {
+  const entries = serverIds.map((serverId) => {
     const server = currentServers.get(serverId);
     const ref = serverSnapshotRef(serverId);
-
-    refs.push(ref);
-    writes.set(
-      ref.path,
-      server ?
-        {
-          data: {
-            ...server,
-            updatedAt: FieldValue.serverTimestamp(),
-          },
-          merge: false,
-        } :
-        {
-          data: {
-            id: serverId,
-            exists: false,
-            updatedAt: FieldValue.serverTimestamp(),
-          },
-          merge: true,
+    const write: SnapshotWrite = server ?
+      {
+        data: {
+          ...server,
+          updatedAt: FieldValue.serverTimestamp(),
         },
-    );
-  }
+        merge: false,
+      } :
+      {
+        data: {
+          id: serverId,
+          exists: false,
+          updatedAt: FieldValue.serverTimestamp(),
+        },
+        merge: true,
+      };
 
-  await runBatchedWrites(refs, (batch, ref) => {
-    const write = writes.get(ref.path);
-    if (!write) {
-      return;
-    }
-
-    if (write.merge) {
-      batch.set(ref, write.data, { merge: true });
-      return;
-    }
-
-    batch.set(ref, write.data);
+    return { ref, write };
   });
+
+  await runBatchedWrites(
+    entries,
+    (batch, { ref, write }: SnapshotWriteEntry) => {
+      if (write.merge) {
+        batch.set(ref, write.data, { merge: true });
+        return;
+      }
+
+      batch.set(ref, write.data);
+    },
+  );
 }
