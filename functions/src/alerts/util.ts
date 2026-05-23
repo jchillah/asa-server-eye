@@ -64,7 +64,10 @@ export function readInt(data: Record<string, unknown>, keys: string[]): number {
   return 0;
 }
 
-export function readBool(data: Record<string, unknown>, keys: string[]): boolean {
+export function readBool(
+  data: Record<string, unknown>,
+  keys: string[],
+): boolean {
   for (const key of keys) {
     const value = data[key];
 
