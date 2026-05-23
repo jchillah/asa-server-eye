@@ -55,6 +55,17 @@ service cloud.firestore {
       return p in ['steam', 'xbox', 'psn', 'unknown'];
     }
 
+    function validFcmPlatform(p) {
+      return p in [
+        'android',
+        'ios',
+        'macos',
+        'windows',
+        'linux',
+        'fuchsia'
+      ];
+    }
+
     function validCreatorLevel(c) {
       return c in ['free', 'premium', 'admin'];
     }
@@ -136,6 +147,21 @@ service cloud.firestore {
         && validPlatform(request.resource.data.platform)
         && validSharingScope(request.resource.data.sharingScope)
         && validOptionalString(request.resource.data.note);
+    }
+
+    function validFcmTokenDocumentShape() {
+      return request.resource.data.keys().hasOnly([
+        'token',
+        'platform',
+        'createdAt',
+        'updatedAt'
+      ]);
+    }
+
+    function validFcmTokenDocumentValues() {
+      return validRequiredNonEmptyString(request.resource.data.token)
+        && validFcmPlatform(request.resource.data.platform)
+        && request.resource.data.updatedAt == request.time;
     }
 
     // -------- USERS --------
@@ -240,6 +266,23 @@ service cloud.firestore {
         && request.resource.data.updatedAt == request.time;
 
       allow delete: if isSignedIn() && request.auth.uid == uid;
+    }
+
+    // -------- USER FCM TOKENS --------
+    match /users/{uid}/fcm_tokens/{tokenId} {
+      allow read, delete: if isSignedIn() && request.auth.uid == uid;
+
+      allow create: if isSignedIn()
+        && request.auth.uid == uid
+        && validFcmTokenDocumentShape()
+        && validFcmTokenDocumentValues()
+        && request.resource.data.createdAt == request.time;
+
+      allow update: if isSignedIn()
+        && request.auth.uid == uid
+        && validFcmTokenDocumentShape()
+        && validFcmTokenDocumentValues()
+        && request.resource.data.createdAt == resource.data.createdAt;
     }
 
     // -------- USER ALERT EVENTS --------
