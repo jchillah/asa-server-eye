@@ -14,6 +14,10 @@ export function uniqueValues<T>(values: T[]): T[] {
  * @return {T[][]} Chunked values.
  */
 export function chunkArray<T>(values: T[], size: number): T[][] {
+  if (!Number.isFinite(size) || size <= 0) {
+    throw new Error("chunkArray size must be a positive finite number.");
+  }
+
   const chunks: T[][] = [];
   for (let index = 0; index < values.length; index += size) {
     chunks.push(values.slice(index, index + size));
