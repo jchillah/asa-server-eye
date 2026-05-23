@@ -3,6 +3,7 @@ import * as logger from "firebase-functions/logger";
 import { onDocumentCreated } from "firebase-functions/v2/firestore";
 
 import { ACCESS_LEVEL } from "../constants/access-levels";
+import { COLLECTION, USER_FIELD } from "../constants/firestore";
 import { REGION } from "../config";
 import { db } from "../firebase";
 import { VerificationRequestData } from "./types";
@@ -10,7 +11,7 @@ import { verifyPurchaseWithStore } from "./verification";
 
 export const processSubscriptionVerificationRequest = onDocumentCreated(
   {
-    document: "subscription_verification_requests/{requestId}",
+    document: `${COLLECTION.SUBSCRIPTION_VERIFICATION_REQUESTS}/{requestId}`,
     region: REGION,
   },
   async (event) => {
@@ -37,15 +38,17 @@ export const processSubscriptionVerificationRequest = onDocumentCreated(
     }
 
     const requestRef = db
-      .collection("subscription_verification_requests")
+      .collection(COLLECTION.SUBSCRIPTION_VERIFICATION_REQUESTS)
       .doc(requestId);
 
-    const userRef = db.collection("users").doc(data.userId);
-    const entitlementRef = db.collection("user_subscriptions").doc(data.userId);
+    const userRef = db.collection(COLLECTION.USERS).doc(data.userId);
+    const entitlementRef = db
+      .collection(COLLECTION.USER_SUBSCRIPTIONS)
+      .doc(data.userId);
 
     await requestRef.update({
       status: "processing",
-      updatedAt: FieldValue.serverTimestamp(),
+      [USER_FIELD.UPDATED_AT]: FieldValue.serverTimestamp(),
     });
 
     try {
@@ -55,8 +58,8 @@ export const processSubscriptionVerificationRequest = onDocumentCreated(
       const userData = userSnap.data();
 
       let currentAccessLevel: string = ACCESS_LEVEL.FREE;
-      if (typeof userData?.["sightingsAccessLevel"] === "string") {
-        currentAccessLevel = userData["sightingsAccessLevel"];
+      if (typeof userData?.[USER_FIELD.SIGHTINGS_ACCESS_LEVEL] === "string") {
+        currentAccessLevel = userData[USER_FIELD.SIGHTINGS_ACCESS_LEVEL];
       }
 
       let nextAccessLevel: string = ACCESS_LEVEL.FREE;
@@ -80,15 +83,15 @@ export const processSubscriptionVerificationRequest = onDocumentCreated(
           latestPurchaseToken: data.purchaseToken,
           verificationReason: verification.reason ?? null,
           storePayload: verification.storePayload ?? null,
-          updatedAt: FieldValue.serverTimestamp(),
+          [USER_FIELD.UPDATED_AT]: FieldValue.serverTimestamp(),
         },
         { merge: true },
       );
 
       await userRef.set(
         {
-          sightingsAccessLevel: nextAccessLevel,
-          updatedAt: FieldValue.serverTimestamp(),
+          [USER_FIELD.SIGHTINGS_ACCESS_LEVEL]: nextAccessLevel,
+          [USER_FIELD.UPDATED_AT]: FieldValue.serverTimestamp(),
         },
         { merge: true },
       );
@@ -96,7 +99,7 @@ export const processSubscriptionVerificationRequest = onDocumentCreated(
       await requestRef.update({
         status: verification.purchaseStatus,
         processedAt: FieldValue.serverTimestamp(),
-        updatedAt: FieldValue.serverTimestamp(),
+        [USER_FIELD.UPDATED_AT]: FieldValue.serverTimestamp(),
         resultReason: verification.reason ?? null,
       });
 
@@ -115,7 +118,7 @@ export const processSubscriptionVerificationRequest = onDocumentCreated(
 
       await requestRef.update({
         status: "error",
-        updatedAt: FieldValue.serverTimestamp(),
+        [USER_FIELD.UPDATED_AT]: FieldValue.serverTimestamp(),
         errorMessage: error instanceof Error ? error.message : String(error),
       });
 
