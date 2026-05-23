@@ -32,18 +32,16 @@ class FcmTokenRepository {
       'updatedAt': FieldValue.serverTimestamp(),
     };
 
-    try {
+    final snapshot = await docRef.get();
+    if (snapshot.exists) {
       await docRef.update(updateData);
-    } on FirebaseException catch (error) {
-      if (error.code != 'not-found') {
-        rethrow;
-      }
-
-      await docRef.set({
-        ...updateData,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
+      return;
     }
+
+    await docRef.set({
+      ...updateData,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
   }
 
   Future<void> removeToken({
