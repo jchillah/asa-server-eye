@@ -1,11 +1,13 @@
 name: Refresh billing dependency lock
 
 on:
-  push:
+  pull_request:
     branches:
-      - agent/update-play-billing-8
-    paths:
-      - pubspec.yaml
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
   workflow_dispatch:
 
 permissions:
@@ -13,12 +15,14 @@ permissions:
 
 jobs:
   resolve-dependencies:
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'agent/update-play-billing-8'
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out fix branch
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
           fetch-depth: 0
 
       - name: Set up Flutter
@@ -39,6 +43,8 @@ jobs:
 
       - name: Commit refreshed lockfile
         shell: bash
+        env:
+          HEAD_BRANCH: ${{ github.event.pull_request.head.ref || github.ref_name }}
         run: |
           if git diff --quiet -- pubspec.lock; then
             echo "pubspec.lock is already current."
@@ -49,4 +55,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add pubspec.lock
           git commit -m "chore: refresh dependency lock"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          git push origin "HEAD:${HEAD_BRANCH}"
