@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Profile avatars are private account data. Only the authenticated owner
+    // may read, create, replace, or delete the single avatar object.
+    match /users/{uid}/profile.jpg {
+      allow read: if request.auth != null && request.auth.uid == uid;
+
+      allow create, update: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Deny every storage path that is not explicitly allowed above.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
