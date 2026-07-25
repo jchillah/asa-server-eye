@@ -1,6 +1,7 @@
 // features/profile/presentation/widgets/profile_loaded_view.dart
 import 'package:asa_server_eye/core/extensions/context_l10n.dart';
 import 'package:asa_server_eye/features/auth/presentation/providers/auth_repository_provider.dart';
+import 'package:asa_server_eye/features/favorites/presentation/providers/favorite_servers_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -53,6 +54,9 @@ class _ProfileLoadedViewState extends ConsumerState<ProfileLoadedView> {
 
   @override
   Widget build(BuildContext context) {
+    final resolvedFavorites = ref.watch(favoriteServersProvider);
+    final visibleFavoritesCount = resolvedFavorites.valueOrNull?.length ?? 0;
+
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -77,7 +81,7 @@ class _ProfileLoadedViewState extends ConsumerState<ProfileLoadedView> {
           accessLevel: widget.profile.sightingsAccessLevel,
           favoritesLabel: context.l10n.favorites,
           favoritesCountText: context.l10n.savedFavoritesCount(
-            widget.profile.favoriteIds.length,
+            visibleFavoritesCount,
           ),
         ),
         const SizedBox(height: 24),
