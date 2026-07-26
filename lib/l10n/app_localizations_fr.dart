@@ -27,7 +27,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noServersFound => 'Aucun serveur trouvé';
 
   @override
-  String get noServersMatchSearch => 'Aucun serveur ne correspond à votre recherche';
+  String get noServersMatchSearch =>
+      'Aucun serveur ne correspond à votre recherche';
 
   @override
   String get serverDetails => 'Détails du serveur';
@@ -139,7 +140,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get support => 'Support';
 
   @override
-  String get getHelpAndContactSupport => 'Obtenir de l\'aide et contacter le support';
+  String get getHelpAndContactSupport =>
+      'Obtenir de l\'aide et contacter le support';
 
   @override
   String comingSoon(String title) {
@@ -177,7 +179,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get welcomeBack => 'Bon retour';
 
   @override
-  String get signInToContinue => 'Connectez-vous pour continuer avec vos données enregistrées.';
+  String get signInToContinue =>
+      'Connectez-vous pour continuer avec vos données enregistrées.';
 
   @override
   String get createAccount => 'Créer un compte';
@@ -186,7 +189,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get createYourAccount => 'Créez votre compte';
 
   @override
-  String get signUpToSaveFavorites => 'Inscrivez-vous pour enregistrer vos favoris sur tous vos appareils.';
+  String get signUpToSaveFavorites =>
+      'Inscrivez-vous pour enregistrer vos favoris sur tous vos appareils.';
 
   @override
   String get account => 'Compte';
@@ -198,10 +202,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get signOutDescription => 'Se déconnecter du compte actuel';
 
   @override
-  String get authMissingEmailOrPassword => 'Veuillez saisir votre e-mail et votre mot de passe.';
+  String get authMissingEmailOrPassword =>
+      'Veuillez saisir votre e-mail et votre mot de passe.';
 
   @override
-  String get authInvalidEmailFormat => 'Veuillez saisir une adresse e-mail valide.';
+  String get authInvalidEmailFormat =>
+      'Veuillez saisir une adresse e-mail valide.';
 
   @override
   String get authUserDisabled => 'Ce compte a été désactivé.';
@@ -213,34 +219,41 @@ class AppLocalizationsFr extends AppLocalizations {
   String get networkError => 'Erreur réseau. Veuillez réessayer.';
 
   @override
-  String get authWeakPassword => 'Le mot de passe doit contenir au moins 6 caractères.';
+  String get authWeakPassword =>
+      'Le mot de passe doit contenir au moins 6 caractères.';
 
   @override
   String get authEmailAlreadyInUse => 'Cet e-mail est déjà utilisé.';
 
   @override
-  String get aboutBody => 'ASA Server Eye est une application compagnon pour ARK: Survival Ascended. L’application affiche des informations sur les serveurs, prend en charge les favoris et constitue la base de futures fonctionnalités telles que les listes de surveillance, les notifications et les fonctionnalités premium.\n\nDéveloppé et exploité par :\nMichael Winkler\nE-mail : asa.server.eye@gmail.com';
+  String get aboutBody =>
+      'ASA Server Eye est une application compagnon pour ARK: Survival Ascended. L’application affiche des informations sur les serveurs, prend en charge les favoris et constitue la base de futures fonctionnalités telles que les listes de surveillance, les notifications et les fonctionnalités premium.\n\nDéveloppé et exploité par :\nMichael Winkler\nE-mail : asa.server.eye@gmail.com';
 
   @override
-  String get privacyBody => 'Politique de confidentialité\n\nResponsable du traitement des données :\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAllemagne\nE-mail : asa.server.eye@gmail.com\n\nCette application utilise Firebase Authentication pour la connexion aux comptes, Cloud Firestore pour stocker les favoris personnels et Google AdMob pour diffuser des publicités.\n\nSelon l’utilisation de l’application, des données techniques peuvent être traitées, notamment les données de compte, les informations sur l’appareil, les interactions avec l’application, les identifiants, les données de diagnostic et les données liées à la publicité. Les favoris sont stockés par utilisateur afin qu’ils restent disponibles après le redémarrage de l’application et sur plusieurs appareils.\n\nLe traitement est effectué afin de fournir les fonctionnalités de l’application, d’authentifier les utilisateurs, d’enregistrer les paramètres liés à l’utilisateur et de financer l’application par la publicité.\n\nIl ne peut être exclu que des services tiers intégrés traitent des données en dehors de l’Union européenne. À cet égard, les informations de confidentialité des services utilisés s’appliquent également, notamment Google Firebase et Google AdMob.\n\nPour toute question relative à la confidentialité ou pour demander la suppression de données, veuillez contacter :\nasa.server.eye@gmail.com\n\nRemarque : avant une publication publique définitive, cette politique de confidentialité devrait être relue et complétée avec des informations complètes sur les bases légales, les durées de conservation, les droits des utilisateurs et tous les services intégrés.';
+  String get privacyBody =>
+      'Politique de confidentialité\n\nResponsable du traitement des données :\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAllemagne\nE-mail : asa.server.eye@gmail.com\n\nCette application utilise Firebase Authentication pour la connexion aux comptes, Cloud Firestore pour stocker les favoris personnels et Google AdMob pour diffuser des publicités.\n\nSelon l’utilisation de l’application, des données techniques peuvent être traitées, notamment les données de compte, les informations sur l’appareil, les interactions avec l’application, les identifiants, les données de diagnostic et les données liées à la publicité. Les favoris sont stockés par utilisateur afin qu’ils restent disponibles après le redémarrage de l’application et sur plusieurs appareils.\n\nLe traitement est effectué afin de fournir les fonctionnalités de l’application, d’authentifier les utilisateurs, d’enregistrer les paramètres liés à l’utilisateur et de financer l’application par la publicité.\n\nIl ne peut être exclu que des services tiers intégrés traitent des données en dehors de l’Union européenne. À cet égard, les informations de confidentialité des services utilisés s’appliquent également, notamment Google Firebase et Google AdMob.\n\nPour toute question relative à la confidentialité ou pour demander la suppression de données, veuillez contacter :\nasa.server.eye@gmail.com\n\nRemarque : avant une publication publique définitive, cette politique de confidentialité devrait être relue et complétée avec des informations complètes sur les bases légales, les durées de conservation, les droits des utilisateurs et tous les services intégrés.';
 
   @override
-  String get imprintBody => 'Mentions légales\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAllemagne\n\nE-mail :\nasa.server.eye@gmail.com\n\nResponsable du contenu :\nMichael Winkler';
+  String get imprintBody =>
+      'Mentions légales\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nAllemagne\n\nE-mail :\nasa.server.eye@gmail.com\n\nResponsable du contenu :\nMichael Winkler';
 
   @override
-  String get supportBody => 'Support\n\nPour toute question, problème ou retour concernant l’application, veuillez contacter :\n\nMichael Winkler\nE-mail : asa.server.eye@gmail.com\n\nVeuillez décrire votre problème aussi précisément que possible et inclure si possible votre appareil ainsi que la version de l’application.';
+  String get supportBody =>
+      'Support\n\nPour toute question, problème ou retour concernant l’application, veuillez contacter :\n\nMichael Winkler\nE-mail : asa.server.eye@gmail.com\n\nVeuillez décrire votre problème aussi précisément que possible et inclure si possible votre appareil ainsi que la version de l’application.';
 
   @override
   String get contactSupport => 'Contacter le support';
 
   @override
-  String get emailAppCouldNotBeOpened => 'Impossible d’ouvrir l’application e-mail.';
+  String get emailAppCouldNotBeOpened =>
+      'Impossible d’ouvrir l’application e-mail.';
 
   @override
   String get supportEmailSubject => 'Support ASA Server Eye';
 
   @override
-  String get supportEmailBodyTemplate => 'Bonjour Michael,\n\nj’ai le problème suivant :\n\n\n---\nVersion de l’application :\nAppareil :\n';
+  String get supportEmailBodyTemplate =>
+      'Bonjour Michael,\n\nj’ai le problème suivant :\n\n\n---\nVersion de l’application :\nAppareil :\n';
 
   @override
   String get fullPrivacyPolicy => 'Politique de confidentialité complète';
@@ -273,7 +286,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileDeleteError => 'Le compte n\'a pas pu être supprimé.';
 
   @override
-  String get deleteAccountHint => 'La suppression de votre compte supprimera votre profil. Les sightings existants resteront disponibles.';
+  String get deleteAccountHint =>
+      'La suppression de votre compte supprimera votre profil. Les sightings existants resteront disponibles.';
 
   @override
   String savedFavoritesCount(int count) {
@@ -284,13 +298,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get usernameEmpty => 'Veuillez saisir un nom d\'utilisateur.';
 
   @override
-  String get usernameTooShort => 'Le nom d\'utilisateur doit contenir au moins 3 caractères.';
+  String get usernameTooShort =>
+      'Le nom d\'utilisateur doit contenir au moins 3 caractères.';
 
   @override
-  String get usernameTooLong => 'Le nom d\'utilisateur ne peut pas dépasser 20 caractères.';
+  String get usernameTooLong =>
+      'Le nom d\'utilisateur ne peut pas dépasser 20 caractères.';
 
   @override
-  String get usernameInvalidCharacters => 'Le nom d\'utilisateur ne peut contenir que des lettres, chiffres, points, tirets bas et traits d\'union.';
+  String get usernameInvalidCharacters =>
+      'Le nom d\'utilisateur ne peut contenir que des lettres, chiffres, points, tirets bas et traits d\'union.';
 
   @override
   String get deleteAccountDialogTitle => 'Supprimer le compte';
@@ -301,7 +318,8 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get signUpUsernameHint => 'Ce sera votre nom d\'utilisateur public visible par les autres utilisateurs.';
+  String get signUpUsernameHint =>
+      'Ce sera votre nom d\'utilisateur public visible par les autres utilisateurs.';
 
   @override
   String get emailHint => 'nom@email.com';
@@ -373,25 +391,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sightingSaveError => 'Le signalement n\'a pas pu être enregistré.';
 
   @override
-  String get sightingUpdateError => 'Le signalement n\'a pas pu être mis à jour.';
+  String get sightingUpdateError =>
+      'Le signalement n\'a pas pu être mis à jour.';
 
   @override
   String get sightingHideError => 'Le signalement n\'a pas pu être masqué.';
 
   @override
-  String get sightingRequiresLogin => 'Vous devez être connecté pour signaler une observation.';
+  String get sightingRequiresLogin =>
+      'Vous devez être connecté pour signaler une observation.';
 
   @override
-  String get sightingDeleteNotAllowed => 'Vous n\'êtes pas autorisé à supprimer ce signalement.';
+  String get sightingDeleteNotAllowed =>
+      'Vous n\'êtes pas autorisé à supprimer ce signalement.';
 
   @override
-  String get sightingEditNotAllowed => 'Vous n\'êtes pas autorisé à modifier ce signalement.';
+  String get sightingEditNotAllowed =>
+      'Vous n\'êtes pas autorisé à modifier ce signalement.';
 
   @override
   String get sightingInGameNameRequired => 'Veuillez saisir un nom de joueur.';
 
   @override
-  String get sightingPlatformIdRequired => 'Veuillez saisir un ID de plateforme.';
+  String get sightingPlatformIdRequired =>
+      'Veuillez saisir un ID de plateforme.';
 
   @override
   String get sightingTribeNameRequired => 'Veuillez saisir un nom de tribu.';
@@ -400,7 +423,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sightingReasonRequired => 'Veuillez indiquer une raison.';
 
   @override
-  String get sightingDeleteHint => 'Ce signalement ne sera pas supprimé définitivement. Il sera seulement masqué pour les utilisateurs normaux et restera traçable pour les administrateurs.';
+  String get sightingDeleteHint =>
+      'Ce signalement ne sera pas supprimé définitivement. Il sera seulement masqué pour les utilisateurs normaux et restera traçable pour les administrateurs.';
 
   @override
   String get reason => 'Raison';
@@ -415,13 +439,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sightingsLoadError => 'Les sightings n\'ont pas pu être chargés.';
 
   @override
-  String get sightingHistoryLoadError => 'L\'historique n\'a pas pu être chargé.';
+  String get sightingHistoryLoadError =>
+      'L\'historique n\'a pas pu être chargé.';
 
   @override
   String get noSightingHistory => 'Aucun historique disponible pour le moment.';
 
   @override
-  String get accessLevelLoadError => 'Le niveau d\'accès n\'a pas pu être chargé.';
+  String get accessLevelLoadError =>
+      'Le niveau d\'accès n\'a pas pu être chargé.';
 
   @override
   String get edit => 'Modifier';
@@ -445,7 +471,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get platformUnknown => 'Inconnu';
 
   @override
-  String get sightingUserProfileLoadError => 'Le profil utilisateur n\'a pas pu être chargé.';
+  String get sightingUserProfileLoadError =>
+      'Le profil utilisateur n\'a pas pu être chargé.';
 
   @override
   String get playerSightings => 'Observations de joueurs';
@@ -520,25 +547,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accountCreated => 'Compte créé avec succès';
 
   @override
-  String get accountCreationFailed => 'Échec de la création du compte. Veuillez réessayer.';
+  String get accountCreationFailed =>
+      'Échec de la création du compte. Veuillez réessayer.';
 
   @override
   String get accountDeleted => 'Compte supprimé avec succès';
 
   @override
-  String get accountDeletionFailed => 'Échec de la suppression du compte. Veuillez réessayer.';
+  String get accountDeletionFailed =>
+      'Échec de la suppression du compte. Veuillez réessayer.';
 
   @override
   String get deletePermanently => 'Supprimer définitivement';
 
   @override
-  String get deletePermanentlyConfirmation => 'Cette observation et son historique seront supprimés définitivement. Cette action ne peut pas être annulée.';
+  String get deletePermanentlyConfirmation =>
+      'Cette observation et son historique seront supprimés définitivement. Cette action ne peut pas être annulée.';
 
   @override
-  String get sightingDeletedPermanently => 'Observation supprimée définitivement';
+  String get sightingDeletedPermanently =>
+      'Observation supprimée définitivement';
 
   @override
-  String get premiumRequiredForMoreFavorites => 'Vous avez atteint la limite de favoris pour les utilisateurs gratuits. Passez à Premium pour enregistrer plus de favoris.';
+  String get premiumRequiredForMoreFavorites =>
+      'Vous avez atteint la limite de favoris pour les utilisateurs gratuits. Passez à Premium pour enregistrer plus de favoris.';
 
   @override
   String get serversNavLabel => 'Serveurs';
@@ -556,43 +588,50 @@ class AppLocalizationsFr extends AppLocalizations {
   String get premiumTitle => 'Premium';
 
   @override
-  String get premiumSettingsSubtitle => 'Découvrez les avantages de Premium et gérez votre abonnement.';
+  String get premiumSettingsSubtitle =>
+      'Découvrez les avantages de Premium et gérez votre abonnement.';
 
   @override
   String get premiumHeadline => 'Passez à Premium pour plus de fonctionnalités';
 
   @override
-  String get premiumDescription => 'Premium offre des fonctionnalités exclusives pour améliorer votre expérience avec ASA Server Eye, notamment l\'accès à la section des observations de joueurs, la possibilité d\'enregistrer plus de favoris et des extras à venir pour les utilisateurs Premium.';
+  String get premiumDescription =>
+      'Premium offre des fonctionnalités exclusives pour améliorer votre expérience avec ASA Server Eye, notamment l\'accès à la section des observations de joueurs, la possibilité d\'enregistrer plus de favoris et des extras à venir pour les utilisateurs Premium.';
 
   @override
   String get premiumBenefitSightingsTitle => 'Observations de joueurs';
 
   @override
-  String get premiumBenefitSightingsDescription => 'Accédez à la section exclusive des observations de joueurs pour signaler et consulter les activités suspectes en jeu.';
+  String get premiumBenefitSightingsDescription =>
+      'Accédez à la section exclusive des observations de joueurs pour signaler et consulter les activités suspectes en jeu.';
 
   @override
   String get premiumBenefitFavoritesTitle => 'Plus de favoris';
 
   @override
-  String get premiumBenefitFavoritesDescription => 'Enregistrez significativement plus de serveurs dans vos favoris.';
+  String get premiumBenefitFavoritesDescription =>
+      'Enregistrez significativement plus de serveurs dans vos favoris.';
 
   @override
   String get premiumBenefitAlertsTitle => 'Alertes et extras à venir';
 
   @override
-  String get premiumBenefitAlertsDescription => 'Bénéficiez d\'alertes personnalisées et d\'extras exclusifs à venir pour les utilisateurs Premium.';
+  String get premiumBenefitAlertsDescription =>
+      'Bénéficiez d\'alertes personnalisées et d\'extras exclusifs à venir pour les utilisateurs Premium.';
 
   @override
   String get premiumMonthlyPlan => 'Mensuel';
 
   @override
-  String get premiumMonthlyPlanDescription => 'Idéal pour essayer les fonctionnalités Premium et profiter d\'une flexibilité maximale.';
+  String get premiumMonthlyPlanDescription =>
+      'Idéal pour essayer les fonctionnalités Premium et profiter d\'une flexibilité maximale.';
 
   @override
   String get premiumYearlyPlan => 'Annuel';
 
   @override
-  String get premiumYearlyPlanDescription => 'Meilleure valeur pour un usage à long terme';
+  String get premiumYearlyPlanDescription =>
+      'Meilleure valeur pour un usage à long terme';
 
   @override
   String get premiumStartMonthly => 'Commencer mensuel';
@@ -610,13 +649,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get premiumUpgradeTitle => 'Passez à Premium';
 
   @override
-  String get premiumUpgradeDescription => 'Débloquez des fonctionnalités exclusives et améliorez votre expérience avec ASA Server Eye en passant à Premium.';
+  String get premiumUpgradeDescription =>
+      'Débloquez des fonctionnalités exclusives et améliorez votre expérience avec ASA Server Eye en passant à Premium.';
 
   @override
   String get premiumActiveTitle => 'Premium actif';
 
   @override
-  String get premiumActiveDescription => 'Vous profitez actuellement des avantages de Premium. Merci pour votre soutien !';
+  String get premiumActiveDescription =>
+      'Vous profitez actuellement des avantages de Premium. Merci pour votre soutien !';
 
   @override
   String get unlockPremium => 'Débloquer Premium';
@@ -625,28 +666,36 @@ class AppLocalizationsFr extends AppLocalizations {
   String get managePremium => 'Gérer Premium';
 
   @override
-  String get premiumStoreUnavailable => 'Le magasin de Premium n\'est pas disponible pour le moment. Veuillez réessayer plus tard.';
+  String get premiumStoreUnavailable =>
+      'Le magasin de Premium n\'est pas disponible pour le moment. Veuillez réessayer plus tard.';
 
   @override
-  String get premiumProductsUnavailable => 'Les produits Premium n\'ont pas pu être chargés pour le moment. Veuillez réessayer plus tard.';
+  String get premiumProductsUnavailable =>
+      'Les produits Premium n\'ont pas pu être chargés pour le moment. Veuillez réessayer plus tard.';
 
   @override
-  String get premiumPurchaseError => 'Une erreur s\'est produite lors de l\'achat de Premium. Veuillez réessayer.';
+  String get premiumPurchaseError =>
+      'Une erreur s\'est produite lors de l\'achat de Premium. Veuillez réessayer.';
 
   @override
-  String get premiumRestoreSuccess => 'Les achats ont été restaurés avec succès.';
+  String get premiumRestoreSuccess =>
+      'Les achats ont été restaurés avec succès.';
 
   @override
-  String get premiumRestoreError => 'Une erreur s\'est produite lors de la restauration des achats. Veuillez réessayer.';
+  String get premiumRestoreError =>
+      'Une erreur s\'est produite lors de la restauration des achats. Veuillez réessayer.';
 
   @override
-  String get premiumPurchasePending => 'Votre achat est en cours de traitement. Premium sera débloqué après vérification réussie.';
+  String get premiumPurchasePending =>
+      'Votre achat est en cours de traitement. Premium sera débloqué après vérification réussie.';
 
   @override
-  String get premiumExpiredDescription => 'Votre accès premium a expiré. Vous pouvez débloquer Premium à nouveau à tout moment.';
+  String get premiumExpiredDescription =>
+      'Votre accès premium a expiré. Vous pouvez débloquer Premium à nouveau à tout moment.';
 
   @override
-  String get premiumVerificationQueued => 'Votre achat a été soumis et est maintenant en cours de vérification.';
+  String get premiumVerificationQueued =>
+      'Votre achat a été soumis et est maintenant en cours de vérification.';
 
   @override
   String get serverSyncSourceLive => 'Source: Réseau';
@@ -655,10 +704,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get serverSyncSourceCache => 'Source: Cache';
 
   @override
-  String get serverSyncCacheBanner => 'Les données du serveur en cache sont affichées';
+  String get serverSyncCacheBanner =>
+      'Les données du serveur en cache sont affichées';
 
   @override
-  String get serverSyncCacheStale => 'Les données en cache pourraient être obsolètes';
+  String get serverSyncCacheStale =>
+      'Les données en cache pourraient être obsolètes';
 
   @override
   String get serverSyncUnknownUpdateTime => 'Dernière mise à jour: Inconnue';
@@ -672,7 +723,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get serverSyncLoading => 'Chargement de l’état de synchronisation…';
 
   @override
-  String get serverSyncUnavailable => 'L’état de synchronisation est actuellement indisponible';
+  String get serverSyncUnavailable =>
+      'L’état de synchronisation est actuellement indisponible';
 
   @override
   String get alertSettingsTitle => 'Règles d’alerte';
@@ -690,13 +742,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get editAlertRule => 'Modifier la règle d’alerte';
 
   @override
-  String get noAlertRulesYet => 'Aucune règle d’alerte pour ce serveur pour le moment.';
+  String get noAlertRulesYet =>
+      'Aucune règle d’alerte pour ce serveur pour le moment.';
 
   @override
-  String get alertRulesLoadError => 'Les règles d’alerte n’ont pas pu être chargées.';
+  String get alertRulesLoadError =>
+      'Les règles d’alerte n’ont pas pu être chargées.';
 
   @override
-  String get alertRulesRequiresLogin => 'Vous devez être connecté pour gérer les règles d’alerte.';
+  String get alertRulesRequiresLogin =>
+      'Vous devez être connecté pour gérer les règles d’alerte.';
 
   @override
   String get alertRuleType => 'Type d’alerte';
@@ -726,7 +781,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deleteAlertRule => 'Supprimer la règle d’alerte';
 
   @override
-  String get deleteAlertRuleQuestion => 'Voulez-vous supprimer cette règle d’alerte ?';
+  String get deleteAlertRuleQuestion =>
+      'Voulez-vous supprimer cette règle d’alerte ?';
 
   @override
   String get alertRuleSaved => 'Règle d’alerte enregistrée.';
@@ -738,7 +794,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get alertRuleDeleted => 'Règle d’alerte supprimée.';
 
   @override
-  String get alertRuleMutationError => 'La règle d’alerte n’a pas pu être enregistrée. Veuillez réessayer.';
+  String get alertRuleMutationError =>
+      'La règle d’alerte n’a pas pu être enregistrée. Veuillez réessayer.';
 
   @override
   String get alertTypePopulationIncreased => 'Population en hausse';
@@ -757,4 +814,24 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get alertTypeServerOffline => 'Serveur hors ligne';
+
+  @override
+  String get forgotPassword => 'Mot de passe oublié ?';
+
+  @override
+  String get passwordResetEmailSent =>
+      'Si un compte existe pour cet e-mail, un lien de réinitialisation a été envoyé.';
+
+  @override
+  String get authMissingEmail => 'Saisissez votre adresse e-mail.';
+
+  @override
+  String get resetPassword => 'Réinitialiser le mot de passe';
+
+  @override
+  String get resetPasswordInstructions =>
+      'Saisissez votre adresse e-mail et nous vous enverrons un lien de réinitialisation.';
+
+  @override
+  String get sendResetLink => 'Envoyer le lien';
 }

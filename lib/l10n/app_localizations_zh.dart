@@ -219,16 +219,20 @@ class AppLocalizationsZh extends AppLocalizations {
   String get authEmailAlreadyInUse => '该电子邮件已被使用。';
 
   @override
-  String get aboutBody => 'ASA Server Eye 是一款适用于 ARK: Survival Ascended 的伴侣应用。该应用可显示服务器信息、支持收藏功能，并为后续的关注列表、通知和高级功能奠定基础。\n\n开发和运营者：\nMichael Winkler\n电子邮件：asa.server.eye@gmail.com';
+  String get aboutBody =>
+      'ASA Server Eye 是一款适用于 ARK: Survival Ascended 的伴侣应用。该应用可显示服务器信息、支持收藏功能，并为后续的关注列表、通知和高级功能奠定基础。\n\n开发和运营者：\nMichael Winkler\n电子邮件：asa.server.eye@gmail.com';
 
   @override
-  String get privacyBody => '隐私政策\n\n数据处理负责人：\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\n德国\n电子邮件：asa.server.eye@gmail.com\n\n本应用使用 Firebase Authentication 进行账户登录，使用 Cloud Firestore 存储个人收藏，并使用 Google AdMob 提供广告。\n\n根据应用的使用方式，可能会处理技术数据，包括账户数据、设备信息、应用交互、标识符、诊断数据以及与广告相关的数据。收藏内容会按用户存储，以便在重新启动应用后以及在多个设备之间继续可用。\n\n这些数据处理用于提供应用功能、验证用户身份、保存与用户相关的设置以及通过广告为应用提供资金支持。\n\n不能排除集成的第三方服务会在欧盟以外处理数据。在这方面，也适用相关服务各自的隐私信息，尤其是 Google Firebase 和 Google AdMob。\n\n如有与隐私相关的问题或数据删除请求，请联系：\nasa.server.eye@gmail.com\n\n注意：在最终公开发布之前，应再次审查并补充本隐私政策，包括法律依据、保存期限、用户权利以及所有集成服务的完整信息。';
+  String get privacyBody =>
+      '隐私政策\n\n数据处理负责人：\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\n德国\n电子邮件：asa.server.eye@gmail.com\n\n本应用使用 Firebase Authentication 进行账户登录，使用 Cloud Firestore 存储个人收藏，并使用 Google AdMob 提供广告。\n\n根据应用的使用方式，可能会处理技术数据，包括账户数据、设备信息、应用交互、标识符、诊断数据以及与广告相关的数据。收藏内容会按用户存储，以便在重新启动应用后以及在多个设备之间继续可用。\n\n这些数据处理用于提供应用功能、验证用户身份、保存与用户相关的设置以及通过广告为应用提供资金支持。\n\n不能排除集成的第三方服务会在欧盟以外处理数据。在这方面，也适用相关服务各自的隐私信息，尤其是 Google Firebase 和 Google AdMob。\n\n如有与隐私相关的问题或数据删除请求，请联系：\nasa.server.eye@gmail.com\n\n注意：在最终公开发布之前，应再次审查并补充本隐私政策，包括法律依据、保存期限、用户权利以及所有集成服务的完整信息。';
 
   @override
-  String get imprintBody => '法律声明\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\n德国\n\n电子邮件：\nasa.server.eye@gmail.com\n\n内容负责人：\nMichael Winkler';
+  String get imprintBody =>
+      '法律声明\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\n德国\n\n电子邮件：\nasa.server.eye@gmail.com\n\n内容负责人：\nMichael Winkler';
 
   @override
-  String get supportBody => '支持\n\n如果你对本应用有任何问题、故障或反馈，请联系：\n\nMichael Winkler\n电子邮件：asa.server.eye@gmail.com\n\n请尽可能准确地描述你的问题，并尽量附上你的设备信息和应用版本。';
+  String get supportBody =>
+      '支持\n\n如果你对本应用有任何问题、故障或反馈，请联系：\n\nMichael Winkler\n电子邮件：asa.server.eye@gmail.com\n\n请尽可能准确地描述你的问题，并尽量附上你的设备信息和应用版本。';
 
   @override
   String get contactSupport => '联系支持';
@@ -240,7 +244,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get supportEmailSubject => 'ASA Server Eye 支持';
 
   @override
-  String get supportEmailBodyTemplate => '你好 Michael，\n\n我遇到了以下问题：\n\n\n---\n应用版本：\n设备：\n';
+  String get supportEmailBodyTemplate =>
+      '你好 Michael，\n\n我遇到了以下问题：\n\n\n---\n应用版本：\n设备：\n';
 
   @override
   String get fullPrivacyPolicy => '完整隐私政策';
@@ -568,7 +573,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get premiumBenefitSightingsTitle => '玩家目击记录';
 
   @override
-  String get premiumBenefitSightingsDescription => '可直接通过导航访问目击记录，并在整个目击记录区域使用 Premium 权限。';
+  String get premiumBenefitSightingsDescription =>
+      '可直接通过导航访问目击记录，并在整个目击记录区域使用 Premium 权限。';
 
   @override
   String get premiumBenefitFavoritesTitle => '更多收藏';
@@ -580,7 +586,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get premiumBenefitAlertsTitle => '未来扩展功能';
 
   @override
-  String get premiumBenefitAlertsDescription => '为即将推出的 Premium 功能做好准备，例如增强监控和提醒。';
+  String get premiumBenefitAlertsDescription =>
+      '为即将推出的 Premium 功能做好准备，例如增强监控和提醒。';
 
   @override
   String get premiumMonthlyPlan => '月度';
@@ -757,4 +764,22 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get alertTypeServerOffline => '服务器离线';
+
+  @override
+  String get forgotPassword => '忘记密码？';
+
+  @override
+  String get passwordResetEmailSent => '如果此电子邮件对应的账户存在，密码重置链接已发送。';
+
+  @override
+  String get authMissingEmail => '请输入电子邮件地址。';
+
+  @override
+  String get resetPassword => '重置密码';
+
+  @override
+  String get resetPasswordInstructions => '请输入电子邮件地址，我们会向你发送密码重置链接。';
+
+  @override
+  String get sendResetLink => '发送重置链接';
 }

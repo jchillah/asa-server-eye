@@ -84,4 +84,44 @@ class SignInController {
       return l10n.genericError;
     }
   }
+
+  Future<String> sendPasswordResetEmail({
+    required BuildContext context,
+    required String email,
+  }) async {
+    final l10n = context.l10n;
+    final emailError = AuthFormValidators.validateEmail(context, email);
+    if (emailError != null) {
+      return emailError;
+    }
+
+    try {
+      await _repository.sendPasswordResetEmail(email: email);
+      return l10n.passwordResetEmailSent;
+    } on FirebaseAuthException catch (error, stackTrace) {
+      AppLogger.error(
+        'SignInController',
+        'Password reset failed with FirebaseAuthException.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
+      return AuthErrorMapper.mapPasswordResetError(
+        code: error.code,
+        invalidEmailFormat: l10n.authInvalidEmailFormat,
+        userDisabled: l10n.authUserDisabled,
+        networkError: l10n.networkError,
+        genericError: l10n.genericError,
+      );
+    } catch (error, stackTrace) {
+      AppLogger.error(
+        'SignInController',
+        'Unexpected password reset error.',
+        error: error,
+        stackTrace: stackTrace,
+      );
+
+      return l10n.genericError;
+    }
+  }
 }

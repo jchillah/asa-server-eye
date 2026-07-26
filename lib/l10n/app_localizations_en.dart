@@ -186,7 +186,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createYourAccount => 'Create your account';
 
   @override
-  String get signUpToSaveFavorites => 'Sign up to save your favorites across devices.';
+  String get signUpToSaveFavorites =>
+      'Sign up to save your favorites across devices.';
 
   @override
   String get account => 'Account';
@@ -198,7 +199,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signOutDescription => 'Log out of your current account';
 
   @override
-  String get authMissingEmailOrPassword => 'Please enter your email and password.';
+  String get authMissingEmailOrPassword =>
+      'Please enter your email and password.';
 
   @override
   String get authInvalidEmailFormat => 'Please enter a valid email address.';
@@ -219,16 +221,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authEmailAlreadyInUse => 'This email is already in use.';
 
   @override
-  String get aboutBody => 'ASA Server Eye is a companion app for ARK: Survival Ascended. The app shows server information, supports favorites, and provides the foundation for future features such as watchlists, notifications, and premium features.\n\nDeveloped and operated by:\nMichael Winkler\nEmail: asa.server.eye@gmail.com';
+  String get aboutBody =>
+      'ASA Server Eye is a companion app for ARK: Survival Ascended. The app shows server information, supports favorites, and provides the foundation for future features such as watchlists, notifications, and premium features.\n\nDeveloped and operated by:\nMichael Winkler\nEmail: asa.server.eye@gmail.com';
 
   @override
-  String get privacyBody => 'Privacy Policy\n\nController responsible for data processing:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\nEmail: asa.server.eye@gmail.com\n\nThis app uses Firebase Authentication for account sign-in, Cloud Firestore to store personal favorites, and Google AdMob to serve ads.\n\nDepending on how the app is used, technical data may be processed, including account data, device information, app interactions, identifiers, diagnostics, and advertising-related data. Favorites are stored per user so they remain available after restarting the app and across multiple devices.\n\nProcessing is carried out to provide app functionality, authenticate users, store user-related settings, and finance the app through advertising.\n\nIt cannot be ruled out that integrated third-party services process data outside the European Union. In this respect, the privacy information of the respective services applies, especially Google Firebase and Google AdMob.\n\nFor privacy-related questions or deletion requests, please contact:\nasa.server.eye@gmail.com\n\nNote: Before a final public release, this privacy policy should be reviewed and expanded with full details on legal bases, retention periods, user rights, and all integrated services.';
+  String get privacyBody =>
+      'Privacy Policy\n\nController responsible for data processing:\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\nEmail: asa.server.eye@gmail.com\n\nThis app uses Firebase Authentication for account sign-in, Cloud Firestore to store personal favorites, and Google AdMob to serve ads.\n\nDepending on how the app is used, technical data may be processed, including account data, device information, app interactions, identifiers, diagnostics, and advertising-related data. Favorites are stored per user so they remain available after restarting the app and across multiple devices.\n\nProcessing is carried out to provide app functionality, authenticate users, store user-related settings, and finance the app through advertising.\n\nIt cannot be ruled out that integrated third-party services process data outside the European Union. In this respect, the privacy information of the respective services applies, especially Google Firebase and Google AdMob.\n\nFor privacy-related questions or deletion requests, please contact:\nasa.server.eye@gmail.com\n\nNote: Before a final public release, this privacy policy should be reviewed and expanded with full details on legal bases, retention periods, user rights, and all integrated services.';
 
   @override
-  String get imprintBody => 'Imprint / Legal Notice\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\n\nEmail:\nasa.server.eye@gmail.com\n\nResponsible for content:\nMichael Winkler';
+  String get imprintBody =>
+      'Imprint / Legal Notice\n\nMichael Winkler\nAm Schülerheim 17\n14195 Berlin\nGermany\n\nEmail:\nasa.server.eye@gmail.com\n\nResponsible for content:\nMichael Winkler';
 
   @override
-  String get supportBody => 'Support\n\nFor questions, issues, or feedback about the app, please contact:\n\nMichael Winkler\nEmail: asa.server.eye@gmail.com\n\nPlease describe your issue as precisely as possible and include your device and app version if available.';
+  String get supportBody =>
+      'Support\n\nFor questions, issues, or feedback about the app, please contact:\n\nMichael Winkler\nEmail: asa.server.eye@gmail.com\n\nPlease describe your issue as precisely as possible and include your device and app version if available.';
 
   @override
   String get contactSupport => 'Contact support';
@@ -240,7 +246,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get supportEmailSubject => 'ASA Server Eye Support';
 
   @override
-  String get supportEmailBodyTemplate => 'Hello Michael,\n\nI have the following issue:\n\n\n---\nApp version:\nDevice:\n';
+  String get supportEmailBodyTemplate =>
+      'Hello Michael,\n\nI have the following issue:\n\n\n---\nApp version:\nDevice:\n';
 
   @override
   String get fullPrivacyPolicy => 'Full Privacy Policy';
@@ -273,7 +280,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileDeleteError => 'Account could not be deleted.';
 
   @override
-  String get deleteAccountHint => 'Deleting your account will remove your profile. Existing sightings will remain.';
+  String get deleteAccountHint =>
+      'Deleting your account will remove your profile. Existing sightings will remain.';
 
   @override
   String savedFavoritesCount(int count) {
@@ -284,13 +292,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get usernameEmpty => 'Please enter a username.';
 
   @override
-  String get usernameTooShort => 'The username must be at least 3 characters long.';
+  String get usernameTooShort =>
+      'The username must be at least 3 characters long.';
 
   @override
-  String get usernameTooLong => 'The username may be at most 20 characters long.';
+  String get usernameTooLong =>
+      'The username may be at most 20 characters long.';
 
   @override
-  String get usernameInvalidCharacters => 'The username may only contain letters, numbers, periods, underscores, and hyphens.';
+  String get usernameInvalidCharacters =>
+      'The username may only contain letters, numbers, periods, underscores, and hyphens.';
 
   @override
   String get deleteAccountDialogTitle => 'Delete account';
@@ -301,7 +312,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get signUpUsernameHint => 'This will be your public username visible to other users.';
+  String get signUpUsernameHint =>
+      'This will be your public username visible to other users.';
 
   @override
   String get emailHint => 'name@email.com';
@@ -379,13 +391,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sightingHideError => 'Sighting could not be hidden.';
 
   @override
-  String get sightingRequiresLogin => 'You must be logged in to report a sighting.';
+  String get sightingRequiresLogin =>
+      'You must be logged in to report a sighting.';
 
   @override
-  String get sightingDeleteNotAllowed => 'You are not allowed to delete this sighting.';
+  String get sightingDeleteNotAllowed =>
+      'You are not allowed to delete this sighting.';
 
   @override
-  String get sightingEditNotAllowed => 'You are not allowed to edit this sighting.';
+  String get sightingEditNotAllowed =>
+      'You are not allowed to edit this sighting.';
 
   @override
   String get sightingInGameNameRequired => 'Please enter a player name.';
@@ -400,7 +415,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sightingReasonRequired => 'Please enter a reason.';
 
   @override
-  String get sightingDeleteHint => 'This sighting will not be permanently deleted. It will only be hidden from normal users and remain traceable for admins.';
+  String get sightingDeleteHint =>
+      'This sighting will not be permanently deleted. It will only be hidden from normal users and remain traceable for admins.';
 
   @override
   String get reason => 'Reason';
@@ -445,7 +461,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get platformUnknown => 'Unknown';
 
   @override
-  String get sightingUserProfileLoadError => 'User profile could not be loaded.';
+  String get sightingUserProfileLoadError =>
+      'User profile could not be loaded.';
 
   @override
   String get playerSightings => 'Player Sightings';
@@ -520,25 +537,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountCreated => 'Account created successfully';
 
   @override
-  String get accountCreationFailed => 'Failed to create account. Please try again.';
+  String get accountCreationFailed =>
+      'Failed to create account. Please try again.';
 
   @override
   String get accountDeleted => 'Account deleted successfully';
 
   @override
-  String get accountDeletionFailed => 'Failed to delete account. Please try again.';
+  String get accountDeletionFailed =>
+      'Failed to delete account. Please try again.';
 
   @override
   String get deletePermanently => 'Delete permanently';
 
   @override
-  String get deletePermanentlyConfirmation => 'This sighting and its history will be permanently deleted. This action cannot be undone.';
+  String get deletePermanentlyConfirmation =>
+      'This sighting and its history will be permanently deleted. This action cannot be undone.';
 
   @override
   String get sightingDeletedPermanently => 'Sighting deleted permanently';
 
   @override
-  String get premiumRequiredForMoreFavorites => 'You need Premium to save more than one favorite.';
+  String get premiumRequiredForMoreFavorites =>
+      'You need Premium to save more than one favorite.';
 
   @override
   String get serversNavLabel => 'Servers';
@@ -562,25 +583,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get premiumHeadline => 'Unlock Premium';
 
   @override
-  String get premiumDescription => 'With Premium, you get access to player sightings, more favorites, and future premium features.';
+  String get premiumDescription =>
+      'With Premium, you get access to player sightings, more favorites, and future premium features.';
 
   @override
   String get premiumBenefitSightingsTitle => 'Player sightings';
 
   @override
-  String get premiumBenefitSightingsDescription => 'Access sightings directly from the navigation and use premium access across the sightings area.';
+  String get premiumBenefitSightingsDescription =>
+      'Access sightings directly from the navigation and use premium access across the sightings area.';
 
   @override
   String get premiumBenefitFavoritesTitle => 'More favorites';
 
   @override
-  String get premiumBenefitFavoritesDescription => 'Save significantly more servers to your favorites.';
+  String get premiumBenefitFavoritesDescription =>
+      'Save significantly more servers to your favorites.';
 
   @override
   String get premiumBenefitAlertsTitle => 'Future extras';
 
   @override
-  String get premiumBenefitAlertsDescription => 'Get ready for future premium features like enhanced tracking and alerts.';
+  String get premiumBenefitAlertsDescription =>
+      'Get ready for future premium features like enhanced tracking and alerts.';
 
   @override
   String get premiumMonthlyPlan => 'Monthly';
@@ -604,19 +629,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restorePurchases => 'Restore purchases';
 
   @override
-  String get premiumPurchaseComingSoon => 'The purchase flow will be connected next.';
+  String get premiumPurchaseComingSoon =>
+      'The purchase flow will be connected next.';
 
   @override
   String get premiumUpgradeTitle => 'Upgrade to Premium';
 
   @override
-  String get premiumUpgradeDescription => 'Unlock the sightings tab and additional premium benefits.';
+  String get premiumUpgradeDescription =>
+      'Unlock the sightings tab and additional premium benefits.';
 
   @override
   String get premiumActiveTitle => 'Premium active';
 
   @override
-  String get premiumActiveDescription => 'Your account already has access to premium features.';
+  String get premiumActiveDescription =>
+      'Your account already has access to premium features.';
 
   @override
   String get unlockPremium => 'Unlock Premium';
@@ -625,28 +653,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get managePremium => 'Manage Premium';
 
   @override
-  String get premiumStoreUnavailable => 'The store is currently unavailable. Please try again later.';
+  String get premiumStoreUnavailable =>
+      'The store is currently unavailable. Please try again later.';
 
   @override
-  String get premiumProductsUnavailable => 'Currently, no premium products could be loaded.';
+  String get premiumProductsUnavailable =>
+      'Currently, no premium products could be loaded.';
 
   @override
-  String get premiumPurchaseError => 'An error occurred while purchasing. Please try again.';
+  String get premiumPurchaseError =>
+      'An error occurred while purchasing. Please try again.';
 
   @override
   String get premiumRestoreSuccess => 'Purchases restored successfully.';
 
   @override
-  String get premiumRestoreError => 'An error occurred while restoring purchases. Please try again.';
+  String get premiumRestoreError =>
+      'An error occurred while restoring purchases. Please try again.';
 
   @override
-  String get premiumPurchasePending => 'Your purchase is being processed. Premium will unlock after successful verification.';
+  String get premiumPurchasePending =>
+      'Your purchase is being processed. Premium will unlock after successful verification.';
 
   @override
-  String get premiumExpiredDescription => 'Your premium access has expired. You can unlock Premium again at any time.';
+  String get premiumExpiredDescription =>
+      'Your premium access has expired. You can unlock Premium again at any time.';
 
   @override
-  String get premiumVerificationQueued => 'Your purchase was submitted and is now being verified.';
+  String get premiumVerificationQueued =>
+      'Your purchase was submitted and is now being verified.';
 
   @override
   String get serverSyncSourceLive => 'Source: Live data';
@@ -696,7 +731,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alertRulesLoadError => 'Alert rules could not be loaded.';
 
   @override
-  String get alertRulesRequiresLogin => 'You must be logged in to manage alert rules.';
+  String get alertRulesRequiresLogin =>
+      'You must be logged in to manage alert rules.';
 
   @override
   String get alertRuleType => 'Alert-Type';
@@ -705,7 +741,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alertRuleThreshold => 'Threshold';
 
   @override
-  String get alertRuleThresholdHint => 'Enter player count or population percentage depending on the alert type.';
+  String get alertRuleThresholdHint =>
+      'Enter player count or population percentage depending on the alert type.';
 
   @override
   String get alertRuleThresholdRequired => 'Please enter a threshold value.';
@@ -726,7 +763,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteAlertRule => 'Delete Alert Rule';
 
   @override
-  String get deleteAlertRuleQuestion => 'Do you want to delete this alert rule?';
+  String get deleteAlertRuleQuestion =>
+      'Do you want to delete this alert rule?';
 
   @override
   String get alertRuleSaved => 'Alert rule saved.';
@@ -738,7 +776,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alertRuleDeleted => 'Alert rule deleted.';
 
   @override
-  String get alertRuleMutationError => 'Alert rule could not be saved. Please try again.';
+  String get alertRuleMutationError =>
+      'Alert rule could not be saved. Please try again.';
 
   @override
   String get alertTypePopulationIncreased => 'Population increased';
@@ -757,4 +796,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get alertTypeServerOffline => 'Server offline';
+
+  @override
+  String get forgotPassword => 'Forgot password?';
+
+  @override
+  String get passwordResetEmailSent =>
+      'If an account exists for this email, a password reset link has been sent.';
+
+  @override
+  String get authMissingEmail => 'Please enter your email address.';
+
+  @override
+  String get resetPassword => 'Reset password';
+
+  @override
+  String get resetPasswordInstructions =>
+      'Enter your email address and we’ll send you a link to reset your password.';
+
+  @override
+  String get sendResetLink => 'Send reset link';
 }

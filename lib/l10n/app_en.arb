@@ -1030,5 +1030,17 @@
   "alertTypeServerOffline": "Server offline",
   "@alertTypeServerOffline": {
     "description": "Label for alert type indicating that the server is offline"
-  }
-} 
+  },
+  "forgotPassword": "Forgot password?",
+  "@forgotPassword": {
+    "description": "Button on the sign-in screen that sends a password reset email"
+  },
+  "passwordResetEmailSent": "If an account exists for this email, a password reset link has been sent.",
+  "@passwordResetEmailSent": {
+    "description": "Confirmation after requesting a password reset email"
+  },
+  "authMissingEmail": "Please enter your email address.",
+  "resetPassword": "Reset password",
+  "resetPasswordInstructions": "Enter your email address and we’ll send you a link to reset your password.",
+  "sendResetLink": "Send reset link"
+}

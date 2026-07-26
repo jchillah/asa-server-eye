@@ -1030,5 +1030,17 @@
     "alertTypeServerOffline": "Servidor fuera de línea",
     "@alertTypeServerOffline": {
         "description": "Etiqueta del tipo de alerta"
-    }
+    },
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "@forgotPassword": {
+        "description": "Botón para solicitar un correo de restablecimiento de contraseña"
+    },
+    "passwordResetEmailSent": "Si existe una cuenta para este correo, se ha enviado un enlace para restablecer la contraseña.",
+    "@passwordResetEmailSent": {
+        "description": "Confirmación tras solicitar el restablecimiento de contraseña"
+    },
+    "authMissingEmail": "Introduce tu correo electrónico.",
+    "resetPassword": "Restablecer contraseña",
+    "resetPasswordInstructions": "Introduce tu correo y te enviaremos un enlace para restablecer tu contraseña.",
+    "sendResetLink": "Enviar enlace"
 }

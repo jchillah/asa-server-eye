@@ -21,6 +21,12 @@ class AuthRepository {
     );
   }
 
+  Future<void> sendPasswordResetEmail({required String email}) async {
+    await _firebaseAuth.sendPasswordResetEmail(
+      email: email.trim().toLowerCase(),
+    );
+  }
+
   Future<void> signUp({
     required String username,
     required String email,

@@ -1,9 +1,21 @@
 // features/auth/presentation/utils/auth_navigation.dart
 import 'package:flutter/material.dart';
 
+import '../screens/forgot_password_screen.dart';
 import '../screens/sign_up_screen.dart';
 
 abstract final class AuthNavigation {
+  static Future<void> openForgotPassword(
+    BuildContext context, {
+    String initialEmail = '',
+  }) {
+    return Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ForgotPasswordScreen(initialEmail: initialEmail),
+      ),
+    );
+  }
+
   static Future<void> openSignUp(BuildContext context) {
     return Navigator.of(
       context,
