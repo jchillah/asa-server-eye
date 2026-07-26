@@ -359,7 +359,7 @@
   "@profileDeleteError": {
     "description": "Error when deleting the account fails"
   },
-  "deleteAccountHint": "Deleting your account will remove your profile. Existing sightings will remain.",
+  "deleteAccountHint": "Deleting your account permanently removes your account, profile, favorites, notification data, premium metadata, and created sightings.",
   "@deleteAccountHint": {
     "description": "Hint below the delete account button"
   },

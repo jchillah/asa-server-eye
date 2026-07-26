@@ -13,7 +13,10 @@ class FirestoreAlertEventsRepository implements AlertEventsRepository {
   final FirebaseFirestore _firestore;
 
   CollectionReference<Map<String, dynamic>> _eventsCollection(String userId) {
-    return _firestore.collection('users').doc(userId).collection('alert_events');
+    return _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('alert_events');
   }
 
   List<AlertEvent> _mapEvents(QuerySnapshot<Map<String, dynamic>> snapshot) {
@@ -58,11 +61,11 @@ class FirestoreAlertEventsRepository implements AlertEventsRepository {
 
   @override
   Stream<List<AlertEvent>> watchEvents(String userId) {
-    return _eventsCollection(
-      userId,
-    ).orderBy('triggeredAt', descending: true).limit(100).snapshots().map(
-      _mapEvents,
-    );
+    return _eventsCollection(userId)
+        .orderBy('triggeredAt', descending: true)
+        .limit(100)
+        .snapshots()
+        .map(_mapEvents);
   }
 
   @override

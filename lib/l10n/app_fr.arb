@@ -359,7 +359,7 @@
     "@profileDeleteError": {
         "description": "Erreur lors de la suppression du compte"
     },
-    "deleteAccountHint": "La suppression de votre compte supprimera votre profil. Les sightings existants resteront disponibles.",
+    "deleteAccountHint": "La suppression efface définitivement votre compte, profil, favoris, données de notification, métadonnées Premium et signalements créés.",
     "@deleteAccountHint": {
         "description": "Texte d'information sous le bouton de suppression du compte"
     },

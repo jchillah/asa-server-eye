@@ -623,7 +623,7 @@ abstract class AppLocalizations {
   /// Hint below the delete account button
   ///
   /// In en, this message translates to:
-  /// **'Deleting your account will remove your profile. Existing sightings will remain.'**
+  /// **'Deleting your account permanently removes your account, profile, favorites, notification data, premium metadata, and created sightings.'**
   String get deleteAccountHint;
 
   /// Number of saved favorites

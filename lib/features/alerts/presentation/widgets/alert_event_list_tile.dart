@@ -45,9 +45,9 @@ class AlertEventListTile extends StatelessWidget {
               if (triggeredAt != null) ...[
                 const SizedBox(height: 2),
                 Text(
-                  MaterialLocalizations.of(context).formatShortDate(
-                    triggeredAt,
-                  ),
+                  MaterialLocalizations.of(
+                    context,
+                  ).formatShortDate(triggeredAt),
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),

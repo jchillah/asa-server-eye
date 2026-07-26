@@ -31,8 +31,7 @@ final serverAlertEventsProvider = StreamProvider.autoDispose
         return const Stream.empty();
       }
 
-      return ref.watch(alertEventsRepositoryProvider).watchEventsForServer(
-        userId: userId,
-        serverId: serverId,
-      );
+      return ref
+          .watch(alertEventsRepositoryProvider)
+          .watchEventsForServer(userId: userId, serverId: serverId);
     });

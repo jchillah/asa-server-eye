@@ -281,7 +281,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteAccountHint =>
-      'Deleting your account will remove your profile. Existing sightings will remain.';
+      'Deleting your account permanently removes your account, profile, favorites, notification data, premium metadata, and created sightings.';
 
   @override
   String savedFavoritesCount(int count) {

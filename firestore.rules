@@ -188,7 +188,9 @@ service cloud.firestore {
         && request.resource.data.sightingsAccessLevel == resource.data.sightingsAccessLevel
         && request.resource.data.updatedAt == request.time;
 
-      allow delete: if isSignedIn() && request.auth.uid == uid;
+      // Account documents are deleted only by the privileged deletion
+      // function after all related data has been cleaned up.
+      allow delete: if false;
     }
 
     // -------- USER ALERT RULES --------

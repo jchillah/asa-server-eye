@@ -2,17 +2,24 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../domain/app_user_profile.dart';
 
 class ProfileRepository {
-  ProfileRepository(this._firestore, this._auth, this._storage);
+  ProfileRepository(
+    this._firestore,
+    this._auth,
+    this._storage,
+    this._functions,
+  );
 
   final FirebaseFirestore _firestore;
   final FirebaseAuth _auth;
   final FirebaseStorage _storage;
+  final FirebaseFunctions _functions;
 
   User get _currentUser {
     final user = _auth.currentUser;
@@ -115,21 +122,20 @@ class ProfileRepository {
   }) async {
     final user = _currentUser;
     final normalizedEmail = email.trim().toLowerCase();
-    final userDoc = _userDoc(user.uid);
-    final imageRef = _storage.ref().child('users/${user.uid}/profile.jpg');
-
     final credential = EmailAuthProvider.credential(
       email: normalizedEmail,
       password: password,
     );
 
     await user.reauthenticateWithCredential(credential);
+    await user.getIdToken(true);
 
-    try {
-      await imageRef.delete();
-    } catch (_) {}
-
-    await userDoc.delete();
-    await user.delete();
+    final result = await _functions
+        .httpsCallable('deleteAccount')
+        .call<Map<Object?, Object?>>();
+    final data = result.data;
+    if (data['deleted'] != true) {
+      throw StateError('Account deletion was not confirmed by the server.');
+    }
   }
 }

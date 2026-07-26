@@ -359,7 +359,7 @@
   "@profileDeleteError": {
     "description": "Fehlermeldung beim Löschen des Kontos"
   },
-  "deleteAccountHint": "Beim Löschen wird das Profil entfernt. Bereits erstellte Sightings bleiben erhalten.",
+  "deleteAccountHint": "Beim Löschen werden dein Konto, Profil, Favoriten, Benachrichtigungsdaten, Premium-Metadaten und erstellte Sichtungen dauerhaft entfernt.",
   "@deleteAccountHint": {
     "description": "Hinweistext unter dem Button zum Löschen des Kontos"
   },

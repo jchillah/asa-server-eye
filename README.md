@@ -1,6 +1,6 @@
 # ASA Server Eye
 
-**ASA Server Eye** is a Flutter companion app for **ARK: Survival Ascended** players. The app helps users inspect official server data, open server details and save important servers as favorites.
+**ASA Server Eye** is a Flutter companion app for **ARK: Survival Ascended** players. The app provides official server data, favorites, alerts, player sightings, profile management and Free/Premium/Admin access levels.
 
 The project is built as a real release app with a production-oriented Flutter structure, localization, Firebase integration and public support pages.
 
@@ -9,7 +9,7 @@ The project is built as a real release app with a production-oriented Flutter st
 ```txt
 Android release: published
 Development: active
-Focus: server overview, favorites, future alerts and better server intelligence
+Focus: production hardening, privacy, alerts and server intelligence
 ```
 
 ## Resources
@@ -26,18 +26,19 @@ Focus: server overview, favorites, future alerts and better server intelligence
 - Server search and filtering
 - Server detail screen
 - Favorites for important servers
-- Firebase-backed user functionality
+- Server alerts and push-notification history
+- Player sightings with role-based visibility
+- Firebase-backed authentication and profiles
+- Premium subscriptions with server-side Android verification
+- Server-orchestrated account and related-data deletion
 - Localized app text
-- Android release preparation
 - Privacy policy support
 
 ## Planned Features
 
-- Server population alerts
-- Favorite server notifications
 - Watchlists
 - Better server intelligence and trend detection
-- Premium alert options
+- iOS subscription verification
 - More advanced filtering and sorting
 
 ## Tech Stack
@@ -60,8 +61,13 @@ lib/
 ├── core/
 ├── features/
 │   ├── auth/
+│   ├── alerts/
 │   ├── servers/
 │   ├── favorites/
+│   ├── notifications/
+│   ├── profile/
+│   ├── sightings/
+│   ├── subscriptions/
 │   └── settings/
 └── l10n/
 ```
@@ -84,6 +90,13 @@ Analyze code:
 
 ```bash
 flutter analyze
+```
+
+Run Flutter and Firebase Functions tests:
+
+```bash
+flutter test
+cd functions && npm test
 ```
 
 Build Android App Bundle:
