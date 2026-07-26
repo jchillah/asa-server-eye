@@ -52,7 +52,20 @@ class SignInScreen extends ConsumerWidget {
                           labelText: context.l10n.password,
                           autofillHints: const [AutofillHints.password],
                         ),
-                        const SizedBox(height: 20),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: formController.isSubmitting
+                                ? null
+                                : () => AuthNavigation.openForgotPassword(
+                                    context,
+                                    initialEmail:
+                                        formController.emailController.text,
+                                  ),
+                            child: Text(context.l10n.forgotPassword),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
                         AppActionButton(
                           label: context.l10n.signIn,
                           isLoading: formController.isSubmitting,

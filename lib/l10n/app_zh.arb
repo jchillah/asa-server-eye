@@ -1030,5 +1030,17 @@
     "alertTypeServerOffline": "服务器离线",
     "@alertTypeServerOffline": {
         "description": "提醒类型标签"
-    }
+    },
+    "forgotPassword": "忘记密码？",
+    "@forgotPassword": {
+        "description": "用于请求密码重置邮件的按钮"
+    },
+    "passwordResetEmailSent": "如果此电子邮件对应的账户存在，密码重置链接已发送。",
+    "@passwordResetEmailSent": {
+        "description": "请求密码重置邮件后的确认信息"
+    },
+    "authMissingEmail": "请输入电子邮件地址。",
+    "resetPassword": "重置密码",
+    "resetPasswordInstructions": "请输入电子邮件地址，我们会向你发送密码重置链接。",
+    "sendResetLink": "发送重置链接"
 }

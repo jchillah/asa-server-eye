@@ -31,7 +31,7 @@ abstract final class AuthFormValidators {
     final trimmedEmail = email.trim();
 
     if (trimmedEmail.isEmpty) {
-      return context.l10n.authMissingEmailOrPassword;
+      return context.l10n.authMissingEmail;
     }
 
     final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');

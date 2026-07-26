@@ -45,4 +45,23 @@ abstract final class AuthErrorMapper {
         return genericError;
     }
   }
+
+  static String mapPasswordResetError({
+    required String code,
+    required String invalidEmailFormat,
+    required String userDisabled,
+    required String networkError,
+    required String genericError,
+  }) {
+    switch (code) {
+      case 'invalid-email':
+        return invalidEmailFormat;
+      case 'user-disabled':
+        return userDisabled;
+      case 'network-request-failed':
+        return networkError;
+      default:
+        return genericError;
+    }
+  }
 }

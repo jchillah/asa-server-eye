@@ -1030,5 +1030,17 @@
     "alertTypeServerOffline": "Serveur hors ligne",
     "@alertTypeServerOffline": {
         "description": "Libellé du type d’alerte"
-    }
+    },
+    "forgotPassword": "Mot de passe oublié ?",
+    "@forgotPassword": {
+        "description": "Bouton pour demander un e-mail de réinitialisation du mot de passe"
+    },
+    "passwordResetEmailSent": "Si un compte existe pour cet e-mail, un lien de réinitialisation a été envoyé.",
+    "@passwordResetEmailSent": {
+        "description": "Confirmation après une demande de réinitialisation du mot de passe"
+    },
+    "authMissingEmail": "Saisissez votre adresse e-mail.",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "resetPasswordInstructions": "Saisissez votre adresse e-mail et nous vous enverrons un lien de réinitialisation.",
+    "sendResetLink": "Envoyer le lien"
 }

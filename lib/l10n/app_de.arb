@@ -1030,5 +1030,17 @@
   "alertTypeServerOffline": "Server offline",
   "@alertTypeServerOffline": {
     "description": "Bezeichnung für Alert-Typ"
-  }
+  },
+  "forgotPassword": "Passwort vergessen?",
+  "@forgotPassword": {
+    "description": "Schaltfläche zum Anfordern einer E-Mail zum Zurücksetzen des Passworts"
+  },
+  "passwordResetEmailSent": "Falls ein Konto für diese E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.",
+  "@passwordResetEmailSent": {
+    "description": "Bestätigung nach dem Anfordern einer Passwort-Reset-E-Mail"
+  },
+  "authMissingEmail": "Bitte gib deine E-Mail-Adresse ein.",
+  "resetPassword": "Passwort zurücksetzen",
+  "resetPasswordInstructions": "Gib deine E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen deines Passworts.",
+  "sendResetLink": "Reset-Link senden"
 }
