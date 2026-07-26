@@ -150,10 +150,7 @@ class PremiumScreen extends ConsumerWidget {
     );
   }
 
-  String? _mapStatusMessage(
-    BuildContext context,
-    SubscriptionMessageKey? key,
-  ) {
+  String? _mapStatusMessage(BuildContext context, SubscriptionMessageKey? key) {
     switch (key) {
       case SubscriptionMessageKey.storeUnavailable:
         return context.l10n.premiumStoreUnavailable;

@@ -4,9 +4,10 @@ import 'dart:developer' as developer;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final localAlertNotificationServiceProvider = Provider<LocalAlertNotificationService>(
-  (ref) => const LocalAlertNotificationService(),
-);
+final localAlertNotificationServiceProvider =
+    Provider<LocalAlertNotificationService>(
+      (ref) => const LocalAlertNotificationService(),
+    );
 
 class LocalAlertNotificationService {
   const LocalAlertNotificationService();
@@ -40,16 +41,14 @@ class LocalAlertNotificationService {
     }
 
     try {
-      final result = await _channel.invokeMapMethod<String, String>(
-        _methodShowAlertNotification,
-        {
-          _argTitle: title,
-          _argBody: body,
-          _argServerId: serverId,
-          _argRuleType: ruleType,
-          _argAlertId: alertId,
-        },
-      );
+      final result = await _channel
+          .invokeMapMethod<String, String>(_methodShowAlertNotification, {
+            _argTitle: title,
+            _argBody: body,
+            _argServerId: serverId,
+            _argRuleType: ruleType,
+            _argAlertId: alertId,
+          });
 
       return LocalAlertNotificationResultX.fromStatus(result?[_statusKey]);
     } on MissingPluginException {

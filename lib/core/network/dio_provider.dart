@@ -10,9 +10,7 @@ final dioProvider = Provider<Dio>((ref) {
       receiveTimeout: const Duration(seconds: 15),
       sendTimeout: const Duration(seconds: 10),
       responseType: ResponseType.json,
-      headers: {
-        Headers.acceptHeader: 'application/json',
-      },
+      headers: {Headers.acceptHeader: 'application/json'},
     ),
   );
 
@@ -30,7 +28,10 @@ class _AppLoggerInterceptor extends Interceptor {
   }
 
   @override
-  void onResponse(Response<dynamic> response, ResponseInterceptorHandler handler) {
+  void onResponse(
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
     AppLogger.debug(
       _tag,
       'RESPONSE ${response.statusCode} ${response.requestOptions.uri}',

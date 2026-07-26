@@ -64,8 +64,7 @@ class AlertEvaluationController extends StateNotifier<AlertTriggerEvent?> {
 
     final newEvents = events
         .where(
-          (event) =>
-              !_pendingTriggerPersistenceRuleIds.contains(event.rule.id),
+          (event) => !_pendingTriggerPersistenceRuleIds.contains(event.rule.id),
         )
         .toList();
 
@@ -86,20 +85,18 @@ class AlertEvaluationController extends StateNotifier<AlertTriggerEvent?> {
 
     unawaited(
       _repository
-          .markRuleTriggered(
-            userId: event.rule.userId,
-            ruleId: ruleId,
-          )
+          .markRuleTriggered(userId: event.rule.userId, ruleId: ruleId)
           .catchError((Object error, StackTrace stackTrace) {
-        developer.log(
-          'Failed to mark alert rule as triggered.',
-          name: 'AlertEvaluationController',
-          error: error,
-          stackTrace: stackTrace,
-        );
-      }).whenComplete(() {
-        _pendingTriggerPersistenceRuleIds.remove(ruleId);
-      }),
+            developer.log(
+              'Failed to mark alert rule as triggered.',
+              name: 'AlertEvaluationController',
+              error: error,
+              stackTrace: stackTrace,
+            );
+          })
+          .whenComplete(() {
+            _pendingTriggerPersistenceRuleIds.remove(ruleId);
+          }),
     );
   }
 }

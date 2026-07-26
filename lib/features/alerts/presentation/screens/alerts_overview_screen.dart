@@ -23,7 +23,8 @@ class AlertsOverviewScreen extends ConsumerWidget {
     final userId = ref.watch(currentUserIdProvider);
     final ruleMutationState = ref.watch(alertRuleMutationControllerProvider);
     final eventMutationState = ref.watch(alertEventMutationControllerProvider);
-    final isMutating = ruleMutationState.isLoading || eventMutationState.isLoading;
+    final isMutating =
+        ruleMutationState.isLoading || eventMutationState.isLoading;
 
     ref.listen<AsyncValue<void>>(alertRuleMutationControllerProvider, (
       previous,
@@ -92,9 +93,7 @@ class _AlertRulesTab extends ConsumerWidget {
     return rulesAsync.when(
       data: (rules) {
         if (rules.isEmpty) {
-          return AlertsMessageBody(
-            message: context.l10n.noUserAlertRulesYet,
-          );
+          return AlertsMessageBody(message: context.l10n.noUserAlertRulesYet);
         }
 
         return ListView.separated(
@@ -108,11 +107,8 @@ class _AlertRulesTab extends ConsumerWidget {
               key: ValueKey('rule-${rule.id}'),
               direction: DismissDirection.endToStart,
               background: _DeleteSwipeBackground(label: context.l10n.delete),
-              confirmDismiss: (_) => _confirmDelete(
-                context: context,
-                ref: ref,
-                rule: rule,
-              ),
+              confirmDismiss: (_) =>
+                  _confirmDelete(context: context, ref: ref, rule: rule),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -127,16 +123,10 @@ class _AlertRulesTab extends ConsumerWidget {
                   ),
                   AlertRuleListTile(
                     rule: rule,
-                    onEdit: () => _openEditSheet(
-                      context: context,
-                      ref: ref,
-                      rule: rule,
-                    ),
-                    onDelete: () => _confirmDelete(
-                      context: context,
-                      ref: ref,
-                      rule: rule,
-                    ),
+                    onEdit: () =>
+                        _openEditSheet(context: context, ref: ref, rule: rule),
+                    onDelete: () =>
+                        _confirmDelete(context: context, ref: ref, rule: rule),
                     onEnabledChanged: (value) => _setRuleEnabled(
                       context: context,
                       ref: ref,
@@ -151,9 +141,8 @@ class _AlertRulesTab extends ConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (_, _) => AlertsMessageBody(
-        message: context.l10n.alertRulesLoadError,
-      ),
+      error: (_, _) =>
+          AlertsMessageBody(message: context.l10n.alertRulesLoadError),
     );
   }
 
@@ -277,18 +266,12 @@ class _AlertHistoryTab extends ConsumerWidget {
               key: ValueKey('event-${event.id}'),
               direction: DismissDirection.endToStart,
               background: _DeleteSwipeBackground(label: context.l10n.delete),
-              confirmDismiss: (_) => _deleteEvent(
-                context: context,
-                ref: ref,
-                event: event,
-              ),
+              confirmDismiss: (_) =>
+                  _deleteEvent(context: context, ref: ref, event: event),
               child: AlertEventListTile(
                 event: event,
-                onDelete: () => _deleteEvent(
-                  context: context,
-                  ref: ref,
-                  event: event,
-                ),
+                onDelete: () =>
+                    _deleteEvent(context: context, ref: ref, event: event),
                 onDeleteServerHistory: () => _deleteServerHistory(
                   context: context,
                   ref: ref,
@@ -300,9 +283,8 @@ class _AlertHistoryTab extends ConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (_, _) => AlertsMessageBody(
-        message: context.l10n.alertEventsLoadError,
-      ),
+      error: (_, _) =>
+          AlertsMessageBody(message: context.l10n.alertEventsLoadError),
     );
   }
 
@@ -311,10 +293,9 @@ class _AlertHistoryTab extends ConsumerWidget {
     required WidgetRef ref,
     required AlertEvent event,
   }) async {
-    await ref.read(alertEventMutationControllerProvider.notifier).deleteEvent(
-          userId: userId,
-          eventId: event.id,
-        );
+    await ref
+        .read(alertEventMutationControllerProvider.notifier)
+        .deleteEvent(userId: userId, eventId: event.id);
     if (!context.mounted) return false;
 
     if (!_eventMutationWasSuccessful(ref)) return false;

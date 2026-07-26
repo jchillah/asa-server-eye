@@ -9,10 +9,7 @@ abstract class AlertEventsRepository {
     required String serverId,
   });
 
-  Future<void> deleteEvent({
-    required String userId,
-    required String eventId,
-  });
+  Future<void> deleteEvent({required String userId, required String eventId});
 
   Future<void> deleteEventsForServer({
     required String userId,
