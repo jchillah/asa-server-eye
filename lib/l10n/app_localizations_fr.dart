@@ -287,7 +287,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deleteAccountHint =>
-      'La suppression de votre compte supprimera votre profil. Les sightings existants resteront disponibles.';
+      'La suppression efface définitivement votre compte, profil, favoris, données de notification, métadonnées Premium et signalements créés.';
 
   @override
   String savedFavoritesCount(int count) {

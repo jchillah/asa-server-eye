@@ -278,7 +278,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get profileDeleteError => '无法删除账户。';
 
   @override
-  String get deleteAccountHint => '删除账户将移除你的个人资料。已创建的 sightings 将会保留。';
+  String get deleteAccountHint =>
+      '删除账户会永久移除你的账户、个人资料、收藏、通知数据、高级版元数据以及你创建的玩家目击记录。';
 
   @override
   String savedFavoritesCount(int count) {

@@ -285,7 +285,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get deleteAccountHint =>
-      'Beim Löschen wird das Profil entfernt. Bereits erstellte Sightings bleiben erhalten.';
+      'Beim Löschen werden dein Konto, Profil, Favoriten, Benachrichtigungsdaten, Premium-Metadaten und erstellte Sichtungen dauerhaft entfernt.';
 
   @override
   String savedFavoritesCount(int count) {

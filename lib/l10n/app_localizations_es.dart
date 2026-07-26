@@ -286,7 +286,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get deleteAccountHint =>
-      'Eliminar tu cuenta quitará tu perfil. Los sightings existentes permanecerán.';
+      'Eliminar tu cuenta borrará permanentemente tu cuenta, perfil, favoritos, datos de notificaciones, metadatos premium y avistamientos creados.';
 
   @override
   String savedFavoritesCount(int count) {
