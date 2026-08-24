@@ -2,6 +2,11 @@ name: Deploy to Google Play Production
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/production-release-trigger"
 
 jobs:
   deploy-production:
@@ -56,7 +61,7 @@ jobs:
       - name: Install fastlane
         run: gem install fastlane
 
-      - name: Upload to Google Play Production as draft
+      - name: Upload to Google Play Production
         run: |
           fastlane supply \
             --aab build/app/outputs/bundle/release/app-release.aab \
@@ -66,4 +71,4 @@ jobs:
             --skip_upload_metadata true \
             --skip_upload_images true \
             --skip_upload_screenshots true \
-            --release_status draft
+            --release_status completed
