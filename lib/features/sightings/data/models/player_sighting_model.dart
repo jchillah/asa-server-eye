@@ -44,6 +44,7 @@ class PlayerSightingModel extends PlayerSighting {
       createdAt: _dateTimeFromFirestore(json['createdAt']),
       createdByUserId: json['createdByUserId']?.toString() ?? '',
       createdByUsername: json['createdByUsername']?.toString() ?? '',
+      // Backward-compatible read only. New writes never persist creator email.
       createdByEmail: json['createdByEmail']?.toString() ?? '',
       creatorLevel: _creatorLevelFromString(json['creatorLevel']),
       sharingScope: _sharingScopeFromString(json['sharingScope']),
@@ -67,7 +68,6 @@ class PlayerSightingModel extends PlayerSighting {
       'createdAt': Timestamp.fromDate(createdAt),
       'createdByUserId': createdByUserId,
       'createdByUsername': createdByUsername,
-      'createdByEmail': createdByEmail,
       'creatorLevel': creatorLevel.name,
       'sharingScope': sharingScope.name,
       'isVisible': isVisible,
