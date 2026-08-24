@@ -127,7 +127,6 @@ service cloud.firestore {
         'createdAt',
         'createdByUserId',
         'createdByUsername',
-        'createdByEmail',
         'creatorLevel',
         'sharingScope',
         'isVisible',
@@ -305,6 +304,9 @@ service cloud.firestore {
               || (
                 data.sharingScope == 'premiumShared'
                 && isPremiumOrAdmin()
+                // Legacy documents contained the creator's e-mail address.
+                // Never expose those documents to another user.
+                && !data.keys().hasAny(['createdByEmail'])
               )
             )
           );
@@ -319,7 +321,6 @@ service cloud.firestore {
         && validMutableSightingFields()
         && request.resource.data.createdByUserId == request.auth.uid
         && request.resource.data.createdByUsername == currentUserData().username
-        && request.resource.data.createdByEmail == request.auth.token.email
         && request.resource.data.createdAt == request.time
         && validCreatorLevel(request.resource.data.creatorLevel)
         && request.resource.data.isVisible == true
@@ -353,7 +354,6 @@ service cloud.firestore {
             && request.resource.data.createdAt == resource.data.createdAt
             && request.resource.data.createdByUserId == resource.data.createdByUserId
             && request.resource.data.createdByUsername == resource.data.createdByUsername
-            && request.resource.data.createdByEmail == resource.data.createdByEmail
             && request.resource.data.creatorLevel == resource.data.creatorLevel
             && request.resource.data.isVisible == true
             && request.resource.data.deletedAt == resource.data.deletedAt
@@ -380,7 +380,6 @@ service cloud.firestore {
             && request.resource.data.createdAt == resource.data.createdAt
             && request.resource.data.createdByUserId == resource.data.createdByUserId
             && request.resource.data.createdByUsername == resource.data.createdByUsername
-            && request.resource.data.createdByEmail == resource.data.createdByEmail
             && request.resource.data.playerPlatformId == resource.data.playerPlatformId
             && request.resource.data.inGameName == resource.data.inGameName
             && request.resource.data.tribeName == resource.data.tribeName
@@ -405,7 +404,6 @@ service cloud.firestore {
             && request.resource.data.createdAt == resource.data.createdAt
             && request.resource.data.createdByUserId == resource.data.createdByUserId
             && request.resource.data.createdByUsername == resource.data.createdByUsername
-            && request.resource.data.createdByEmail == resource.data.createdByEmail
             && validMutableSightingFields()
             && validCreatorLevel(request.resource.data.creatorLevel)
             && request.resource.data.updatedAt == request.time
