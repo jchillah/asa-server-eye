@@ -101,6 +101,92 @@ DATA_USES: dict[str, DataUse] = {
     ),
 }
 
+# Google's API has added account/deletion questions over time while the public
+# sample CSV can lag behind. These are official machine-readable IDs accepted
+# by the Data Safety importer. Missing rows are appended before answers are
+# generated; if Google rejects or adds another required item the job fails
+# closed and production is not uploaded.
+MODERN_ACCOUNT_ROWS: tuple[tuple[str, str, str, str], ...] = (
+    (
+        "PSL_SUPPORTED_ACCOUNT_CREATION_METHODS",
+        "PSL_ACM_USER_ID_PASSWORD",
+        "MULTIPLE_CHOICE",
+        "Which account creation methods are supported? / User ID and password",
+    ),
+    (
+        "PSL_SUPPORTED_ACCOUNT_CREATION_METHODS",
+        "PSL_ACM_USER_ID_OTHER_AUTH",
+        "MULTIPLE_CHOICE",
+        "Which account creation methods are supported? / User ID and other authentication",
+    ),
+    (
+        "PSL_SUPPORTED_ACCOUNT_CREATION_METHODS",
+        "PSL_ACM_USER_ID_PASSWORD_OTHER_AUTH",
+        "MULTIPLE_CHOICE",
+        "Which account creation methods are supported? / User ID, password, and other authentication",
+    ),
+    (
+        "PSL_SUPPORTED_ACCOUNT_CREATION_METHODS",
+        "PSL_ACM_OAUTH",
+        "MULTIPLE_CHOICE",
+        "Which account creation methods are supported? / OAuth",
+    ),
+    (
+        "PSL_SUPPORTED_ACCOUNT_CREATION_METHODS",
+        "PSL_ACM_OTHER",
+        "MULTIPLE_CHOICE",
+        "Which account creation methods are supported? / Other",
+    ),
+    (
+        "PSL_SUPPORTED_ACCOUNT_CREATION_METHODS",
+        "PSL_ACM_NONE",
+        "MULTIPLE_CHOICE",
+        "Which account creation methods are supported? / No account creation",
+    ),
+    (
+        "PSL_ACM_SPECIFY",
+        "",
+        "MAYBE_REQUIRED",
+        "Describe another supported account creation method",
+    ),
+    (
+        "PSL_ACCOUNT_DELETION_URL",
+        "",
+        "MAYBE_REQUIRED",
+        "Account deletion URL",
+    ),
+    (
+        "PSL_SUPPORT_DATA_DELETION_BY_USER",
+        "DATA_DELETION_YES",
+        "SINGLE_CHOICE",
+        "Can users request deletion of their data? / Yes",
+    ),
+    (
+        "PSL_SUPPORT_DATA_DELETION_BY_USER",
+        "DATA_DELETION_NO",
+        "SINGLE_CHOICE",
+        "Can users request deletion of their data? / No",
+    ),
+    (
+        "PSL_SUPPORT_DATA_DELETION_BY_USER",
+        "DATA_DELETION_NO_AUTO_DELETED",
+        "SINGLE_CHOICE",
+        "Can users request deletion of their data? / Automatically deleted",
+    ),
+    (
+        "PSL_DATA_DELETION_URL",
+        "",
+        "MAYBE_REQUIRED",
+        "Data deletion URL",
+    ),
+    (
+        "PSL_HAS_OUTSIDE_APP_ACCOUNTS",
+        "",
+        "OPTIONAL",
+        "Can users log in with accounts created outside the app?",
+    ),
+)
+
 
 def fail(message: str) -> None:
     print(f"Data Safety error: {message}", file=sys.stderr)
@@ -152,6 +238,28 @@ def download_template(session: requests.Session) -> str:
     return ""
 
 
+def add_missing_account_rows(
+    rows: list[dict[str, str]], fieldnames: list[str]
+) -> None:
+    existing = {
+        (
+            row.get("Question ID (machine readable)", ""),
+            row.get("Response ID (machine readable)", ""),
+        )
+        for row in rows
+    }
+
+    for question_id, response_id, requirement, label in MODERN_ACCOUNT_ROWS:
+        if (question_id, response_id) in existing:
+            continue
+        row = {field: "" for field in fieldnames}
+        row["Question ID (machine readable)"] = question_id
+        row["Response ID (machine readable)"] = response_id
+        row["Answer requirement"] = requirement
+        row["Human-friendly question label"] = label
+        rows.append(row)
+
+
 def configure_rows(rows: list[dict[str, str]]) -> None:
     selected_types = set(DATA_USES)
 
@@ -167,6 +275,27 @@ def configure_rows(rows: list[dict[str, str]]) -> None:
             "PSL_DATA_COLLECTION_USER_REQUEST_DELETE",
         }:
             row["Response value"] = "true"
+            continue
+
+        if question_id == "PSL_SUPPORTED_ACCOUNT_CREATION_METHODS":
+            # ASA Server Eye creates Firebase Authentication accounts using an
+            # e-mail/user identifier and password. No OAuth or external account
+            # creation flow exists in the current production build.
+            if response_id == "PSL_ACM_USER_ID_PASSWORD":
+                row["Response value"] = "true"
+            continue
+
+        if question_id in {"PSL_ACCOUNT_DELETION_URL", "PSL_DATA_DELETION_URL"}:
+            row["Response value"] = ACCOUNT_DELETION_URL
+            continue
+
+        if question_id == "PSL_SUPPORT_DATA_DELETION_BY_USER":
+            if response_id == "DATA_DELETION_YES":
+                row["Response value"] = "true"
+            continue
+
+        if question_id == "PSL_HAS_OUTSIDE_APP_ACCOUNTS":
+            row["Response value"] = "false"
             continue
 
         if "delet" in label and "url" in label:
@@ -247,6 +376,22 @@ def validate(rows: list[dict[str, str]]) -> None:
         if missing:
             fail(f"Incomplete answers for {data_type}: {sorted(missing)}")
 
+    if not any(
+        row.get("Question ID (machine readable)")
+        == "PSL_SUPPORTED_ACCOUNT_CREATION_METHODS"
+        and row.get("Response ID (machine readable)") == "PSL_ACM_USER_ID_PASSWORD"
+        and row.get("Response value") == "true"
+        for row in rows
+    ):
+        fail("Account creation method is not declared")
+
+    if not any(
+        row.get("Question ID (machine readable)") == "PSL_ACCOUNT_DELETION_URL"
+        and row.get("Response value") == ACCOUNT_DELETION_URL
+        for row in rows
+    ):
+        fail("Account deletion URL is not declared")
+
     for row in rows:
         if row.get("Answer requirement") == "REQUIRED" and not row.get(
             "Response value"
@@ -302,10 +447,12 @@ def main() -> None:
     reader = csv.DictReader(io.StringIO(template))
     if reader.fieldnames is None:
         fail("Google template has no CSV header")
+    fieldnames = list(reader.fieldnames)
     rows = list(reader)
+    add_missing_account_rows(rows, fieldnames)
     configure_rows(rows)
     validate(rows)
-    csv_text = render_csv(reader.fieldnames, rows)
+    csv_text = render_csv(fieldnames, rows)
 
     output_path = os.environ.get("DATA_SAFETY_OUTPUT")
     if output_path:
