@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
-"""Build and publish ASA Server Eye's Google Play Data Safety declaration.
-
-The script deliberately downloads Google's current CSV template at runtime.
-That keeps the machine-readable question IDs under Google's control and makes
-new required questions fail closed instead of silently publishing stale data.
-"""
+"""Generate and publish ASA Server Eye's Google Play Data Safety CSV."""
 
 from __future__ import annotations
 
 import csv
+import html
 import io
 import json
 import os
@@ -21,8 +17,13 @@ import google.auth.transport.requests
 from google.oauth2 import service_account
 import requests
 
-HELP_URL = (
-    "https://support.google.com/googleplay/android-developer/answer/10787469?hl=en"
+HELP_URL = "https://support.google.com/googleplay/android-developer/answer/10787469?hl=en"
+# Current official sample linked by the Play Console Help article. The help
+# page is client-rendered for some requests, so keep the official object as a
+# validated fallback while still discovering newer links first.
+OFFICIAL_SAMPLE_FALLBACK = (
+    "https://storage.googleapis.com/support-kms-prod/"
+    "b5v9It2EgwrgyY1gPFVB3jPUypc5lL3oNg2G"
 )
 API_SCOPE = "https://www.googleapis.com/auth/androidpublisher"
 DEFAULT_PACKAGE_NAME = "com.jchillah.asaservereye"
@@ -33,16 +34,19 @@ ACCOUNT_DELETION_URL = (
 
 @dataclass(frozen=True)
 class DataUse:
-    collected: bool = True
     shared: bool = False
     optional: bool = True
     collection_purposes: tuple[str, ...] = ("PSL_APP_FUNCTIONALITY",)
     sharing_purposes: tuple[str, ...] = ()
 
 
+AD_PURPOSES = (
+    "PSL_ADVERTISING",
+    "PSL_ANALYTICS",
+    "PSL_FRAUD_PREVENTION_SECURITY",
+)
+
 DATA_USES: dict[str, DataUse] = {
-    # Firebase account/profile data. Username and UID are also present on
-    # explicitly shared premium sighting documents; e-mail is not.
     "PSL_NAME": DataUse(
         shared=True,
         collection_purposes=("PSL_APP_FUNCTIONALITY", "PSL_ACCOUNT_MANAGEMENT"),
@@ -56,81 +60,44 @@ DATA_USES: dict[str, DataUse] = {
         collection_purposes=("PSL_APP_FUNCTIONALITY", "PSL_ACCOUNT_MANAGEMENT"),
         sharing_purposes=("PSL_APP_FUNCTIONALITY",),
     ),
-    # Optional profile image.
     "PSL_PHOTOS": DataUse(),
-    # Purchase identifiers/tokens are stored to verify Premium entitlement.
     "PSL_PURCHASE_HISTORY": DataUse(
         collection_purposes=("PSL_APP_FUNCTIONALITY", "PSL_ACCOUNT_MANAGEMENT"),
     ),
-    # User-created sightings and optional notes can be intentionally shared.
     "PSL_USER_GENERATED_CONTENT": DataUse(
         shared=True,
         sharing_purposes=("PSL_APP_FUNCTIONALITY",),
     ),
-    # Favorites and alert-rule actions stored for app functionality.
     "PSL_OTHER_APP_ACTIVITY": DataUse(
         collection_purposes=("PSL_APP_FUNCTIONALITY", "PSL_PERSONALIZATION"),
     ),
-    # Google Mobile Ads SDK automatic data collection/sharing. Google documents
-    # these purposes as advertising, analytics and fraud prevention/security.
     "PSL_APPROX_LOCATION": DataUse(
         shared=True,
         optional=False,
-        collection_purposes=(
-            "PSL_ADVERTISING",
-            "PSL_ANALYTICS",
-            "PSL_FRAUD_PREVENTION_SECURITY",
-        ),
-        sharing_purposes=(
-            "PSL_ADVERTISING",
-            "PSL_ANALYTICS",
-            "PSL_FRAUD_PREVENTION_SECURITY",
-        ),
+        collection_purposes=AD_PURPOSES,
+        sharing_purposes=AD_PURPOSES,
     ),
     "PSL_PERFORMANCE_DIAGNOSTICS": DataUse(
         shared=True,
         optional=False,
-        collection_purposes=(
-            "PSL_ADVERTISING",
-            "PSL_ANALYTICS",
-            "PSL_FRAUD_PREVENTION_SECURITY",
-        ),
-        sharing_purposes=(
-            "PSL_ADVERTISING",
-            "PSL_ANALYTICS",
-            "PSL_FRAUD_PREVENTION_SECURITY",
-        ),
+        collection_purposes=AD_PURPOSES,
+        sharing_purposes=AD_PURPOSES,
     ),
     "PSL_USER_INTERACTION": DataUse(
         shared=True,
         optional=False,
-        collection_purposes=(
-            "PSL_ADVERTISING",
-            "PSL_ANALYTICS",
-            "PSL_FRAUD_PREVENTION_SECURITY",
-        ),
-        sharing_purposes=(
-            "PSL_ADVERTISING",
-            "PSL_ANALYTICS",
-            "PSL_FRAUD_PREVENTION_SECURITY",
-        ),
+        collection_purposes=AD_PURPOSES,
+        sharing_purposes=AD_PURPOSES,
     ),
-    # AdMob identifiers plus FCM token used for notifications.
     "PSL_DEVICE_ID": DataUse(
         shared=True,
         optional=False,
         collection_purposes=(
             "PSL_APP_FUNCTIONALITY",
             "PSL_DEVELOPER_COMMUNICATIONS",
-            "PSL_ADVERTISING",
-            "PSL_ANALYTICS",
-            "PSL_FRAUD_PREVENTION_SECURITY",
+            *AD_PURPOSES,
         ),
-        sharing_purposes=(
-            "PSL_ADVERTISING",
-            "PSL_ANALYTICS",
-            "PSL_FRAUD_PREVENTION_SECURITY",
-        ),
+        sharing_purposes=AD_PURPOSES,
     ),
 }
 
@@ -140,33 +107,49 @@ def fail(message: str) -> None:
     raise SystemExit(1)
 
 
-def download_template(session: requests.Session) -> str:
-    response = session.get(HELP_URL, timeout=30)
-    response.raise_for_status()
-
-    candidates = re.findall(
-        r'https://storage\.googleapis\.com/[^"\'<>\\s]+', response.text
+def _is_valid_template(text: str) -> bool:
+    return (
+        "Question ID (machine readable)" in text
+        and "Response value" in text
+        and "PSL_DATA_TYPES_" in text
     )
-    if not candidates:
-        fail("Google's current sample CSV link could not be found")
 
+
+def download_template(session: requests.Session) -> str:
+    candidates: list[str] = []
+    try:
+        response = session.get(HELP_URL, timeout=30)
+        response.raise_for_status()
+        decoded = html.unescape(response.text)
+        candidates.extend(
+            re.findall(
+                r"https://storage\.googleapis\.com/[A-Za-z0-9_./?=&%-]+",
+                decoded,
+            )
+        )
+    except requests.RequestException as error:
+        print(f"Warning: Help page lookup failed: {error}", file=sys.stderr)
+
+    candidates.append(OFFICIAL_SAMPLE_FALLBACK)
+    seen: set[str] = set()
     last_error: Exception | None = None
+
     for url in candidates:
+        if url in seen:
+            continue
+        seen.add(url)
         try:
-            csv_response = session.get(url.replace("&amp;", "&"), timeout=30)
-            csv_response.raise_for_status()
-            text = csv_response.content.decode("utf-8-sig")
-            if "Question ID (machine readable)" in text and "PSL_DATA_TYPES_" in text:
+            response = session.get(url, timeout=30)
+            response.raise_for_status()
+            text = response.content.decode("utf-8-sig")
+            if _is_valid_template(text):
+                print(f"Using Google Data Safety template: {url}")
                 return text
         except Exception as error:  # pragma: no cover - network fallback
             last_error = error
 
-    fail(f"Google's sample CSV could not be downloaded: {last_error}")
+    fail(f"Google's current sample CSV could not be downloaded: {last_error}")
     return ""
-
-
-def set_value(row: dict[str, str], value: str) -> None:
-    row["Response value"] = value
 
 
 def configure_rows(rows: list[dict[str, str]]) -> None:
@@ -175,28 +158,24 @@ def configure_rows(rows: list[dict[str, str]]) -> None:
     for row in rows:
         question_id = row.get("Question ID (machine readable)", "")
         response_id = row.get("Response ID (machine readable)", "")
-        label = row.get("Human-friendly question label", "")
+        label = row.get("Human-friendly question label", "").lower()
         row["Response value"] = ""
 
-        if question_id == "PSL_DATA_COLLECTION_COLLECTS_PERSONAL_DATA":
-            set_value(row, "true")
-            continue
-        if question_id == "PSL_DATA_COLLECTION_ENCRYPTED_IN_TRANSIT":
-            set_value(row, "true")
-            continue
-        if question_id == "PSL_DATA_COLLECTION_USER_REQUEST_DELETE":
-            set_value(row, "true")
+        if question_id in {
+            "PSL_DATA_COLLECTION_COLLECTS_PERSONAL_DATA",
+            "PSL_DATA_COLLECTION_ENCRYPTED_IN_TRANSIT",
+            "PSL_DATA_COLLECTION_USER_REQUEST_DELETE",
+        }:
+            row["Response value"] = "true"
             continue
 
-        # Newer templates may contain a separate deletion URL question.
-        normalized_label = label.lower()
-        if "delet" in normalized_label and "url" in normalized_label:
-            set_value(row, ACCOUNT_DELETION_URL)
+        if "delet" in label and "url" in label:
+            row["Response value"] = ACCOUNT_DELETION_URL
             continue
 
         if question_id.startswith("PSL_DATA_TYPES_"):
             if response_id in selected_types:
-                set_value(row, "true")
+                row["Response value"] = "true"
             continue
 
         prefix = "PSL_DATA_USAGE_RESPONSES:"
@@ -206,19 +185,18 @@ def configure_rows(rows: list[dict[str, str]]) -> None:
         parts = question_id.split(":")
         if len(parts) < 3:
             continue
-        data_type = parts[1]
-        question = parts[2]
+        data_type, question = parts[1], parts[2]
         spec = DATA_USES.get(data_type)
         if spec is None:
             continue
 
         if question == "PSL_DATA_USAGE_COLLECTION_AND_SHARING":
-            if response_id == "PSL_DATA_USAGE_ONLY_COLLECTED" and spec.collected:
-                set_value(row, "true")
+            if response_id == "PSL_DATA_USAGE_ONLY_COLLECTED":
+                row["Response value"] = "true"
             elif response_id == "PSL_DATA_USAGE_ONLY_SHARED" and spec.shared:
-                set_value(row, "true")
+                row["Response value"] = "true"
         elif question == "PSL_DATA_USAGE_EPHEMERAL":
-            set_value(row, "false")
+            row["Response value"] = "false"
         elif question == "DATA_USAGE_USER_CONTROL":
             expected = (
                 "PSL_DATA_USAGE_USER_CONTROL_OPTIONAL"
@@ -226,13 +204,13 @@ def configure_rows(rows: list[dict[str, str]]) -> None:
                 else "PSL_DATA_USAGE_USER_CONTROL_REQUIRED"
             )
             if response_id == expected:
-                set_value(row, "true")
+                row["Response value"] = "true"
         elif question == "DATA_USAGE_COLLECTION_PURPOSE":
             if response_id in spec.collection_purposes:
-                set_value(row, "true")
+                row["Response value"] = "true"
         elif question == "DATA_USAGE_SHARING_PURPOSE":
             if spec.shared and response_id in spec.sharing_purposes:
-                set_value(row, "true")
+                row["Response value"] = "true"
 
 
 def validate(rows: list[dict[str, str]]) -> None:
@@ -243,58 +221,40 @@ def validate(rows: list[dict[str, str]]) -> None:
     }
     missing_types = set(DATA_USES) - present_types
     if missing_types:
-        fail(f"Current Google template is missing expected data types: {sorted(missing_types)}")
+        fail(f"Google template is missing expected data types: {sorted(missing_types)}")
 
-    # Every selected type needs collection/sharing, ephemeral, user control,
-    # and at least one collection purpose. Shared types also need a purpose.
     for data_type, spec in DATA_USES.items():
+        prefix = f"PSL_DATA_USAGE_RESPONSES:{data_type}:"
         relevant = [
             row
             for row in rows
-            if row.get("Question ID (machine readable)", "").startswith(
-                f"PSL_DATA_USAGE_RESPONSES:{data_type}:"
-            )
+            if row.get("Question ID (machine readable)", "").startswith(prefix)
         ]
-        selected = {
-            (
-                row.get("Question ID (machine readable)", "").split(":")[-1],
-                row.get("Response ID (machine readable)", ""),
-            )
+        answered_questions = {
+            row["Question ID (machine readable)"].split(":")[-1]
             for row in relevant
             if row.get("Response value") in {"true", "false"}
         }
-        questions_with_value = {
-            row.get("Question ID (machine readable)", "").split(":")[-1]
-            for row in relevant
-            if row.get("Response value") in {"true", "false"}
-        }
-        required_questions = {
+        required = {
             "PSL_DATA_USAGE_COLLECTION_AND_SHARING",
             "PSL_DATA_USAGE_EPHEMERAL",
             "DATA_USAGE_USER_CONTROL",
             "DATA_USAGE_COLLECTION_PURPOSE",
         }
         if spec.shared:
-            required_questions.add("DATA_USAGE_SHARING_PURPOSE")
-        missing = required_questions - questions_with_value
+            required.add("DATA_USAGE_SHARING_PURPOSE")
+        missing = required - answered_questions
         if missing:
             fail(f"Incomplete answers for {data_type}: {sorted(missing)}")
 
-        if not any(
-            q == "PSL_DATA_USAGE_COLLECTION_AND_SHARING"
-            and r == "PSL_DATA_USAGE_ONLY_COLLECTED"
-            for q, r in selected
-        ):
-            fail(f"{data_type} is not marked as collected")
-
-    # Fail closed if Google adds a new globally-required question that this
-    # script does not yet understand.
     for row in rows:
-        requirement = row.get("Answer requirement", "")
-        value = row.get("Response value", "")
-        question_id = row.get("Question ID (machine readable)", "")
-        if requirement == "REQUIRED" and not value:
-            fail(f"Unhandled required Google question: {question_id}")
+        if row.get("Answer requirement") == "REQUIRED" and not row.get(
+            "Response value"
+        ):
+            fail(
+                "Unhandled required Google question: "
+                f"{row.get('Question ID (machine readable)', '')}"
+            )
 
 
 def render_csv(fieldnames: list[str], rows: Iterable[dict[str, str]]) -> str:
@@ -314,9 +274,7 @@ def publish(csv_text: str) -> None:
         credentials_path,
         scopes=[API_SCOPE],
     )
-    request = google.auth.transport.requests.Request()
-    credentials.refresh(request)
-
+    credentials.refresh(google.auth.transport.requests.Request())
     package_name = os.environ.get("PLAY_PACKAGE_NAME", DEFAULT_PACKAGE_NAME)
     url = (
         "https://androidpublisher.googleapis.com/androidpublisher/v3/"
@@ -336,13 +294,11 @@ def publish(csv_text: str) -> None:
             f"Google Play Data Safety API returned {response.status_code}: "
             f"{response.text[:2000]}"
         )
-
     print("Google Play Data Safety declaration updated successfully.")
 
 
 def main() -> None:
-    session = requests.Session()
-    template = download_template(session)
+    template = download_template(requests.Session())
     reader = csv.DictReader(io.StringIO(template))
     if reader.fieldnames is None:
         fail("Google template has no CSV header")
