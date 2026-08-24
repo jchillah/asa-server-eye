@@ -75,13 +75,14 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   }
 
   void _disposeBanner() {
+    final shouldNotify = _bannerAd != null || _isLoaded || _isLoading;
     final ad = _bannerAd;
     _bannerAd = null;
     _isLoaded = false;
     _isLoading = false;
     ad?.dispose();
 
-    if (mounted) {
+    if (mounted && shouldNotify) {
       setState(() {});
     }
   }
