@@ -1,4 +1,5 @@
 // core/widgets/ad_banner_widget.dart
+import 'package:asa_server_eye/core/ads/ads_consent_service.dart';
 import 'package:asa_server_eye/core/ads/admob_ids.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -11,21 +12,39 @@ class AdBannerWidget extends StatefulWidget {
 }
 
 class _AdBannerWidgetState extends State<AdBannerWidget> {
+  late final AdsConsentService _consentService;
+
   BannerAd? _bannerAd;
   bool _isLoaded = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _loadBanner();
+    _consentService = AdsConsentService.instance;
+    _consentService.canRequestAds.addListener(_handleConsentChanged);
+    _handleConsentChanged();
+  }
+
+  void _handleConsentChanged() {
+    if (!_consentService.canRequestAds.value) {
+      _disposeBanner();
+      return;
+    }
+
+    if (!_isLoaded && !_isLoading) {
+      _loadBanner();
+    }
   }
 
   void _loadBanner() {
     final adUnitId = AdMobIds.banner;
 
-    if (adUnitId == null) {
+    if (adUnitId == null || !_consentService.canRequestAds.value) {
       return;
     }
+
+    _isLoading = true;
 
     final bannerAd = BannerAd(
       adUnitId: adUnitId,
@@ -33,7 +52,8 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          if (!mounted) {
+          if (!mounted || !_consentService.canRequestAds.value) {
+            _isLoading = false;
             ad.dispose();
             return;
           }
@@ -41,9 +61,11 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
           setState(() {
             _bannerAd = ad as BannerAd;
             _isLoaded = true;
+            _isLoading = false;
           });
         },
         onAdFailedToLoad: (ad, error) {
+          _isLoading = false;
           ad.dispose();
         },
       ),
@@ -52,8 +74,22 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
     bannerAd.load();
   }
 
+  void _disposeBanner() {
+    final shouldNotify = _bannerAd != null || _isLoaded || _isLoading;
+    final ad = _bannerAd;
+    _bannerAd = null;
+    _isLoaded = false;
+    _isLoading = false;
+    ad?.dispose();
+
+    if (mounted && shouldNotify) {
+      setState(() {});
+    }
+  }
+
   @override
   void dispose() {
+    _consentService.canRequestAds.removeListener(_handleConsentChanged);
     _bannerAd?.dispose();
     super.dispose();
   }

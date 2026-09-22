@@ -2,6 +2,11 @@ name: Deploy to Google Play Production
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/production-release-trigger"
 
 jobs:
   deploy-production:
@@ -48,6 +53,20 @@ jobs:
           ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           EOF
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Data Safety dependencies
+        run: python -m pip install --disable-pip-version-check google-auth requests
+
+      - name: Update Google Play Data Safety declaration
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: play-service-account.json
+          PLAY_PACKAGE_NAME: com.jchillah.asaservereye
+        run: python .github/scripts/update_play_data_safety.py
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -56,7 +75,7 @@ jobs:
       - name: Install fastlane
         run: gem install fastlane
 
-      - name: Upload to Google Play Production as draft
+      - name: Upload to Google Play Production
         run: |
           fastlane supply \
             --aab build/app/outputs/bundle/release/app-release.aab \
@@ -66,4 +85,4 @@ jobs:
             --skip_upload_metadata true \
             --skip_upload_images true \
             --skip_upload_screenshots true \
-            --release_status draft
+            --release_status completed

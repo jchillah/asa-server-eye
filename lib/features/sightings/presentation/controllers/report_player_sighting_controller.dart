@@ -249,7 +249,6 @@ class ReportPlayerSightingController
         platform: state.platform,
         createdByUserId: currentUser.uid,
         createdByUsername: userProfile.username,
-        createdByEmail: userProfile.email,
         creatorLevel: creatorLevel,
         sharingScope: sharingScope,
         note: state.note.trim().isEmpty ? null : state.note.trim(),

@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   flutter-check:
     runs-on: ubuntu-latest
@@ -69,3 +72,78 @@ jobs:
 
       - name: Test Functions
         run: npm test
+
+  release-data-safety:
+    if: startsWith(github.head_ref, 'release/play-production-')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check google-auth requests
+
+      - name: Write Google Play service account
+        run: |
+          cat <<'EOF' > play-service-account.json
+          ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          EOF
+
+      - name: Publish audited Google Play Data Safety declaration
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: play-service-account.json
+          PLAY_PACKAGE_NAME: com.jchillah.asaservereye
+          DATA_SAFETY_OUTPUT: data-safety-generated.csv
+        run: python .github/scripts/update_play_data_safety.py
+
+      - name: Upload generated declaration for audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-play-data-safety
+          path: data-safety-generated.csv
+          if-no-files-found: ignore
+          retention-days: 14
+
+  release-firestore-rules:
+    if: startsWith(github.head_ref, 'release/play-production-')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check google-auth requests
+
+      - name: Select Firebase credential
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          if [ -n "$FIREBASE_SERVICE_ACCOUNT_JSON" ]; then
+            printf '%s' "$FIREBASE_SERVICE_ACCOUNT_JSON" > firebase-service-account.json
+          elif [ -n "$PLAY_SERVICE_ACCOUNT_JSON" ]; then
+            printf '%s' "$PLAY_SERVICE_ACCOUNT_JSON" > firebase-service-account.json
+          else
+            echo "No service-account credential is configured for Firebase Rules." >&2
+            exit 1
+          fi
+
+      - name: Deploy Firestore rules through Firebase Rules API
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
+          FIREBASE_PROJECT_ID: asa-server-eye
+          FIRESTORE_RULES_FILE: firestore.rules
+        run: python .github/scripts/deploy_firestore_rules.py
